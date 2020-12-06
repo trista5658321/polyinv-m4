@@ -4,13 +4,9 @@ https://github.com/mupq/pqm4/tree/master/crypto_kem/sntrup761/m4f
 
 commit: f7a99d8fc54cdd509c0c6b5cfad86a38a659a8cd
 
-keypair cycles:
-11349863
-encaps cycles:
-789446
-decaps cycles:
-742182
-OK KEYS
+|keypair cycles|encaps cycles|decaps cycles|
+|---|---|---|
+|11349863|789446|742182|
 
 # Optimization
 ## 8: x2p2 0.52%
