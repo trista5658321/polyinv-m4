@@ -1,0 +1,3 @@
+python gen_x2p2.py > tmp/jump128divsteps_1.S
+diff jump128divsteps.S tmp/jump128divsteps_1.S
+echo "test done"
