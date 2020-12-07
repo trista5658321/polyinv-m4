@@ -1,7 +1,13 @@
-PATH_R_PQM4 = "../pqm4/crypto_kem/sntrup761/m4f/"
-PATH_DEST = "./"
+import pathlib
+
 LENGTH = 64
 FILE_NAME = "polymul_" + str(LENGTH) + "x" + str(LENGTH)
+
+# For the directory of the script being run:
+PATH_DIR = pathlib.Path(__file__).parent.absolute()
+
+PATH_PQM4 = PATH_DIR.parent.parent
+PATH_DEST = PATH_DIR
 
 IGNORE_LIST = [
     "push.w {r4-r12, lr}",
@@ -12,11 +18,13 @@ IGNORE_LIST = [
 ]
 # IGNORE_LIST = []
 
-f = open(PATH_R_PQM4 + FILE_NAME + ".S")
+f = open(PATH_PQM4.joinpath("pqm4/crypto_kem/sntrup761/m4f", FILE_NAME + ".S"))
 code_list = f.readlines()
 
-new_file = open(PATH_DEST+ FILE_NAME + ".py", "w")
-new_file.write("from utility import *\n\n")
+new_file = open(PATH_DEST.joinpath(FILE_NAME + ".py"), "w")
+new_file.write("import sys, pathlib\n")
+new_file.write("sys.path.append(str(pathlib.Path(__file__).parent.absolute().parent))\n\n")
+new_file.write("from utility import printIn\n\n")
 new_file.write("def " + FILE_NAME + "():\n")
 
 write_flag = False

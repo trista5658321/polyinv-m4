@@ -1,3 +1,6 @@
+import sys, pathlib
+sys.path.append(str(pathlib.Path(__file__).parent.absolute().parent))
+
 from utility import printIn
 
 def polymul_64x64():
