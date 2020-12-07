@@ -15,12 +15,12 @@ M_u_offset = LENGTH * 2 * 2
 M_v_offset = LENGTH * 3 * 2
 M_r_offset = LENGTH * 4 * 2
 M_s_offset = LENGTH * 5 * 2
-S_FH = "s10" # r2
-S_GH = "s11" # r3
+S_FH = "s4" # r2
+S_GH = "s5" # r3
 
-s_b1_addr = "s7"
-s_bb1_addr = "s8"
-s_b2_addr = "s9"
+s_b1_addr = "s6"
+s_bb1_addr = "s7"
+s_b2_addr = "s8"
 s_bb2_addr = ""
 
 def data_config():
