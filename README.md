@@ -17,7 +17,7 @@ commit: f7a99d8fc54cdd509c0c6b5cfad86a38a659a8cd
 ## Current
 |keypair cycles|encaps cycles|decaps cycles|
 |---|---|---|
-|11207951|789443|742181|
+|11186664|789441|742180|
 
 # Optimization
 ## 8: x2p2 0.52%
@@ -63,4 +63,13 @@ encaps cycles:
 789443                                                   
 decaps cycles:                                           
 742181                                                   
+OK KEYS
+
+## 256 x2p2 (-21287: 0.19%)
+keypair cycles:
+11186664
+encaps cycles:
+789441
+decaps cycles:
+742180
 OK KEYS
