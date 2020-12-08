@@ -11,7 +11,7 @@ commit: f7a99d8fc54cdd509c0c6b5cfad86a38a659a8cd
 # Progress (4591_761)
 |      |8  |16 |32 |64 |128|256|512|753|768|1521|
 |------|---|---|---|---|---|---|---|---|---|---|
-| x2p2 | v | v | v | v | v |---|---| x |---| x |
+| x2p2 | v | v | v | v | v | v |---| x |---| x |
 | 2x2  |---|---|---|---|---|---|---|---|---|---|
 
 ## Current
@@ -20,56 +20,9 @@ commit: f7a99d8fc54cdd509c0c6b5cfad86a38a659a8cd
 |11186664|789441|742180|
 
 # Optimization
-## 8: x2p2 0.52%
-keypair cycles:                          
-11290363                                 
-encaps cycles:                           
-789446                                   
-decaps cycles:                           
-742182                                   
-OK KEYS 
-
-## 16: x2p2 0.27%
-keypair cycles:                          
-11259336                                 
-encaps cycles:                           
-789445                                   
-decaps cycles:                           
-742182                                   
-OK KEYS
-
-## 32: x2p2 0.17%
-keypair cycles:                          
-11240247                                 
-encaps cycles:                           
-789444                                   
-decaps cycles:                           
-742181                                   
-OK KEYS
-
-## 64 x2p2 0.09%
-keypair cycles:                                      
-11230215                                  
-encaps cycles:                                       
-789446                                               
-decaps cycles:                                       
-742182                                               
-OK KEYS 
-
-## 128 x2p2 0.19%
-keypair cycles:                                          
-11207951                                                 
-encaps cycles:                                           
-789443                                                   
-decaps cycles:                                           
-742181                                                   
-OK KEYS
-
-## 256 x2p2 (-21287: 0.19%)
-keypair cycles:
-11186664
-encaps cycles:
-789441
-decaps cycles:
-742180
-OK KEYS
+## x2p2
+|         |8  |16 |32 |64 |128|256|512|
+|---------|---|---|---|---|---|---|---|
+| keypair |11290363|11259336|11240247|11230215|11207951|11186664|---|
+| encaps  |789446  |789445  |789444  |789446  |789443  |789441|---|
+| decaps  |742182  |742182  |742181  |742182  |742181  |742180|---|
