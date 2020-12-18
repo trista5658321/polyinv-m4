@@ -1,4 +1,4 @@
-LENGTH = 128
+LENGTH = 32
 
 S_Q_R2INV = "s2"
 
@@ -19,6 +19,15 @@ def head(name, params, data_config):
     print("@ void " + name + params)
     print(name + ":")
     printIn("push {r1-r12, lr}")
+
+def _func_head(name, func):
+    print(".p2align 2,,3")
+    print(".syntax	unified")
+    print(".text")
+    print(name + ":")
+    printIn("push.w {lr}")
+    func()
+    printIn("pop.w {pc}")
 
 def end():
     printIn("pop {r1-r12, pc}")
