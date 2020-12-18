@@ -4,8 +4,11 @@
 # python gen_divstep.py > tmp/jump128divsteps_1.S
 # diff jump128divsteps.S tmp/jump128divsteps_1.S
 
-python gen_divstep.py > tmp/jump256divsteps_1.S
-diff jump256divsteps.S tmp/jump256divsteps_1.S
+# python gen_divstep.py > tmp/jump256divsteps_1.S
+# diff jump256divsteps.S tmp/jump256divsteps_1.S
+
+python gen_divstep.py > tmp/jump512divsteps_1.S
+diff jump512divsteps.S tmp/jump512divsteps_1.S
 
 echo "test done"
 

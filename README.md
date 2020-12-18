@@ -17,7 +17,7 @@ commit: f7a99d8fc54cdd509c0c6b5cfad86a38a659a8cd
 ## Current
 |keypair cycles|encaps cycles|decaps cycles|
 |---|---|---|
-|11144301|789441|742180|
+|11121863|789443|742181|
 
 # Optimization
 ## x2p2
