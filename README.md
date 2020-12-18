@@ -6,7 +6,7 @@ commit: f7a99d8fc54cdd509c0c6b5cfad86a38a659a8cd
 
 |keypair cycles|encaps cycles|decaps cycles|
 |---|---|---|
-|11349863|789446|742182|
+|11169092|789442|742181|
 
 # Progress (4591_761)
 |      |8  |16 |32 |64 |128|256|512|753|768|1521|
