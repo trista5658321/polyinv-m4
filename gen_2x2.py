@@ -97,7 +97,7 @@ def bl_polyadd():
 
 def main():
     if not UNROLL:
-        u._func_head(__polymul_name, polymul_32x32)
+        # u._func_head(__polymul_name, polymul_32x32)
         u._func_head(__polyadd_name, gen_2x2_add.main)
 
     f_name = "__gf_polymul_" + str(LENGTH) + "x" + str(LENGTH) + "_2x2_x_2x2"
@@ -250,4 +250,4 @@ def main():
     
     u.end()
 
-main()
+# main()

@@ -59,3 +59,6 @@ def barrett_16x2i (x, q, qR2inv, _2P15, high_16, low_16):
     printIn("smulbt.w " + high_16 + ", " + q + ", " + high_16)
     printIn("pkhbt.w " + low_16 + ", " + low_16 + ", " + high_16 + ", LSL #16")
     printIn("ssub16.w " + x + ", " + x + ", " + low_16)
+
+def bl_polymul(__polymul_name):
+    printIn("bl	" + __polymul_name)
