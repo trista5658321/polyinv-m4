@@ -6,7 +6,7 @@ commit: f7a99d8fc54cdd509c0c6b5cfad86a38a659a8cd
 
 |keypair cycles|encaps cycles|decaps cycles|
 |---|---|---|
-|11169917|789442|742181|
+|11349863|789446|742182|
 
 # Progress (4591_761)
 |      |8  |16 |32 |64 |128|256|512|753|768|1521|
@@ -17,7 +17,7 @@ commit: f7a99d8fc54cdd509c0c6b5cfad86a38a659a8cd
 ## Current
 |keypair cycles|encaps cycles|decaps cycles|
 |---|---|---|
-|11186664|789441|742180|
+|11169917|789442|742181|
 
 # Optimization
 ## x2p2

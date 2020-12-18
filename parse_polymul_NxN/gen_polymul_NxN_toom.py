@@ -32,7 +32,7 @@ new_file = open(PATH_DEST.joinpath(FILE_NAME + ".py"), "w")
 new_file.write("import sys, pathlib\n")
 new_file.write("sys.path.append(str(pathlib.Path(__file__).parent.absolute().parent))\n\n")
 new_file.write("from utility import printIn\n\n")
-new_file.write("def polymul(label_postfix):\n")
+new_file.write('def polymul(label_postfix = ""):\n')
 
 write_flag = False
 stop_s1_to_s3 = False
