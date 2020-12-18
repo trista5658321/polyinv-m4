@@ -3,7 +3,7 @@ sys.path.append(str(pathlib.Path(__file__).parent.absolute().parent))
 
 from utility import printIn
 
-def polymul_32x32():
+def polymul():
 	printIn("ldr.w r4, [r1, #4]")
 	printIn("ldr.w r3, [r1], #8")
 	printIn("ldr.w r6, [r2, #4]")

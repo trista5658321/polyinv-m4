@@ -3,7 +3,7 @@ sys.path.append(str(pathlib.Path(__file__).parent.absolute().parent))
 
 from utility import printIn
 
-def polymul_128x128(label_postfix):
+def polymul(label_postfix):
     printIn("sub.w sp, sp, #2432")
     printIn("vmov.w s9, r0")
     printIn("mov.w r0, sp")

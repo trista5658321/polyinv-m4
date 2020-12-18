@@ -1,8 +1,11 @@
-# python gen_x2p2.py > tmp/jump128divsteps_1.S
+python gen_divstep.py > tmp/jump64divsteps_1.S
+diff jump64divsteps.S tmp/jump64divsteps_1.S
+
+# python gen_divstep.py > tmp/jump128divsteps_1.S
 # diff jump128divsteps.S tmp/jump128divsteps_1.S
 
-python gen_x2p2_toom.py > tmp/jump256divsteps_1.S
-diff jump256divsteps.S tmp/jump256divsteps_1.S
+# python gen_x2p2_toom.py > tmp/jump256divsteps_1.S
+# diff jump256divsteps.S tmp/jump256divsteps_1.S
 
 echo "test done"
 

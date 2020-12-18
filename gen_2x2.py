@@ -2,7 +2,10 @@ from utility import printIn, LENGTH
 import utility as u
 
 import gen_2x2_add
-from parse_polymul_NxN.polymul_32x32 import polymul_32x32
+
+polymul_path = "parse_polymul_NxN.polymul_" + str(LENGTH) + "x" + str(LENGTH)
+_tmp = __import__(polymul_path, globals(), locals(), ['polymul'], 0)
+polymul = _tmp.polymul
 
 UNROLL = False
 
@@ -97,7 +100,7 @@ def bl_polyadd():
 
 def main():
     if not UNROLL:
-        # u._func_head(__polymul_name, polymul_32x32)
+        # u._func_head(__polymul_name, polymul)
         u._func_head(__polyadd_name, gen_2x2_add.main)
 
     f_name = "__gf_polymul_" + str(LENGTH) + "x" + str(LENGTH) + "_2x2_x_2x2"
@@ -125,7 +128,7 @@ def main():
     if not UNROLL:
         bl_polymul()
     else:
-        polymul_32x32()
+        polymul()
 
     # reset r0: M , r1: M1+32(r), r2: M2+16(v)
     get_M_addr("r0", "M")
@@ -136,7 +139,7 @@ def main():
     if not UNROLL:
         bl_polymul()
     else:
-        polymul_32x32()
+        polymul()
 
     # reset r0: M, r1: B_1
     get_b1_addr("r1")
@@ -157,7 +160,7 @@ def main():
     if not UNROLL:
         bl_polymul()
     else:
-        polymul_32x32()
+        polymul()
 
     # reset r0: M(v), r1: M1(s), r2: M2(v)
     get_M_addr("r0", "M")
@@ -171,7 +174,7 @@ def main():
     if not UNROLL:
         bl_polymul()
     else:
-        polymul_32x32()
+        polymul()
 
     # reset r0: M, r1: B_1
     get_b1_addr("r1")
@@ -192,7 +195,7 @@ def main():
     if not UNROLL:
         bl_polymul()
     else:
-        polymul_32x32()
+        polymul()
 
     # reset r0: M(r), r1: M1(r), r2: M2(s)
     get_M_addr("r0", "M")
@@ -204,7 +207,7 @@ def main():
     if not UNROLL:
         bl_polymul()
     else:
-        polymul_32x32()
+        polymul()
 
     # reset r0: M, r1: B_1
     get_b1_addr("r1")
@@ -226,7 +229,7 @@ def main():
     if not UNROLL:
         bl_polymul()
     else:
-        polymul_32x32()
+        polymul()
 
     # reset r0: M(s), r1: M1(s), r2: M2(s)
     get_M_addr("r0", "M")
@@ -238,7 +241,7 @@ def main():
     if not UNROLL:
         bl_polymul()
     else:
-        polymul_32x32()
+        polymul()
 
     # reset r0: M, r1: B_1
     get_b1_addr("r1")

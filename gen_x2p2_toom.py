@@ -3,7 +3,10 @@ import utility as u
 
 import gen_f
 import gen_g
-from parse_polymul_NxN.polymul_128x128 import polymul_128x128
+
+polymul_path = "parse_polymul_NxN.polymul_" + str(LENGTH) + "x" + str(LENGTH)
+_tmp = __import__(polymul_path, globals(), locals(), ['polymul'], 0)
+polymul = _tmp.polymul
 
 V = "s0" # r0
 M = "s1" # r1
@@ -119,7 +122,7 @@ def main():
     printIn("movw.w " + tmp[0] + ", #" + str(M_u_offset))
     printIn("add.w r1, " + tmp[0])
     # mul32x32
-    polymul_128x128("1")
+    polymul("1")
 
     # # for test
     # printIn("vmov.w r0, " + V)
@@ -136,7 +139,7 @@ def main():
     printIn("add.w r1, " + tmp[0])
     get_gh_addr("r2")
     # mul32x32
-    polymul_128x128("2")
+    polymul("2")
 
     # for test
     # printIn("vmov.w r0, " + V)
@@ -158,7 +161,7 @@ def main():
     printIn("vmov.w r2, " + S_FH)
     printIn("add.w r0, r0, #" + str(v_g_offset))
     printIn("add.w r1, r3, #" + str(M_r_offset))
-    polymul_128x128("3")
+    polymul("3")
     
     # mul32x32
     get_bb1_addr("r0")
@@ -166,7 +169,7 @@ def main():
     printIn("movw.w " + tmp[0] + ", #" + str(M_s_offset))
     printIn("add.w r1, " + tmp[0])
     get_gh_addr("r2")
-    polymul_128x128("4")
+    polymul("4")
     
     # reset r0-5
     printIn("vmov.w r0, " + V)

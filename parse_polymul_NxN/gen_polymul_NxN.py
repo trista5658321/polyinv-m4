@@ -25,7 +25,7 @@ new_file = open(PATH_DEST.joinpath(FILE_NAME + ".py"), "w")
 new_file.write("import sys, pathlib\n")
 new_file.write("sys.path.append(str(pathlib.Path(__file__).parent.absolute().parent))\n\n")
 new_file.write("from utility import printIn\n\n")
-new_file.write("def " + FILE_NAME + "():\n")
+new_file.write("def polymul():\n")
 
 write_flag = False
 r0_offset = 0

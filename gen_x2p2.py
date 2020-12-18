@@ -3,7 +3,10 @@ import utility as u
 
 import gen_f
 import gen_g
-from parse_polymul_NxN.polymul_32x32 import polymul_32x32
+
+polymul_path = "parse_polymul_NxN.polymul_" + str(LENGTH) + "x" + str(LENGTH)
+_tmp = __import__(polymul_path, globals(), locals(), ['polymul'], 0)
+polymul = _tmp.polymul
 
 UNROLL = False
 
@@ -26,7 +29,6 @@ s_b2_addr = "s8"
 s_bb2_addr = ""
 
 __polymul_name = "__polymul_" + str(LENGTH) + "x" + str(LENGTH)
-__polymul = polymul_32x32
 
 def data_config():
     buffer_len = LENGTH * 2 # coefficients
@@ -74,7 +76,7 @@ def get_gh_addr(rd):
 
 def main():
     if not UNROLL:
-        u._func_head(__polymul_name, __polymul)
+        u._func_head(__polymul_name, polymul)
 
     f_name = "__gf_polymul_" + str(LENGTH) + "x" + str(LENGTH) + "_2x2_x2p2"
     f_params = "(int *V,int *M,int *fh,int *gh)"
@@ -109,7 +111,7 @@ def main():
     if not UNROLL:
         u.bl_polymul(__polymul_name)
     else:
-        __polymul()
+        polymul()
 
     # reset r0: BB64_1 , r2: gh
     get_bb1_addr("r0")
@@ -118,7 +120,7 @@ def main():
     if not UNROLL:
         u.bl_polymul(__polymul_name)
     else:
-        __polymul()
+        polymul()
     # reset r0-6
     printIn("vmov.w " + "r0, r3, " + V + ", " + M)
     get_b1_addr("r1")
@@ -135,7 +137,7 @@ def main():
     if not UNROLL:
         u.bl_polymul(__polymul_name)
     else:
-        __polymul()
+        polymul()
     
     # mul32x32
     get_bb1_addr("r0")
@@ -143,7 +145,7 @@ def main():
     if not UNROLL:
         u.bl_polymul(__polymul_name)
     else:
-        __polymul()
+        polymul()
     
     # reset r0-5
     printIn("vmov.w r0, " + V)
