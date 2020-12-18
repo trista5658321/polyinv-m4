@@ -4,7 +4,7 @@ import pathlib
 # 2. use s2 instead of "movw.w r4, #18015 / movt.w r4, #14"
 # 3. ignore "Toom4Table_4591" , "vldm r10, {s1-s16} @ read table"
 
-LENGTH = 128
+LENGTH = 256
 FILE_NAME = "polymul_" + str(LENGTH) + "x" + str(LENGTH)
 
 # For the directory of the script being run:
