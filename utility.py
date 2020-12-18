@@ -1,4 +1,4 @@
-LENGTH = 64
+LENGTH = 128
 
 S_Q_R2INV = "s2"
 

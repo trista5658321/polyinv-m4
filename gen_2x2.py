@@ -41,6 +41,25 @@ def data_config():
     printIn(".word " + buffer1)
     printIn(".word " + buffer1 + "+2")
 
+    if LENGTH >= 128:
+        print("Toom4Table_4591_2x2:")
+        printIn(".word 4194697214 @ s1")
+        printIn(".word 66848888   @ s2^")
+        printIn(".word 145489918  @ s3^")
+        printIn(".word 4219667963 @ s4^")
+        printIn(".word 87754235   @ s5")
+        printIn(".word 263483     @ s6")
+        printIn(".word 4144690955 @ s7")
+        printIn(".word 16713465   @ s8")
+        printIn(".word 4144758733 @ s9#")
+        printIn(".word 75236093   @ s10^")
+        printIn(".word 4207215357 @ s11")
+        printIn(".word 4294703813 @ s12")
+        printIn(".word 100272375  @ s13")
+        printIn(".word 4261546104 @ s14^")
+        printIn(".word 4149545207 @ s15^")
+        printIn(".word 16777012   @ s16#")
+
 def get_b1_addr(rd, label = False):
     if label:
         printIn("ldr.w " + rd + ", b1_addr_2x2")
@@ -107,6 +126,11 @@ def main():
     f_params = "(int *M,int *S_M1,int *fh,int *gh)"
     u.head(f_name, f_params, data_config)
 
+    if LENGTH >= 128:
+        printIn("vpush.w { s16-s25 }")
+        printIn("adr lr, Toom4Table_4591_2x2")
+        printIn("vldm lr, {s10-s25}")
+
     # 存 r0-r3 function input
     tmp = ["r7", "r8", "r9", "r10", "r11", "r12", "lr"]
     printIn("vmov.w " + S_M + ", " + S_M1 + ", r0, r1")
@@ -133,7 +157,14 @@ def main():
     # reset r0: M , r1: M1+32(r), r2: M2+16(v)
     get_M_addr("r0", "M")
     get_M_addr("r1", "M1")
+
+    if LENGTH >= 128:
+        get_M_addr("r2", "M2")
+
     get_M_elem("next2", "r1")
+    
+    if LENGTH >= 128:
+        get_M_elem("next", "r2")
     
     # mul
     if not UNROLL:
@@ -142,6 +173,8 @@ def main():
         polymul()
 
     # reset r0: M, r1: B_1
+    if LENGTH >= 128:
+        get_M_addr("r0", "M")
     get_b1_addr("r1")
     # add
     if not UNROLL:
@@ -165,10 +198,15 @@ def main():
     # reset r0: M(v), r1: M1(s), r2: M2(v)
     get_M_addr("r0", "M")
     get_M_addr("r1", "M1")
-    # get_M_addr("r2", "M2") #加了反而變快= =
+
+    if LENGTH >= 128:
+        get_M_addr("r2", "M2")
+
     get_new_M_elem("v", "r0")
     get_M_elem("s", "r1")
-    # get_M_elem("v", "r2") #加了反而變快= =
+    
+    if LENGTH >= 128:
+        get_M_elem("v", "r2")
 
     # mul
     if not UNROLL:
@@ -176,8 +214,11 @@ def main():
     else:
         polymul()
 
-    # reset r0: M, r1: B_1
+    # reset r0: M(v), r1: B_1
     get_b1_addr("r1")
+    if LENGTH >= 128:
+        get_M_addr("r0", "M")
+        get_new_M_elem("v", "r0")
     # add
     if not UNROLL:
         bl_polyadd()
@@ -200,7 +241,12 @@ def main():
     # reset r0: M(r), r1: M1(r), r2: M2(s)
     get_M_addr("r0", "M")
     get_M_addr("r1", "M1")
+    if LENGTH >= 128:
+        get_M_addr("r2", "M2")
+
     get_new_M_elem("r", "r0")
+    if LENGTH >= 128:
+        get_M_elem("s", "r2")
     get_M_elem("r", "r1")
 
     # mul
@@ -209,8 +255,11 @@ def main():
     else:
         polymul()
 
-    # reset r0: M, r1: B_1
+    # reset r0: M(r), r1: B_1
     get_b1_addr("r1")
+    if LENGTH >= 128:
+        get_M_addr("r0", "M")
+        get_new_M_elem("r", "r0")
     # add
     if not UNROLL:
         bl_polyadd()
@@ -234,8 +283,12 @@ def main():
     # reset r0: M(s), r1: M1(s), r2: M2(s)
     get_M_addr("r0", "M")
     get_M_addr("r1", "M1")
+    if LENGTH >= 128:
+        get_M_addr("r2", "M2")
     get_new_M_elem("s", "r0")
     get_M_elem("s", "r1")
+    if LENGTH >= 128:
+        get_M_elem("s", "r2")
 
     # mul
     if not UNROLL:
@@ -243,14 +296,19 @@ def main():
     else:
         polymul()
 
-    # reset r0: M, r1: B_1
+    # reset r0: M(s), r1: B_1
     get_b1_addr("r1")
+    if LENGTH >= 128:
+        get_M_addr("r0", "M")
+        get_new_M_elem("s", "r0")
     # add
     if not UNROLL:
         bl_polyadd()
     else:
         gen_2x2_add.main()
     
+    if LENGTH >= 128:
+        printIn("vpop.w { s16-s25 }")
     u.end()
 
 # main()
