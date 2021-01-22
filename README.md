@@ -12,7 +12,7 @@ commit: f7a99d8fc54cdd509c0c6b5cfad86a38a659a8cd
 |      |8  |16 |32 |64 |128|256|512|753|768|1521|
 |------|---|---|---|---|---|---|---|---|---|---|
 | x2p2 | v | v | v | v | v | v | v | x |---| x |
-| 2x2  | v |---|---| v | v | v | v |---|---|---|
+| 2x2  | v | v |---| v | v | v | v |---|---|---|
 
 ## Current
 |keypair cycles|encaps cycles|decaps cycles|
