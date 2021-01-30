@@ -12,7 +12,7 @@ _tmp = __import__(polymul_path, globals(), locals(), ['polymul'], 0)
 polymul = _tmp.polymul
 
 UNROLL = False
-ONLY_UV = True
+ONLY_UV = False
 
 S_M = "s0" # r0
 S_M1 = "s5" # r1
@@ -134,11 +134,10 @@ def bl_polyadd():
 
 def block34():
     # === 3 ===
-    # reset r0: BB64_1, r1: M1(u), r2: M2(r)
+    # reset r0: BB64_1, r1: M2(r), r2: M1(u)
     get_bb1_addr("r0")
-    get_M_addr("r1", "M1")
-    get_M_addr("r2", "M2")
-    get_M_elem("r", "r2")
+    get_M2_M1("r1", "r2")
+    get_M_elem("r", "r1", "M2")
 
     # mul
     if not UNROLL:
@@ -146,16 +145,12 @@ def block34():
     else:
         polymul()
 
-    # reset r0: M(r), r1: M1(r), r2: M2(s)
+    # reset r0: M(r), r1: M2(s), r2: M1(r)
     get_M_addr("r0", "M")
-    get_M_addr("r1", "M1")
-    if LENGTH >= 128:
-        get_M_addr("r2", "M2")
-
+    get_M2_M1("r1", "r2")
     get_new_M_elem("r", "r0")
-    if LENGTH >= 128:
-        get_M_elem("s", "r2")
-    get_M_elem("r", "r1")
+    get_M_elem("s", "r1", "M2")
+    get_M_elem("r", "r2")
 
     # mul
     if not UNROLL:
@@ -165,9 +160,9 @@ def block34():
 
     # reset r0: M(r), r1: B_1
     get_b1_addr("r1")
-    if LENGTH >= 128:
-        get_M_addr("r0", "M")
-        get_new_M_elem("r", "r0")
+    get_M_addr("r0", "M")
+    get_new_M_elem("r", "r0")
+
     # add
     if not UNROLL:
         bl_polyadd()
@@ -175,12 +170,11 @@ def block34():
         gen_2x2_add_new.main()
 
     # === 4 ===
-    # reset r0: BB64_1, r1: M1(v), r2: M2(r)
+    # reset r0: BB64_1, r1: M2(r), r2: M1(v)
     get_bb1_addr("r0")
-    get_M_addr("r1", "M1")
-    get_M_addr("r2", "M2")
-    get_M_elem("v", "r1")
-    get_M_elem("r", "r2")
+    get_M2_M1("r1", "r2")
+    get_M_elem("r", "r1", "M2")
+    get_M_elem("v", "r2")
 
     # mul
     if not UNROLL:
@@ -188,15 +182,12 @@ def block34():
     else:
         polymul()
 
-    # reset r0: M(s), r1: M1(s), r2: M2(s)
+    # reset r0: M(s), r1: M2(s), r2: M1(s)
     get_M_addr("r0", "M")
-    get_M_addr("r1", "M1")
-    if LENGTH >= 128:
-        get_M_addr("r2", "M2")
+    get_M2_M1("r1", "r2")
     get_new_M_elem("s", "r0")
-    get_M_elem("s", "r1")
-    if LENGTH >= 128:
-        get_M_elem("s", "r2")
+    get_M_elem("s", "r1", "M2")
+    get_M_elem("s", "r2")
 
     # mul
     if not UNROLL:
@@ -206,9 +197,9 @@ def block34():
 
     # reset r0: M(s), r1: B_1
     get_b1_addr("r1")
-    if LENGTH >= 128:
-        get_M_addr("r0", "M")
-        get_new_M_elem("s", "r0")
+    get_M_addr("r0", "M")
+    get_new_M_elem("s", "r0")
+    
     # add
     if not UNROLL:
         bl_polyadd()
