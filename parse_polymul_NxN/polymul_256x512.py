@@ -3,13 +3,14 @@ sys.path.append(str(pathlib.Path(__file__).parent.absolute().parent))
 
 from utility import printIn, head, end, get_qR2inv
 
-# s0: dest
 # s2: qR2inv
+
+# s1: dest
 # s3: g | f (1st mul end: f+128)
 # s4: g+512 (g_h) [s19]
-# s1: flag, default: 1 [s20]
-# s5: c0 addr [s17]
-# s6: c0' addr
+# s9: flag, default: 1 [s20]
+# s26: c0 addr [s17]
+# s27: c0' addr
 
 def data_config():
     print(".text")
@@ -200,7 +201,7 @@ def get_toom_C(label_postfix = ""):
     printIn("bne.w gf_polymul_256x256_eval_input_d_body" + label_postfix)
     printIn("vmov.w r1, s3")
     printIn("add.w r0, r0, #512")
-    # printIn("vmov.w r4, s0")
+    # printIn("vmov.w r4, s1")
     printIn("vmov.w r4, s3")
     printIn("mov.w r5, r0")
     printIn("sub.w r6, r1, #128")
@@ -232,7 +233,7 @@ def get_toom_C(label_postfix = ""):
     printIn("add.w r1, r6, #384")
     printIn("add.w r2, r7, #384")
     printIn("bl.w gf_polymul_64x64")
-    # printIn("vmov.w s0, r4")
+    # printIn("vmov.w s1, r4")
     printIn("vmov.w s3, r4")
     printIn("mov.w r0, r5")
     printIn("add.w lr, r0, #256")
@@ -501,12 +502,12 @@ def gf_polymul_256x256_copy_output_overlap_B(two, two_1, label_postfix = ""):
     printIn("bne.w gf_polymul_256x256_copy_output_overlap_B" + label_postfix)
 
 
-# s5: c0 addr
-# s6: c0' addr
+# s26: c0 addr
+# s27: c0' addr
 def output(label_postfix = ""):
     # r1: f * g_l c_0 addr
-    printIn("vmov.w r1, s5")
-    printIn("vmov.w r0, s0")
+    printIn("vmov.w r1, s26")
+    printIn("vmov.w r0, s1")
     printIn("add.w lr, r0, #88")
     print("gf_polymul_256x256_copy_output_A" + label_postfix + ":")
     printIn("ldr.w r3, [r1, #4]")
@@ -596,7 +597,7 @@ def output(label_postfix = ""):
 
     gf_polymul_256x256_copy_output_B("r1")
     
-    printIn("vmov.w r12, s6")
+    printIn("vmov.w r12, s27")
 
     gf_polymul_256x256_copy_output_overlap_A("r1", "r12")
     gf_polymul_256x256_copy_output_overlap_B("r1", "r12")
@@ -652,15 +653,17 @@ def output(label_postfix = ""):
     # printIn("str.w r2, [r0], #40")
 
 def polymul(label_postfix = ""):
-    printIn("vmov.w s0, r0")
-    printIn("mov.w r0, sp")
-    printIn("vmov.w s3, r2")
-    # set flag
-    printIn("mov.w r3, #0")
-    printIn("vmov.w s1, r3")
+    printIn("sub.w sp, sp, #6144")
     # store g_h
     printIn("add.w r3, r2, #512")
-    printIn("vmov.w s4, r3")
+    printIn("vmov.w s4, r3") # g_h
+    printIn("vmov.w s3, r2") # g
+
+    printIn("vmov.w s1, r0")
+    printIn("mov.w r0, sp")
+    # set flag
+    printIn("mov.w r3, #0")
+    printIn("vmov.w s9, r3")
 
     # mul twice: f * g_l, f * g_h
     # r0: sp, r1: f, s3: g
@@ -668,16 +671,16 @@ def polymul(label_postfix = ""):
     get_toom_C()
 
     # compare if f * g_h
-    printIn("vmov.w r10, s1")
+    printIn("vmov.w r10, s9")
     printIn("cmp.w r10, #1")
     printIn("beq.w output")
     
     # store c_0 position
     printIn("sub.w r1, r0, #256")
-    printIn("vmov.w s5, r1")
+    printIn("vmov.w s26, r1")
     # set flag
     printIn("add.w r10, #1")
-    printIn("vmov.w s1, r10")
+    printIn("vmov.w s9, r10")
     # params
     printIn("add.w r0, r1, #1792")
     printIn("vmov.w r1, s3")
@@ -688,22 +691,23 @@ def polymul(label_postfix = ""):
     print("output:")
     # store c_0' position
     printIn("sub.w r1, r0, #256")
-    printIn("vmov.w s6, r1")
+    printIn("vmov.w s27, r1")
     output()
+    printIn("add.w sp, sp, #6144")
     
 
 def main():
-    f_name = "__polymul_256x512"
-    f_params = "(int *h, int *f,int *g)"
-    head(f_name, f_params, data_config)
-    printIn("vpush.w { s16-s25 }")
-    printIn("adr lr, Toom4Table_4591_2x2")
-    printIn("vldm lr, {s10-s25}")
-    printIn("sub.w sp, sp, #6144")
-    get_qR2inv("r5", True)
+    # f_name = "__polymul_256x512"
+    # f_params = "(int *h, int *f,int *g)"
+    # head(f_name, f_params, data_config)
+    # printIn("vpush.w { s16-s25 }")
+    # printIn("adr lr, Toom4Table_4591_2x2")
+    # printIn("vldm lr, {s10-s25}")
+    
+    # get_qR2inv("r5", True)
     polymul()
-    printIn("add.w sp, sp, #6144")
-    printIn("vpop.w { s16-s25 }")
-    end()
+    
+    # printIn("vpop.w { s16-s25 }")
+    # end()
 
-main()
+# main()
