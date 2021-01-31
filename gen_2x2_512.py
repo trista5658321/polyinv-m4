@@ -1,13 +1,11 @@
-from utility import printIn, LENGTH
+from utility import printIn, LENGTH_1, LENGTH_2
 import utility as u
 
 import gen_2x2_add_new
 
-M1_LENGTH = LENGTH * 2
-M2_LENGTH = LENGTH
-NEW_LENGTH = M1_LENGTH + M2_LENGTH # result coefficients (M)
+NEW_LENGTH = LENGTH_2 + LENGTH_1 # result coefficients (M)
 
-polymul_path = "parse_polymul_NxN.polymul_" + str(M2_LENGTH) + "x" + str(M1_LENGTH) # M2 * M1
+polymul_path = "parse_polymul_NxN.polymul_" + str(LENGTH_1) + "x" + str(LENGTH_2) # M2 * M1
 _tmp = __import__(polymul_path, globals(), locals(), ['polymul'], 0)
 polymul = _tmp.polymul
 
@@ -20,25 +18,25 @@ S_M2 = "s6" # r2
 
 new_M_offset = NEW_LENGTH * 2
 
-M1_one_elem_offset = M1_LENGTH * 1 * 2
-M1_two_elem_offset = M1_LENGTH * 2 * 2
+M1_one_elem_offset = LENGTH_2 * 1 * 2
+M1_two_elem_offset = LENGTH_2 * 2 * 2
 M1_u_offset = 0
-M1_v_offset = M1_LENGTH * 1 * 2
-M1_r_offset = M1_LENGTH * 2 * 2
-M1_s_offset = M1_LENGTH * 3 * 2
+M1_v_offset = LENGTH_2 * 1 * 2
+M1_r_offset = LENGTH_2 * 2 * 2
+M1_s_offset = LENGTH_2 * 3 * 2
 
-M2_one_elem_offset = M2_LENGTH * 1 * 2
-M2_two_elem_offset = M2_LENGTH * 2 * 2
+M2_one_elem_offset = LENGTH_1 * 1 * 2
+M2_two_elem_offset = LENGTH_1 * 2 * 2
 M2_u_offset = 0
-M2_v_offset = M2_LENGTH * 1 * 2
-M2_r_offset = M2_LENGTH * 2 * 2
-M2_s_offset = M2_LENGTH * 3 * 2
+M2_v_offset = LENGTH_1 * 1 * 2
+M2_r_offset = LENGTH_1 * 2 * 2
+M2_s_offset = LENGTH_1 * 3 * 2
 
 
 s_b1_addr = "s7"
 s_bb1_addr = "s8"
 
-__polymul_name = "__polymul_" + str(M2_LENGTH) + "x" + str(M1_LENGTH)
+__polymul_name = "__polymul_" + str(LENGTH_1) + "x" + str(LENGTH_2)
 __polyadd_name = "__polyadd_" + str(NEW_LENGTH)
 
 def data_config():
@@ -199,7 +197,7 @@ def block34():
     get_b1_addr("r1")
     get_M_addr("r0", "M")
     get_new_M_elem("s", "r0")
-    
+
     # add
     if not UNROLL:
         bl_polyadd()
@@ -211,7 +209,7 @@ def main():
         u._func_head(__polymul_name, polymul)
         u._func_head(__polyadd_name, gen_2x2_add_new.main)
 
-    f_name = "__gf_polymul_" + str(M2_LENGTH) + "x" + str(M1_LENGTH) + "_2x2_x_2x2"
+    f_name = "__gf_polymul_" + str(LENGTH_1) + "x" + str(LENGTH_2) + "_2x2_x_2x2"
     if ONLY_UV:
         f_name = f_name + "_onlyuv"
     f_params = "(int *M,int *S_M1,int *fh,int *gh)"

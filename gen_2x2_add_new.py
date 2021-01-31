@@ -1,4 +1,4 @@
-from utility import printIn, M1_LENGTH, M2_LENGTH, barrett_16x2i
+from utility import printIn, LENGTH_1, LENGTH_2, barrett_16x2i
 import utility as u
 
 DEST = "r0"
@@ -61,7 +61,7 @@ def add_r(c_pair_num):
     printIn("str.w " + COEFFI[0] + ", ["+DEST+"], #" + str(next_gap))
 
 def main():
-    Total_C = M1_LENGTH + M2_LENGTH
+    Total_C = LENGTH_1 + LENGTH_2
     c_pair_num = 4
 
     u.get_q(q)
