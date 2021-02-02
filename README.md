@@ -11,10 +11,10 @@ commit: f7a99d8fc54cdd509c0c6b5cfad86a38a659a8cd
 # Progress (4591_761)
 |      |8  |16 |32 |64 |128|256|512|753|768|1521|
 |------|---|---|---|---|---|---|---|---|---|---|
-| x2p2 | v | v | v | v | v | v | v | x |---| x |
+| x2p2 | v | v | v | v | v | v | v | x | v | x |
 | 2x2  | v | v | v | v | v | v | v | v | v |---|
 
 ## Current
 |keypair cycles|encaps cycles|decaps cycles|
 |---|---|---|
-|10939026|789442|742181|
+|10917981|789443|742182|

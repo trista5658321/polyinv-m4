@@ -3,7 +3,13 @@ import utility as u
 
 import gen_x2p2_add
 
+MUL_PARAM_INVERSE = False
+if LENGTH_1 > LENGTH_2:
+    MUL_PARAM_INVERSE = True
+
 polymul_path = "parse_polymul_NxN.polymul_" + str(LENGTH_1) + "x" + str(LENGTH_2)
+if MUL_PARAM_INVERSE:
+    polymul_path = "parse_polymul_NxN.polymul_" + str(LENGTH_2) + "x" + str(LENGTH_1)
 _tmp = __import__(polymul_path, globals(), locals(), ['polymul'], 0)
 polymul = _tmp.polymul
 
@@ -28,7 +34,9 @@ STACK_INTERVAL_SPACE = (NEW_LENGTH // 2) * 4
 STACK_SPACE = str(STACK_INTERVAL_SPACE * 4)
 
 __polymul_name = "__polymul_" + str(LENGTH_1) + "x" + str(LENGTH_2)
-__polyadd_name = "__polyadd_" + str(NEW_LENGTH)
+if MUL_PARAM_INVERSE:
+    __polymul_name = "__polymul_" + str(LENGTH_2) + "x" + str(LENGTH_1)
+__polyadd_name = "__polyadd_x2p2_" + str(LENGTH_1) + "_" + str(NEW_LENGTH)
 
 def data_config():
     print(".text")
@@ -53,14 +61,20 @@ def data_config():
 def get_gh_addr(rd):
     printIn("vmov.w " + rd + ", " + S_GH)
 
-def main():
+def main(merge = False):
     if not UNROLL:
-        u._func_head(__polymul_name, polymul)
+        if not merge:
+            u._func_head(__polymul_name, polymul)
         u._func_head(__polyadd_name, gen_x2p2_add.main)
 
     f_name = "__gf_polymul_" + str(LENGTH_1) + "x" + str(LENGTH_2) + "_2x2_x2p2"
     f_params = "(int *V,int *M,int *fh,int *gh)"
-    u.head(f_name, f_params, data_config)
+
+    if not merge:
+        u.head(f_name, f_params, data_config)
+    else:
+        u.head(f_name, f_params)
+
     printIn("vpush.w { s16-s27 }")
     printIn("adr lr, Toom4Table_4591")
     printIn("vldm lr, {s10-s25}")
@@ -80,7 +94,11 @@ def main():
     # === 1 ===
     # reset r0: sp+2, r1: M(u), r2: fh
     printIn("add.w r0, #2")
-    printIn("add.w r1, " + "#" + str(M_u_offset))
+    if not MUL_PARAM_INVERSE:
+        printIn("add.w r1, " + "#" + str(M_u_offset))
+    else:
+        printIn("vmov.w " + "r2, r1, " + M + ", " + S_FH)
+        printIn("add.w r2, " + "#" + str(M_u_offset))
 
     # mul
     if not UNROLL:
@@ -98,9 +116,14 @@ def main():
 
 
     # reset r0: sp (one+2), r1: M(v), r2: gh
-    printIn("vmov.w " + "r1, " + M)
-    printIn("add.w r1, #" + str(M_v_offset))
-    get_gh_addr("r2")
+    if not MUL_PARAM_INVERSE:
+        printIn("vmov.w " + "r1, " + M)
+        printIn("add.w r1, #" + str(M_v_offset))
+        get_gh_addr("r2")
+    else:
+        printIn("vmov.w " + "r2, " + M)
+        printIn("add.w r2, #" + str(M_v_offset))
+        get_gh_addr("r1")
 
     # mul
     if not UNROLL:
@@ -122,9 +145,13 @@ def main():
     # mul
     # reset r0: sp(two), r1: M(r), r2: fh
     printIn("sub.w r0, r0, #2")
-    printIn("vmov.w " + "r1, " + M)
-    printIn("add.w r1, #" + str(M_r_offset))
-    printIn("vmov.w r2, " + S_FH)
+    if not MUL_PARAM_INVERSE:
+        printIn("vmov.w " + "r1, r2, " + M + ", " + S_FH)
+        printIn("add.w r1, #" + str(M_r_offset))
+    else:
+        printIn("vmov.w " + "r2, r1, " + M + ", " + S_FH)
+        printIn("add.w r2, #" + str(M_r_offset))
+
     if not UNROLL:
         u.bl_polymul(__polymul_name)
     else:
@@ -132,9 +159,14 @@ def main():
     
     # mul
     ## reset r0: sp(three), r1: M(s), r2: gh
-    printIn("vmov.w " + "r1, " + M)
-    printIn("add.w r1, #" + str(M_s_offset))
-    get_gh_addr("r2")
+    if not MUL_PARAM_INVERSE:
+        printIn("vmov.w " + "r1, " + M)
+        printIn("add.w r1, #" + str(M_s_offset))
+        get_gh_addr("r2")
+    else:
+        printIn("vmov.w " + "r2, " + M)
+        printIn("add.w r2, #" + str(M_s_offset))
+        get_gh_addr("r1")
     if not UNROLL:
         u.bl_polymul(__polymul_name)
     else:
@@ -167,4 +199,4 @@ def main():
     printIn("vpop.w { s16-s27 }")
     u.end()
 
-main()
+# main()

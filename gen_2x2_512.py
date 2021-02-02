@@ -5,7 +5,14 @@ import gen_2x2_add_new
 
 NEW_LENGTH = LENGTH_2 + LENGTH_1 # result coefficients (M)
 
+MUL_PARAM_INVERSE = False
+if LENGTH_1 > LENGTH_2:
+    MUL_PARAM_INVERSE = True
+
 polymul_path = "parse_polymul_NxN.polymul_" + str(LENGTH_1) + "x" + str(LENGTH_2) # M2 * M1
+if MUL_PARAM_INVERSE:
+    polymul_path = "parse_polymul_NxN.polymul_" + str(LENGTH_2) + "x" + str(LENGTH_1)
+
 _tmp = __import__(polymul_path, globals(), locals(), ['polymul'], 0)
 polymul = _tmp.polymul
 
@@ -204,9 +211,10 @@ def block34():
     else:
         gen_2x2_add_new.main()
 
-def main():
+def main(merge = False):
     if not UNROLL:
-        u._func_head(__polymul_name, polymul)
+        if not merge:
+            u._func_head(__polymul_name, polymul)
         u._func_head(__polyadd_name, gen_2x2_add_new.main)
 
     f_name = "__gf_polymul_" + str(LENGTH_1) + "x" + str(LENGTH_2) + "_2x2_x_2x2"
@@ -312,4 +320,4 @@ def main():
     printIn("vpop.w { s16-s27 }")
     u.end()
 
-main()
+# main()

@@ -1,13 +1,25 @@
-LENGTH = 256
-LENGTH_1 = LENGTH 
-LENGTH_2 = LENGTH * 2
+import sys
+
+LENGTH = 64
+
+argv_len = len(sys.argv)
+
+if argv_len > 1:
+    LENGTH = int(sys.argv[1])
+
+LENGTH_1 = LENGTH
+LENGTH_2 = LENGTH
+
+if argv_len > 2:
+    LENGTH_1 = LENGTH * int(sys.argv[2])
+    LENGTH_2 = LENGTH * int(sys.argv[3])
 
 S_Q_R2INV = "s2"
 
 def printIn(asm):
     print("\t" + asm)
 
-def head(name, params, data_config):
+def head(name, params, data_config = None):
     print(".p2align 2,,3")
     print(".syntax	unified")
 

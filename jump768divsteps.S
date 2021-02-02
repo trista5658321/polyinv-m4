@@ -576,6 +576,276 @@ gf_polymul_256x256_copy_output_C:
 .p2align 2,,3
 .syntax	unified
 .text
+__polyadd_x2p2_512_768:
+	push.w {lr}
+	add.w lr, r0, #1024
+	add_3_512:
+	ldr.w r4, [r2, #4]
+	ldr.w r3, [r2], #8
+	ldr.w r6, [r1, #4]
+	ldr.w r7, [r1, #1536]
+	ldr.w r8, [r1, #1540]
+	ldr.w r5, [r1], #8
+	sadd16.w r3, r3, r5
+	sadd16.w r4, r4, r6
+	sadd16.w r3, r3, r7
+	sadd16.w r4, r4, r8
+	smlawb.w r6, r11, r3, r12
+	smlawt.w r5, r11, r3, r12
+	smulbt.w r6, r10, r6
+	smulbt.w r5, r10, r5
+	pkhbt.w r6, r6, r5, LSL #16
+	ssub16.w r3, r3, r6
+	smlawb.w r6, r11, r4, r12
+	smlawt.w r5, r11, r4, r12
+	smulbt.w r6, r10, r6
+	smulbt.w r5, r10, r5
+	pkhbt.w r6, r6, r5, LSL #16
+	ssub16.w r4, r4, r6
+	str.w r4, [r0, #4]
+	str.w r3, [r0], #8
+	cmp.w lr, r0
+	bne.w add_3_512
+	add.w lr, r0, #512
+	add_2_256:
+	ldr.w r3, [r1, #4]
+	ldr.w r4, [r1, #8]
+	ldr.w r5, [r1, #12]
+	ldr.w r6, [r1, #1536]
+	ldr.w r7, [r1, #1540]
+	ldr.w r8, [r1, #1544]
+	ldr.w r9, [r1, #1548]
+	ldr.w r2, [r1], #16
+	sadd16.w r2, r2, r6
+	sadd16.w r3, r3, r7
+	sadd16.w r4, r4, r8
+	sadd16.w r5, r5, r9
+	smlawb.w r7, r11, r2, r12
+	smlawt.w r6, r11, r2, r12
+	smulbt.w r7, r10, r7
+	smulbt.w r6, r10, r6
+	pkhbt.w r7, r7, r6, LSL #16
+	ssub16.w r2, r2, r7
+	smlawb.w r7, r11, r3, r12
+	smlawt.w r6, r11, r3, r12
+	smulbt.w r7, r10, r7
+	smulbt.w r6, r10, r6
+	pkhbt.w r7, r7, r6, LSL #16
+	ssub16.w r3, r3, r7
+	smlawb.w r7, r11, r4, r12
+	smlawt.w r6, r11, r4, r12
+	smulbt.w r7, r10, r7
+	smulbt.w r6, r10, r6
+	pkhbt.w r7, r7, r6, LSL #16
+	ssub16.w r4, r4, r7
+	smlawb.w r7, r11, r5, r12
+	smlawt.w r6, r11, r5, r12
+	smulbt.w r7, r10, r7
+	smulbt.w r6, r10, r6
+	pkhbt.w r7, r7, r6, LSL #16
+	ssub16.w r5, r5, r7
+	str.w r3, [r0, #4]
+	str.w r4, [r0, #8]
+	str.w r5, [r0, #12]
+	str.w r2, [r0], #16
+	cmp.w lr, r0
+	bne.w add_2_256
+	pop.w {pc}
+.p2align 2,,3
+.syntax	unified
+.text
+Toom4Table_4591:
+	.word 4194697214 @ s1
+	.word 66848888   @ s2^
+	.word 145489918  @ s3^
+	.word 4219667963 @ s4^
+	.word 87754235   @ s5
+	.word 263483     @ s6
+	.word 4144690955 @ s7
+	.word 16713465   @ s8
+	.word 4144758733 @ s9#
+	.word 75236093   @ s10^
+	.word 4207215357 @ s11
+	.word 4294703813 @ s12
+	.word 100272375  @ s13
+	.word 4261546104 @ s14^
+	.word 4149545207 @ s15^
+	.word 16777012   @ s16#
+.global	__gf_polymul_512x256_2x2_x2p2
+.type 	__gf_polymul_512x256_2x2_x2p2, %function
+@ void __gf_polymul_512x256_2x2_x2p2(int *V,int *M,int *fh,int *gh)
+__gf_polymul_512x256_2x2_x2p2:
+	push {r1-r12, lr}
+	vpush.w { s16-s27 }
+	adr lr, Toom4Table_4591
+	vldm lr, {s10-s25}
+	vmov.w s5, s6, r0, r1
+	vmov.w s7, s8, r2, r3
+	movw.w r7, #18015
+	movt.w r7, #14
+	vmov.w s2, r7
+	movw.w r11, #0
+	sub.w sp, #6144
+	mov.w r0, sp
+	str.w r11, [r0]
+	add.w r0, #2
+	vmov.w r2, r1, s6, s7
+	add.w r2, #2048
+	bl	__polymul_256x512
+	vmov.w r2, s6
+	add.w r2, #3072
+	vmov.w r1, s8
+	bl	__polymul_256x512
+	sub.w r0, r0, #2
+	vmov.w r2, r1, s6, s7
+	add.w r2, #4096
+	bl	__polymul_256x512
+	vmov.w r2, s6
+	add.w r2, #5120
+	vmov.w r1, s8
+	bl	__polymul_256x512
+	mov.w r10, 4591
+	movw.w r12, #32768
+	vmov.w r0, r2, s5, s6
+	mov.w r1, sp
+	vmov.w r11, s2
+	bl	__polyadd_x2p2_512_768
+	vmov.w r2, s6
+	add.w r1, #1536
+	add.w r2, #1024
+	bl	__polyadd_x2p2_512_768
+	add.w sp, #6144
+	vpop.w { s16-s27 }
+	pop {r1-r12, pc}
+.p2align 2,,3
+.syntax	unified
+.text
+__polyadd_x2p2_256_768:
+	push.w {lr}
+	add.w lr, r0, #512
+	add_3_256:
+	ldr.w r4, [r2, #4]
+	ldr.w r3, [r2], #8
+	ldr.w r6, [r1, #4]
+	ldr.w r7, [r1, #1536]
+	ldr.w r8, [r1, #1540]
+	ldr.w r5, [r1], #8
+	sadd16.w r3, r3, r5
+	sadd16.w r4, r4, r6
+	sadd16.w r3, r3, r7
+	sadd16.w r4, r4, r8
+	smlawb.w r6, r11, r3, r12
+	smlawt.w r5, r11, r3, r12
+	smulbt.w r6, r10, r6
+	smulbt.w r5, r10, r5
+	pkhbt.w r6, r6, r5, LSL #16
+	ssub16.w r3, r3, r6
+	smlawb.w r6, r11, r4, r12
+	smlawt.w r5, r11, r4, r12
+	smulbt.w r6, r10, r6
+	smulbt.w r5, r10, r5
+	pkhbt.w r6, r6, r5, LSL #16
+	ssub16.w r4, r4, r6
+	str.w r4, [r0, #4]
+	str.w r3, [r0], #8
+	cmp.w lr, r0
+	bne.w add_3_256
+	add.w lr, r0, #1024
+	add_2_512:
+	ldr.w r3, [r1, #4]
+	ldr.w r4, [r1, #8]
+	ldr.w r5, [r1, #12]
+	ldr.w r6, [r1, #1536]
+	ldr.w r7, [r1, #1540]
+	ldr.w r8, [r1, #1544]
+	ldr.w r9, [r1, #1548]
+	ldr.w r2, [r1], #16
+	sadd16.w r2, r2, r6
+	sadd16.w r3, r3, r7
+	sadd16.w r4, r4, r8
+	sadd16.w r5, r5, r9
+	smlawb.w r7, r11, r2, r12
+	smlawt.w r6, r11, r2, r12
+	smulbt.w r7, r10, r7
+	smulbt.w r6, r10, r6
+	pkhbt.w r7, r7, r6, LSL #16
+	ssub16.w r2, r2, r7
+	smlawb.w r7, r11, r3, r12
+	smlawt.w r6, r11, r3, r12
+	smulbt.w r7, r10, r7
+	smulbt.w r6, r10, r6
+	pkhbt.w r7, r7, r6, LSL #16
+	ssub16.w r3, r3, r7
+	smlawb.w r7, r11, r4, r12
+	smlawt.w r6, r11, r4, r12
+	smulbt.w r7, r10, r7
+	smulbt.w r6, r10, r6
+	pkhbt.w r7, r7, r6, LSL #16
+	ssub16.w r4, r4, r7
+	smlawb.w r7, r11, r5, r12
+	smlawt.w r6, r11, r5, r12
+	smulbt.w r7, r10, r7
+	smulbt.w r6, r10, r6
+	pkhbt.w r7, r7, r6, LSL #16
+	ssub16.w r5, r5, r7
+	str.w r3, [r0, #4]
+	str.w r4, [r0, #8]
+	str.w r5, [r0, #12]
+	str.w r2, [r0], #16
+	cmp.w lr, r0
+	bne.w add_2_512
+	pop.w {pc}
+.p2align 2,,3
+.syntax	unified
+.text
+.global	__gf_polymul_256x512_2x2_x2p2
+.type 	__gf_polymul_256x512_2x2_x2p2, %function
+@ void __gf_polymul_256x512_2x2_x2p2(int *V,int *M,int *fh,int *gh)
+__gf_polymul_256x512_2x2_x2p2:
+	push {r1-r12, lr}
+	vpush.w { s16-s27 }
+	adr lr, Toom4Table_4591
+	vldm lr, {s10-s25}
+	vmov.w s5, s6, r0, r1
+	vmov.w s7, s8, r2, r3
+	movw.w r7, #18015
+	movt.w r7, #14
+	vmov.w s2, r7
+	movw.w r11, #0
+	sub.w sp, #6144
+	mov.w r0, sp
+	str.w r11, [r0]
+	add.w r0, #2
+	add.w r1, #1024
+	bl	__polymul_256x512
+	vmov.w r1, s6
+	add.w r1, #1536
+	vmov.w r2, s8
+	bl	__polymul_256x512
+	sub.w r0, r0, #2
+	vmov.w r1, r2, s6, s7
+	add.w r1, #2048
+	bl	__polymul_256x512
+	vmov.w r1, s6
+	add.w r1, #2560
+	vmov.w r2, s8
+	bl	__polymul_256x512
+	mov.w r10, 4591
+	movw.w r12, #32768
+	vmov.w r0, r2, s5, s6
+	mov.w r1, sp
+	vmov.w r11, s2
+	bl	__polyadd_x2p2_256_768
+	vmov.w r2, s6
+	add.w r1, #1536
+	add.w r2, #512
+	bl	__polyadd_x2p2_256_768
+	add.w sp, #6144
+	vpop.w { s16-s27 }
+	pop {r1-r12, pc}
+.p2align 2,,3
+.syntax	unified
+.text
 __polyadd_768:
 	push.w {lr}
 	mov.w r2, 4591
