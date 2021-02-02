@@ -40,7 +40,7 @@ __polymul_name = "__polymul_" + str(LENGTH_1) + "x" + str(LENGTH_2)
 __polyadd_name = "__polyadd_" + str(NEW_LENGTH)
 
 def data_config():
-    buffer_len = NEW_LENGTH * 3 # coefficients
+    buffer_len = NEW_LENGTH # coefficients
     buffer_bytes = buffer_len * 2 + 4
     buffer1 = "b" + str(buffer_len) + "_1_2x2"
 
