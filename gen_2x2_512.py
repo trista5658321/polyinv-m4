@@ -40,7 +40,7 @@ __polymul_name = "__polymul_" + str(LENGTH_1) + "x" + str(LENGTH_2)
 __polyadd_name = "__polyadd_" + str(NEW_LENGTH)
 
 def data_config():
-    buffer_len = LENGTH * 3 # coefficients
+    buffer_len = NEW_LENGTH * 3 # coefficients
     buffer_bytes = buffer_len * 2 + 4
     buffer1 = "b" + str(buffer_len) + "_1_2x2"
 
@@ -51,7 +51,7 @@ def data_config():
     printIn(".word " + buffer1)
     printIn(".word " + buffer1 + "+2")
 
-    if LENGTH >= 128:
+    if LENGTH_1 >= 128:
         print("Toom4Table_4591_2x2:")
         printIn(".word 4194697214 @ s1")
         printIn(".word 66848888   @ s2^")
@@ -215,7 +215,7 @@ def main():
     f_params = "(int *M,int *S_M1,int *fh,int *gh)"
     u.head(f_name, f_params, data_config)
 
-    if LENGTH >= 128:
+    if LENGTH_1 >= 128:
         printIn("vpush.w { s16-s27 }")
         printIn("adr lr, Toom4Table_4591_2x2")
         printIn("vldm lr, {s10-s25}")
