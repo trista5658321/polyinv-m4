@@ -64,3 +64,6 @@ def barrett_16x2i (x, q, qR2inv, _2P15, high_16, low_16):
 
 def bl_polymul(__polymul_name):
     printIn("bl	" + __polymul_name)
+
+def bl_polyadd(__polyadd_name):
+    printIn("bl	" + __polyadd_name)
