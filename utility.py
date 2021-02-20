@@ -21,22 +21,22 @@ def printIn(asm):
 
 def head(name, params, data_config = None):
     print(".p2align 2,,3")
-    print(".syntax	unified")
+    print(".syntax unified")
 
     if data_config:
         data_config()
     else:
         print(".text")
 
-    print(".global	" + name + "")
-    print(".type 	" + name + ", %function")
+    print(".global " + name + "")
+    print(".type  " + name + ", %function")
     print("@ void " + name + params)
     print(name + ":")
     printIn("push {r1-r12, lr}")
 
 def _func_head(name, func):
     print(".p2align 2,,3")
-    print(".syntax	unified")
+    print(".syntax unified")
     print(".text")
     print(name + ":")
     printIn("push.w {lr}")
@@ -75,7 +75,45 @@ def barrett_16x2i (x, q, qR2inv, _2P15, high_16, low_16):
     printIn("ssub16.w " + x + ", " + x + ", " + low_16)
 
 def bl_polymul(__polymul_name):
-    printIn("bl	" + __polymul_name)
+    printIn("bl " + __polymul_name)
 
 def bl_polyadd(__polyadd_name):
-    printIn("bl	" + __polyadd_name)
+    printIn("bl " + __polyadd_name)
+
+def prologue_mod3(N) :
+    print("// void __gf_polymul_%dx%d_2x2_x2p2_mod3 (int *V, int *M, int *fh, int *gh);" % (N,N))
+    print(".p2align 2,,3")
+    print(".syntax unified")
+    print(".text")
+    print(".global __gf_polymul_%dx%d_2x2_x2p2_mod3" % (N,N))
+    print(".type __gf_polymul_%dx%d_2x2_x2p2_mod3, %%function" % (N,N))
+    print("__gf_polymul_%dx%d_2x2_x2p2_mod3:" % (N,N))
+    printIn("push {r4-r12,lr}")
+
+def epilogue_mod3() :
+    printIn("pop {r4-r12,pc}")
+
+def reduce_mod3_5 (X, scr, r03) : # at most 5, r03 = 0x03030303 
+    printIn("usub8 %s, %s, %s // >= 3 ?" % (scr, X, r03))
+    printIn("sel %s, %s, %s // select" % (X, scr, X))
+
+def reduce_mod3_11 (X, scr, r03) : # r03 = 0x03030303, good for 4 adds
+    printIn("bic %s, %s, %s // top 3b < 3" % (scr, X, r03))
+    printIn("and %s, %s, %s // bot 2b < 4" % (X, X, r03))
+    printIn("add %s, %s, %s, LSR #2 // range <=5" % (X, X, scr))
+    reduce_mod3_5 (X, scr, r03)
+    
+def reduce_mod3_32 (X, scr, r03) : # r03 = 0x03030303, good for 8/12 adds
+    printIn("bic %s, %s, %s // top 3b < 8" % (scr, X, r03))
+    printIn("and %s, %s, %s // bot 2b < 4" % (X, X, r03))
+    printIn("add %s, %s, %s, LSR #2 // range <=10" % (X, X, scr))
+    reduce_mod3_11 (X, scr, r03)
+
+def reduce_mod3_lazy (X, scr, r03) : # r03 = 0x03030303, good for 16 adds
+    printIn("and %s, %s, #0xF0F0F0F0 // top 4b < 16" % (scr, X))
+    printIn("and %s, %s, #0x0F0F0F0F // bot 4b < 16" % (X, X))
+    printIn("add %s, %s, %s, LSR #4 // range < 31" % (X, X, scr))
+
+def reduce_mod3_full (X, scr, r03) :
+    reduce_mod3_lazy(X, scr, r03)
+    reduce_mod3_32(X, scr, r03)
