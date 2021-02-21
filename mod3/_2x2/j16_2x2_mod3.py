@@ -1,10 +1,10 @@
 import sys, pathlib
 sys.path.append(str(pathlib.Path(__file__).parent.parent.absolute().parent))
 
-from utility import printIn, prologue_mod3
+from utility import printIn, prologue_mod3, LENGTH
 import utility as u
 
-coeffi = 8 # n x n
+coeffi = LENGTH # n x n
 
 M = "r0"
 M1 = "r1"
@@ -87,4 +87,4 @@ def main():
 
     u.epilogue_mod3(f_regs)
 
-main()
+# main()

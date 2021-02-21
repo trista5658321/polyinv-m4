@@ -95,4 +95,4 @@ def main():
 
     u.epilogue_mod3(f_regs)
 
-main()
+# main()
