@@ -32,8 +32,7 @@ __gf_polymul_8x8_2x2_x2p2_mod3:
 	ldr.w r9, [r1, #-28]
 	add.w r8, r8, r4, LSL #8
 	add.w r9, r9, r5, LSL #8
-	ubfx.w r2, r4, #24, #8
-	add.w r9, r2
+	add.w r9, r9, r4, LSR #24
 	ubfx.w r2, r5, #24, #8
 	add.w r10, r2, r6, LSL #8
 	ubfx.w r2, r6, #24, #8
@@ -175,12 +174,9 @@ __gf_polymul_8x8_2x2_x_2x2_mod3:
 	add.w r9, r9, r5, LSL #8
 	add.w r10, r10, r6, LSL #8
 	add.w r11, r11, r7, LSL #8
-	ubfx.w r12, r4, #24, #8
-	add.w r9, r12
-	ubfx.w r12, r5, #24, #8
-	add.w r10, r12
-	ubfx.w r12, r6, #24, #8
-	add.w r11, r12
+	add.w r9, r9, r4, LSR #24
+	add.w r10, r10, r5, LSR #24
+	add.w r11, r11, r6, LSR #24
 	bic lr, r8, r3 // top 3b < 8
 	and r8, r8, r3 // bot 2b < 4
 	add r8, r8, lr, LSR #2 // range <=10
@@ -245,12 +241,9 @@ __gf_polymul_8x8_2x2_x_2x2_mod3:
 	add.w r9, r9, r5, LSL #8
 	add.w r10, r10, r6, LSL #8
 	add.w r11, r11, r7, LSL #8
-	ubfx.w r12, r4, #24, #8
-	add.w r9, r12
-	ubfx.w r12, r5, #24, #8
-	add.w r10, r12
-	ubfx.w r12, r6, #24, #8
-	add.w r11, r12
+	add.w r9, r9, r4, LSR #24
+	add.w r10, r10, r5, LSR #24
+	add.w r11, r11, r6, LSR #24
 	bic lr, r8, r3 // top 3b < 8
 	and r8, r8, r3 // bot 2b < 4
 	add r8, r8, lr, LSR #2 // range <=10
@@ -316,12 +309,9 @@ __gf_polymul_8x8_2x2_x_2x2_mod3:
 	add.w r9, r9, r5, LSL #8
 	add.w r10, r10, r6, LSL #8
 	add.w r11, r11, r7, LSL #8
-	ubfx.w r12, r4, #24, #8
-	add.w r9, r12
-	ubfx.w r12, r5, #24, #8
-	add.w r10, r12
-	ubfx.w r12, r6, #24, #8
-	add.w r11, r12
+	add.w r9, r9, r4, LSR #24
+	add.w r10, r10, r5, LSR #24
+	add.w r11, r11, r6, LSR #24
 	bic lr, r8, r3 // top 3b < 8
 	and r8, r8, r3 // bot 2b < 4
 	add r8, r8, lr, LSR #2 // range <=10
@@ -387,12 +377,9 @@ __gf_polymul_8x8_2x2_x_2x2_mod3:
 	add.w r9, r9, r5, LSL #8
 	add.w r10, r10, r6, LSL #8
 	add.w r11, r11, r7, LSL #8
-	ubfx.w r12, r4, #24, #8
-	add.w r9, r12
-	ubfx.w r12, r5, #24, #8
-	add.w r10, r12
-	ubfx.w r12, r6, #24, #8
-	add.w r11, r12
+	add.w r9, r9, r4, LSR #24
+	add.w r10, r10, r5, LSR #24
+	add.w r11, r11, r6, LSR #24
 	bic lr, r8, r3 // top 3b < 8
 	and r8, r8, r3 // bot 2b < 4
 	add r8, r8, lr, LSR #2 // range <=10

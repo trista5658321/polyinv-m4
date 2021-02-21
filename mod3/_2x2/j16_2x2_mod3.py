@@ -35,8 +35,7 @@ def add_reduce_str(a, b): # a*x + b
     for i in range(len(a)):
         printIn("add.w %s, %s, %s, LSL #8" %(b[i], b[i], a[i]))
     for i in range(len(a)-1):
-        printIn("ubfx.w %s, %s, #24, #8" % (u_tmp, a[i]))
-        printIn("add.w %s, %s" %(b[i+1], u_tmp))
+        printIn("add.w %s, %s, %s, LSR #24" %(b[i+1], b[i+1], a[i]))
 
     for i in range(len(b)):
         if i != 1 and i != 2:
