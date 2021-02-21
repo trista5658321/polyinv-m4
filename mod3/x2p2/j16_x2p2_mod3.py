@@ -32,7 +32,10 @@ def polymul_8x8(h, g, tmp):
     printIn("umlal.w %s, %s, %s, %s" % (h[1], h[2], tmp[0], tmp[3]))
 
 def main():
-    u.prologue_mod3(8)
+    f_name = "__gf_polymul_" + str(coeffi) + "x" + str(coeffi) + "_2x2_x2p2_mod3"
+    f_params = "(int *V, int *M, int *fh, int *gh)"
+    f_regs = "r4-r12"
+    u.prologue_mod3(f_name, f_params, f_regs)
     printIn("vmov.w %s, %s, %s, %s" % (s_fh, s_gh, fh, gh))
     printIn("add.w %s, #16" % (M))
     polymul_8x8(h1, fh, h2)
@@ -90,6 +93,6 @@ def main():
         printIn("str %s, [%s, #%d]" % (h1[i], V, 4*i))
     printIn("str %s, [%s], #%d" % (h1[0], V, 4*4))
 
-    u.epilogue_mod3()
+    u.epilogue_mod3(f_regs)
 
 main()

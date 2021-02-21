@@ -80,18 +80,18 @@ def bl_polymul(__polymul_name):
 def bl_polyadd(__polyadd_name):
     printIn("bl " + __polyadd_name)
 
-def prologue_mod3(N) :
-    print("// void __gf_polymul_%dx%d_2x2_x2p2_mod3 (int *V, int *M, int *fh, int *gh);" % (N,N))
+def prologue_mod3(name, params, regs) :
+    print("// void %s %s;" % (name, params))
     print(".p2align 2,,3")
     print(".syntax unified")
     print(".text")
-    print(".global __gf_polymul_%dx%d_2x2_x2p2_mod3" % (N,N))
-    print(".type __gf_polymul_%dx%d_2x2_x2p2_mod3, %%function" % (N,N))
-    print("__gf_polymul_%dx%d_2x2_x2p2_mod3:" % (N,N))
-    printIn("push {r4-r12,lr}")
+    print(".global %s" % (name))
+    print(".type %s, %%function" % (name))
+    print("%s:" % (name))
+    printIn("push {%s,lr}" % (regs))
 
-def epilogue_mod3() :
-    printIn("pop {r4-r12,pc}")
+def epilogue_mod3(regs) :
+    printIn("pop {%s,pc}" % (regs))
 
 def reduce_mod3_5 (X, scr, r03) : # at most 5, r03 = 0x03030303 
     printIn("usub8 %s, %s, %s // >= 3 ?" % (scr, X, r03))
