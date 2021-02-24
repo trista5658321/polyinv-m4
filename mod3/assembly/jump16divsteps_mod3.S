@@ -5,7 +5,7 @@
 .global __gf_polymul_8x8_2x2_x2p2_mod3
 .type __gf_polymul_8x8_2x2_x2p2_mod3, %function
 __gf_polymul_8x8_2x2_x2p2_mod3:
-	push {r4-r12,lr}
+	push.w {r4-r12,lr}
 	vmov.w s1, s2, r2, r3
 	add.w r1, #16
 	ldr.w r10, [r2]
@@ -38,41 +38,41 @@ __gf_polymul_8x8_2x2_x2p2_mod3:
 	ubfx.w r2, r6, #24, #8
 	add.w r11, r2, r7, LSL #8
 	mov.w r12, #0x03030303
-	bic lr, r8, r12 // top 3b < 8
-	and r8, r8, r12 // bot 2b < 4
-	add r8, r8, lr, LSR #2 // range <=10
-	bic lr, r8, r12 // top 3b < 3
-	and r8, r8, r12 // bot 2b < 4
-	add r8, r8, lr, LSR #2 // range <=5
-	usub8 lr, r8, r12 // >= 3 ?
-	sel r8, lr, r8 // select
-	bic lr, r9, r12 // top 3b < 8
-	and r9, r9, r12 // bot 2b < 4
-	add r9, r9, lr, LSR #2 // range <=10
-	bic lr, r9, r12 // top 3b < 3
-	and r9, r9, r12 // bot 2b < 4
-	add r9, r9, lr, LSR #2 // range <=5
-	usub8 lr, r9, r12 // >= 3 ?
-	sel r9, lr, r9 // select
-	and lr, r10, #0xF0F0F0F0 // top 4b < 16
-	and r10, r10, #0x0F0F0F0F // bot 4b < 16
-	add r10, r10, lr, LSR #4 // range < 31
-	bic lr, r10, r12 // top 3b < 8
-	and r10, r10, r12 // bot 2b < 4
-	add r10, r10, lr, LSR #2 // range <=10
-	bic lr, r10, r12 // top 3b < 3
-	and r10, r10, r12 // bot 2b < 4
-	add r10, r10, lr, LSR #2 // range <=5
-	usub8 lr, r10, r12 // >= 3 ?
-	sel r10, lr, r10 // select
-	bic lr, r11, r12 // top 3b < 8
-	and r11, r11, r12 // bot 2b < 4
-	add r11, r11, lr, LSR #2 // range <=10
-	bic lr, r11, r12 // top 3b < 3
-	and r11, r11, r12 // bot 2b < 4
-	add r11, r11, lr, LSR #2 // range <=5
-	usub8 lr, r11, r12 // >= 3 ?
-	sel r11, lr, r11 // select
+	bic.w lr, r8, r12 // top 3b < 8
+	and.w r8, r8, r12 // bot 2b < 4
+	add.w r8, r8, lr, LSR #2 // range <=10
+	bic.w lr, r8, r12 // top 3b < 3
+	and.w r8, r8, r12 // bot 2b < 4
+	add.w r8, r8, lr, LSR #2 // range <=5
+	usub8.w lr, r8, r12 // >= 3 ?
+	sel.w r8, lr, r8 // select
+	bic.w lr, r9, r12 // top 3b < 8
+	and.w r9, r9, r12 // bot 2b < 4
+	add.w r9, r9, lr, LSR #2 // range <=10
+	bic.w lr, r9, r12 // top 3b < 3
+	and.w r9, r9, r12 // bot 2b < 4
+	add.w r9, r9, lr, LSR #2 // range <=5
+	usub8.w lr, r9, r12 // >= 3 ?
+	sel.w r9, lr, r9 // select
+	and.w lr, r10, #0xF0F0F0F0 // top 4b < 16
+	and.w r10, r10, #0x0F0F0F0F // bot 4b < 16
+	add.w r10, r10, lr, LSR #4 // range < 31
+	bic.w lr, r10, r12 // top 3b < 8
+	and.w r10, r10, r12 // bot 2b < 4
+	add.w r10, r10, lr, LSR #2 // range <=10
+	bic.w lr, r10, r12 // top 3b < 3
+	and.w r10, r10, r12 // bot 2b < 4
+	add.w r10, r10, lr, LSR #2 // range <=5
+	usub8.w lr, r10, r12 // >= 3 ?
+	sel.w r10, lr, r10 // select
+	bic.w lr, r11, r12 // top 3b < 8
+	and.w r11, r11, r12 // bot 2b < 4
+	add.w r11, r11, lr, LSR #2 // range <=10
+	bic.w lr, r11, r12 // top 3b < 3
+	and.w r11, r11, r12 // bot 2b < 4
+	add.w r11, r11, lr, LSR #2 // range <=5
+	usub8.w lr, r11, r12 // >= 3 ?
+	sel.w r11, lr, r11 // select
 	str r9, [r0, #4]
 	str r10, [r0, #8]
 	str r11, [r0, #12]
@@ -103,46 +103,46 @@ __gf_polymul_8x8_2x2_x2p2_mod3:
 	add.w r4, r8
 	add.w r5, r9
 	mov.w r12, #0x03030303
-	bic lr, r4, r12 // top 3b < 8
-	and r4, r4, r12 // bot 2b < 4
-	add r4, r4, lr, LSR #2 // range <=10
-	bic lr, r4, r12 // top 3b < 3
-	and r4, r4, r12 // bot 2b < 4
-	add r4, r4, lr, LSR #2 // range <=5
-	usub8 lr, r4, r12 // >= 3 ?
-	sel r4, lr, r4 // select
-	bic lr, r5, r12 // top 3b < 8
-	and r5, r5, r12 // bot 2b < 4
-	add r5, r5, lr, LSR #2 // range <=10
-	bic lr, r5, r12 // top 3b < 3
-	and r5, r5, r12 // bot 2b < 4
-	add r5, r5, lr, LSR #2 // range <=5
-	usub8 lr, r5, r12 // >= 3 ?
-	sel r5, lr, r5 // select
-	and lr, r6, #0xF0F0F0F0 // top 4b < 16
-	and r6, r6, #0x0F0F0F0F // bot 4b < 16
-	add r6, r6, lr, LSR #4 // range < 31
-	bic lr, r6, r12 // top 3b < 8
-	and r6, r6, r12 // bot 2b < 4
-	add r6, r6, lr, LSR #2 // range <=10
-	bic lr, r6, r12 // top 3b < 3
-	and r6, r6, r12 // bot 2b < 4
-	add r6, r6, lr, LSR #2 // range <=5
-	usub8 lr, r6, r12 // >= 3 ?
-	sel r6, lr, r6 // select
-	bic lr, r7, r12 // top 3b < 8
-	and r7, r7, r12 // bot 2b < 4
-	add r7, r7, lr, LSR #2 // range <=10
-	bic lr, r7, r12 // top 3b < 3
-	and r7, r7, r12 // bot 2b < 4
-	add r7, r7, lr, LSR #2 // range <=5
-	usub8 lr, r7, r12 // >= 3 ?
-	sel r7, lr, r7 // select
+	bic.w lr, r4, r12 // top 3b < 8
+	and.w r4, r4, r12 // bot 2b < 4
+	add.w r4, r4, lr, LSR #2 // range <=10
+	bic.w lr, r4, r12 // top 3b < 3
+	and.w r4, r4, r12 // bot 2b < 4
+	add.w r4, r4, lr, LSR #2 // range <=5
+	usub8.w lr, r4, r12 // >= 3 ?
+	sel.w r4, lr, r4 // select
+	bic.w lr, r5, r12 // top 3b < 8
+	and.w r5, r5, r12 // bot 2b < 4
+	add.w r5, r5, lr, LSR #2 // range <=10
+	bic.w lr, r5, r12 // top 3b < 3
+	and.w r5, r5, r12 // bot 2b < 4
+	add.w r5, r5, lr, LSR #2 // range <=5
+	usub8.w lr, r5, r12 // >= 3 ?
+	sel.w r5, lr, r5 // select
+	and.w lr, r6, #0xF0F0F0F0 // top 4b < 16
+	and.w r6, r6, #0x0F0F0F0F // bot 4b < 16
+	add.w r6, r6, lr, LSR #4 // range < 31
+	bic.w lr, r6, r12 // top 3b < 8
+	and.w r6, r6, r12 // bot 2b < 4
+	add.w r6, r6, lr, LSR #2 // range <=10
+	bic.w lr, r6, r12 // top 3b < 3
+	and.w r6, r6, r12 // bot 2b < 4
+	add.w r6, r6, lr, LSR #2 // range <=5
+	usub8.w lr, r6, r12 // >= 3 ?
+	sel.w r6, lr, r6 // select
+	bic.w lr, r7, r12 // top 3b < 8
+	and.w r7, r7, r12 // bot 2b < 4
+	add.w r7, r7, lr, LSR #2 // range <=10
+	bic.w lr, r7, r12 // top 3b < 3
+	and.w r7, r7, r12 // bot 2b < 4
+	add.w r7, r7, lr, LSR #2 // range <=5
+	usub8.w lr, r7, r12 // >= 3 ?
+	sel.w r7, lr, r7 // select
 	str r5, [r0, #4]
 	str r6, [r0, #8]
 	str r7, [r0, #12]
 	str r4, [r0], #16
-	pop {r4-r12,pc}
+	pop.w {r4-r12,pc}
 // void __gf_polymul_8x8_2x2_x_2x2_mod3 (int *M,int *M1,int *M2);
 .p2align 2,,3
 .syntax unified
@@ -150,7 +150,7 @@ __gf_polymul_8x8_2x2_x2p2_mod3:
 .global __gf_polymul_8x8_2x2_x_2x2_mod3
 .type __gf_polymul_8x8_2x2_x_2x2_mod3, %function
 __gf_polymul_8x8_2x2_x_2x2_mod3:
-	push {r3-r12,lr}
+	push.w {r3-r12,lr}
 	mov.w r3, #0x03030303
 	vmov.w s0, s1, r2, r3
 	ldr.w r10, [r2], #4
@@ -177,44 +177,44 @@ __gf_polymul_8x8_2x2_x_2x2_mod3:
 	add.w r9, r9, r4, LSR #24
 	add.w r10, r10, r5, LSR #24
 	add.w r11, r11, r6, LSR #24
-	bic lr, r8, r3 // top 3b < 8
-	and r8, r8, r3 // bot 2b < 4
-	add r8, r8, lr, LSR #2 // range <=10
-	bic lr, r8, r3 // top 3b < 3
-	and r8, r8, r3 // bot 2b < 4
-	add r8, r8, lr, LSR #2 // range <=5
-	usub8 lr, r8, r3 // >= 3 ?
-	sel r8, lr, r8 // select
-	and lr, r9, #0xF0F0F0F0 // top 4b < 16
-	and r9, r9, #0x0F0F0F0F // bot 4b < 16
-	add r9, r9, lr, LSR #4 // range < 31
-	bic lr, r9, r3 // top 3b < 8
-	and r9, r9, r3 // bot 2b < 4
-	add r9, r9, lr, LSR #2 // range <=10
-	bic lr, r9, r3 // top 3b < 3
-	and r9, r9, r3 // bot 2b < 4
-	add r9, r9, lr, LSR #2 // range <=5
-	usub8 lr, r9, r3 // >= 3 ?
-	sel r9, lr, r9 // select
-	and lr, r10, #0xF0F0F0F0 // top 4b < 16
-	and r10, r10, #0x0F0F0F0F // bot 4b < 16
-	add r10, r10, lr, LSR #4 // range < 31
-	bic lr, r10, r3 // top 3b < 8
-	and r10, r10, r3 // bot 2b < 4
-	add r10, r10, lr, LSR #2 // range <=10
-	bic lr, r10, r3 // top 3b < 3
-	and r10, r10, r3 // bot 2b < 4
-	add r10, r10, lr, LSR #2 // range <=5
-	usub8 lr, r10, r3 // >= 3 ?
-	sel r10, lr, r10 // select
-	bic lr, r11, r3 // top 3b < 8
-	and r11, r11, r3 // bot 2b < 4
-	add r11, r11, lr, LSR #2 // range <=10
-	bic lr, r11, r3 // top 3b < 3
-	and r11, r11, r3 // bot 2b < 4
-	add r11, r11, lr, LSR #2 // range <=5
-	usub8 lr, r11, r3 // >= 3 ?
-	sel r11, lr, r11 // select
+	bic.w lr, r8, r3 // top 3b < 8
+	and.w r8, r8, r3 // bot 2b < 4
+	add.w r8, r8, lr, LSR #2 // range <=10
+	bic.w lr, r8, r3 // top 3b < 3
+	and.w r8, r8, r3 // bot 2b < 4
+	add.w r8, r8, lr, LSR #2 // range <=5
+	usub8.w lr, r8, r3 // >= 3 ?
+	sel.w r8, lr, r8 // select
+	and.w lr, r9, #0xF0F0F0F0 // top 4b < 16
+	and.w r9, r9, #0x0F0F0F0F // bot 4b < 16
+	add.w r9, r9, lr, LSR #4 // range < 31
+	bic.w lr, r9, r3 // top 3b < 8
+	and.w r9, r9, r3 // bot 2b < 4
+	add.w r9, r9, lr, LSR #2 // range <=10
+	bic.w lr, r9, r3 // top 3b < 3
+	and.w r9, r9, r3 // bot 2b < 4
+	add.w r9, r9, lr, LSR #2 // range <=5
+	usub8.w lr, r9, r3 // >= 3 ?
+	sel.w r9, lr, r9 // select
+	and.w lr, r10, #0xF0F0F0F0 // top 4b < 16
+	and.w r10, r10, #0x0F0F0F0F // bot 4b < 16
+	add.w r10, r10, lr, LSR #4 // range < 31
+	bic.w lr, r10, r3 // top 3b < 8
+	and.w r10, r10, r3 // bot 2b < 4
+	add.w r10, r10, lr, LSR #2 // range <=10
+	bic.w lr, r10, r3 // top 3b < 3
+	and.w r10, r10, r3 // bot 2b < 4
+	add.w r10, r10, lr, LSR #2 // range <=5
+	usub8.w lr, r10, r3 // >= 3 ?
+	sel.w r10, lr, r10 // select
+	bic.w lr, r11, r3 // top 3b < 8
+	and.w r11, r11, r3 // bot 2b < 4
+	add.w r11, r11, lr, LSR #2 // range <=10
+	bic.w lr, r11, r3 // top 3b < 3
+	and.w r11, r11, r3 // bot 2b < 4
+	add.w r11, r11, lr, LSR #2 // range <=5
+	usub8.w lr, r11, r3 // >= 3 ?
+	sel.w r11, lr, r11 // select
 	str r9, [r0, #4]
 	str r10, [r0, #8]
 	str r11, [r0, #12]
@@ -244,44 +244,44 @@ __gf_polymul_8x8_2x2_x_2x2_mod3:
 	add.w r9, r9, r4, LSR #24
 	add.w r10, r10, r5, LSR #24
 	add.w r11, r11, r6, LSR #24
-	bic lr, r8, r3 // top 3b < 8
-	and r8, r8, r3 // bot 2b < 4
-	add r8, r8, lr, LSR #2 // range <=10
-	bic lr, r8, r3 // top 3b < 3
-	and r8, r8, r3 // bot 2b < 4
-	add r8, r8, lr, LSR #2 // range <=5
-	usub8 lr, r8, r3 // >= 3 ?
-	sel r8, lr, r8 // select
-	and lr, r9, #0xF0F0F0F0 // top 4b < 16
-	and r9, r9, #0x0F0F0F0F // bot 4b < 16
-	add r9, r9, lr, LSR #4 // range < 31
-	bic lr, r9, r3 // top 3b < 8
-	and r9, r9, r3 // bot 2b < 4
-	add r9, r9, lr, LSR #2 // range <=10
-	bic lr, r9, r3 // top 3b < 3
-	and r9, r9, r3 // bot 2b < 4
-	add r9, r9, lr, LSR #2 // range <=5
-	usub8 lr, r9, r3 // >= 3 ?
-	sel r9, lr, r9 // select
-	and lr, r10, #0xF0F0F0F0 // top 4b < 16
-	and r10, r10, #0x0F0F0F0F // bot 4b < 16
-	add r10, r10, lr, LSR #4 // range < 31
-	bic lr, r10, r3 // top 3b < 8
-	and r10, r10, r3 // bot 2b < 4
-	add r10, r10, lr, LSR #2 // range <=10
-	bic lr, r10, r3 // top 3b < 3
-	and r10, r10, r3 // bot 2b < 4
-	add r10, r10, lr, LSR #2 // range <=5
-	usub8 lr, r10, r3 // >= 3 ?
-	sel r10, lr, r10 // select
-	bic lr, r11, r3 // top 3b < 8
-	and r11, r11, r3 // bot 2b < 4
-	add r11, r11, lr, LSR #2 // range <=10
-	bic lr, r11, r3 // top 3b < 3
-	and r11, r11, r3 // bot 2b < 4
-	add r11, r11, lr, LSR #2 // range <=5
-	usub8 lr, r11, r3 // >= 3 ?
-	sel r11, lr, r11 // select
+	bic.w lr, r8, r3 // top 3b < 8
+	and.w r8, r8, r3 // bot 2b < 4
+	add.w r8, r8, lr, LSR #2 // range <=10
+	bic.w lr, r8, r3 // top 3b < 3
+	and.w r8, r8, r3 // bot 2b < 4
+	add.w r8, r8, lr, LSR #2 // range <=5
+	usub8.w lr, r8, r3 // >= 3 ?
+	sel.w r8, lr, r8 // select
+	and.w lr, r9, #0xF0F0F0F0 // top 4b < 16
+	and.w r9, r9, #0x0F0F0F0F // bot 4b < 16
+	add.w r9, r9, lr, LSR #4 // range < 31
+	bic.w lr, r9, r3 // top 3b < 8
+	and.w r9, r9, r3 // bot 2b < 4
+	add.w r9, r9, lr, LSR #2 // range <=10
+	bic.w lr, r9, r3 // top 3b < 3
+	and.w r9, r9, r3 // bot 2b < 4
+	add.w r9, r9, lr, LSR #2 // range <=5
+	usub8.w lr, r9, r3 // >= 3 ?
+	sel.w r9, lr, r9 // select
+	and.w lr, r10, #0xF0F0F0F0 // top 4b < 16
+	and.w r10, r10, #0x0F0F0F0F // bot 4b < 16
+	add.w r10, r10, lr, LSR #4 // range < 31
+	bic.w lr, r10, r3 // top 3b < 8
+	and.w r10, r10, r3 // bot 2b < 4
+	add.w r10, r10, lr, LSR #2 // range <=10
+	bic.w lr, r10, r3 // top 3b < 3
+	and.w r10, r10, r3 // bot 2b < 4
+	add.w r10, r10, lr, LSR #2 // range <=5
+	usub8.w lr, r10, r3 // >= 3 ?
+	sel.w r10, lr, r10 // select
+	bic.w lr, r11, r3 // top 3b < 8
+	and.w r11, r11, r3 // bot 2b < 4
+	add.w r11, r11, lr, LSR #2 // range <=10
+	bic.w lr, r11, r3 // top 3b < 3
+	and.w r11, r11, r3 // bot 2b < 4
+	add.w r11, r11, lr, LSR #2 // range <=5
+	usub8.w lr, r11, r3 // >= 3 ?
+	sel.w r11, lr, r11 // select
 	str r9, [r0, #4]
 	str r10, [r0, #8]
 	str r11, [r0, #12]
@@ -312,44 +312,44 @@ __gf_polymul_8x8_2x2_x_2x2_mod3:
 	add.w r9, r9, r4, LSR #24
 	add.w r10, r10, r5, LSR #24
 	add.w r11, r11, r6, LSR #24
-	bic lr, r8, r3 // top 3b < 8
-	and r8, r8, r3 // bot 2b < 4
-	add r8, r8, lr, LSR #2 // range <=10
-	bic lr, r8, r3 // top 3b < 3
-	and r8, r8, r3 // bot 2b < 4
-	add r8, r8, lr, LSR #2 // range <=5
-	usub8 lr, r8, r3 // >= 3 ?
-	sel r8, lr, r8 // select
-	and lr, r9, #0xF0F0F0F0 // top 4b < 16
-	and r9, r9, #0x0F0F0F0F // bot 4b < 16
-	add r9, r9, lr, LSR #4 // range < 31
-	bic lr, r9, r3 // top 3b < 8
-	and r9, r9, r3 // bot 2b < 4
-	add r9, r9, lr, LSR #2 // range <=10
-	bic lr, r9, r3 // top 3b < 3
-	and r9, r9, r3 // bot 2b < 4
-	add r9, r9, lr, LSR #2 // range <=5
-	usub8 lr, r9, r3 // >= 3 ?
-	sel r9, lr, r9 // select
-	and lr, r10, #0xF0F0F0F0 // top 4b < 16
-	and r10, r10, #0x0F0F0F0F // bot 4b < 16
-	add r10, r10, lr, LSR #4 // range < 31
-	bic lr, r10, r3 // top 3b < 8
-	and r10, r10, r3 // bot 2b < 4
-	add r10, r10, lr, LSR #2 // range <=10
-	bic lr, r10, r3 // top 3b < 3
-	and r10, r10, r3 // bot 2b < 4
-	add r10, r10, lr, LSR #2 // range <=5
-	usub8 lr, r10, r3 // >= 3 ?
-	sel r10, lr, r10 // select
-	bic lr, r11, r3 // top 3b < 8
-	and r11, r11, r3 // bot 2b < 4
-	add r11, r11, lr, LSR #2 // range <=10
-	bic lr, r11, r3 // top 3b < 3
-	and r11, r11, r3 // bot 2b < 4
-	add r11, r11, lr, LSR #2 // range <=5
-	usub8 lr, r11, r3 // >= 3 ?
-	sel r11, lr, r11 // select
+	bic.w lr, r8, r3 // top 3b < 8
+	and.w r8, r8, r3 // bot 2b < 4
+	add.w r8, r8, lr, LSR #2 // range <=10
+	bic.w lr, r8, r3 // top 3b < 3
+	and.w r8, r8, r3 // bot 2b < 4
+	add.w r8, r8, lr, LSR #2 // range <=5
+	usub8.w lr, r8, r3 // >= 3 ?
+	sel.w r8, lr, r8 // select
+	and.w lr, r9, #0xF0F0F0F0 // top 4b < 16
+	and.w r9, r9, #0x0F0F0F0F // bot 4b < 16
+	add.w r9, r9, lr, LSR #4 // range < 31
+	bic.w lr, r9, r3 // top 3b < 8
+	and.w r9, r9, r3 // bot 2b < 4
+	add.w r9, r9, lr, LSR #2 // range <=10
+	bic.w lr, r9, r3 // top 3b < 3
+	and.w r9, r9, r3 // bot 2b < 4
+	add.w r9, r9, lr, LSR #2 // range <=5
+	usub8.w lr, r9, r3 // >= 3 ?
+	sel.w r9, lr, r9 // select
+	and.w lr, r10, #0xF0F0F0F0 // top 4b < 16
+	and.w r10, r10, #0x0F0F0F0F // bot 4b < 16
+	add.w r10, r10, lr, LSR #4 // range < 31
+	bic.w lr, r10, r3 // top 3b < 8
+	and.w r10, r10, r3 // bot 2b < 4
+	add.w r10, r10, lr, LSR #2 // range <=10
+	bic.w lr, r10, r3 // top 3b < 3
+	and.w r10, r10, r3 // bot 2b < 4
+	add.w r10, r10, lr, LSR #2 // range <=5
+	usub8.w lr, r10, r3 // >= 3 ?
+	sel.w r10, lr, r10 // select
+	bic.w lr, r11, r3 // top 3b < 8
+	and.w r11, r11, r3 // bot 2b < 4
+	add.w r11, r11, lr, LSR #2 // range <=10
+	bic.w lr, r11, r3 // top 3b < 3
+	and.w r11, r11, r3 // bot 2b < 4
+	add.w r11, r11, lr, LSR #2 // range <=5
+	usub8.w lr, r11, r3 // >= 3 ?
+	sel.w r11, lr, r11 // select
 	str r9, [r0, #4]
 	str r10, [r0, #8]
 	str r11, [r0, #12]
@@ -380,46 +380,46 @@ __gf_polymul_8x8_2x2_x_2x2_mod3:
 	add.w r9, r9, r4, LSR #24
 	add.w r10, r10, r5, LSR #24
 	add.w r11, r11, r6, LSR #24
-	bic lr, r8, r3 // top 3b < 8
-	and r8, r8, r3 // bot 2b < 4
-	add r8, r8, lr, LSR #2 // range <=10
-	bic lr, r8, r3 // top 3b < 3
-	and r8, r8, r3 // bot 2b < 4
-	add r8, r8, lr, LSR #2 // range <=5
-	usub8 lr, r8, r3 // >= 3 ?
-	sel r8, lr, r8 // select
-	and lr, r9, #0xF0F0F0F0 // top 4b < 16
-	and r9, r9, #0x0F0F0F0F // bot 4b < 16
-	add r9, r9, lr, LSR #4 // range < 31
-	bic lr, r9, r3 // top 3b < 8
-	and r9, r9, r3 // bot 2b < 4
-	add r9, r9, lr, LSR #2 // range <=10
-	bic lr, r9, r3 // top 3b < 3
-	and r9, r9, r3 // bot 2b < 4
-	add r9, r9, lr, LSR #2 // range <=5
-	usub8 lr, r9, r3 // >= 3 ?
-	sel r9, lr, r9 // select
-	and lr, r10, #0xF0F0F0F0 // top 4b < 16
-	and r10, r10, #0x0F0F0F0F // bot 4b < 16
-	add r10, r10, lr, LSR #4 // range < 31
-	bic lr, r10, r3 // top 3b < 8
-	and r10, r10, r3 // bot 2b < 4
-	add r10, r10, lr, LSR #2 // range <=10
-	bic lr, r10, r3 // top 3b < 3
-	and r10, r10, r3 // bot 2b < 4
-	add r10, r10, lr, LSR #2 // range <=5
-	usub8 lr, r10, r3 // >= 3 ?
-	sel r10, lr, r10 // select
-	bic lr, r11, r3 // top 3b < 8
-	and r11, r11, r3 // bot 2b < 4
-	add r11, r11, lr, LSR #2 // range <=10
-	bic lr, r11, r3 // top 3b < 3
-	and r11, r11, r3 // bot 2b < 4
-	add r11, r11, lr, LSR #2 // range <=5
-	usub8 lr, r11, r3 // >= 3 ?
-	sel r11, lr, r11 // select
+	bic.w lr, r8, r3 // top 3b < 8
+	and.w r8, r8, r3 // bot 2b < 4
+	add.w r8, r8, lr, LSR #2 // range <=10
+	bic.w lr, r8, r3 // top 3b < 3
+	and.w r8, r8, r3 // bot 2b < 4
+	add.w r8, r8, lr, LSR #2 // range <=5
+	usub8.w lr, r8, r3 // >= 3 ?
+	sel.w r8, lr, r8 // select
+	and.w lr, r9, #0xF0F0F0F0 // top 4b < 16
+	and.w r9, r9, #0x0F0F0F0F // bot 4b < 16
+	add.w r9, r9, lr, LSR #4 // range < 31
+	bic.w lr, r9, r3 // top 3b < 8
+	and.w r9, r9, r3 // bot 2b < 4
+	add.w r9, r9, lr, LSR #2 // range <=10
+	bic.w lr, r9, r3 // top 3b < 3
+	and.w r9, r9, r3 // bot 2b < 4
+	add.w r9, r9, lr, LSR #2 // range <=5
+	usub8.w lr, r9, r3 // >= 3 ?
+	sel.w r9, lr, r9 // select
+	and.w lr, r10, #0xF0F0F0F0 // top 4b < 16
+	and.w r10, r10, #0x0F0F0F0F // bot 4b < 16
+	add.w r10, r10, lr, LSR #4 // range < 31
+	bic.w lr, r10, r3 // top 3b < 8
+	and.w r10, r10, r3 // bot 2b < 4
+	add.w r10, r10, lr, LSR #2 // range <=10
+	bic.w lr, r10, r3 // top 3b < 3
+	and.w r10, r10, r3 // bot 2b < 4
+	add.w r10, r10, lr, LSR #2 // range <=5
+	usub8.w lr, r10, r3 // >= 3 ?
+	sel.w r10, lr, r10 // select
+	bic.w lr, r11, r3 // top 3b < 8
+	and.w r11, r11, r3 // bot 2b < 4
+	add.w r11, r11, lr, LSR #2 // range <=10
+	bic.w lr, r11, r3 // top 3b < 3
+	and.w r11, r11, r3 // bot 2b < 4
+	add.w r11, r11, lr, LSR #2 // range <=5
+	usub8.w lr, r11, r3 // >= 3 ?
+	sel.w r11, lr, r11 // select
 	str r9, [r0, #4]
 	str r10, [r0, #8]
 	str r11, [r0, #12]
 	str r8, [r0], #16
-	pop {r3-r12,pc}
+	pop.w {r3-r12,pc}
