@@ -28,4 +28,4 @@ commit: f7a99d8fc54cdd509c0c6b5cfad86a38a659a8cd
 ## Current
 |keypair cycles|encaps cycles|decaps cycles|
 |---|---|---|
-|10773450|789443|742181|
+|10748110|789441|742180|

@@ -3,8 +3,8 @@ sys.path.append(str(pathlib.Path(__file__).parent.absolute().parent))
 
 from utility import printIn
 
-a_adr = "r1"
-b_adr = "r2"
+# a_adr = "r1"
+# b_adr = "r2"
 b0 = "r11"
 b1 = "r12"
 b2 = "lr"
@@ -13,7 +13,7 @@ def str_to_s(r, s):
     printIn("vmov.w %s, %s, %s, %s" % (s[0], s[1], r[0], r[1]))
     printIn("vmov.w %s, %s, %s, %s" % (s[2], s[3], r[2], r[3]))
 
-def polymul(i = 0):
+def polymul(i = 0, a_adr = "r1", b_adr = "r2"):
     r_1 = ["r" + str(x) for x in range(6,10)]
     r_2 = ["r" + str(x) for x in range(5,9)]
     s_1 = ["s" + str(x + i*8) for x in range(2,6)]
@@ -25,7 +25,7 @@ def polymul(i = 0):
     printIn("ldr.w r4, [%s, #12]" % (b_adr))
     printIn("ldr.w %s, [%s, #8]" % (b2, b_adr))
     printIn("ldr.w %s, [%s, #4]" % (b1, b_adr))
-    printIn("ldr.w %s, [%s, #0]" % (b0, b_adr))
+    printIn("ldr.w %s, [%s], #32" % (b0, b_adr))
     
     printIn("umull.w r7, r8, %s, r5" % (b1))
     printIn("umull.w r9, r10, r4, r5")
@@ -49,9 +49,9 @@ def polymul(i = 0):
     printIn("mov.w r6, #0")
     printIn("mov.w r5, r10")
 
-    printIn("ldr.w %s, [%s, #4]" % (b1, b_adr))
-    printIn("ldr.w %s, [%s, #8]" % (b2, b_adr))
-    printIn("ldr.w r4, [%s, #12]" % (b_adr))
+    printIn("ldr.w %s, [%s, #%d]" % (b1, b_adr, 4-32))
+    printIn("ldr.w %s, [%s, #%d]" % (b2, b_adr, 8-32))
+    printIn("ldr.w r4, [%s, #%d]" % (b_adr, 12-32))
     printIn("ldr.w r9, [%s, #-4]" % (a_adr))
     printIn("umull.w r7, r8, r4, r9")
     printIn("umlal.w r6, r7, %s, r9" % (b2))
