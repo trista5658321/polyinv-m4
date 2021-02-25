@@ -120,9 +120,6 @@ __gf_polymul_16x16_2x2_x2p2_mod3:
 	add.w r9, r9, r5, LSL #8
 	add.w r9, r9, r4, LSR #24
 	mov.w r4, #0x03030303
-	and.w r5, r6, #0xF0F0F0F0 // top 4b < 16
-	and.w r6, r6, #0x0F0F0F0F // bot 4b < 16
-	add.w r6, r6, r5, LSR #4 // range < 31
 	bic.w r5, r6, r4 // top 3b < 8
 	and.w r6, r6, r4 // bot 2b < 4
 	add.w r6, r6, r5, LSR #2 // range <=10
@@ -197,9 +194,6 @@ __gf_polymul_16x16_2x2_x2p2_mod3:
 	add.w r12, r12, r5, LSR #2 // range <=5
 	usub8.w r5, r12, r4 // >= 3 ?
 	sel.w r12, r5, r12 // select
-	and.w r5, lr, #0xF0F0F0F0 // top 4b < 16
-	and.w lr, lr, #0x0F0F0F0F // bot 4b < 16
-	add.w lr, lr, r5, LSR #4 // range < 31
 	bic.w r5, lr, r4 // top 3b < 8
 	and.w lr, lr, r4 // bot 2b < 4
 	add.w lr, lr, r5, LSR #2 // range <=10
@@ -317,9 +311,6 @@ __gf_polymul_16x16_2x2_x2p2_mod3:
 	add.w r8, r4
 	add.w r9, r5
 	mov.w r4, #0x03030303
-	and.w r5, r6, #0xF0F0F0F0 // top 4b < 16
-	and.w r6, r6, #0x0F0F0F0F // bot 4b < 16
-	add.w r6, r6, r5, LSR #4 // range < 31
 	bic.w r5, r6, r4 // top 3b < 8
 	and.w r6, r6, r4 // bot 2b < 4
 	add.w r6, r6, r5, LSR #2 // range <=10
@@ -394,9 +385,6 @@ __gf_polymul_16x16_2x2_x2p2_mod3:
 	add.w r12, r12, r5, LSR #2 // range <=5
 	usub8.w r5, r12, r4 // >= 3 ?
 	sel.w r12, r5, r12 // select
-	and.w r5, lr, #0xF0F0F0F0 // top 4b < 16
-	and.w lr, lr, #0x0F0F0F0F // bot 4b < 16
-	add.w lr, lr, r5, LSR #4 // range < 31
 	bic.w r5, lr, r4 // top 3b < 8
 	and.w lr, lr, r4 // bot 2b < 4
 	add.w lr, lr, r5, LSR #2 // range <=10

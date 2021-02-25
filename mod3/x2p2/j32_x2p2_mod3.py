@@ -41,11 +41,10 @@ def reduce_str(a, b = []):
     rs = a + b
     printIn("mov.w %s, #0x03030303" % (r03))
     for i in range(len(rs)):
-        # if i != 2:
-        #     u.reduce_mod3_32(rs[i], scr, r03)
-        # else:
-        #     u.reduce_mod3_full(rs[i], scr, r03)
-        u.reduce_mod3_full(rs[i], scr, r03)
+        if i == 0 or i == len(rs)-1:
+            u.reduce_mod3_32(rs[i], scr, r03)
+        else:
+            u.reduce_mod3_full(rs[i], scr, r03)
 
     for i in range(1, len(rs)):
         printIn("str.w %s, [%s, #%d]" % (rs[i], V, 4*i))
