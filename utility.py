@@ -34,13 +34,16 @@ def head(name, params, data_config = None):
     print(name + ":")
     printIn("push {r1-r12, lr}")
 
-def _func_head(name, func):
+def _func_head(name, func, *args):
     print(".p2align 2,,3")
     print(".syntax unified")
     print(".text")
     print(name + ":")
     printIn("push.w {lr}")
-    func()
+    if args:
+        func(*args)
+    else:
+        func()
     printIn("pop.w {pc}")
 
 def end():

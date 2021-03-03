@@ -1,5 +1,5 @@
 .p2align 2,,3
-.syntax	unified
+.syntax unified
 .text
 __polymul_256x512:
 	push.w {lr}
@@ -574,7 +574,7 @@ gf_polymul_256x256_copy_output_C:
 	add.w sp, sp, #6144
 	pop.w {pc}
 .p2align 2,,3
-.syntax	unified
+.syntax unified
 .text
 __polyadd_x2p2_512_768:
 	push.w {lr}
@@ -652,7 +652,7 @@ __polyadd_x2p2_512_768:
 	bne.w add_2_256
 	pop.w {pc}
 .p2align 2,,3
-.syntax	unified
+.syntax unified
 .text
 Toom4Table_4591:
 	.word 4194697214 @ s1
@@ -671,8 +671,8 @@ Toom4Table_4591:
 	.word 4261546104 @ s14^
 	.word 4149545207 @ s15^
 	.word 16777012   @ s16#
-.global	__gf_polymul_512x256_2x2_x2p2
-.type 	__gf_polymul_512x256_2x2_x2p2, %function
+.global __gf_polymul_512x256_2x2_x2p2
+.type  __gf_polymul_512x256_2x2_x2p2, %function
 @ void __gf_polymul_512x256_2x2_x2p2(int *V,int *M,int *fh,int *gh)
 __gf_polymul_512x256_2x2_x2p2:
 	push {r1-r12, lr}
@@ -691,34 +691,34 @@ __gf_polymul_512x256_2x2_x2p2:
 	add.w r0, #2
 	vmov.w r2, r1, s6, s7
 	add.w r2, #2048
-	bl	__polymul_256x512
+	bl __polymul_256x512
 	vmov.w r2, s6
 	add.w r2, #3072
 	vmov.w r1, s8
-	bl	__polymul_256x512
+	bl __polymul_256x512
 	sub.w r0, r0, #2
 	vmov.w r2, r1, s6, s7
 	add.w r2, #4096
-	bl	__polymul_256x512
+	bl __polymul_256x512
 	vmov.w r2, s6
 	add.w r2, #5120
 	vmov.w r1, s8
-	bl	__polymul_256x512
+	bl __polymul_256x512
 	mov.w r10, 4591
 	movw.w r12, #32768
 	vmov.w r0, r2, s5, s6
 	mov.w r1, sp
 	vmov.w r11, s2
-	bl	__polyadd_x2p2_512_768
+	bl __polyadd_x2p2_512_768
 	vmov.w r2, s6
 	add.w r1, #1536
 	add.w r2, #1024
-	bl	__polyadd_x2p2_512_768
+	bl __polyadd_x2p2_512_768
 	add.w sp, #6144
 	vpop.w { s16-s27 }
 	pop {r1-r12, pc}
 .p2align 2,,3
-.syntax	unified
+.syntax unified
 .text
 __polyadd_x2p2_256_768:
 	push.w {lr}
@@ -796,10 +796,10 @@ __polyadd_x2p2_256_768:
 	bne.w add_2_512
 	pop.w {pc}
 .p2align 2,,3
-.syntax	unified
+.syntax unified
 .text
-.global	__gf_polymul_256x512_2x2_x2p2
-.type 	__gf_polymul_256x512_2x2_x2p2, %function
+.global __gf_polymul_256x512_2x2_x2p2
+.type  __gf_polymul_256x512_2x2_x2p2, %function
 @ void __gf_polymul_256x512_2x2_x2p2(int *V,int *M,int *fh,int *gh)
 __gf_polymul_256x512_2x2_x2p2:
 	push {r1-r12, lr}
@@ -817,34 +817,34 @@ __gf_polymul_256x512_2x2_x2p2:
 	str.w r11, [r0]
 	add.w r0, #2
 	add.w r1, #1024
-	bl	__polymul_256x512
+	bl __polymul_256x512
 	vmov.w r1, s6
 	add.w r1, #1536
 	vmov.w r2, s8
-	bl	__polymul_256x512
+	bl __polymul_256x512
 	sub.w r0, r0, #2
 	vmov.w r1, r2, s6, s7
 	add.w r1, #2048
-	bl	__polymul_256x512
+	bl __polymul_256x512
 	vmov.w r1, s6
 	add.w r1, #2560
 	vmov.w r2, s8
-	bl	__polymul_256x512
+	bl __polymul_256x512
 	mov.w r10, 4591
 	movw.w r12, #32768
 	vmov.w r0, r2, s5, s6
 	mov.w r1, sp
 	vmov.w r11, s2
-	bl	__polyadd_x2p2_256_768
+	bl __polyadd_x2p2_256_768
 	vmov.w r2, s6
 	add.w r1, #1536
 	add.w r2, #512
-	bl	__polyadd_x2p2_256_768
+	bl __polyadd_x2p2_256_768
 	add.w sp, #6144
 	vpop.w { s16-s27 }
 	pop {r1-r12, pc}
 .p2align 2,,3
-.syntax	unified
+.syntax unified
 .text
 __polyadd_768:
 	push.w {lr}
@@ -897,7 +897,7 @@ _add:
 	bne.w _add
 	pop.w {pc}
 .p2align 2,,3
-.syntax	unified
+.syntax unified
 .data
 b768_1_2x2: .space 1540
 .text
@@ -921,8 +921,8 @@ Toom4Table_4591_2x2:
 	.word 4261546104 @ s14^
 	.word 4149545207 @ s15^
 	.word 16777012   @ s16#
-.global	__gf_polymul_256x512_2x2_x_2x2
-.type 	__gf_polymul_256x512_2x2_x_2x2, %function
+.global __gf_polymul_256x512_2x2_x_2x2
+.type  __gf_polymul_256x512_2x2_x_2x2, %function
 @ void __gf_polymul_256x512_2x2_x_2x2(int *M,int *S_M1,int *fh,int *gh)
 __gf_polymul_256x512_2x2_x_2x2:
 	push {r1-r12, lr}
