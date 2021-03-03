@@ -19,7 +19,7 @@ sch3_1:			// later blocks
 	umull	r9, r10, r4, r5
 	umlal	r6, r7, r1, r5
 	umlal	r8, r9, r3, r5
-	// ([0-2],1), ([0-1 k],2), (0,3) blocks
+	// ([0-2],1), ([0-1],2), (0,3) blocks
 	ldr	r5, [r12, #4]
 	umlal	r9, r10, r3, r5
 	umlal	r8, r9, r2, r5
@@ -71,20 +71,14 @@ sch3_1:			// later blocks
 	umlal	r6, r7, r2, r5
 	umlal	r7, r8, r3, r5
 	umlal	r8, r9, r4, r5
-	// ([0-2],5), ([0-1 k],6), (0,7) blocks
+	// ([0-2],5), ([0-1],6), (0,7) blocks
 	ldr	r5, [r12, #20]
 	umlal	r8, r9, r3, r5
 	umlal	r7, r8, r2, r5
 	umlal	r6, r7, r1, r5
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	ldr	r5, [r12, #24]
 	umlal	r8, r9, r2, r5
 	umlal	r7, r8, r1, r5
-	and	r5, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r5, LSR #4	// range < 31
 	ldr	r5, [r12, #28]
 	umlal	r8, r9, r1, r5
 	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
@@ -127,9 +121,6 @@ sch3_10:			// decreasing thread length
 	umlal	r6, r7, r2, r4
 	umlal	r7, r8, r3, r4
 	// ([5-7],3),([6-7],2),(7,1) blocks
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
 	ldr	r4, [r12, #12]
 	umlal	r6, r7, r3, r4
 	umlal	r10, r6, r2, r4
@@ -137,17 +128,11 @@ sch3_10:			// decreasing thread length
 	ldr	r4, [r12, #8]
 	umlal	r10, r6, r3, r4
 	umlal	r9, r10, r2, r4
-	and	r4, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r4, LSR #4	// range < 31
 	ldr	r4, [r12, #4]
 	umlal	r9, r10, r3, r4
 	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
 	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
 	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -161,9 +146,6 @@ sch3_20:			// mv hh back to h
 	ldr	r2, [r14, #24]
 	ldr	r3, [r14, #28]
 	// ([5-7],7),([6-7],6),(7,5) blocks
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
 	ldr	r4, [r12, #28]
 	umlal	r10, r6, r3, r4
 	umlal	r9, r10, r2, r4

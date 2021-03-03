@@ -19,7 +19,7 @@ sch3_1:			// later blocks
 	umull	r9, r10, r4, r5
 	umlal	r6, r7, r1, r5
 	umlal	r8, r9, r3, r5
-	// ([0-2],1), ([0-1 k],2), (0,3) blocks
+	// ([0-2],1), ([0-1],2), (0,3) blocks
 	ldr	r5, [r12, #4]
 	umlal	r9, r10, r3, r5
 	umlal	r8, r9, r2, r5
@@ -71,20 +71,14 @@ sch3_1:			// later blocks
 	umlal	r6, r7, r2, r5
 	umlal	r7, r8, r3, r5
 	umlal	r8, r9, r4, r5
-	// ([0-2],5), ([0-1 k],6), (0,7) blocks
+	// ([0-2],5), ([0-1],6), (0,7) blocks
 	ldr	r5, [r12, #20]
 	umlal	r8, r9, r3, r5
 	umlal	r7, r8, r2, r5
 	umlal	r6, r7, r1, r5
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	ldr	r5, [r12, #24]
 	umlal	r8, r9, r2, r5
 	umlal	r7, r8, r1, r5
-	and	r5, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r5, LSR #4	// range < 31
 	ldr	r5, [r12, #28]
 	umlal	r8, r9, r1, r5
 	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
@@ -160,7 +154,7 @@ sch3_1:			// later blocks
 	umlal	r10, r6, r2, r5
 	umlal	r6, r7, r3, r5
 	umlal	r7, r8, r4, r5
-	// ([0-2],9), ([0-1 k],10), (0,11) blocks
+	// ([0-2],9), ([0-1],10), (0,11) blocks
 	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
 	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
 	add	r9, r9, r5, LSR #4	// range < 31
@@ -280,7 +274,7 @@ sch3_1:			// later blocks
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	// ([0-2],13), ([0-1 k],14), (0,15) blocks
+	// ([0-2],13), ([0-1],14), (0,15) blocks
 	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
 	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
 	add	r8, r8, r5, LSR #4	// range < 31
@@ -398,9 +392,6 @@ sch3_10:			// decreasing thread length
 	umlal	r9, r10, r5, r2
 	umlal	r10, r6, r1, r2
 	// ([13-15],3),([14-15],2),(15,1) blocks
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
 	ldr	r2, [r12, #12]
 	umlal	r9, r10, r1, r2
 	umlal	r8, r9, r5, r2
@@ -486,9 +477,6 @@ sch3_10:			// decreasing thread length
 	umlal	r8, r9, r5, r2
 	umlal	r9, r10, r1, r2
 	// ([13-15],7),([14-15],6),(15,5) blocks
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
 	ldr	r2, [r12, #28]
 	umlal	r8, r9, r1, r2
 	umlal	r7, r8, r5, r2
@@ -504,12 +492,12 @@ sch3_10:			// decreasing thread length
 	add	r8, r8, r2, LSR #4	// range < 31
 	ldr	r2, [r12, #20]
 	umlal	r6, r7, r1, r2
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
 	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
 	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
 	add	r7, r7, r2, LSR #4	// range < 31
+	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
+	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
+	add	r6, r6, r2, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -546,9 +534,6 @@ sch3_10:			// decreasing thread length
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
 	// ([13-15],11),([14-15],10),(15,9) blocks
-	and	r2, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r2, LSR #4	// range < 31
 	ldr	r2, [r12, #44]
 	umlal	r7, r8, r1, r2
 	umlal	r6, r7, r5, r2
@@ -556,17 +541,11 @@ sch3_10:			// decreasing thread length
 	ldr	r2, [r12, #40]
 	umlal	r6, r7, r1, r2
 	umlal	r10, r6, r5, r2
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
 	ldr	r2, [r12, #36]
 	umlal	r10, r6, r1, r2
 	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
 	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
 	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -580,9 +559,6 @@ sch3_20:			// mv hh back to h
 	ldr	r5, [r14, #56]
 	ldr	r1, [r14, #60]
 	// ([13-15],15),([14-15],14),(15,13) blocks
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	ldr	r2, [r12, #60]
 	umlal	r6, r7, r1, r2
 	umlal	r10, r6, r5, r2

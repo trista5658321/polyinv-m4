@@ -124,14 +124,15 @@ def continue_strip_bot (i,j) :
         
 def end_strip_top (i) :
     j = 4 * i
-    print("	// ([0-2],%d), ([0-1 k],%d), (0,%d) blocks" % (4*i+1,4*i+2,4*i+3))
+    lower_bound = 6 # need reduction
+    print("	// ([0-2],%d), ([0-1],%d), (0,%d) blocks" % (4*i+1,4*i+2,4*i+3))
 
     # [0] reduction (before store)
     # if (j % C1 == C1 - 1) :
     #     reduce_mod3_32(ac(i,0),ar(i,j,4),"r11")
     # else :
     #     reduce_mod3_full(ac(i,0),ar(i,j,4),"r11")
-    if j % C1 > 4: # maximum = 30 + 20 adds
+    if (j > lower_bound) and j % C1 > 4: # maximum = 30 + 20 adds
         reduce_mod3_lazy(ac(i,0),ar(i,j,4),"r11")
 
     print("	ldr	%s, [r12, #%d]" % (ar(i,j,4), 16*i+4))
@@ -140,7 +141,7 @@ def end_strip_top (i) :
     print("	umlal	%s, %s, %s, %s" % (ac(i,1),ac(i,2),ar(i,j,0),ar(i,j,4)))
 
     # [1] reduction (before store)
-    if (j+1) % C1 > 4: # maximum = 30 + 20 adds
+    if ((j+1) > lower_bound) and ((j+1) % C1 > 4): # maximum = 30 + 20 adds
         reduce_mod3_lazy(ac(i,1),ar(i,j,4),"r11")
     # reduce_mod3_full(ac(i,1),ar(i,j,4),"r11")
 
@@ -155,7 +156,7 @@ def end_strip_top (i) :
     print("	umlal	%s, %s, %s, %s" % (ac(i,2),ac(i,3),ar(i,j,0),ar(i,j,4)))
 
     # [2] reduction (before store)
-    if (j+2) % C1 > 4: # maximum = 30 + 20 adds
+    if ((j+2) > lower_bound) and ((j+2) % C1 > 4): # maximum = 30 + 20 adds
         reduce_mod3_lazy(ac(i,2),ar(i,j,4),"r11")
     #reduce_mod3_full(ac(i,2),ar(i,j,4),"r11")
 
@@ -168,7 +169,7 @@ def end_strip_top (i) :
     print("	umlal	%s, %s, %s, %s" % (ac(i,3),ac(i,4),ar(i,j,0),ar(i,j,4)))
     
     # [3] reduction (before store)
-    if (j+3) % C1 > 4: # maximum = 30 + 20 adds
+    if ((j+3) > lower_bound) and ((j+3) % C1 > 4): # maximum = 30 + 20 adds
         reduce_mod3_lazy(ac(i,3),ar(i,j,4),"r11")
     # reduce_mod3_full(ac(i,3),ar(i,j,4),"r11")
 
@@ -184,9 +185,10 @@ def end_strip_top (i) :
 def end_strip_bot (i) :
     j = 4 * i - N // 4 +4
     blocks_count = N//4-j
+    lower_bound = 7
     print("	// ([%d-%d],%d),([%d-%d],%d),(%d,%d) blocks" % (N//4-3,N//4-1,j-1,N//4-2,N//4-1,j-2,N//4-1,j-3))
-    if ((N//4-j) % C2 != C2 - 1) :
-        reduce_mod3_lazy(ac(i,4),ar(i,j,4),"r11")
+    # if ((N//4-j) % C2 != C2 - 1) :
+    #     reduce_mod3_lazy(ac(i,4),ar(i,j,4),"r11")
 
     print("	ldr	%s, [r12, #%d]" % (ar(i,j,4), 16*i-N+12))
     print("	umlal	%s, %s, %s, %s" % (ac(i,2),ac(i,3),ar(i,j,3),ar(i,j,4)))
@@ -194,7 +196,7 @@ def end_strip_bot (i) :
     print("	umlal	%s, %s, %s, %s" % (ac(i,0),ac(i,1),ar(i,j,1),ar(i,j,4)))
     
     # [3] reduction (before store)
-    if (blocks_count+1) % C1 > 5: # maximum = 30 + 20 adds (5 blocks)
+    if (blocks_count+1 > lower_bound) and ((blocks_count+1) % C1 > 5): # maximum = 30 + 20 adds (5 blocks)
         reduce_mod3_lazy(ac(i,3),ar(i,j,4),"r11")
     # reduce_mod3_full(ac(i,3),ar(i,j,4),"r11")
 
@@ -208,7 +210,7 @@ def end_strip_bot (i) :
     print("	umlal	%s, %s, %s, %s" % (ac(i,0),ac(i,1),ar(i,j,2),ar(i,j,4)))
     
     # [2] reduction (before store)
-    if (blocks_count+2) % C1 > 5: # maximum = 30 + 20 adds (5 blocks)
+    if (blocks_count+2 > lower_bound) and ((blocks_count+2) % C1 > 5): # maximum = 30 + 20 adds (5 blocks)
         reduce_mod3_lazy(ac(i,2),ar(i,j,4),"r11")
     # reduce_mod3_full(ac(i,2),ar(i,j,4),"r11")
 
@@ -220,9 +222,10 @@ def end_strip_bot (i) :
     print("	umlal	%s, %s, %s, %s" % (ac(i,0),ac(i,1),ar(i,j,3),ar(i,j,4)))
     
     # [0,1] reduction (before store)
-    if (blocks_count+2) % C1 > 5: # maximum = 30 + 20 adds (5 blocks)
-        reduce_mod3_lazy(ac(i,0),ar(i,j,4),"r11")
+    if (blocks_count+3 > lower_bound) and ((blocks_count+3) % C1 > 5): # maximum = 30 + 20 adds (5 blocks)
         reduce_mod3_lazy(ac(i,1),ar(i,j,4),"r11")
+    if (blocks_count+4 > lower_bound) and ((blocks_count+4) % C1 > 5): # maximum = 30 + 20 adds (5 blocks)
+        reduce_mod3_lazy(ac(i,0),ar(i,j,4),"r11")
     # reduce_mod3_full(ac(i,0),ar(i,j,4),"r11")
     # reduce_mod3_full(ac(i,1),ar(i,j,4),"r11")
 
