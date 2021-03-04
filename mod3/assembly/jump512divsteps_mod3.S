@@ -8792,7 +8792,9 @@ __gf_polymul_256x256_2x2_x_2x2_mod3:
 	push.w {r3-r12,lr}
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
-	sub.w sp, #4100
+	movw.w r12, #4100
+	movt.w r12, #0
+	sub.w sp, r12
 	mov.w r0, sp
 	movw.w lr, #0
 	str.w lr, [r0], #1
@@ -8935,5 +8937,7 @@ add_loop_2x2_256:
 	sel.w r3, r12, r3 // select
 	str.w r3, [r0, #4]
 	str.w r2, [r0], #8
-	add.w sp, #4100
+	movw.w r12, #4100
+	movt.w r12, #0
+	add.w sp, r12
 	pop.w {r3-r12,pc}

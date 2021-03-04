@@ -70,10 +70,14 @@ def main(merge = False):
     printIn("vmov.w %s, %s" % (s_M2, M2))
 
     # stack initial
-    printIn("mov.w lr, #0")
-    printIn("movw.w lr, #0")
-    printIn("sub.w sp, #%d" % (STACK_SPACE))
+    if coeffi == 256:
+        printIn("movw.w r12, #%d" % (STACK_SPACE))
+        printIn("movt.w r12, #0")
+        printIn("sub.w sp, r12")
+    else:
+        printIn("sub.w sp, #%d" % (STACK_SPACE))
     printIn("mov.w r0, sp")
+    printIn("movw.w lr, #0")
     printIn("str.w lr, [r0], #1")
 
     # 1
@@ -152,5 +156,10 @@ def main(merge = False):
         tmp_arr = h1[:remainder]
         reduce_str(tmp_arr)
     
-    printIn("add.w sp, #%d" % (STACK_SPACE))
+    if coeffi == 256:
+        printIn("movw.w r12, #%d" % (STACK_SPACE))
+        printIn("movt.w r12, #0")
+        printIn("add.w sp, r12")
+    else:
+        printIn("add.w sp, #%d" % (STACK_SPACE))
     u.epilogue_mod3(f_regs)
