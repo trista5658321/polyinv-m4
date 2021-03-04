@@ -7,6 +7,7 @@ import x2p2.j32_x2p2_mod3 as j32_p
 import x2p2.jN_x2p2_mod3 as jN_p
 import _2x2.j16_2x2_mod3 as j16_2x2
 import _2x2.j32_2x2_mod3 as j32_2x2
+import _2x2.jN_2x2_mod3 as jN_2x2
 
 if LENGTH*2 == 16:
     j16_p.main()
@@ -18,4 +19,4 @@ if LENGTH*2 == 32:
 
 if LENGTH*2 >= 64:
     jN_p.main()
-    # j32_2x2.main()
+    jN_2x2.main(True)
