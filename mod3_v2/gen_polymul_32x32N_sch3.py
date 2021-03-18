@@ -30,30 +30,38 @@ def main():
     for i in range(1, 26):
         coeffi = 32 * i
         __polymul_name = "__polymul_32x" + str(coeffi)
-        u._func_head(__polymul_name, polymul, coeffi, C1, C2)
+        print(".p2align 2,,3")
+        print(".syntax unified")
+        print(".text")
+        print(".global " + __polymul_name + "")
+        print(".type  " + __polymul_name + ", %function")
+        print(__polymul_name + ":")
+        printIn("push.w {lr}")
+        polymul(coeffi, C1, C2)
+        printIn("pop.w {pc}")
 
-    f_name = "__jump1536_mod3"
-    f_params = "(int minusdelta, int32_t *M, int32_t *f, int32_t *g)"
-    f_regs = "r4-r12"
-    u.prologue_mod3(f_name, f_params, f_regs)
+    # f_name = "__jump1536_mod3"
+    # f_params = "(int minusdelta, int32_t *M, int32_t *f, int32_t *g)"
+    # f_regs = "r4-r12"
+    # u.prologue_mod3(f_name, f_params, f_regs)
 
-    coeffi = 800
-    __polymul_name = "__polymul_32x" + str(coeffi)
+    # coeffi = 800
+    # __polymul_name = "__polymul_32x" + str(coeffi)
 
-    printIn("vmov.w s0, r0")
-    u.bl_polymul(__polymul_name)
+    # printIn("vmov.w s0, r0")
+    # u.bl_polymul(__polymul_name)
 
-    #
-    printIn("vmov.w r0, s0")
-    printIn("add.w lr, r0, #832")
-    print("reduction3:")
-    rs = ["r" + str(x) for x in range(2,6)]
-    for i in range(len(rs)):
-        printIn("ldr.w %s, [%s, #%d]" % (rs[i], "r0", 4*i))
-    reduce_str(rs)
-    printIn("cmp.w lr, r0")
-    printIn("bne.w reduction3")
+    # #
+    # printIn("vmov.w r0, s0")
+    # printIn("add.w lr, r0, #832")
+    # print("reduction3:")
+    # rs = ["r" + str(x) for x in range(2,6)]
+    # for i in range(len(rs)):
+    #     printIn("ldr.w %s, [%s, #%d]" % (rs[i], "r0", 4*i))
+    # reduce_str(rs)
+    # printIn("cmp.w lr, r0")
+    # printIn("bne.w reduction3")
 
-    u.epilogue_mod3(f_regs)
+    # u.epilogue_mod3(f_regs)
 
 main()

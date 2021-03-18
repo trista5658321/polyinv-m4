@@ -1,6 +1,8 @@
 .p2align 2,,3
 .syntax unified
 .text
+.global __polymul_32x32
+.type  __polymul_32x32, %function
 __polymul_32x32:
 	push.w {lr}
  // increasing thread length
@@ -163,6 +165,8 @@ __polymul_32x32:
 .p2align 2,,3
 .syntax unified
 .text
+.global __polymul_32x64
+.type  __polymul_32x64, %function
 __polymul_32x64:
 	push.w {lr}
  // increasing thread length
@@ -484,6 +488,8 @@ __polymul_32x64:
 .p2align 2,,3
 .syntax unified
 .text
+.global __polymul_32x96
+.type  __polymul_32x96, %function
 __polymul_32x96:
 	push.w {lr}
  // increasing thread length
@@ -946,6 +952,8 @@ __polymul_32x96:
 .p2align 2,,3
 .syntax unified
 .text
+.global __polymul_32x128
+.type  __polymul_32x128, %function
 __polymul_32x128:
 	push.w {lr}
  // increasing thread length
@@ -1573,6 +1581,8 @@ __polymul_32x128:
 .p2align 2,,3
 .syntax unified
 .text
+.global __polymul_32x160
+.type  __polymul_32x160, %function
 __polymul_32x160:
 	push.w {lr}
  // increasing thread length
@@ -2335,6 +2345,8 @@ __polymul_32x160:
 .p2align 2,,3
 .syntax unified
 .text
+.global __polymul_32x192
+.type  __polymul_32x192, %function
 __polymul_32x192:
 	push.w {lr}
  // increasing thread length
@@ -3256,6 +3268,8 @@ __polymul_32x192:
 .p2align 2,,3
 .syntax unified
 .text
+.global __polymul_32x224
+.type  __polymul_32x224, %function
 __polymul_32x224:
 	push.w {lr}
  // increasing thread length
@@ -4318,6 +4332,8 @@ __polymul_32x224:
 .p2align 2,,3
 .syntax unified
 .text
+.global __polymul_32x256
+.type  __polymul_32x256, %function
 __polymul_32x256:
 	push.w {lr}
  // increasing thread length
@@ -5530,6 +5546,8 @@ __polymul_32x256:
 .p2align 2,,3
 .syntax unified
 .text
+.global __polymul_32x288
+.type  __polymul_32x288, %function
 __polymul_32x288:
 	push.w {lr}
  // increasing thread length
@@ -6901,6 +6919,8 @@ __polymul_32x288:
 .p2align 2,,3
 .syntax unified
 .text
+.global __polymul_32x320
+.type  __polymul_32x320, %function
 __polymul_32x320:
 	push.w {lr}
  // increasing thread length
@@ -8413,6 +8433,8 @@ __polymul_32x320:
 .p2align 2,,3
 .syntax unified
 .text
+.global __polymul_32x352
+.type  __polymul_32x352, %function
 __polymul_32x352:
 	push.w {lr}
  // increasing thread length
@@ -10090,6 +10112,8 @@ __polymul_32x352:
 .p2align 2,,3
 .syntax unified
 .text
+.global __polymul_32x384
+.type  __polymul_32x384, %function
 __polymul_32x384:
 	push.w {lr}
  // increasing thread length
@@ -11902,6 +11926,8 @@ __polymul_32x384:
 .p2align 2,,3
 .syntax unified
 .text
+.global __polymul_32x416
+.type  __polymul_32x416, %function
 __polymul_32x416:
 	push.w {lr}
  // increasing thread length
@@ -13873,6 +13899,8 @@ __polymul_32x416:
 .p2align 2,,3
 .syntax unified
 .text
+.global __polymul_32x448
+.type  __polymul_32x448, %function
 __polymul_32x448:
 	push.w {lr}
  // increasing thread length
@@ -15985,6 +16013,8 @@ __polymul_32x448:
 .p2align 2,,3
 .syntax unified
 .text
+.global __polymul_32x480
+.type  __polymul_32x480, %function
 __polymul_32x480:
 	push.w {lr}
  // increasing thread length
@@ -18247,6 +18277,8 @@ __polymul_32x480:
 .p2align 2,,3
 .syntax unified
 .text
+.global __polymul_32x512
+.type  __polymul_32x512, %function
 __polymul_32x512:
 	push.w {lr}
  // increasing thread length
@@ -20668,6 +20700,8 @@ __polymul_32x512:
 .p2align 2,,3
 .syntax unified
 .text
+.global __polymul_32x544
+.type  __polymul_32x544, %function
 __polymul_32x544:
 	push.w {lr}
  // increasing thread length
@@ -23230,6 +23264,8 @@ __polymul_32x544:
 .p2align 2,,3
 .syntax unified
 .text
+.global __polymul_32x576
+.type  __polymul_32x576, %function
 __polymul_32x576:
 	push.w {lr}
  // increasing thread length
@@ -25957,6 +25993,8 @@ __polymul_32x576:
 .p2align 2,,3
 .syntax unified
 .text
+.global __polymul_32x608
+.type  __polymul_32x608, %function
 __polymul_32x608:
 	push.w {lr}
  // increasing thread length
@@ -28819,6 +28857,8 @@ __polymul_32x608:
 .p2align 2,,3
 .syntax unified
 .text
+.global __polymul_32x640
+.type  __polymul_32x640, %function
 __polymul_32x640:
 	push.w {lr}
  // increasing thread length
@@ -31840,6 +31880,8 @@ __polymul_32x640:
 .p2align 2,,3
 .syntax unified
 .text
+.global __polymul_32x672
+.type  __polymul_32x672, %function
 __polymul_32x672:
 	push.w {lr}
  // increasing thread length
@@ -35002,6 +35044,8 @@ __polymul_32x672:
 .p2align 2,,3
 .syntax unified
 .text
+.global __polymul_32x704
+.type  __polymul_32x704, %function
 __polymul_32x704:
 	push.w {lr}
  // increasing thread length
@@ -38314,6 +38358,8 @@ __polymul_32x704:
 .p2align 2,,3
 .syntax unified
 .text
+.global __polymul_32x736
+.type  __polymul_32x736, %function
 __polymul_32x736:
 	push.w {lr}
  // increasing thread length
@@ -41785,6 +41831,8 @@ __polymul_32x736:
 .p2align 2,,3
 .syntax unified
 .text
+.global __polymul_32x768
+.type  __polymul_32x768, %function
 __polymul_32x768:
 	push.w {lr}
  // increasing thread length
@@ -45397,6 +45445,8 @@ __polymul_32x768:
 .p2align 2,,3
 .syntax unified
 .text
+.global __polymul_32x800
+.type  __polymul_32x800, %function
 __polymul_32x800:
 	push.w {lr}
  // increasing thread length
@@ -49171,71 +49221,3 @@ __polymul_32x800:
 	str.w r8, [r0, #12]
 	str.w r10, [r0], #16
 	pop.w {pc}
-// void __jump1536_mod3 (int minusdelta, int32_t *M, int32_t *f, int32_t *g);
-.p2align 2,,3
-.syntax unified
-.text
-.global __jump1536_mod3
-.type __jump1536_mod3, %function
-__jump1536_mod3:
-	push.w {r4-r12,lr}
-	vmov.w s0, r0
-	bl __polymul_32x800
-	vmov.w r0, s0
-	add.w lr, r0, #832
-reduction3:
-	ldr.w r2, [r0, #0]
-	ldr.w r3, [r0, #4]
-	ldr.w r4, [r0, #8]
-	ldr.w r5, [r0, #12]
-	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
-	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
-	add.w r2, r2, r12, LSR #4 // range < 31
-	bic.w r12, r2, r11 // top 3b < 8
-	and.w r2, r2, r11 // bot 2b < 4
-	add.w r2, r2, r12, LSR #2 // range <=10
-	bic.w r12, r2, r11 // top 3b < 3
-	and.w r2, r2, r11 // bot 2b < 4
-	add.w r2, r2, r12, LSR #2 // range <=5
-	usub8.w r12, r2, r11 // >= 3 ?
-	sel.w r2, r12, r2 // select
-	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
-	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
-	add.w r3, r3, r12, LSR #4 // range < 31
-	bic.w r12, r3, r11 // top 3b < 8
-	and.w r3, r3, r11 // bot 2b < 4
-	add.w r3, r3, r12, LSR #2 // range <=10
-	bic.w r12, r3, r11 // top 3b < 3
-	and.w r3, r3, r11 // bot 2b < 4
-	add.w r3, r3, r12, LSR #2 // range <=5
-	usub8.w r12, r3, r11 // >= 3 ?
-	sel.w r3, r12, r3 // select
-	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
-	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
-	add.w r4, r4, r12, LSR #4 // range < 31
-	bic.w r12, r4, r11 // top 3b < 8
-	and.w r4, r4, r11 // bot 2b < 4
-	add.w r4, r4, r12, LSR #2 // range <=10
-	bic.w r12, r4, r11 // top 3b < 3
-	and.w r4, r4, r11 // bot 2b < 4
-	add.w r4, r4, r12, LSR #2 // range <=5
-	usub8.w r12, r4, r11 // >= 3 ?
-	sel.w r4, r12, r4 // select
-	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
-	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
-	add.w r5, r5, r12, LSR #4 // range < 31
-	bic.w r12, r5, r11 // top 3b < 8
-	and.w r5, r5, r11 // bot 2b < 4
-	add.w r5, r5, r12, LSR #2 // range <=10
-	bic.w r12, r5, r11 // top 3b < 3
-	and.w r5, r5, r11 // bot 2b < 4
-	add.w r5, r5, r12, LSR #2 // range <=5
-	usub8.w r12, r5, r11 // >= 3 ?
-	sel.w r5, r12, r5 // select
-	str.w r3, [r0, #4]
-	str.w r4, [r0, #8]
-	str.w r5, [r0, #12]
-	str.w r2, [r0], #16
-	cmp.w lr, r0
-	bne.w reduction3
-	pop.w {r4-r12,pc}

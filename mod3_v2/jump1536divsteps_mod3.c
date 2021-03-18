@@ -130,7 +130,7 @@ int jump1536divsteps_mod3(int minusdelta, int32_t *M, int32_t *f, int32_t *g){
         // print_poly_byte(M1, "M2", 101, 96);
         // print_poly_byte(f, "f", 768, 0);
 
-        update_fg(f, g, M1+16);
+        __update_fg_32x768(f, g, M1+16);
         update_VS(V, S, M1+16);
         // print_poly_byte(V, "V", 5, 0);
     }
@@ -138,8 +138,32 @@ int jump1536divsteps_mod3(int minusdelta, int32_t *M, int32_t *f, int32_t *g){
         minusdelta = jump32divsteps_mod3(minusdelta,M1,f,g);
         // print_poly_byte(M1, "M2", 101, 96);
         // print_poly_byte(f, "f", 768, 0);
-
-        update_fg(f, g, M1+16);
+        if (i == 0) __update_fg_32x768(f, g, M1+16);
+        else if (i == 1) __update_fg_32x736(f, g, M1+16);
+        else if (i == 2) __update_fg_32x704(f, g, M1+16);
+        else if (i == 3) __update_fg_32x672(f, g, M1+16);
+        else if (i == 4) __update_fg_32x640(f, g, M1+16);
+        else if (i == 5) __update_fg_32x608(f, g, M1+16);
+        else if (i == 6) __update_fg_32x576(f, g, M1+16);
+        else if (i == 7) __update_fg_32x544(f, g, M1+16);
+        else if (i == 8) __update_fg_32x512(f, g, M1+16);
+        else if (i == 9) __update_fg_32x480(f, g, M1+16);
+        else if (i == 10) __update_fg_32x448(f, g, M1+16);
+        else if (i == 11) __update_fg_32x416(f, g, M1+16);
+        else if (i == 12) __update_fg_32x384(f, g, M1+16);
+        else if (i == 13) __update_fg_32x352(f, g, M1+16);
+        else if (i == 14) __update_fg_32x320(f, g, M1+16);
+        else if (i == 15) __update_fg_32x288(f, g, M1+16);
+        else if (i == 16) __update_fg_32x256(f, g, M1+16);
+        else if (i == 17) __update_fg_32x224(f, g, M1+16);
+        else if (i == 18) __update_fg_32x192(f, g, M1+16);
+        else if (i == 19) __update_fg_32x160(f, g, M1+16);
+        else if (i == 20) __update_fg_32x128(f, g, M1+16);
+        else if (i == 21) __update_fg_32x96(f, g, M1+16);
+        else if (i == 22) __update_fg_32x64(f, g, M1+16);
+        else if (i == 23) __update_fg_32x32(f, g, M1+16);
+        else update_fg(f, g, M1+16);
+        
         update_VS_800(V, S, M1+16);
         // print_poly_byte(V, "V", 5, 0);
     }
