@@ -6,6 +6,7 @@
 .type __update_fg_32x32, %function
 __update_fg_32x32:
 	push.w {r3-r12,lr}
+	ldr r11, =0x03030303
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #260
@@ -41,10 +42,21 @@ add_loop_32:
 	ldr.w r7, [r10, #196]
 	ldr.w r8, [r10, #200]
 	ldr.w r9, [r10, #204]
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -53,6 +65,9 @@ add_loop_32:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -61,6 +76,9 @@ add_loop_32:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -69,6 +87,9 @@ add_loop_32:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -89,10 +110,21 @@ add_loop_32:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -101,6 +133,9 @@ add_loop_32:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -109,6 +144,9 @@ add_loop_32:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -117,6 +155,9 @@ add_loop_32:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -141,6 +182,7 @@ add_loop_32:
 .type __update_fg_32x64, %function
 __update_fg_32x64:
 	push.w {r3-r12,lr}
+	ldr r11, =0x03030303
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #388
@@ -176,10 +218,21 @@ add_loop_64:
 	ldr.w r7, [r10, #292]
 	ldr.w r8, [r10, #296]
 	ldr.w r9, [r10, #300]
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -188,6 +241,9 @@ add_loop_64:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -196,6 +252,9 @@ add_loop_64:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -204,6 +263,9 @@ add_loop_64:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -224,10 +286,21 @@ add_loop_64:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -236,6 +309,9 @@ add_loop_64:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -244,6 +320,9 @@ add_loop_64:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -252,6 +331,9 @@ add_loop_64:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -276,6 +358,7 @@ add_loop_64:
 .type __update_fg_32x96, %function
 __update_fg_32x96:
 	push.w {r3-r12,lr}
+	ldr r11, =0x03030303
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #516
@@ -311,10 +394,21 @@ add_loop_96:
 	ldr.w r7, [r10, #388]
 	ldr.w r8, [r10, #392]
 	ldr.w r9, [r10, #396]
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -323,6 +417,9 @@ add_loop_96:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -331,6 +428,9 @@ add_loop_96:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -339,6 +439,9 @@ add_loop_96:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -359,10 +462,21 @@ add_loop_96:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -371,6 +485,9 @@ add_loop_96:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -379,6 +496,9 @@ add_loop_96:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -387,6 +507,9 @@ add_loop_96:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -411,6 +534,7 @@ add_loop_96:
 .type __update_fg_32x128, %function
 __update_fg_32x128:
 	push.w {r3-r12,lr}
+	ldr r11, =0x03030303
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #644
@@ -446,10 +570,21 @@ add_loop_128:
 	ldr.w r7, [r10, #484]
 	ldr.w r8, [r10, #488]
 	ldr.w r9, [r10, #492]
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -458,6 +593,9 @@ add_loop_128:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -466,6 +604,9 @@ add_loop_128:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -474,6 +615,9 @@ add_loop_128:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -494,10 +638,21 @@ add_loop_128:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -506,6 +661,9 @@ add_loop_128:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -514,6 +672,9 @@ add_loop_128:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -522,6 +683,9 @@ add_loop_128:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -546,6 +710,7 @@ add_loop_128:
 .type __update_fg_32x160, %function
 __update_fg_32x160:
 	push.w {r3-r12,lr}
+	ldr r11, =0x03030303
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #772
@@ -581,10 +746,21 @@ add_loop_160:
 	ldr.w r7, [r10, #580]
 	ldr.w r8, [r10, #584]
 	ldr.w r9, [r10, #588]
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -593,6 +769,9 @@ add_loop_160:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -601,6 +780,9 @@ add_loop_160:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -609,6 +791,9 @@ add_loop_160:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -629,10 +814,21 @@ add_loop_160:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -641,6 +837,9 @@ add_loop_160:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -649,6 +848,9 @@ add_loop_160:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -657,6 +859,9 @@ add_loop_160:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -681,6 +886,7 @@ add_loop_160:
 .type __update_fg_32x192, %function
 __update_fg_32x192:
 	push.w {r3-r12,lr}
+	ldr r11, =0x03030303
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #900
@@ -716,10 +922,21 @@ add_loop_192:
 	ldr.w r7, [r10, #676]
 	ldr.w r8, [r10, #680]
 	ldr.w r9, [r10, #684]
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -728,6 +945,9 @@ add_loop_192:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -736,6 +956,9 @@ add_loop_192:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -744,6 +967,9 @@ add_loop_192:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -764,10 +990,21 @@ add_loop_192:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -776,6 +1013,9 @@ add_loop_192:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -784,6 +1024,9 @@ add_loop_192:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -792,6 +1035,9 @@ add_loop_192:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -816,6 +1062,7 @@ add_loop_192:
 .type __update_fg_32x224, %function
 __update_fg_32x224:
 	push.w {r3-r12,lr}
+	ldr r11, =0x03030303
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #1028
@@ -851,10 +1098,21 @@ add_loop_224:
 	ldr.w r7, [r10, #772]
 	ldr.w r8, [r10, #776]
 	ldr.w r9, [r10, #780]
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -863,6 +1121,9 @@ add_loop_224:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -871,6 +1132,9 @@ add_loop_224:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -879,6 +1143,9 @@ add_loop_224:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -899,10 +1166,21 @@ add_loop_224:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -911,6 +1189,9 @@ add_loop_224:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -919,6 +1200,9 @@ add_loop_224:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -927,6 +1211,9 @@ add_loop_224:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -951,6 +1238,7 @@ add_loop_224:
 .type __update_fg_32x256, %function
 __update_fg_32x256:
 	push.w {r3-r12,lr}
+	ldr r11, =0x03030303
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #1156
@@ -986,10 +1274,21 @@ add_loop_256:
 	ldr.w r7, [r10, #868]
 	ldr.w r8, [r10, #872]
 	ldr.w r9, [r10, #876]
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -998,6 +1297,9 @@ add_loop_256:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -1006,6 +1308,9 @@ add_loop_256:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -1014,6 +1319,9 @@ add_loop_256:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -1034,10 +1342,21 @@ add_loop_256:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -1046,6 +1365,9 @@ add_loop_256:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -1054,6 +1376,9 @@ add_loop_256:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -1062,6 +1387,9 @@ add_loop_256:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -1086,6 +1414,7 @@ add_loop_256:
 .type __update_fg_32x288, %function
 __update_fg_32x288:
 	push.w {r3-r12,lr}
+	ldr r11, =0x03030303
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #1284
@@ -1121,10 +1450,21 @@ add_loop_288:
 	ldr.w r7, [r10, #964]
 	ldr.w r8, [r10, #968]
 	ldr.w r9, [r10, #972]
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -1133,6 +1473,9 @@ add_loop_288:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -1141,6 +1484,9 @@ add_loop_288:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -1149,6 +1495,9 @@ add_loop_288:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -1169,10 +1518,21 @@ add_loop_288:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -1181,6 +1541,9 @@ add_loop_288:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -1189,6 +1552,9 @@ add_loop_288:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -1197,6 +1563,9 @@ add_loop_288:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -1221,6 +1590,7 @@ add_loop_288:
 .type __update_fg_32x320, %function
 __update_fg_32x320:
 	push.w {r3-r12,lr}
+	ldr r11, =0x03030303
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #1412
@@ -1256,10 +1626,21 @@ add_loop_320:
 	ldr.w r7, [r10, #1060]
 	ldr.w r8, [r10, #1064]
 	ldr.w r9, [r10, #1068]
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -1268,6 +1649,9 @@ add_loop_320:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -1276,6 +1660,9 @@ add_loop_320:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -1284,6 +1671,9 @@ add_loop_320:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -1304,10 +1694,21 @@ add_loop_320:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -1316,6 +1717,9 @@ add_loop_320:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -1324,6 +1728,9 @@ add_loop_320:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -1332,6 +1739,9 @@ add_loop_320:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -1356,6 +1766,7 @@ add_loop_320:
 .type __update_fg_32x352, %function
 __update_fg_32x352:
 	push.w {r3-r12,lr}
+	ldr r11, =0x03030303
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #1540
@@ -1391,10 +1802,21 @@ add_loop_352:
 	ldr.w r7, [r10, #1156]
 	ldr.w r8, [r10, #1160]
 	ldr.w r9, [r10, #1164]
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -1403,6 +1825,9 @@ add_loop_352:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -1411,6 +1836,9 @@ add_loop_352:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -1419,6 +1847,9 @@ add_loop_352:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -1439,10 +1870,21 @@ add_loop_352:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -1451,6 +1893,9 @@ add_loop_352:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -1459,6 +1904,9 @@ add_loop_352:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -1467,6 +1915,9 @@ add_loop_352:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -1491,6 +1942,7 @@ add_loop_352:
 .type __update_fg_32x384, %function
 __update_fg_32x384:
 	push.w {r3-r12,lr}
+	ldr r11, =0x03030303
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #1668
@@ -1526,10 +1978,21 @@ add_loop_384:
 	ldr.w r7, [r10, #1252]
 	ldr.w r8, [r10, #1256]
 	ldr.w r9, [r10, #1260]
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -1538,6 +2001,9 @@ add_loop_384:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -1546,6 +2012,9 @@ add_loop_384:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -1554,6 +2023,9 @@ add_loop_384:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -1574,10 +2046,21 @@ add_loop_384:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -1586,6 +2069,9 @@ add_loop_384:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -1594,6 +2080,9 @@ add_loop_384:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -1602,6 +2091,9 @@ add_loop_384:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -1626,6 +2118,7 @@ add_loop_384:
 .type __update_fg_32x416, %function
 __update_fg_32x416:
 	push.w {r3-r12,lr}
+	ldr r11, =0x03030303
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #1796
@@ -1661,10 +2154,21 @@ add_loop_416:
 	ldr.w r7, [r10, #1348]
 	ldr.w r8, [r10, #1352]
 	ldr.w r9, [r10, #1356]
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -1673,6 +2177,9 @@ add_loop_416:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -1681,6 +2188,9 @@ add_loop_416:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -1689,6 +2199,9 @@ add_loop_416:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -1709,10 +2222,21 @@ add_loop_416:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -1721,6 +2245,9 @@ add_loop_416:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -1729,6 +2256,9 @@ add_loop_416:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -1737,6 +2267,9 @@ add_loop_416:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -1761,6 +2294,7 @@ add_loop_416:
 .type __update_fg_32x448, %function
 __update_fg_32x448:
 	push.w {r3-r12,lr}
+	ldr r11, =0x03030303
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #1924
@@ -1796,10 +2330,21 @@ add_loop_448:
 	ldr.w r7, [r10, #1444]
 	ldr.w r8, [r10, #1448]
 	ldr.w r9, [r10, #1452]
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -1808,6 +2353,9 @@ add_loop_448:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -1816,6 +2364,9 @@ add_loop_448:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -1824,6 +2375,9 @@ add_loop_448:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -1844,10 +2398,21 @@ add_loop_448:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -1856,6 +2421,9 @@ add_loop_448:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -1864,6 +2432,9 @@ add_loop_448:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -1872,6 +2443,9 @@ add_loop_448:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -1896,6 +2470,7 @@ add_loop_448:
 .type __update_fg_32x480, %function
 __update_fg_32x480:
 	push.w {r3-r12,lr}
+	ldr r11, =0x03030303
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #2052
@@ -1931,10 +2506,21 @@ add_loop_480:
 	ldr.w r7, [r10, #1540]
 	ldr.w r8, [r10, #1544]
 	ldr.w r9, [r10, #1548]
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -1943,6 +2529,9 @@ add_loop_480:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -1951,6 +2540,9 @@ add_loop_480:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -1959,6 +2551,9 @@ add_loop_480:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -1979,10 +2574,21 @@ add_loop_480:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -1991,6 +2597,9 @@ add_loop_480:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -1999,6 +2608,9 @@ add_loop_480:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -2007,6 +2619,9 @@ add_loop_480:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -2031,6 +2646,7 @@ add_loop_480:
 .type __update_fg_32x512, %function
 __update_fg_32x512:
 	push.w {r3-r12,lr}
+	ldr r11, =0x03030303
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #2180
@@ -2066,10 +2682,21 @@ add_loop_512:
 	ldr.w r7, [r10, #1636]
 	ldr.w r8, [r10, #1640]
 	ldr.w r9, [r10, #1644]
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -2078,6 +2705,9 @@ add_loop_512:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -2086,6 +2716,9 @@ add_loop_512:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -2094,6 +2727,9 @@ add_loop_512:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -2114,10 +2750,21 @@ add_loop_512:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -2126,6 +2773,9 @@ add_loop_512:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -2134,6 +2784,9 @@ add_loop_512:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -2142,6 +2795,9 @@ add_loop_512:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -2166,6 +2822,7 @@ add_loop_512:
 .type __update_fg_32x544, %function
 __update_fg_32x544:
 	push.w {r3-r12,lr}
+	ldr r11, =0x03030303
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #2308
@@ -2201,10 +2858,21 @@ add_loop_544:
 	ldr.w r7, [r10, #1732]
 	ldr.w r8, [r10, #1736]
 	ldr.w r9, [r10, #1740]
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -2213,6 +2881,9 @@ add_loop_544:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -2221,6 +2892,9 @@ add_loop_544:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -2229,6 +2903,9 @@ add_loop_544:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -2249,10 +2926,21 @@ add_loop_544:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -2261,6 +2949,9 @@ add_loop_544:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -2269,6 +2960,9 @@ add_loop_544:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -2277,6 +2971,9 @@ add_loop_544:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -2301,6 +2998,7 @@ add_loop_544:
 .type __update_fg_32x576, %function
 __update_fg_32x576:
 	push.w {r3-r12,lr}
+	ldr r11, =0x03030303
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #2436
@@ -2336,10 +3034,21 @@ add_loop_576:
 	ldr.w r7, [r10, #1828]
 	ldr.w r8, [r10, #1832]
 	ldr.w r9, [r10, #1836]
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -2348,6 +3057,9 @@ add_loop_576:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -2356,6 +3068,9 @@ add_loop_576:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -2364,6 +3079,9 @@ add_loop_576:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -2384,10 +3102,21 @@ add_loop_576:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -2396,6 +3125,9 @@ add_loop_576:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -2404,6 +3136,9 @@ add_loop_576:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -2412,6 +3147,9 @@ add_loop_576:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -2436,6 +3174,7 @@ add_loop_576:
 .type __update_fg_32x608, %function
 __update_fg_32x608:
 	push.w {r3-r12,lr}
+	ldr r11, =0x03030303
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #2564
@@ -2471,10 +3210,21 @@ add_loop_608:
 	ldr.w r7, [r10, #1924]
 	ldr.w r8, [r10, #1928]
 	ldr.w r9, [r10, #1932]
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -2483,6 +3233,9 @@ add_loop_608:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -2491,6 +3244,9 @@ add_loop_608:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -2499,6 +3255,9 @@ add_loop_608:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -2519,10 +3278,21 @@ add_loop_608:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -2531,6 +3301,9 @@ add_loop_608:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -2539,6 +3312,9 @@ add_loop_608:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -2547,6 +3323,9 @@ add_loop_608:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -2571,6 +3350,7 @@ add_loop_608:
 .type __update_fg_32x640, %function
 __update_fg_32x640:
 	push.w {r3-r12,lr}
+	ldr r11, =0x03030303
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #2692
@@ -2606,10 +3386,21 @@ add_loop_640:
 	ldr.w r7, [r10, #2020]
 	ldr.w r8, [r10, #2024]
 	ldr.w r9, [r10, #2028]
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -2618,6 +3409,9 @@ add_loop_640:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -2626,6 +3420,9 @@ add_loop_640:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -2634,6 +3431,9 @@ add_loop_640:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -2654,10 +3454,21 @@ add_loop_640:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -2666,6 +3477,9 @@ add_loop_640:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -2674,6 +3488,9 @@ add_loop_640:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -2682,6 +3499,9 @@ add_loop_640:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -2706,6 +3526,7 @@ add_loop_640:
 .type __update_fg_32x672, %function
 __update_fg_32x672:
 	push.w {r3-r12,lr}
+	ldr r11, =0x03030303
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #2820
@@ -2741,10 +3562,21 @@ add_loop_672:
 	ldr.w r7, [r10, #2116]
 	ldr.w r8, [r10, #2120]
 	ldr.w r9, [r10, #2124]
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -2753,6 +3585,9 @@ add_loop_672:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -2761,6 +3596,9 @@ add_loop_672:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -2769,6 +3607,9 @@ add_loop_672:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -2789,10 +3630,21 @@ add_loop_672:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -2801,6 +3653,9 @@ add_loop_672:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -2809,6 +3664,9 @@ add_loop_672:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -2817,6 +3675,9 @@ add_loop_672:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -2841,6 +3702,7 @@ add_loop_672:
 .type __update_fg_32x704, %function
 __update_fg_32x704:
 	push.w {r3-r12,lr}
+	ldr r11, =0x03030303
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #2948
@@ -2876,10 +3738,21 @@ add_loop_704:
 	ldr.w r7, [r10, #2212]
 	ldr.w r8, [r10, #2216]
 	ldr.w r9, [r10, #2220]
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -2888,6 +3761,9 @@ add_loop_704:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -2896,6 +3772,9 @@ add_loop_704:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -2904,6 +3783,9 @@ add_loop_704:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -2924,10 +3806,21 @@ add_loop_704:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -2936,6 +3829,9 @@ add_loop_704:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -2944,6 +3840,9 @@ add_loop_704:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -2952,6 +3851,9 @@ add_loop_704:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -2976,6 +3878,7 @@ add_loop_704:
 .type __update_fg_32x736, %function
 __update_fg_32x736:
 	push.w {r3-r12,lr}
+	ldr r11, =0x03030303
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #3076
@@ -3011,10 +3914,21 @@ add_loop_736:
 	ldr.w r7, [r10, #2308]
 	ldr.w r8, [r10, #2312]
 	ldr.w r9, [r10, #2316]
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -3023,6 +3937,9 @@ add_loop_736:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -3031,6 +3948,9 @@ add_loop_736:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -3039,6 +3959,9 @@ add_loop_736:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -3059,10 +3982,21 @@ add_loop_736:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -3071,6 +4005,9 @@ add_loop_736:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -3079,6 +4016,9 @@ add_loop_736:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -3087,6 +4027,9 @@ add_loop_736:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -3111,6 +4054,7 @@ add_loop_736:
 .type __update_fg_32x768, %function
 __update_fg_32x768:
 	push.w {r3-r12,lr}
+	ldr r11, =0x03030303
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #3204
@@ -3146,10 +4090,21 @@ add_loop_768:
 	ldr.w r7, [r10, #2404]
 	ldr.w r8, [r10, #2408]
 	ldr.w r9, [r10, #2412]
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -3158,6 +4113,9 @@ add_loop_768:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -3166,6 +4124,9 @@ add_loop_768:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -3174,6 +4135,9 @@ add_loop_768:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10
@@ -3194,10 +4158,21 @@ add_loop_768:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
 	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
 	bic.w r12, r2, r11 // top 3b < 8
 	and.w r2, r2, r11 // bot 2b < 4
 	add.w r2, r2, r12, LSR #2 // range <=10
@@ -3206,6 +4181,9 @@ add_loop_768:
 	add.w r2, r2, r12, LSR #2 // range <=5
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
 	bic.w r12, r3, r11 // top 3b < 8
 	and.w r3, r3, r11 // bot 2b < 4
 	add.w r3, r3, r12, LSR #2 // range <=10
@@ -3214,6 +4192,9 @@ add_loop_768:
 	add.w r3, r3, r12, LSR #2 // range <=5
 	usub8.w r12, r3, r11 // >= 3 ?
 	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
 	bic.w r12, r4, r11 // top 3b < 8
 	and.w r4, r4, r11 // bot 2b < 4
 	add.w r4, r4, r12, LSR #2 // range <=10
@@ -3222,6 +4203,9 @@ add_loop_768:
 	add.w r4, r4, r12, LSR #2 // range <=5
 	usub8.w r12, r4, r11 // >= 3 ?
 	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
 	bic.w r12, r5, r11 // top 3b < 8
 	and.w r5, r5, r11 // bot 2b < 4
 	add.w r5, r5, r12, LSR #2 // range <=10

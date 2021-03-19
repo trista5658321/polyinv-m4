@@ -9,7 +9,6 @@ __polymul_32x32:
 	mov	r6, #0
 	mov	r12, r1
 	mov	r14, r2
-	ldr	r11, =0x03030303
  // later blocks
 	// ([0-3], 0) blocks
 	ldr	r5, [r12]
@@ -83,9 +82,6 @@ __polymul_32x32:
 	umlal	r7, r8, r1, r5
 	ldr	r5, [r12, #28]
 	umlal	r8, r9, r1, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -132,9 +128,6 @@ __polymul_32x32:
 	umlal	r9, r10, r2, r4
 	ldr	r4, [r12, #4]
 	umlal	r9, r10, r3, r4
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -173,7 +166,6 @@ __polymul_32x64:
 	mov	r6, #0
 	mov	r12, r1
 	mov	r14, r2
-	ldr	r11, =0x03030303
  // later blocks
 	// ([0-3], 0) blocks
 	ldr	r5, [r12]
@@ -247,9 +239,6 @@ __polymul_32x64:
 	umlal	r7, r8, r1, r5
 	ldr	r5, [r12, #28]
 	umlal	r8, r9, r1, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -313,18 +302,6 @@ __polymul_32x64:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -388,18 +365,6 @@ __polymul_32x64:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -441,23 +406,11 @@ __polymul_32x64:
 	umlal	r9, r10, r1, r2
 	umlal	r8, r9, r5, r2
 	umlal	r7, r8, r4, r2
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
-	and	r2, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r2, LSR #4	// range < 31
 	ldr	r2, [r12, #8]
 	umlal	r8, r9, r1, r2
 	umlal	r7, r8, r5, r2
 	ldr	r2, [r12, #4]
 	umlal	r7, r8, r1, r2
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -496,7 +449,6 @@ __polymul_32x96:
 	mov	r6, #0
 	mov	r12, r1
 	mov	r14, r2
-	ldr	r11, =0x03030303
  // later blocks
 	// ([0-3], 0) blocks
 	ldr	r5, [r12]
@@ -570,9 +522,6 @@ __polymul_32x96:
 	umlal	r7, r8, r1, r5
 	ldr	r5, [r12, #28]
 	umlal	r8, r9, r1, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -636,18 +585,6 @@ __polymul_32x96:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -711,18 +648,6 @@ __polymul_32x96:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -786,18 +711,6 @@ __polymul_32x96:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -861,18 +774,6 @@ __polymul_32x96:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -919,9 +820,6 @@ __polymul_32x96:
 	umlal	r10, r6, r3, r5
 	ldr	r5, [r12, #4]
 	umlal	r10, r6, r4, r5
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -960,7 +858,6 @@ __polymul_32x128:
 	mov	r6, #0
 	mov	r12, r1
 	mov	r14, r2
-	ldr	r11, =0x03030303
  // later blocks
 	// ([0-3], 0) blocks
 	ldr	r5, [r12]
@@ -1034,9 +931,6 @@ __polymul_32x128:
 	umlal	r7, r8, r1, r5
 	ldr	r5, [r12, #28]
 	umlal	r8, r9, r1, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -1100,18 +994,6 @@ __polymul_32x128:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -1175,18 +1057,6 @@ __polymul_32x128:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -1250,18 +1120,6 @@ __polymul_32x128:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -1325,18 +1183,6 @@ __polymul_32x128:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -1400,18 +1246,6 @@ __polymul_32x128:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -1475,18 +1309,6 @@ __polymul_32x128:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -1516,21 +1338,6 @@ __polymul_32x128:
 	umlal	r9, r10, r4, r2
 	umlal	r10, r6, r5, r2
 	umlal	r6, r7, r1, r2
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
-	and	r2, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r2, LSR #4	// range < 31
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
 	// ([28-31], 4) blocks
 	ldr	r3, [r12, #16]
 	ldr	r2, [r14, #124]
@@ -1548,9 +1355,6 @@ __polymul_32x128:
 	umlal	r8, r9, r1, r3
 	ldr	r3, [r12, #4]
 	umlal	r8, r9, r2, r3
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -1589,7 +1393,6 @@ __polymul_32x160:
 	mov	r6, #0
 	mov	r12, r1
 	mov	r14, r2
-	ldr	r11, =0x03030303
  // later blocks
 	// ([0-3], 0) blocks
 	ldr	r5, [r12]
@@ -1663,9 +1466,6 @@ __polymul_32x160:
 	umlal	r7, r8, r1, r5
 	ldr	r5, [r12, #28]
 	umlal	r8, r9, r1, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -1729,18 +1529,6 @@ __polymul_32x160:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -1804,18 +1592,6 @@ __polymul_32x160:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -1879,18 +1655,6 @@ __polymul_32x160:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -1954,18 +1718,6 @@ __polymul_32x160:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -2029,18 +1781,6 @@ __polymul_32x160:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -2104,18 +1844,6 @@ __polymul_32x160:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -2179,18 +1907,6 @@ __polymul_32x160:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -2254,18 +1970,6 @@ __polymul_32x160:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -2312,9 +2016,6 @@ __polymul_32x160:
 	umlal	r6, r7, r4, r1
 	ldr	r1, [r12, #4]
 	umlal	r6, r7, r5, r1
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -2353,7 +2054,6 @@ __polymul_32x192:
 	mov	r6, #0
 	mov	r12, r1
 	mov	r14, r2
-	ldr	r11, =0x03030303
  // later blocks
 	// ([0-3], 0) blocks
 	ldr	r5, [r12]
@@ -2427,9 +2127,6 @@ __polymul_32x192:
 	umlal	r7, r8, r1, r5
 	ldr	r5, [r12, #28]
 	umlal	r8, r9, r1, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -2493,18 +2190,6 @@ __polymul_32x192:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -2568,18 +2253,6 @@ __polymul_32x192:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -2643,18 +2316,6 @@ __polymul_32x192:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -2718,18 +2379,6 @@ __polymul_32x192:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -2793,18 +2442,6 @@ __polymul_32x192:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -2868,18 +2505,6 @@ __polymul_32x192:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -2943,18 +2568,6 @@ __polymul_32x192:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -3018,18 +2631,6 @@ __polymul_32x192:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -3093,18 +2694,6 @@ __polymul_32x192:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -3168,18 +2757,6 @@ __polymul_32x192:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -3226,9 +2803,6 @@ __polymul_32x192:
 	umlal	r9, r10, r2, r4
 	ldr	r4, [r12, #4]
 	umlal	r9, r10, r3, r4
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -3246,15 +2820,6 @@ __polymul_32x192:
 	umlal	r10, r6, r3, r4
 	umlal	r9, r10, r2, r4
 	umlal	r8, r9, r1, r4
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	ldr	r4, [r12, #24]
 	umlal	r9, r10, r3, r4
 	umlal	r8, r9, r2, r4
@@ -3276,7 +2841,6 @@ __polymul_32x224:
 	mov	r6, #0
 	mov	r12, r1
 	mov	r14, r2
-	ldr	r11, =0x03030303
  // later blocks
 	// ([0-3], 0) blocks
 	ldr	r5, [r12]
@@ -3350,9 +2914,6 @@ __polymul_32x224:
 	umlal	r7, r8, r1, r5
 	ldr	r5, [r12, #28]
 	umlal	r8, r9, r1, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -3416,18 +2977,6 @@ __polymul_32x224:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -3491,18 +3040,6 @@ __polymul_32x224:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -3566,18 +3103,6 @@ __polymul_32x224:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -3641,18 +3166,6 @@ __polymul_32x224:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -3716,18 +3229,6 @@ __polymul_32x224:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -3791,18 +3292,6 @@ __polymul_32x224:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -3866,18 +3355,6 @@ __polymul_32x224:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -3941,18 +3418,6 @@ __polymul_32x224:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -4016,18 +3481,6 @@ __polymul_32x224:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -4091,18 +3544,6 @@ __polymul_32x224:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -4166,18 +3607,6 @@ __polymul_32x224:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -4241,18 +3670,6 @@ __polymul_32x224:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -4299,9 +3716,6 @@ __polymul_32x224:
 	umlal	r7, r8, r5, r2
 	ldr	r2, [r12, #4]
 	umlal	r7, r8, r1, r2
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -4340,7 +3754,6 @@ __polymul_32x256:
 	mov	r6, #0
 	mov	r12, r1
 	mov	r14, r2
-	ldr	r11, =0x03030303
  // later blocks
 	// ([0-3], 0) blocks
 	ldr	r5, [r12]
@@ -4414,9 +3827,6 @@ __polymul_32x256:
 	umlal	r7, r8, r1, r5
 	ldr	r5, [r12, #28]
 	umlal	r8, r9, r1, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -4480,18 +3890,6 @@ __polymul_32x256:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -4555,18 +3953,6 @@ __polymul_32x256:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -4630,18 +4016,6 @@ __polymul_32x256:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -4705,18 +4079,6 @@ __polymul_32x256:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -4780,18 +4142,6 @@ __polymul_32x256:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -4855,18 +4205,6 @@ __polymul_32x256:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -4930,18 +4268,6 @@ __polymul_32x256:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -5005,18 +4331,6 @@ __polymul_32x256:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -5080,18 +4394,6 @@ __polymul_32x256:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -5155,18 +4457,6 @@ __polymul_32x256:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -5230,18 +4520,6 @@ __polymul_32x256:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -5305,18 +4583,6 @@ __polymul_32x256:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -5380,18 +4646,6 @@ __polymul_32x256:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -5455,18 +4709,6 @@ __polymul_32x256:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -5513,9 +4755,6 @@ __polymul_32x256:
 	umlal	r10, r6, r3, r5
 	ldr	r5, [r12, #4]
 	umlal	r10, r6, r4, r5
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -5554,7 +4793,6 @@ __polymul_32x288:
 	mov	r6, #0
 	mov	r12, r1
 	mov	r14, r2
-	ldr	r11, =0x03030303
  // later blocks
 	// ([0-3], 0) blocks
 	ldr	r5, [r12]
@@ -5628,9 +4866,6 @@ __polymul_32x288:
 	umlal	r7, r8, r1, r5
 	ldr	r5, [r12, #28]
 	umlal	r8, r9, r1, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -5694,18 +4929,6 @@ __polymul_32x288:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -5769,18 +4992,6 @@ __polymul_32x288:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -5844,18 +5055,6 @@ __polymul_32x288:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -5919,18 +5118,6 @@ __polymul_32x288:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -5994,18 +5181,6 @@ __polymul_32x288:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -6069,18 +5244,6 @@ __polymul_32x288:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -6144,18 +5307,6 @@ __polymul_32x288:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -6219,18 +5370,6 @@ __polymul_32x288:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -6294,18 +5433,6 @@ __polymul_32x288:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -6369,18 +5496,6 @@ __polymul_32x288:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -6444,18 +5559,6 @@ __polymul_32x288:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -6519,18 +5622,6 @@ __polymul_32x288:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -6594,18 +5685,6 @@ __polymul_32x288:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -6669,18 +5748,6 @@ __polymul_32x288:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -6744,18 +5811,6 @@ __polymul_32x288:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -6819,18 +5874,6 @@ __polymul_32x288:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -6872,23 +5915,11 @@ __polymul_32x288:
 	umlal	r10, r6, r2, r3
 	umlal	r9, r10, r1, r3
 	umlal	r8, r9, r5, r3
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
-	and	r3, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r3, LSR #4	// range < 31
 	ldr	r3, [r12, #8]
 	umlal	r9, r10, r2, r3
 	umlal	r8, r9, r1, r3
 	ldr	r3, [r12, #4]
 	umlal	r8, r9, r2, r3
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -6927,7 +5958,6 @@ __polymul_32x320:
 	mov	r6, #0
 	mov	r12, r1
 	mov	r14, r2
-	ldr	r11, =0x03030303
  // later blocks
 	// ([0-3], 0) blocks
 	ldr	r5, [r12]
@@ -7001,9 +6031,6 @@ __polymul_32x320:
 	umlal	r7, r8, r1, r5
 	ldr	r5, [r12, #28]
 	umlal	r8, r9, r1, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -7067,18 +6094,6 @@ __polymul_32x320:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -7142,18 +6157,6 @@ __polymul_32x320:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -7217,18 +6220,6 @@ __polymul_32x320:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -7292,18 +6283,6 @@ __polymul_32x320:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -7367,18 +6346,6 @@ __polymul_32x320:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -7442,18 +6409,6 @@ __polymul_32x320:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -7517,18 +6472,6 @@ __polymul_32x320:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -7592,18 +6535,6 @@ __polymul_32x320:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -7667,18 +6598,6 @@ __polymul_32x320:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -7742,18 +6661,6 @@ __polymul_32x320:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -7817,18 +6724,6 @@ __polymul_32x320:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -7892,18 +6787,6 @@ __polymul_32x320:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -7967,18 +6850,6 @@ __polymul_32x320:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -8042,18 +6913,6 @@ __polymul_32x320:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -8117,18 +6976,6 @@ __polymul_32x320:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -8192,18 +7039,6 @@ __polymul_32x320:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -8267,18 +7102,6 @@ __polymul_32x320:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -8342,18 +7165,6 @@ __polymul_32x320:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -8400,9 +7211,6 @@ __polymul_32x320:
 	umlal	r6, r7, r4, r1
 	ldr	r1, [r12, #4]
 	umlal	r6, r7, r5, r1
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -8441,7 +7249,6 @@ __polymul_32x352:
 	mov	r6, #0
 	mov	r12, r1
 	mov	r14, r2
-	ldr	r11, =0x03030303
  // later blocks
 	// ([0-3], 0) blocks
 	ldr	r5, [r12]
@@ -8515,9 +7322,6 @@ __polymul_32x352:
 	umlal	r7, r8, r1, r5
 	ldr	r5, [r12, #28]
 	umlal	r8, r9, r1, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -8581,18 +7385,6 @@ __polymul_32x352:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -8656,18 +7448,6 @@ __polymul_32x352:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -8731,18 +7511,6 @@ __polymul_32x352:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -8806,18 +7574,6 @@ __polymul_32x352:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -8881,18 +7637,6 @@ __polymul_32x352:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -8956,18 +7700,6 @@ __polymul_32x352:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -9031,18 +7763,6 @@ __polymul_32x352:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -9106,18 +7826,6 @@ __polymul_32x352:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -9181,18 +7889,6 @@ __polymul_32x352:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -9256,18 +7952,6 @@ __polymul_32x352:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -9331,18 +8015,6 @@ __polymul_32x352:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -9406,18 +8078,6 @@ __polymul_32x352:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -9481,18 +8141,6 @@ __polymul_32x352:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -9556,18 +8204,6 @@ __polymul_32x352:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -9631,18 +8267,6 @@ __polymul_32x352:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -9706,18 +8330,6 @@ __polymul_32x352:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -9781,18 +8393,6 @@ __polymul_32x352:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -9856,18 +8456,6 @@ __polymul_32x352:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -9931,18 +8519,6 @@ __polymul_32x352:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -10006,18 +8582,6 @@ __polymul_32x352:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -10047,21 +8611,6 @@ __polymul_32x352:
 	umlal	r10, r6, r5, r3
 	umlal	r6, r7, r1, r3
 	umlal	r7, r8, r2, r3
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
-	and	r3, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r3, LSR #4	// range < 31
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
 	// ([84-87], 4) blocks
 	ldr	r4, [r12, #16]
 	ldr	r3, [r14, #348]
@@ -10079,9 +8628,6 @@ __polymul_32x352:
 	umlal	r9, r10, r2, r4
 	ldr	r4, [r12, #4]
 	umlal	r9, r10, r3, r4
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -10120,7 +8666,6 @@ __polymul_32x384:
 	mov	r6, #0
 	mov	r12, r1
 	mov	r14, r2
-	ldr	r11, =0x03030303
  // later blocks
 	// ([0-3], 0) blocks
 	ldr	r5, [r12]
@@ -10194,9 +8739,6 @@ __polymul_32x384:
 	umlal	r7, r8, r1, r5
 	ldr	r5, [r12, #28]
 	umlal	r8, r9, r1, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -10260,18 +8802,6 @@ __polymul_32x384:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -10335,18 +8865,6 @@ __polymul_32x384:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -10410,18 +8928,6 @@ __polymul_32x384:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -10485,18 +8991,6 @@ __polymul_32x384:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -10560,18 +9054,6 @@ __polymul_32x384:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -10635,18 +9117,6 @@ __polymul_32x384:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -10710,18 +9180,6 @@ __polymul_32x384:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -10785,18 +9243,6 @@ __polymul_32x384:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -10860,18 +9306,6 @@ __polymul_32x384:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -10935,18 +9369,6 @@ __polymul_32x384:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -11010,18 +9432,6 @@ __polymul_32x384:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -11085,18 +9495,6 @@ __polymul_32x384:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -11160,18 +9558,6 @@ __polymul_32x384:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -11235,18 +9621,6 @@ __polymul_32x384:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -11310,18 +9684,6 @@ __polymul_32x384:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -11385,18 +9747,6 @@ __polymul_32x384:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -11460,18 +9810,6 @@ __polymul_32x384:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -11535,18 +9873,6 @@ __polymul_32x384:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -11610,18 +9936,6 @@ __polymul_32x384:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -11685,18 +9999,6 @@ __polymul_32x384:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -11760,18 +10062,6 @@ __polymul_32x384:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -11835,18 +10125,6 @@ __polymul_32x384:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -11893,9 +10171,6 @@ __polymul_32x384:
 	umlal	r7, r8, r5, r2
 	ldr	r2, [r12, #4]
 	umlal	r7, r8, r1, r2
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -11934,7 +10209,6 @@ __polymul_32x416:
 	mov	r6, #0
 	mov	r12, r1
 	mov	r14, r2
-	ldr	r11, =0x03030303
  // later blocks
 	// ([0-3], 0) blocks
 	ldr	r5, [r12]
@@ -12008,9 +10282,6 @@ __polymul_32x416:
 	umlal	r7, r8, r1, r5
 	ldr	r5, [r12, #28]
 	umlal	r8, r9, r1, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -12074,18 +10345,6 @@ __polymul_32x416:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -12149,18 +10408,6 @@ __polymul_32x416:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -12224,18 +10471,6 @@ __polymul_32x416:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -12299,18 +10534,6 @@ __polymul_32x416:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -12374,18 +10597,6 @@ __polymul_32x416:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -12449,18 +10660,6 @@ __polymul_32x416:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -12524,18 +10723,6 @@ __polymul_32x416:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -12599,18 +10786,6 @@ __polymul_32x416:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -12674,18 +10849,6 @@ __polymul_32x416:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -12749,18 +10912,6 @@ __polymul_32x416:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -12824,18 +10975,6 @@ __polymul_32x416:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -12899,18 +11038,6 @@ __polymul_32x416:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -12974,18 +11101,6 @@ __polymul_32x416:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -13049,18 +11164,6 @@ __polymul_32x416:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -13124,18 +11227,6 @@ __polymul_32x416:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -13199,18 +11290,6 @@ __polymul_32x416:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -13274,18 +11353,6 @@ __polymul_32x416:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -13349,18 +11416,6 @@ __polymul_32x416:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -13424,18 +11479,6 @@ __polymul_32x416:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -13499,18 +11542,6 @@ __polymul_32x416:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -13574,18 +11605,6 @@ __polymul_32x416:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -13649,18 +11668,6 @@ __polymul_32x416:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -13724,18 +11731,6 @@ __polymul_32x416:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -13799,18 +11794,6 @@ __polymul_32x416:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -13857,9 +11840,6 @@ __polymul_32x416:
 	umlal	r10, r6, r3, r5
 	ldr	r5, [r12, #4]
 	umlal	r10, r6, r4, r5
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -13877,15 +11857,6 @@ __polymul_32x416:
 	umlal	r6, r7, r4, r5
 	umlal	r10, r6, r3, r5
 	umlal	r9, r10, r2, r5
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	ldr	r5, [r12, #24]
 	umlal	r10, r6, r4, r5
 	umlal	r9, r10, r3, r5
@@ -13907,7 +11878,6 @@ __polymul_32x448:
 	mov	r6, #0
 	mov	r12, r1
 	mov	r14, r2
-	ldr	r11, =0x03030303
  // later blocks
 	// ([0-3], 0) blocks
 	ldr	r5, [r12]
@@ -13981,9 +11951,6 @@ __polymul_32x448:
 	umlal	r7, r8, r1, r5
 	ldr	r5, [r12, #28]
 	umlal	r8, r9, r1, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -14047,18 +12014,6 @@ __polymul_32x448:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -14122,18 +12077,6 @@ __polymul_32x448:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -14197,18 +12140,6 @@ __polymul_32x448:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -14272,18 +12203,6 @@ __polymul_32x448:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -14347,18 +12266,6 @@ __polymul_32x448:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -14422,18 +12329,6 @@ __polymul_32x448:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -14497,18 +12392,6 @@ __polymul_32x448:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -14572,18 +12455,6 @@ __polymul_32x448:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -14647,18 +12518,6 @@ __polymul_32x448:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -14722,18 +12581,6 @@ __polymul_32x448:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -14797,18 +12644,6 @@ __polymul_32x448:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -14872,18 +12707,6 @@ __polymul_32x448:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -14947,18 +12770,6 @@ __polymul_32x448:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -15022,18 +12833,6 @@ __polymul_32x448:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -15097,18 +12896,6 @@ __polymul_32x448:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -15172,18 +12959,6 @@ __polymul_32x448:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -15247,18 +13022,6 @@ __polymul_32x448:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -15322,18 +13085,6 @@ __polymul_32x448:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -15397,18 +13148,6 @@ __polymul_32x448:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -15472,18 +13211,6 @@ __polymul_32x448:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -15547,18 +13274,6 @@ __polymul_32x448:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -15622,18 +13337,6 @@ __polymul_32x448:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -15697,18 +13400,6 @@ __polymul_32x448:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -15772,18 +13463,6 @@ __polymul_32x448:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -15847,18 +13526,6 @@ __polymul_32x448:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -15922,18 +13589,6 @@ __polymul_32x448:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -15980,9 +13635,6 @@ __polymul_32x448:
 	umlal	r8, r9, r1, r3
 	ldr	r3, [r12, #4]
 	umlal	r8, r9, r2, r3
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -16021,7 +13673,6 @@ __polymul_32x480:
 	mov	r6, #0
 	mov	r12, r1
 	mov	r14, r2
-	ldr	r11, =0x03030303
  // later blocks
 	// ([0-3], 0) blocks
 	ldr	r5, [r12]
@@ -16095,9 +13746,6 @@ __polymul_32x480:
 	umlal	r7, r8, r1, r5
 	ldr	r5, [r12, #28]
 	umlal	r8, r9, r1, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -16161,18 +13809,6 @@ __polymul_32x480:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -16236,18 +13872,6 @@ __polymul_32x480:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -16311,18 +13935,6 @@ __polymul_32x480:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -16386,18 +13998,6 @@ __polymul_32x480:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -16461,18 +14061,6 @@ __polymul_32x480:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -16536,18 +14124,6 @@ __polymul_32x480:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -16611,18 +14187,6 @@ __polymul_32x480:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -16686,18 +14250,6 @@ __polymul_32x480:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -16761,18 +14313,6 @@ __polymul_32x480:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -16836,18 +14376,6 @@ __polymul_32x480:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -16911,18 +14439,6 @@ __polymul_32x480:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -16986,18 +14502,6 @@ __polymul_32x480:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -17061,18 +14565,6 @@ __polymul_32x480:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -17136,18 +14628,6 @@ __polymul_32x480:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -17211,18 +14691,6 @@ __polymul_32x480:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -17286,18 +14754,6 @@ __polymul_32x480:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -17361,18 +14817,6 @@ __polymul_32x480:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -17436,18 +14880,6 @@ __polymul_32x480:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -17511,18 +14943,6 @@ __polymul_32x480:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -17586,18 +15006,6 @@ __polymul_32x480:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -17661,18 +15069,6 @@ __polymul_32x480:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -17736,18 +15132,6 @@ __polymul_32x480:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -17811,18 +15195,6 @@ __polymul_32x480:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -17886,18 +15258,6 @@ __polymul_32x480:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -17961,18 +15321,6 @@ __polymul_32x480:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -18036,18 +15384,6 @@ __polymul_32x480:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -18111,18 +15447,6 @@ __polymul_32x480:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -18186,18 +15510,6 @@ __polymul_32x480:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -18244,9 +15556,6 @@ __polymul_32x480:
 	umlal	r6, r7, r4, r1
 	ldr	r1, [r12, #4]
 	umlal	r6, r7, r5, r1
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -18285,7 +15594,6 @@ __polymul_32x512:
 	mov	r6, #0
 	mov	r12, r1
 	mov	r14, r2
-	ldr	r11, =0x03030303
  // later blocks
 	// ([0-3], 0) blocks
 	ldr	r5, [r12]
@@ -18359,9 +15667,6 @@ __polymul_32x512:
 	umlal	r7, r8, r1, r5
 	ldr	r5, [r12, #28]
 	umlal	r8, r9, r1, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -18425,18 +15730,6 @@ __polymul_32x512:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -18500,18 +15793,6 @@ __polymul_32x512:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -18575,18 +15856,6 @@ __polymul_32x512:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -18650,18 +15919,6 @@ __polymul_32x512:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -18725,18 +15982,6 @@ __polymul_32x512:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -18800,18 +16045,6 @@ __polymul_32x512:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -18875,18 +16108,6 @@ __polymul_32x512:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -18950,18 +16171,6 @@ __polymul_32x512:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -19025,18 +16234,6 @@ __polymul_32x512:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -19100,18 +16297,6 @@ __polymul_32x512:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -19175,18 +16360,6 @@ __polymul_32x512:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -19250,18 +16423,6 @@ __polymul_32x512:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -19325,18 +16486,6 @@ __polymul_32x512:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -19400,18 +16549,6 @@ __polymul_32x512:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -19475,18 +16612,6 @@ __polymul_32x512:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -19550,18 +16675,6 @@ __polymul_32x512:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -19625,18 +16738,6 @@ __polymul_32x512:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -19700,18 +16801,6 @@ __polymul_32x512:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -19775,18 +16864,6 @@ __polymul_32x512:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -19850,18 +16927,6 @@ __polymul_32x512:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -19925,18 +16990,6 @@ __polymul_32x512:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -20000,18 +17053,6 @@ __polymul_32x512:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -20075,18 +17116,6 @@ __polymul_32x512:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -20150,18 +17179,6 @@ __polymul_32x512:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -20225,18 +17242,6 @@ __polymul_32x512:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -20300,18 +17305,6 @@ __polymul_32x512:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -20375,18 +17368,6 @@ __polymul_32x512:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -20450,18 +17431,6 @@ __polymul_32x512:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -20525,18 +17494,6 @@ __polymul_32x512:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -20600,18 +17557,6 @@ __polymul_32x512:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -20653,23 +17598,11 @@ __polymul_32x512:
 	umlal	r6, r7, r3, r4
 	umlal	r10, r6, r2, r4
 	umlal	r9, r10, r1, r4
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
-	and	r4, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r4, LSR #4	// range < 31
 	ldr	r4, [r12, #8]
 	umlal	r10, r6, r3, r4
 	umlal	r9, r10, r2, r4
 	ldr	r4, [r12, #4]
 	umlal	r9, r10, r3, r4
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -20708,7 +17641,6 @@ __polymul_32x544:
 	mov	r6, #0
 	mov	r12, r1
 	mov	r14, r2
-	ldr	r11, =0x03030303
  // later blocks
 	// ([0-3], 0) blocks
 	ldr	r5, [r12]
@@ -20782,9 +17714,6 @@ __polymul_32x544:
 	umlal	r7, r8, r1, r5
 	ldr	r5, [r12, #28]
 	umlal	r8, r9, r1, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -20848,18 +17777,6 @@ __polymul_32x544:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -20923,18 +17840,6 @@ __polymul_32x544:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -20998,18 +17903,6 @@ __polymul_32x544:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -21073,18 +17966,6 @@ __polymul_32x544:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -21148,18 +18029,6 @@ __polymul_32x544:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -21223,18 +18092,6 @@ __polymul_32x544:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -21298,18 +18155,6 @@ __polymul_32x544:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -21373,18 +18218,6 @@ __polymul_32x544:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -21448,18 +18281,6 @@ __polymul_32x544:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -21523,18 +18344,6 @@ __polymul_32x544:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -21598,18 +18407,6 @@ __polymul_32x544:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -21673,18 +18470,6 @@ __polymul_32x544:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -21748,18 +18533,6 @@ __polymul_32x544:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -21823,18 +18596,6 @@ __polymul_32x544:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -21898,18 +18659,6 @@ __polymul_32x544:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -21973,18 +18722,6 @@ __polymul_32x544:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -22048,18 +18785,6 @@ __polymul_32x544:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -22123,18 +18848,6 @@ __polymul_32x544:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -22198,18 +18911,6 @@ __polymul_32x544:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -22273,18 +18974,6 @@ __polymul_32x544:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -22348,18 +19037,6 @@ __polymul_32x544:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -22423,18 +19100,6 @@ __polymul_32x544:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -22498,18 +19163,6 @@ __polymul_32x544:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -22573,18 +19226,6 @@ __polymul_32x544:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -22648,18 +19289,6 @@ __polymul_32x544:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -22723,18 +19352,6 @@ __polymul_32x544:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -22798,18 +19415,6 @@ __polymul_32x544:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -22873,18 +19478,6 @@ __polymul_32x544:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -22948,18 +19541,6 @@ __polymul_32x544:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -23023,18 +19604,6 @@ __polymul_32x544:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -23098,18 +19667,6 @@ __polymul_32x544:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -23173,18 +19730,6 @@ __polymul_32x544:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -23231,9 +19776,6 @@ __polymul_32x544:
 	umlal	r7, r8, r5, r2
 	ldr	r2, [r12, #4]
 	umlal	r7, r8, r1, r2
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -23272,7 +19814,6 @@ __polymul_32x576:
 	mov	r6, #0
 	mov	r12, r1
 	mov	r14, r2
-	ldr	r11, =0x03030303
  // later blocks
 	// ([0-3], 0) blocks
 	ldr	r5, [r12]
@@ -23346,9 +19887,6 @@ __polymul_32x576:
 	umlal	r7, r8, r1, r5
 	ldr	r5, [r12, #28]
 	umlal	r8, r9, r1, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -23412,18 +19950,6 @@ __polymul_32x576:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -23487,18 +20013,6 @@ __polymul_32x576:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -23562,18 +20076,6 @@ __polymul_32x576:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -23637,18 +20139,6 @@ __polymul_32x576:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -23712,18 +20202,6 @@ __polymul_32x576:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -23787,18 +20265,6 @@ __polymul_32x576:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -23862,18 +20328,6 @@ __polymul_32x576:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -23937,18 +20391,6 @@ __polymul_32x576:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -24012,18 +20454,6 @@ __polymul_32x576:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -24087,18 +20517,6 @@ __polymul_32x576:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -24162,18 +20580,6 @@ __polymul_32x576:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -24237,18 +20643,6 @@ __polymul_32x576:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -24312,18 +20706,6 @@ __polymul_32x576:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -24387,18 +20769,6 @@ __polymul_32x576:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -24462,18 +20832,6 @@ __polymul_32x576:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -24537,18 +20895,6 @@ __polymul_32x576:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -24612,18 +20958,6 @@ __polymul_32x576:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -24687,18 +21021,6 @@ __polymul_32x576:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -24762,18 +21084,6 @@ __polymul_32x576:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -24837,18 +21147,6 @@ __polymul_32x576:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -24912,18 +21210,6 @@ __polymul_32x576:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -24987,18 +21273,6 @@ __polymul_32x576:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -25062,18 +21336,6 @@ __polymul_32x576:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -25137,18 +21399,6 @@ __polymul_32x576:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -25212,18 +21462,6 @@ __polymul_32x576:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -25287,18 +21525,6 @@ __polymul_32x576:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -25362,18 +21588,6 @@ __polymul_32x576:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -25437,18 +21651,6 @@ __polymul_32x576:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -25512,18 +21714,6 @@ __polymul_32x576:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -25587,18 +21777,6 @@ __polymul_32x576:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -25662,18 +21840,6 @@ __polymul_32x576:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -25737,18 +21903,6 @@ __polymul_32x576:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -25812,18 +21966,6 @@ __polymul_32x576:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -25887,18 +22029,6 @@ __polymul_32x576:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -25928,21 +22058,6 @@ __polymul_32x576:
 	umlal	r6, r7, r1, r4
 	umlal	r7, r8, r2, r4
 	umlal	r8, r9, r3, r4
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
-	and	r4, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r4, LSR #4	// range < 31
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
 	// ([140-143], 4) blocks
 	ldr	r5, [r12, #16]
 	ldr	r4, [r14, #572]
@@ -25960,9 +22075,6 @@ __polymul_32x576:
 	umlal	r10, r6, r3, r5
 	ldr	r5, [r12, #4]
 	umlal	r10, r6, r4, r5
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -26001,7 +22113,6 @@ __polymul_32x608:
 	mov	r6, #0
 	mov	r12, r1
 	mov	r14, r2
-	ldr	r11, =0x03030303
  // later blocks
 	// ([0-3], 0) blocks
 	ldr	r5, [r12]
@@ -26075,9 +22186,6 @@ __polymul_32x608:
 	umlal	r7, r8, r1, r5
 	ldr	r5, [r12, #28]
 	umlal	r8, r9, r1, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -26141,18 +22249,6 @@ __polymul_32x608:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -26216,18 +22312,6 @@ __polymul_32x608:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -26291,18 +22375,6 @@ __polymul_32x608:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -26366,18 +22438,6 @@ __polymul_32x608:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -26441,18 +22501,6 @@ __polymul_32x608:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -26516,18 +22564,6 @@ __polymul_32x608:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -26591,18 +22627,6 @@ __polymul_32x608:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -26666,18 +22690,6 @@ __polymul_32x608:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -26741,18 +22753,6 @@ __polymul_32x608:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -26816,18 +22816,6 @@ __polymul_32x608:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -26891,18 +22879,6 @@ __polymul_32x608:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -26966,18 +22942,6 @@ __polymul_32x608:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -27041,18 +23005,6 @@ __polymul_32x608:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -27116,18 +23068,6 @@ __polymul_32x608:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -27191,18 +23131,6 @@ __polymul_32x608:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -27266,18 +23194,6 @@ __polymul_32x608:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -27341,18 +23257,6 @@ __polymul_32x608:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -27416,18 +23320,6 @@ __polymul_32x608:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -27491,18 +23383,6 @@ __polymul_32x608:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -27566,18 +23446,6 @@ __polymul_32x608:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -27641,18 +23509,6 @@ __polymul_32x608:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -27716,18 +23572,6 @@ __polymul_32x608:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -27791,18 +23635,6 @@ __polymul_32x608:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -27866,18 +23698,6 @@ __polymul_32x608:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -27941,18 +23761,6 @@ __polymul_32x608:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -28016,18 +23824,6 @@ __polymul_32x608:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -28091,18 +23887,6 @@ __polymul_32x608:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -28166,18 +23950,6 @@ __polymul_32x608:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -28241,18 +24013,6 @@ __polymul_32x608:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -28316,18 +24076,6 @@ __polymul_32x608:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -28391,18 +24139,6 @@ __polymul_32x608:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -28466,18 +24202,6 @@ __polymul_32x608:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -28541,18 +24265,6 @@ __polymul_32x608:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -28616,18 +24328,6 @@ __polymul_32x608:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -28691,18 +24391,6 @@ __polymul_32x608:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -28766,18 +24454,6 @@ __polymul_32x608:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -28824,9 +24500,6 @@ __polymul_32x608:
 	umlal	r8, r9, r1, r3
 	ldr	r3, [r12, #4]
 	umlal	r8, r9, r2, r3
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -28865,7 +24538,6 @@ __polymul_32x640:
 	mov	r6, #0
 	mov	r12, r1
 	mov	r14, r2
-	ldr	r11, =0x03030303
  // later blocks
 	// ([0-3], 0) blocks
 	ldr	r5, [r12]
@@ -28939,9 +24611,6 @@ __polymul_32x640:
 	umlal	r7, r8, r1, r5
 	ldr	r5, [r12, #28]
 	umlal	r8, r9, r1, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -29005,18 +24674,6 @@ __polymul_32x640:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -29080,18 +24737,6 @@ __polymul_32x640:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -29155,18 +24800,6 @@ __polymul_32x640:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -29230,18 +24863,6 @@ __polymul_32x640:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -29305,18 +24926,6 @@ __polymul_32x640:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -29380,18 +24989,6 @@ __polymul_32x640:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -29455,18 +25052,6 @@ __polymul_32x640:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -29530,18 +25115,6 @@ __polymul_32x640:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -29605,18 +25178,6 @@ __polymul_32x640:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -29680,18 +25241,6 @@ __polymul_32x640:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -29755,18 +25304,6 @@ __polymul_32x640:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -29830,18 +25367,6 @@ __polymul_32x640:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -29905,18 +25430,6 @@ __polymul_32x640:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -29980,18 +25493,6 @@ __polymul_32x640:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -30055,18 +25556,6 @@ __polymul_32x640:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -30130,18 +25619,6 @@ __polymul_32x640:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -30205,18 +25682,6 @@ __polymul_32x640:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -30280,18 +25745,6 @@ __polymul_32x640:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -30355,18 +25808,6 @@ __polymul_32x640:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -30430,18 +25871,6 @@ __polymul_32x640:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -30505,18 +25934,6 @@ __polymul_32x640:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -30580,18 +25997,6 @@ __polymul_32x640:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -30655,18 +26060,6 @@ __polymul_32x640:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -30730,18 +26123,6 @@ __polymul_32x640:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -30805,18 +26186,6 @@ __polymul_32x640:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -30880,18 +26249,6 @@ __polymul_32x640:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -30955,18 +26312,6 @@ __polymul_32x640:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -31030,18 +26375,6 @@ __polymul_32x640:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -31105,18 +26438,6 @@ __polymul_32x640:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -31180,18 +26501,6 @@ __polymul_32x640:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -31255,18 +26564,6 @@ __polymul_32x640:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -31330,18 +26627,6 @@ __polymul_32x640:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -31405,18 +26690,6 @@ __polymul_32x640:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -31480,18 +26753,6 @@ __polymul_32x640:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -31555,18 +26816,6 @@ __polymul_32x640:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -31630,18 +26879,6 @@ __polymul_32x640:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -31705,18 +26942,6 @@ __polymul_32x640:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -31780,18 +27005,6 @@ __polymul_32x640:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -31838,9 +27051,6 @@ __polymul_32x640:
 	umlal	r6, r7, r4, r1
 	ldr	r1, [r12, #4]
 	umlal	r6, r7, r5, r1
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -31858,15 +27068,6 @@ __polymul_32x640:
 	umlal	r7, r8, r5, r1
 	umlal	r6, r7, r4, r1
 	umlal	r10, r6, r3, r1
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	ldr	r1, [r12, #24]
 	umlal	r6, r7, r5, r1
 	umlal	r10, r6, r4, r1
@@ -31888,7 +27089,6 @@ __polymul_32x672:
 	mov	r6, #0
 	mov	r12, r1
 	mov	r14, r2
-	ldr	r11, =0x03030303
  // later blocks
 	// ([0-3], 0) blocks
 	ldr	r5, [r12]
@@ -31962,9 +27162,6 @@ __polymul_32x672:
 	umlal	r7, r8, r1, r5
 	ldr	r5, [r12, #28]
 	umlal	r8, r9, r1, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -32028,18 +27225,6 @@ __polymul_32x672:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -32103,18 +27288,6 @@ __polymul_32x672:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -32178,18 +27351,6 @@ __polymul_32x672:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -32253,18 +27414,6 @@ __polymul_32x672:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -32328,18 +27477,6 @@ __polymul_32x672:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -32403,18 +27540,6 @@ __polymul_32x672:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -32478,18 +27603,6 @@ __polymul_32x672:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -32553,18 +27666,6 @@ __polymul_32x672:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -32628,18 +27729,6 @@ __polymul_32x672:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -32703,18 +27792,6 @@ __polymul_32x672:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -32778,18 +27855,6 @@ __polymul_32x672:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -32853,18 +27918,6 @@ __polymul_32x672:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -32928,18 +27981,6 @@ __polymul_32x672:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -33003,18 +28044,6 @@ __polymul_32x672:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -33078,18 +28107,6 @@ __polymul_32x672:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -33153,18 +28170,6 @@ __polymul_32x672:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -33228,18 +28233,6 @@ __polymul_32x672:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -33303,18 +28296,6 @@ __polymul_32x672:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -33378,18 +28359,6 @@ __polymul_32x672:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -33453,18 +28422,6 @@ __polymul_32x672:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -33528,18 +28485,6 @@ __polymul_32x672:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -33603,18 +28548,6 @@ __polymul_32x672:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -33678,18 +28611,6 @@ __polymul_32x672:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -33753,18 +28674,6 @@ __polymul_32x672:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -33828,18 +28737,6 @@ __polymul_32x672:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -33903,18 +28800,6 @@ __polymul_32x672:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -33978,18 +28863,6 @@ __polymul_32x672:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -34053,18 +28926,6 @@ __polymul_32x672:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -34128,18 +28989,6 @@ __polymul_32x672:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -34203,18 +29052,6 @@ __polymul_32x672:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -34278,18 +29115,6 @@ __polymul_32x672:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -34353,18 +29178,6 @@ __polymul_32x672:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -34428,18 +29241,6 @@ __polymul_32x672:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -34503,18 +29304,6 @@ __polymul_32x672:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -34578,18 +29367,6 @@ __polymul_32x672:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -34653,18 +29430,6 @@ __polymul_32x672:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -34728,18 +29493,6 @@ __polymul_32x672:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -34803,18 +29556,6 @@ __polymul_32x672:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -34878,18 +29619,6 @@ __polymul_32x672:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -34953,18 +29682,6 @@ __polymul_32x672:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -35011,9 +29728,6 @@ __polymul_32x672:
 	umlal	r9, r10, r2, r4
 	ldr	r4, [r12, #4]
 	umlal	r9, r10, r3, r4
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -35052,7 +29766,6 @@ __polymul_32x704:
 	mov	r6, #0
 	mov	r12, r1
 	mov	r14, r2
-	ldr	r11, =0x03030303
  // later blocks
 	// ([0-3], 0) blocks
 	ldr	r5, [r12]
@@ -35126,9 +29839,6 @@ __polymul_32x704:
 	umlal	r7, r8, r1, r5
 	ldr	r5, [r12, #28]
 	umlal	r8, r9, r1, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -35192,18 +29902,6 @@ __polymul_32x704:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -35267,18 +29965,6 @@ __polymul_32x704:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -35342,18 +30028,6 @@ __polymul_32x704:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -35417,18 +30091,6 @@ __polymul_32x704:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -35492,18 +30154,6 @@ __polymul_32x704:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -35567,18 +30217,6 @@ __polymul_32x704:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -35642,18 +30280,6 @@ __polymul_32x704:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -35717,18 +30343,6 @@ __polymul_32x704:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -35792,18 +30406,6 @@ __polymul_32x704:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -35867,18 +30469,6 @@ __polymul_32x704:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -35942,18 +30532,6 @@ __polymul_32x704:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -36017,18 +30595,6 @@ __polymul_32x704:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -36092,18 +30658,6 @@ __polymul_32x704:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -36167,18 +30721,6 @@ __polymul_32x704:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -36242,18 +30784,6 @@ __polymul_32x704:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -36317,18 +30847,6 @@ __polymul_32x704:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -36392,18 +30910,6 @@ __polymul_32x704:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -36467,18 +30973,6 @@ __polymul_32x704:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -36542,18 +31036,6 @@ __polymul_32x704:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -36617,18 +31099,6 @@ __polymul_32x704:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -36692,18 +31162,6 @@ __polymul_32x704:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -36767,18 +31225,6 @@ __polymul_32x704:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -36842,18 +31288,6 @@ __polymul_32x704:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -36917,18 +31351,6 @@ __polymul_32x704:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -36992,18 +31414,6 @@ __polymul_32x704:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -37067,18 +31477,6 @@ __polymul_32x704:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -37142,18 +31540,6 @@ __polymul_32x704:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -37217,18 +31603,6 @@ __polymul_32x704:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -37292,18 +31666,6 @@ __polymul_32x704:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -37367,18 +31729,6 @@ __polymul_32x704:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -37442,18 +31792,6 @@ __polymul_32x704:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -37517,18 +31855,6 @@ __polymul_32x704:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -37592,18 +31918,6 @@ __polymul_32x704:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -37667,18 +31981,6 @@ __polymul_32x704:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -37742,18 +32044,6 @@ __polymul_32x704:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -37817,18 +32107,6 @@ __polymul_32x704:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -37892,18 +32170,6 @@ __polymul_32x704:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -37967,18 +32233,6 @@ __polymul_32x704:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -38042,18 +32296,6 @@ __polymul_32x704:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -38117,18 +32359,6 @@ __polymul_32x704:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -38192,18 +32422,6 @@ __polymul_32x704:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -38267,18 +32485,6 @@ __polymul_32x704:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -38325,9 +32531,6 @@ __polymul_32x704:
 	umlal	r7, r8, r5, r2
 	ldr	r2, [r12, #4]
 	umlal	r7, r8, r1, r2
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -38366,7 +32569,6 @@ __polymul_32x736:
 	mov	r6, #0
 	mov	r12, r1
 	mov	r14, r2
-	ldr	r11, =0x03030303
  // later blocks
 	// ([0-3], 0) blocks
 	ldr	r5, [r12]
@@ -38440,9 +32642,6 @@ __polymul_32x736:
 	umlal	r7, r8, r1, r5
 	ldr	r5, [r12, #28]
 	umlal	r8, r9, r1, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -38506,18 +32705,6 @@ __polymul_32x736:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -38581,18 +32768,6 @@ __polymul_32x736:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -38656,18 +32831,6 @@ __polymul_32x736:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -38731,18 +32894,6 @@ __polymul_32x736:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -38806,18 +32957,6 @@ __polymul_32x736:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -38881,18 +33020,6 @@ __polymul_32x736:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -38956,18 +33083,6 @@ __polymul_32x736:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -39031,18 +33146,6 @@ __polymul_32x736:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -39106,18 +33209,6 @@ __polymul_32x736:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -39181,18 +33272,6 @@ __polymul_32x736:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -39256,18 +33335,6 @@ __polymul_32x736:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -39331,18 +33398,6 @@ __polymul_32x736:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -39406,18 +33461,6 @@ __polymul_32x736:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -39481,18 +33524,6 @@ __polymul_32x736:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -39556,18 +33587,6 @@ __polymul_32x736:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -39631,18 +33650,6 @@ __polymul_32x736:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -39706,18 +33713,6 @@ __polymul_32x736:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -39781,18 +33776,6 @@ __polymul_32x736:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -39856,18 +33839,6 @@ __polymul_32x736:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -39931,18 +33902,6 @@ __polymul_32x736:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -40006,18 +33965,6 @@ __polymul_32x736:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -40081,18 +34028,6 @@ __polymul_32x736:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -40156,18 +34091,6 @@ __polymul_32x736:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -40231,18 +34154,6 @@ __polymul_32x736:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -40306,18 +34217,6 @@ __polymul_32x736:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -40381,18 +34280,6 @@ __polymul_32x736:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -40456,18 +34343,6 @@ __polymul_32x736:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -40531,18 +34406,6 @@ __polymul_32x736:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -40606,18 +34469,6 @@ __polymul_32x736:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -40681,18 +34532,6 @@ __polymul_32x736:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -40756,18 +34595,6 @@ __polymul_32x736:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -40831,18 +34658,6 @@ __polymul_32x736:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -40906,18 +34721,6 @@ __polymul_32x736:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -40981,18 +34784,6 @@ __polymul_32x736:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -41056,18 +34847,6 @@ __polymul_32x736:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -41131,18 +34910,6 @@ __polymul_32x736:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -41206,18 +34973,6 @@ __polymul_32x736:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -41281,18 +35036,6 @@ __polymul_32x736:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -41356,18 +35099,6 @@ __polymul_32x736:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -41431,18 +35162,6 @@ __polymul_32x736:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -41506,18 +35225,6 @@ __polymul_32x736:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -41581,18 +35288,6 @@ __polymul_32x736:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -41656,18 +35351,6 @@ __polymul_32x736:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -41731,18 +35414,6 @@ __polymul_32x736:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -41784,23 +35455,11 @@ __polymul_32x736:
 	umlal	r7, r8, r4, r5
 	umlal	r6, r7, r3, r5
 	umlal	r10, r6, r2, r5
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
-	and	r5, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r5, LSR #4	// range < 31
 	ldr	r5, [r12, #8]
 	umlal	r6, r7, r4, r5
 	umlal	r10, r6, r3, r5
 	ldr	r5, [r12, #4]
 	umlal	r10, r6, r4, r5
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -41839,7 +35498,6 @@ __polymul_32x768:
 	mov	r6, #0
 	mov	r12, r1
 	mov	r14, r2
-	ldr	r11, =0x03030303
  // later blocks
 	// ([0-3], 0) blocks
 	ldr	r5, [r12]
@@ -41913,9 +35571,6 @@ __polymul_32x768:
 	umlal	r7, r8, r1, r5
 	ldr	r5, [r12, #28]
 	umlal	r8, r9, r1, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -41979,18 +35634,6 @@ __polymul_32x768:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -42054,18 +35697,6 @@ __polymul_32x768:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -42129,18 +35760,6 @@ __polymul_32x768:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -42204,18 +35823,6 @@ __polymul_32x768:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -42279,18 +35886,6 @@ __polymul_32x768:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -42354,18 +35949,6 @@ __polymul_32x768:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -42429,18 +36012,6 @@ __polymul_32x768:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -42504,18 +36075,6 @@ __polymul_32x768:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -42579,18 +36138,6 @@ __polymul_32x768:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -42654,18 +36201,6 @@ __polymul_32x768:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -42729,18 +36264,6 @@ __polymul_32x768:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -42804,18 +36327,6 @@ __polymul_32x768:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -42879,18 +36390,6 @@ __polymul_32x768:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -42954,18 +36453,6 @@ __polymul_32x768:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -43029,18 +36516,6 @@ __polymul_32x768:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -43104,18 +36579,6 @@ __polymul_32x768:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -43179,18 +36642,6 @@ __polymul_32x768:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -43254,18 +36705,6 @@ __polymul_32x768:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -43329,18 +36768,6 @@ __polymul_32x768:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -43404,18 +36831,6 @@ __polymul_32x768:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -43479,18 +36894,6 @@ __polymul_32x768:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -43554,18 +36957,6 @@ __polymul_32x768:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -43629,18 +37020,6 @@ __polymul_32x768:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -43704,18 +37083,6 @@ __polymul_32x768:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -43779,18 +37146,6 @@ __polymul_32x768:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -43854,18 +37209,6 @@ __polymul_32x768:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -43929,18 +37272,6 @@ __polymul_32x768:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -44004,18 +37335,6 @@ __polymul_32x768:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -44079,18 +37398,6 @@ __polymul_32x768:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -44154,18 +37461,6 @@ __polymul_32x768:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -44229,18 +37524,6 @@ __polymul_32x768:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -44304,18 +37587,6 @@ __polymul_32x768:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -44379,18 +37650,6 @@ __polymul_32x768:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -44454,18 +37713,6 @@ __polymul_32x768:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -44529,18 +37776,6 @@ __polymul_32x768:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -44604,18 +37839,6 @@ __polymul_32x768:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -44679,18 +37902,6 @@ __polymul_32x768:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -44754,18 +37965,6 @@ __polymul_32x768:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -44829,18 +38028,6 @@ __polymul_32x768:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -44904,18 +38091,6 @@ __polymul_32x768:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -44979,18 +38154,6 @@ __polymul_32x768:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -45054,18 +38217,6 @@ __polymul_32x768:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -45129,18 +38280,6 @@ __polymul_32x768:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -45204,18 +38343,6 @@ __polymul_32x768:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -45279,18 +38406,6 @@ __polymul_32x768:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -45354,18 +38469,6 @@ __polymul_32x768:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -45412,9 +38515,6 @@ __polymul_32x768:
 	umlal	r8, r9, r1, r3
 	ldr	r3, [r12, #4]
 	umlal	r8, r9, r2, r3
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -45453,7 +38553,6 @@ __polymul_32x800:
 	mov	r6, #0
 	mov	r12, r1
 	mov	r14, r2
-	ldr	r11, =0x03030303
  // later blocks
 	// ([0-3], 0) blocks
 	ldr	r5, [r12]
@@ -45527,9 +38626,6 @@ __polymul_32x800:
 	umlal	r7, r8, r1, r5
 	ldr	r5, [r12, #28]
 	umlal	r8, r9, r1, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -45593,18 +38689,6 @@ __polymul_32x800:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -45668,18 +38752,6 @@ __polymul_32x800:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -45743,18 +38815,6 @@ __polymul_32x800:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -45818,18 +38878,6 @@ __polymul_32x800:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -45893,18 +38941,6 @@ __polymul_32x800:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -45968,18 +39004,6 @@ __polymul_32x800:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -46043,18 +39067,6 @@ __polymul_32x800:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -46118,18 +39130,6 @@ __polymul_32x800:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -46193,18 +39193,6 @@ __polymul_32x800:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -46268,18 +39256,6 @@ __polymul_32x800:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -46343,18 +39319,6 @@ __polymul_32x800:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -46418,18 +39382,6 @@ __polymul_32x800:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -46493,18 +39445,6 @@ __polymul_32x800:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -46568,18 +39508,6 @@ __polymul_32x800:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -46643,18 +39571,6 @@ __polymul_32x800:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -46718,18 +39634,6 @@ __polymul_32x800:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -46793,18 +39697,6 @@ __polymul_32x800:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -46868,18 +39760,6 @@ __polymul_32x800:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -46943,18 +39823,6 @@ __polymul_32x800:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -47018,18 +39886,6 @@ __polymul_32x800:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -47093,18 +39949,6 @@ __polymul_32x800:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -47168,18 +40012,6 @@ __polymul_32x800:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -47243,18 +40075,6 @@ __polymul_32x800:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -47318,18 +40138,6 @@ __polymul_32x800:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -47393,18 +40201,6 @@ __polymul_32x800:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -47468,18 +40264,6 @@ __polymul_32x800:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -47543,18 +40327,6 @@ __polymul_32x800:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -47618,18 +40390,6 @@ __polymul_32x800:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -47693,18 +40453,6 @@ __polymul_32x800:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -47768,18 +40516,6 @@ __polymul_32x800:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -47843,18 +40579,6 @@ __polymul_32x800:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -47918,18 +40642,6 @@ __polymul_32x800:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -47993,18 +40705,6 @@ __polymul_32x800:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -48068,18 +40768,6 @@ __polymul_32x800:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -48143,18 +40831,6 @@ __polymul_32x800:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -48218,18 +40894,6 @@ __polymul_32x800:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -48293,18 +40957,6 @@ __polymul_32x800:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -48368,18 +41020,6 @@ __polymul_32x800:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -48443,18 +41083,6 @@ __polymul_32x800:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -48518,18 +41146,6 @@ __polymul_32x800:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -48593,18 +41209,6 @@ __polymul_32x800:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -48668,18 +41272,6 @@ __polymul_32x800:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -48743,18 +41335,6 @@ __polymul_32x800:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -48818,18 +41398,6 @@ __polymul_32x800:
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -48893,18 +41461,6 @@ __polymul_32x800:
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -48968,18 +41524,6 @@ __polymul_32x800:
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -49043,18 +41587,6 @@ __polymul_32x800:
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -49118,18 +41650,6 @@ __polymul_32x800:
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
-	and	r4, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r4, LSR #4	// range < 31
-	and	r4, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r4, LSR #4	// range < 31
-	and	r4, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r4, LSR #4	// range < 31
-	and	r4, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r4, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -49159,21 +41679,6 @@ __polymul_32x800:
 	umlal	r7, r8, r2, r5
 	umlal	r8, r9, r3, r5
 	umlal	r9, r10, r4, r5
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
-	and	r5, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r5, LSR #4	// range < 31
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
 	// ([196-199], 4) blocks
 	ldr	r1, [r12, #16]
 	ldr	r5, [r14, #796]
@@ -49191,9 +41696,6 @@ __polymul_32x800:
 	umlal	r6, r7, r4, r1
 	ldr	r1, [r12, #4]
 	umlal	r6, r7, r5, r1
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]

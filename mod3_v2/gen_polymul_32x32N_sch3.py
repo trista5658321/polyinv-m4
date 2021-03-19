@@ -37,7 +37,10 @@ def main():
         print(".type  " + __polymul_name + ", %function")
         print(__polymul_name + ":")
         printIn("push.w {lr}")
-        polymul(coeffi, C1, C2)
+        loop = False
+        # if coeffi < 800:
+        #     loop = False
+        polymul(coeffi, C1, C2, loop)
         printIn("pop.w {pc}")
 
     # f_name = "__jump1536_mod3"

@@ -20,7 +20,7 @@ scr = "r12"
 
 def reduce_str(rs, target = V):
     for i in range(len(rs)):
-        u.reduce_mod3_32(rs[i], scr, r03)
+        u.reduce_mod3_full(rs[i], scr, r03)
 
     for i in range(1, len(rs)):
         printIn("str.w %s, [%s, #%d]" % (rs[i], target, 4*i))
@@ -37,7 +37,7 @@ def main(LENGTH):
     f_params = "(int *V, int *S, int *M1)"
     f_regs = "r3-r12"
     u.prologue_mod3(f_name, f_params, f_regs)
-
+    printIn("ldr r11, =0x03030303")
     printIn("vmov.w %s, %s, %s, %s" % (s_V, s_S, V, S))
     printIn("vmov.w %s, %s" % (s_M, M))
 
@@ -106,6 +106,8 @@ def main(LENGTH):
             printIn("ldr.w %s, [%s], #16" % (h1[0], sp))
 
         # add
+        for i in range(len(h1)):
+            u.reduce_mod3_5(h1[i], scr, r03)
         for i in range(len(h1)):
             printIn("add.w %s, %s" % (h1[i], h2[i]))
         # store
