@@ -1,10 +1,11 @@
 import sys, pathlib
 sys.path.append(str(pathlib.Path(__file__).parent.parent.absolute().parent))
-
+from utility_mod3 import get_BASE
 from utility import printIn
 import utility as u
 from polymul_32x32N_sch3 import polymul
 
+BASE = get_BASE()
 C1 = 14
 C2 = 14
 
@@ -25,23 +26,35 @@ def reduce_str(rs, base = 0):
             printIn("str.w %s, [%s, #%d]" % (rs[i], "r0", 4*i))
         printIn("str.w %s, [%s], #%d" % (rs[0], "r0", 4*len(rs)))
 
+def prologue(__polymul_name):
+    print(".p2align 2,,3")
+    print(".syntax unified")
+    print(".text")
+    print(".global " + __polymul_name + "")
+    print(".type  " + __polymul_name + ", %function")
+    print(__polymul_name + ":")
+    printIn("push.w {lr}")
+
+def end():
+    printIn("pop.w {pc}")
 
 def main():
-    for i in range(1, 26):
-        coeffi = 32 * i
-        __polymul_name = "__polymul_32x" + str(coeffi)
-        print(".p2align 2,,3")
-        print(".syntax unified")
-        print(".text")
-        print(".global " + __polymul_name + "")
-        print(".type  " + __polymul_name + ", %function")
-        print(__polymul_name + ":")
-        printIn("push.w {lr}")
+    for i in range(1, 768//BASE+1):
+        coeffi = BASE * i
+        __polymul_name = "__polymul_" + str(BASE) + "x" + str(coeffi)
+        prologue(__polymul_name)
         loop = False
         # if coeffi < 800:
         #     loop = False
-        polymul(coeffi, C1, C2, loop)
-        printIn("pop.w {pc}")
+        polymul(BASE, coeffi, C1, C2, loop)
+        end()
+
+    coeffi = 800
+    __polymul_name = "__polymul_" + str(BASE) + "x" + str(coeffi)
+    prologue(__polymul_name)
+    loop = False
+    polymul(BASE, coeffi, C1, C2, loop)
+    end()
 
     # f_name = "__jump1536_mod3"
     # f_params = "(int minusdelta, int32_t *M, int32_t *f, int32_t *g)"

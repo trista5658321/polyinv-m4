@@ -1,9 +1,10 @@
 import sys, pathlib
 sys.path.append(str(pathlib.Path(__file__).parent.parent.absolute().parent))
-
+from utility_mod3 import get_BASE
 from utility import printIn
 import utility as u
 
+BASE = get_BASE()
 C1 = 14
 C2 = 14
 
@@ -27,13 +28,13 @@ def reduce_str(rs, target = V):
     printIn("str.w %s, [%s], #%d" % (rs[0], target, 4*len(rs)))
 
 def main(LENGTH):
-    base_coeffi = 32 # jump N divsteps
-    coeffi = LENGTH # 32 x n
+    base_coeffi = BASE # jump N divsteps
+    coeffi = LENGTH # BASE x n
     result_coeffi = base_coeffi + coeffi
-    __polymul_name = "__polymul_32x" + str(coeffi)
+    __polymul_name = "__polymul_" + str(base_coeffi) + "x" + str(coeffi)
     STACK_SPACE = result_coeffi * 4 + 4
 
-    f_name = "__update_VS_32x" + str(coeffi)
+    f_name = "__update_VS_" + str(base_coeffi) + "x" + str(coeffi)
     f_params = "(int *V, int *S, int *M1)"
     f_regs = "r3-r12"
     u.prologue_mod3(f_name, f_params, f_regs)
@@ -119,5 +120,6 @@ def main(LENGTH):
     printIn("add.w sp, #%d" % (STACK_SPACE))
     u.epilogue_mod3(f_regs)
 
-for i in range(1, 26):
-    main(32*i)
+for i in range(1, 768//BASE+1):
+    main(BASE*i)
+main(800)

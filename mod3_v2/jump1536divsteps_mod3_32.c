@@ -1,5 +1,5 @@
 #include <inttypes.h>
-#include "red_mod3_int.h"
+// #include "red_mod3_int.h"
 
 extern int jump32divsteps_mod3(int minusdelta, int* M, int* f, int* g);
 int jump1536divsteps_mod3_32(int minusdelta, int32_t *M, int32_t *f, int32_t *g);
@@ -39,52 +39,52 @@ void gf_polymul_32x768_mod3(uint32_t *h, uint32_t *f, uint32_t *g){
     }
 }
 
-void update_fg(int *f, int*g, int *M1){
-    uint32_t C800_1[201], C800_2[201], C800_3[200], C800_4[200];
-    C800_1[0]=C800_2[0]=0;
-    uint32_t * CC800_1 = (uint32_t *)((void *)C800_1 + 1);
-    uint32_t * CC800_2 = (uint32_t *)((void *)C800_2 + 1);
+// void update_fg(int *f, int*g, int *M1){
+//     uint32_t C800_1[201], C800_2[201], C800_3[200], C800_4[200];
+//     C800_1[0]=C800_2[0]=0;
+//     uint32_t * CC800_1 = (uint32_t *)((void *)C800_1 + 1);
+//     uint32_t * CC800_2 = (uint32_t *)((void *)C800_2 + 1);
 
-    uint32_t i, *X, *Y, *Z;
+//     uint32_t i, *X, *Y, *Z;
 
-    gf_polymul_32x768_mod3(CC800_1, M1, f); // x * u * f
-    gf_polymul_32x768_mod3(CC800_2, M1+8, g); // x * v * g
-    gf_polymul_32x768_mod3(C800_3, M1+16, f); // r * f
-    gf_polymul_32x768_mod3(C800_4, M1+24, g); // s * g
+//     gf_polymul_32x768_mod3(CC800_1, M1, f); // x * u * f
+//     gf_polymul_32x768_mod3(CC800_2, M1+8, g); // x * v * g
+//     gf_polymul_32x768_mod3(C800_3, M1+16, f); // r * f
+//     gf_polymul_32x768_mod3(C800_4, M1+24, g); // s * g
 
-    for (X=f, Y=C800_1+8, Z=C800_2+8, i=192; i>0; i--) {// f = x(u fh+v gh) / x^32
-      *(X++) = add_ub3(*(Y++), *(Z++));
-    }
+//     for (X=f, Y=C800_1+8, Z=C800_2+8, i=192; i>0; i--) {// f = x(u fh+v gh) / x^32
+//       *(X++) = add_ub3(*(Y++), *(Z++));
+//     }
 
-    for (X=g, Y=C800_3+8, Z=C800_4+8, i=192; i>0; i--) {// g = (r f+s g) / x^32
-      *(X++) = add_ub3(*(Y++), *(Z++));
-    }
-}
-void update_VS(int *V, int*S, int *M1){
-    uint32_t C800_1[201], C800_2[200], C800_3[201], C800_4[200];
-    C800_1[0]=C800_3[0]=0;
-    uint32_t * CC800_1 = (uint32_t *)((void *)C800_1 + 1);
-    uint32_t * CC800_3 = (uint32_t *)((void *)C800_3 + 1);
+//     for (X=g, Y=C800_3+8, Z=C800_4+8, i=192; i>0; i--) {// g = (r f+s g) / x^32
+//       *(X++) = add_ub3(*(Y++), *(Z++));
+//     }
+// }
+// void update_VS(int *V, int*S, int *M1){
+//     uint32_t C800_1[201], C800_2[200], C800_3[201], C800_4[200];
+//     C800_1[0]=C800_3[0]=0;
+//     uint32_t * CC800_1 = (uint32_t *)((void *)C800_1 + 1);
+//     uint32_t * CC800_3 = (uint32_t *)((void *)C800_3 + 1);
 
-    uint32_t i, *X, *Y, *Z;
-    // print_poly_byte(M1, "v", 37, 32);
-    // print_poly_byte(S, "S", 5, 0);
+//     uint32_t i, *X, *Y, *Z;
+//     // print_poly_byte(M1, "v", 37, 32);
+//     // print_poly_byte(S, "S", 5, 0);
 
-    gf_polymul_32x768_mod3(CC800_1, M1, V); // u * V * x
-    gf_polymul_32x768_mod3(C800_2, M1+8, S); // v * S
-    gf_polymul_32x768_mod3(CC800_3, M1+16, V); // r * V * x
-    gf_polymul_32x768_mod3(C800_4, M1+24, S); // s * S
+//     gf_polymul_32x768_mod3(CC800_1, M1, V); // u * V * x
+//     gf_polymul_32x768_mod3(C800_2, M1+8, S); // v * S
+//     gf_polymul_32x768_mod3(CC800_3, M1+16, V); // r * V * x
+//     gf_polymul_32x768_mod3(C800_4, M1+24, S); // s * S
 
-    // print_poly_byte(C800_1, "C800_1", 5, 0);
-    // print_poly_byte(C800_2, "C800_2", 5, 0);
+//     // print_poly_byte(C800_1, "C800_1", 5, 0);
+//     // print_poly_byte(C800_2, "C800_2", 5, 0);
 
-    for (X=V, Y=C800_1, Z=C800_2, i=192; i>0; i--) {// V = u V x + v S
-      *(X++) = add_ub3(*(Y++), *(Z++));
-    }
-    for (X=S, Y=C800_3, Z=C800_4, i=192; i>0; i--) {// S = r V x + s S
-      *(X++) = add_ub3(*(Y++), *(Z++));
-    }
-}
+//     for (X=V, Y=C800_1, Z=C800_2, i=192; i>0; i--) {// V = u V x + v S
+//       *(X++) = add_ub3(*(Y++), *(Z++));
+//     }
+//     for (X=S, Y=C800_3, Z=C800_4, i=192; i>0; i--) {// S = r V x + s S
+//       *(X++) = add_ub3(*(Y++), *(Z++));
+//     }
+// }
 
 void update_VS_800(int *V, int*S, int *M1){
     uint32_t C800_1[209], C800_2[208], C800_3[209], C800_4[208];

@@ -321,9 +321,7 @@ def mid_loop():
     ### loop end ###
 
     
-def SCH_polymul32x32N_mod3(N,C1,C2,rf,rg,rh, loop) :
-
-    N1 = 32 # N >= N1
+def SCH_polymul32x32N_mod3(N1,N,C1,C2,rf,rg,rh, loop) :
 
     globals()["C1"]=C1
     globals()["C2"]=C2
@@ -410,7 +408,7 @@ def SCH_polymul32x32N_mod3(N,C1,C2,rf,rg,rh, loop) :
     print("	ldr	%s, [r14, #%d]" % (ar(i,j,3), N-4))
     end_strip_bot(i)
 
-def polymul(NN, C1, C2, loop = True):
-
-    SCH_polymul32x32N_mod3(NN,C1,C2,"r1","r2","r0", loop)    
+def polymul(N1, NN, C1, C2, loop = True):
+    # N >= N1
+    SCH_polymul32x32N_mod3(N1,NN,C1,C2,"r1","r2","r0", loop)    
 
