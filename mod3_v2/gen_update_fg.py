@@ -19,6 +19,38 @@ s_M = "s2"
 r03 = "r11"
 scr = "r12"
 
+# def half_reduce_str(sp, result_coeffi, h1, h2, nums, half_reduce = ""):
+#     g_to_f_distance = result_coeffi * 2
+#     for count in range(2): # 0: g, 1: f
+#         str_target = f
+#         if count == 0:
+#             str_target = g
+#             # first mul
+#             for i in range(nums):
+#                 printIn("ldr.w %s, [%s, #%d]" % (h1[i], sp, i*4 + g_to_f_distance))
+#             # second mul
+#             for i in range(nums):
+#                 printIn("ldr.w %s, [%s, #%d]" % (h2[i], sp, i*4 + result_coeffi + g_to_f_distance))
+#         else:
+#             # second mul
+#             for i in range(nums):
+#                 printIn("ldr.w %s, [%s, #%d]" % (h2[i], sp, i*4 + result_coeffi))
+#             # first mul
+#             for i in range(1, nums):
+#                 printIn("ldr.w %s, [%s, #%d]" % (h1[i], sp, i*4))
+#             printIn("ldr.w %s, [%s], #16" % (h1[0], sp))
+
+#         # add
+#         for i in range(nums):
+#             if half_reduce == "-3":
+#                 u.reduce_mod3_5(h1[i], scr, r03)
+#             elif half_reduce == "lazy":
+#                 u.reduce_mod3_lazy(h1[i], scr, r03)
+#         for i in range(nums):
+#             printIn("add.w %s, %s" % (h1[i], h2[i]))
+#         # store
+#         reduce_str(h1,str_target)
+
 def reduce_str(rs, target = f):
     for i in range(len(rs)):
         u.reduce_mod3_full(rs[i], scr, r03)
@@ -79,8 +111,17 @@ def main(LENGTH):
     printIn("vmov.w %s, %s, %s, %s" % (f, g, s_f, s_g))
     
     printIn("add.w %s, #%d" % (sp, base_coeffi))
-    
+
+    # if not base_coeffi == 32:
+    #     half_reduce_str(sp, result_coeffi, h1, h2, half_reduce = "-3")
+
+    # if base_coeffi == 32:
+    #     printIn("add.w %s, %s, #%d" % (flag, f, coeffi))
+    # else:
+    #     printIn("add.w %s, %s, #%d" % (flag, f, coeffi-64))
+
     printIn("add.w %s, %s, #%d" % (flag, f, coeffi))
+
     add_loop = "add_loop_%d" % (coeffi)
     print(add_loop + ":")
 
@@ -105,8 +146,9 @@ def main(LENGTH):
             printIn("ldr.w %s, [%s], #16" % (h1[0], sp))
 
         # add
-        for i in range(len(h1)):
-            u.reduce_mod3_5(h1[i], scr, r03)
+        if base_coeffi == 32:
+            for i in range(len(h1)):
+                u.reduce_mod3_5(h1[i], scr, r03)
         for i in range(len(h1)):
             printIn("add.w %s, %s" % (h1[i], h2[i]))
         # store
