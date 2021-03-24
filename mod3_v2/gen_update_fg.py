@@ -62,8 +62,9 @@ def reduce_str(rs, target = f):
 def main(LENGTH):
     base_coeffi = BASE # jump N divsteps
     coeffi = LENGTH # BASE x n
-    result_coeffi = base_coeffi + coeffi
-    __polymul_name = "__polymul_" + str(base_coeffi) + "x" + str(coeffi)
+    # result_coeffi = base_coeffi + coeffi
+    result_coeffi = 4 + coeffi
+    __polymul_name = "__polymul_" + str(base_coeffi) + "x" + str(coeffi) + "_jump_head"
     STACK_SPACE = result_coeffi * 4 + 4
 
     f_name = "__update_fg_" + str(base_coeffi) + "x" + str(coeffi)
@@ -110,7 +111,9 @@ def main(LENGTH):
     printIn("mov.w %s, sp" % (sp))
     printIn("vmov.w %s, %s, %s, %s" % (f, g, s_f, s_g))
     
-    printIn("add.w %s, #%d" % (sp, base_coeffi))
+    # printIn("add.w %s, #%d" % (sp, base_coeffi))
+
+    printIn("add.w %s, #%d" % (sp, 4))
 
     # if not base_coeffi == 32:
     #     half_reduce_str(sp, result_coeffi, h1, h2, half_reduce = "-3")

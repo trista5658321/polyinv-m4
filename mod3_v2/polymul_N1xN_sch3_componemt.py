@@ -262,94 +262,13 @@ def end_strip_bot (i) :
     print("	str.w %s, [r0, #8]" % (ac(i,2)))
     print("	str.w %s, [r0, #12]" % (ac(i,3)))
     print("	str.w %s, [r0], #16" % (ac(i,0)))
-   
-def mid_loop():
-    ### loop ###
-
-    flag = "r11"
-    print("	add.w %s, r14, #%d" % (flag, N))
-    print("	add.w r14, #%d" % (N1))
-    add_loop = "_loop_%d" % (N)
-    print(add_loop + ":")
-
-    fix_i = N1 // 16 - 1
-    # for i in range(N1//16, N//16):
-        
-    print("	mov.w %s, %s" % (ac(fix_i,0), ac(fix_i,4)))
-    
-    # start_strip_top (i)
-    print("	// ([%d-%d], 0) blocks" % (4*fix_i, 4*fix_i+3))
-    print("	ldr	%s, [r12]" % (ar(fix_i,0,4)))
-    print("	ldr	%s, [r14, #%d]" % (ar(fix_i,0,1), 4))
-    print("	ldr	%s, [r14, #%d]" % (ar(fix_i,0,2), 8))
-    print("	ldr	%s, [r14, #%d]" % (ar(fix_i,0,3), 12))
-    print("	ldr	%s, [r14], #%d" % (ar(fix_i,0,0), 16))
-    print("	umull	%s, %s, %s, %s" % (ac(fix_i,1),ac(fix_i,2),ar(fix_i,0,1),ar(fix_i,0,4)))
-    print("	umull	%s, %s, %s, %s" % (ac(fix_i,3),ac(fix_i,4),ar(fix_i,0,3),ar(fix_i,0,4)))
-    print("	umlal	%s, %s, %s, %s" % (ac(fix_i,0),ac(fix_i,1),ar(fix_i,0,0),ar(fix_i,0,4)))
-    print("	umlal	%s, %s, %s, %s" % (ac(fix_i,2),ac(fix_i,3),ar(fix_i,0,2),ar(fix_i,0,4)))
-
-    for j in range(1, N1//4) :
-        # continue_strip_top (i,j)
-        print("	// ([%d-%d], %d) blocks" % (4*fix_i-j, 4*fix_i-j+3, j))
-        print("	ldr	%s, [r12, #%d]" % (ar(fix_i,j,4), 4*j))
-        # print("	ldr	%s, [r14, #%d]" % (ar(fix_i,j,0), 16*fix_i-4*j))
-        print("	ldr	%s, [r14, #%d]" % (ar(fix_i,j,0), -16-4*j))
-        print("	umlal	%s, %s, %s, %s" % (ac(fix_i,0),ac(fix_i,1),ar(fix_i,j,0),ar(fix_i,j,4)))
-        print("	umlal	%s, %s, %s, %s" % (ac(fix_i,1),ac(fix_i,2),ar(fix_i,j,1),ar(fix_i,j,4)))
-        print("	umlal	%s, %s, %s, %s" % (ac(fix_i,2),ac(fix_i,3),ar(fix_i,j,2),ar(fix_i,j,4)))
-        print("	umlal	%s, %s, %s, %s" % (ac(fix_i,3),ac(fix_i,4),ar(fix_i,j,3),ar(fix_i,j,4)))
-        # if (j % C1 == C1 - 1) :
-        #     reduce_mod3_lazy(ac(fix_i,0),ar(fix_i,j,4),"r11")
-        #     reduce_mod3_lazy(ac(fix_i,1),ar(fix_i,j,4),"r11")
-        #     reduce_mod3_lazy(ac(fix_i,2),ar(fix_i,j,4),"r11")
-        #     reduce_mod3_lazy(ac(fix_i,3),ar(fix_i,j,4),"r11")
-        # if (j % C2 == C2 - 1) :
-        #     reduce_mod3_lazy(ac(fix_i,4),ar(fix_i,j,4),"r11")
-    
-    print("	ldr	%s, =0x03030303" % (ar(fix_i,j,3)))
-    # end_strip_top_2(i)
-    tmp_r03 = ar(fix_i,j,3)
-    j = N1 // 4 - 1
-    lower_bound = 6 # need reduction
-    if (j > lower_bound) and j % C1 > 4: # maximum = 30 + 20 adds
-        reduce_mod3_lazy(ac(fix_i,0),ar(fix_i,j,4),tmp_r03)
-    if ((j+1) > lower_bound) and ((j+1) % C1 > 4): # maximum = 30 + 20 adds
-        reduce_mod3_lazy(ac(fix_i,1),ar(fix_i,j,4),tmp_r03)
-    if ((j+2) > lower_bound) and ((j+2) % C1 > 4): # maximum = 30 + 20 adds
-        reduce_mod3_lazy(ac(fix_i,2),ar(fix_i,j,4),tmp_r03)
-    if ((j+3) > lower_bound) and ((j+3) % C1 > 4): # maximum = 30 + 20 adds
-        reduce_mod3_lazy(ac(fix_i,3),ar(fix_i,j,4),tmp_r03)
-
-    print("	str.w %s, [r0, #4]" % (ac(fix_i,1)))
-    print("	str.w %s, [r0, #8]" % (ac(fix_i,2)))
-    print("	str.w %s, [r0, #12]" % (ac(fix_i,3)))
-    print("	str.w %s, [r0], #16" % (ac(fix_i,0)))
-
-    print("	cmp.w %s, %s" % ("r14", flag))
-    print("	bne.w " + add_loop)
-    print("	sub.w r14, #%d" % (N))
-    print("	ldr	%s, =0x03030303" % ("r11"))
-    ### loop end ###
-
-    
-def SCH_polymul32x32N_mod3(N1,N,C1,C2,rf,rg,rh, loop) :
+  
+def SCH_polymul_N1xN_mod3(N1,N,C1,C2,rf,rg,rh) :
 
     globals()["C1"]=C1
     globals()["C2"]=C2
     globals()["N1"]=N1
     globals()["N"]=N
-
-
-    #assert (N>16)
-    # alloc_save_no("N",str(N))
-    # alloc_save_no("C1",str(C1))
-    # alloc_save_no("C2",str(C2))
-
-    # print_str(rh,"h","save h")
-    # print_str(rh,"hh","save hh")
-    # print_str(rf,"f","save f")
-    # print_str(rg,"g","save g")
     
     # print("sch3_0:			// increasing thread length")
     print("mul_head:")
@@ -360,51 +279,32 @@ def SCH_polymul32x32N_mod3(N1,N,C1,C2,rf,rg,rh, loop) :
     print("	mov	r14, %s" % rg)
     if N1 > 32:
         print("	ldr	r11, =0x03030303")
-
-    # print("#ifndef __thumb2__")
-    # print_str("r11", "3", "save #0x03030303")
-    # print("	ldr	r11, =0x0f0f0f0f")
-    # print_str("r11", "F", "save #0x0F0F0F0F")
-    # print_ldr("r11", "3", "reload #0x03030303")
-    # print("#endif")
-    
-    
     
     # print("sch3_1:			// later blocks")
     print(" // later blocks")
     first_component_blocks = N % N1
     second_label = first_component_blocks // 16 + N1 // 16
 
-    if loop:
-        for i in range(0,N1//16) : # i is thread count
-            start_strip_top (i)
+    for i in range(0,N//16) : # i is thread count
+        if i == N1 // 16:
+            print("mul_%d:" % (N))
+        if i >= second_label and (i-second_label) % (N1//16) == 0:
+            print("mul_%d:" % (N - first_component_blocks - 16*(i-second_label) ))
+        start_strip_top (i)
+
+        if i < N1//16:
             for j in range(1, 4*i+1) :
                 continue_strip_top (i,j)
+        else:
+            for j in range(1, N1//4) :
+                continue_strip_top (i,j)
+
+        if i < N1//16: # for N1 = 32
             end_strip_top (i)
-
-        mid_loop()
-
-    else:
-        for i in range(0,N//16) : # i is thread count
-            if i == N1 // 16:
-                print("mul_%d:" % (N))
-            if i >= second_label and (i-second_label) % (N1//16) == 0:
-                print("mul_%d:" % (N - first_component_blocks - 16*(i-second_label) ))
-            start_strip_top (i)
-
-            if i < N1//16:
-                for j in range(1, 4*i+1) :
-                    continue_strip_top (i,j)
-            else:
-                for j in range(1, N1//4) :
-                    continue_strip_top (i,j)
-
-            if i < N1//16: # for N1 = 32
-                end_strip_top (i)
-                if i == N1 // 16 - 1:
-                    print("	pop.w {pc}")
-            else:
-                end_strip_top_2(i)
+            if i == N1 // 16 - 1:
+                print("	pop.w {pc}")
+        else:
+            end_strip_top_2(i)
     
     print("mul_%d:" % (N1))
     # print("sch3_10:			// decreasing thread length")
@@ -433,8 +333,52 @@ def SCH_polymul32x32N_mod3(N1,N,C1,C2,rf,rg,rh, loop) :
     end_strip_bot(i)
     print("	pop.w {pc}")
 
-def func_head(BASE, N, coeffi):
+def SCH_polymul_N1xN_mod3_jump_base(BASE, rf, rg):
+    print("mul_head_jump_base:")
+    print(" // increasing thread length")
+    print("	push.w {lr}")
+    print("	mov	r12, %s" % rf)
+    print("	mov	r14, %s" % rg)
+
+    i = BASE//16 - 1
+    r12_list = [ar(i,0,4), ac(i,0), ac(i,1), ac(i,2)]
+    r14_list = [ar(i,0,0), ar(i,0,1), ar(i,0,2), ar(i,0,3)]
+    result_list = [ac(i,3), ac(i,4)]
+
+    for k in range(BASE//16):
+        for idx in range(4):
+            print("	ldr	%s, [r12, #%d]" % (r12_list[idx], 16*k + 4*idx))
+        for idx in range(4):
+            print("	ldr	%s, [r14, #%d]" % (r14_list[idx], 16*(i-k) + 12 - 4*idx))
+
+        if k == 0:
+            print("	umull	%s, %s, %s, %s" % (result_list[0], result_list[1], r12_list[0], r14_list[0]))
+        else:
+            print("	umlal	%s, %s, %s, %s" % (result_list[0], result_list[1], r12_list[0], r14_list[0]))
+            j = 4*k
+            if do_reduction_continue(j):
+                reduce_mod3_lazy(result_list[0], r12_list[0], "r11")
+            if do_reduction_continue_id4(j):
+                reduce_mod3_lazy(result_list[1], r12_list[0], "r11")
+        for idx in range(1, 4):
+            print("	umlal	%s, %s, %s, %s" % (result_list[0], result_list[1], r12_list[idx], r14_list[idx]))
+            j = 4*k + idx
+            if do_reduction_continue(j):
+                reduce_mod3_lazy(result_list[0], r12_list[0], "r11")
+            if do_reduction_continue_id4(j):
+                reduce_mod3_lazy(result_list[1], r12_list[0], "r11")
+
+    if do_reduction_end(BASE//4):
+        reduce_mod3_lazy(result_list[0], r12_list[0], "r11")
+    
+    print("	str.w %s, [r0], #4" % (result_list[0]))
+    
+    print("	pop.w {pc}")
+
+def func_head(BASE, N, coeffi, jump_head = False):
     __polymul_name = "__polymul_" + str(BASE) + "x" + str(coeffi)
+    if jump_head:
+        __polymul_name += "_jump_head"
     print(".p2align 2,,3")
     print(".syntax unified")
     print(".text")
@@ -442,36 +386,46 @@ def func_head(BASE, N, coeffi):
     print(".type  " + __polymul_name + ", %function")
     print(__polymul_name + ":")
     print("	push.w {lr}")
-    print("	bl.w mul_head")
+
+    if jump_head:
+        print("	bl.w mul_head_jump_base")
+    else:
+        print("	bl.w mul_head")
 
     label_i = (BASE+N) // 16 - coeffi // 16
     mul_head_id4_reg = ac(BASE//16-1,4)
     mul_coeffi_id0_reg = ac(label_i,0)
-    
-    print("	mov.w %s, %s" % (mul_coeffi_id0_reg, mul_head_id4_reg))
+    if mul_coeffi_id0_reg != mul_head_id4_reg:
+        print("	mov.w %s, %s" % (mul_coeffi_id0_reg, mul_head_id4_reg))
     
     # change r14 initial index
     shift_blocks = N - coeffi
-    print("	sub.w r14, #%d" % (shift_blocks))
+    if shift_blocks != 0:
+        print("	sub.w r14, #%d" % (shift_blocks))
 
     print("	b.w mul_%d" % (coeffi))
 
-def polymul(N1, NN, C1, C2, loop = True):
+def polymul(N1, NN, C1, C2):
     # N >= N1
     print(".p2align 2,,3")
     print(".syntax unified")
     print(".text")
-    SCH_polymul32x32N_mod3(N1,NN,C1,C2,"r1","r2","r0", loop)
+    SCH_polymul_N1xN_mod3_jump_base(N1, "r1", "r2")
+    SCH_polymul_N1xN_mod3(N1,NN,C1,C2,"r1","r2","r0")
 
 def gen_mul():
     BASE = 64
     C1 = 14
     C2 = 18
     N = 800
-    polymul(BASE, 800, C1, C2, False)
+    polymul(BASE, 800, C1, C2)
 
-    for i in range(1, 768//BASE+1):
+    for i in range(1, N//BASE+1):
         coeffi = BASE * i
-        func_head(BASE, N, coeffi)
+        func_head(BASE, N, coeffi, True)
+        func_head(BASE, N, coeffi, False)
+    if N % BASE != 0:
+        # func_head(BASE, N, N, True)
+        func_head(BASE, N, N, False)
 
 gen_mul()

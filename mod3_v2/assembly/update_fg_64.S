@@ -9,39 +9,39 @@ __update_fg_64x64:
 	ldr r11, =0x03030303
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
-	sub.w sp, #516
+	sub.w sp, #276
 	mov.w r0, sp
 	movw.w lr, #0
 	str.w lr, [r0], #1
 	vmov.w r1, s2
 	vmov.w r2, s0
-	bl __polymul_64x64
+	bl __polymul_64x64_jump_head
 	vmov.w r1, s2
 	vmov.w r2, s1
 	add.w r1, #64
-	bl __polymul_64x64
+	bl __polymul_64x64_jump_head
 	vmov.w r1, s2
 	vmov.w r2, s0
 	add.w r1, #128
 	sub.w r0, #1
-	bl __polymul_64x64
+	bl __polymul_64x64_jump_head
 	vmov.w r1, s2
 	vmov.w r2, s1
 	add.w r1, #192
-	bl __polymul_64x64
+	bl __polymul_64x64_jump_head
 	mov.w r10, sp
 	vmov.w r0, r1, s0, s1
-	add.w r10, #64
+	add.w r10, #4
 	add.w lr, r0, #64
 add_loop_64:
-	ldr.w r2, [r10, #256]
-	ldr.w r3, [r10, #260]
-	ldr.w r4, [r10, #264]
-	ldr.w r5, [r10, #268]
-	ldr.w r6, [r10, #384]
-	ldr.w r7, [r10, #388]
-	ldr.w r8, [r10, #392]
-	ldr.w r9, [r10, #396]
+	ldr.w r2, [r10, #136]
+	ldr.w r3, [r10, #140]
+	ldr.w r4, [r10, #144]
+	ldr.w r5, [r10, #148]
+	ldr.w r6, [r10, #204]
+	ldr.w r7, [r10, #208]
+	ldr.w r8, [r10, #212]
+	ldr.w r9, [r10, #216]
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
@@ -94,10 +94,10 @@ add_loop_64:
 	str.w r4, [r1, #8]
 	str.w r5, [r1, #12]
 	str.w r2, [r1], #16
-	ldr.w r6, [r10, #128]
-	ldr.w r7, [r10, #132]
-	ldr.w r8, [r10, #136]
-	ldr.w r9, [r10, #140]
+	ldr.w r6, [r10, #68]
+	ldr.w r7, [r10, #72]
+	ldr.w r8, [r10, #76]
+	ldr.w r9, [r10, #80]
 	ldr.w r3, [r10, #4]
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
@@ -156,7 +156,7 @@ add_loop_64:
 	str.w r2, [r0], #16
 	cmp.w r0, lr
 	bne.w add_loop_64
-	add.w sp, #516
+	add.w sp, #276
 	pop.w {r3-r12,pc}
 // void __update_fg_64x128 (int *f, int*g, int *M1);
 .p2align 2,,3
@@ -169,39 +169,39 @@ __update_fg_64x128:
 	ldr r11, =0x03030303
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
-	sub.w sp, #772
+	sub.w sp, #532
 	mov.w r0, sp
 	movw.w lr, #0
 	str.w lr, [r0], #1
 	vmov.w r1, s2
 	vmov.w r2, s0
-	bl __polymul_64x128
+	bl __polymul_64x128_jump_head
 	vmov.w r1, s2
 	vmov.w r2, s1
 	add.w r1, #64
-	bl __polymul_64x128
+	bl __polymul_64x128_jump_head
 	vmov.w r1, s2
 	vmov.w r2, s0
 	add.w r1, #128
 	sub.w r0, #1
-	bl __polymul_64x128
+	bl __polymul_64x128_jump_head
 	vmov.w r1, s2
 	vmov.w r2, s1
 	add.w r1, #192
-	bl __polymul_64x128
+	bl __polymul_64x128_jump_head
 	mov.w r10, sp
 	vmov.w r0, r1, s0, s1
-	add.w r10, #64
+	add.w r10, #4
 	add.w lr, r0, #128
 add_loop_128:
-	ldr.w r2, [r10, #384]
-	ldr.w r3, [r10, #388]
-	ldr.w r4, [r10, #392]
-	ldr.w r5, [r10, #396]
-	ldr.w r6, [r10, #576]
-	ldr.w r7, [r10, #580]
-	ldr.w r8, [r10, #584]
-	ldr.w r9, [r10, #588]
+	ldr.w r2, [r10, #264]
+	ldr.w r3, [r10, #268]
+	ldr.w r4, [r10, #272]
+	ldr.w r5, [r10, #276]
+	ldr.w r6, [r10, #396]
+	ldr.w r7, [r10, #400]
+	ldr.w r8, [r10, #404]
+	ldr.w r9, [r10, #408]
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
@@ -254,10 +254,10 @@ add_loop_128:
 	str.w r4, [r1, #8]
 	str.w r5, [r1, #12]
 	str.w r2, [r1], #16
-	ldr.w r6, [r10, #192]
-	ldr.w r7, [r10, #196]
-	ldr.w r8, [r10, #200]
-	ldr.w r9, [r10, #204]
+	ldr.w r6, [r10, #132]
+	ldr.w r7, [r10, #136]
+	ldr.w r8, [r10, #140]
+	ldr.w r9, [r10, #144]
 	ldr.w r3, [r10, #4]
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
@@ -316,7 +316,7 @@ add_loop_128:
 	str.w r2, [r0], #16
 	cmp.w r0, lr
 	bne.w add_loop_128
-	add.w sp, #772
+	add.w sp, #532
 	pop.w {r3-r12,pc}
 // void __update_fg_64x192 (int *f, int*g, int *M1);
 .p2align 2,,3
@@ -329,39 +329,39 @@ __update_fg_64x192:
 	ldr r11, =0x03030303
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
-	sub.w sp, #1028
+	sub.w sp, #788
 	mov.w r0, sp
 	movw.w lr, #0
 	str.w lr, [r0], #1
 	vmov.w r1, s2
 	vmov.w r2, s0
-	bl __polymul_64x192
+	bl __polymul_64x192_jump_head
 	vmov.w r1, s2
 	vmov.w r2, s1
 	add.w r1, #64
-	bl __polymul_64x192
+	bl __polymul_64x192_jump_head
 	vmov.w r1, s2
 	vmov.w r2, s0
 	add.w r1, #128
 	sub.w r0, #1
-	bl __polymul_64x192
+	bl __polymul_64x192_jump_head
 	vmov.w r1, s2
 	vmov.w r2, s1
 	add.w r1, #192
-	bl __polymul_64x192
+	bl __polymul_64x192_jump_head
 	mov.w r10, sp
 	vmov.w r0, r1, s0, s1
-	add.w r10, #64
+	add.w r10, #4
 	add.w lr, r0, #192
 add_loop_192:
-	ldr.w r2, [r10, #512]
-	ldr.w r3, [r10, #516]
-	ldr.w r4, [r10, #520]
-	ldr.w r5, [r10, #524]
-	ldr.w r6, [r10, #768]
-	ldr.w r7, [r10, #772]
-	ldr.w r8, [r10, #776]
-	ldr.w r9, [r10, #780]
+	ldr.w r2, [r10, #392]
+	ldr.w r3, [r10, #396]
+	ldr.w r4, [r10, #400]
+	ldr.w r5, [r10, #404]
+	ldr.w r6, [r10, #588]
+	ldr.w r7, [r10, #592]
+	ldr.w r8, [r10, #596]
+	ldr.w r9, [r10, #600]
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
@@ -414,10 +414,10 @@ add_loop_192:
 	str.w r4, [r1, #8]
 	str.w r5, [r1, #12]
 	str.w r2, [r1], #16
-	ldr.w r6, [r10, #256]
-	ldr.w r7, [r10, #260]
-	ldr.w r8, [r10, #264]
-	ldr.w r9, [r10, #268]
+	ldr.w r6, [r10, #196]
+	ldr.w r7, [r10, #200]
+	ldr.w r8, [r10, #204]
+	ldr.w r9, [r10, #208]
 	ldr.w r3, [r10, #4]
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
@@ -476,7 +476,7 @@ add_loop_192:
 	str.w r2, [r0], #16
 	cmp.w r0, lr
 	bne.w add_loop_192
-	add.w sp, #1028
+	add.w sp, #788
 	pop.w {r3-r12,pc}
 // void __update_fg_64x256 (int *f, int*g, int *M1);
 .p2align 2,,3
@@ -489,39 +489,39 @@ __update_fg_64x256:
 	ldr r11, =0x03030303
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
-	sub.w sp, #1284
+	sub.w sp, #1044
 	mov.w r0, sp
 	movw.w lr, #0
 	str.w lr, [r0], #1
 	vmov.w r1, s2
 	vmov.w r2, s0
-	bl __polymul_64x256
+	bl __polymul_64x256_jump_head
 	vmov.w r1, s2
 	vmov.w r2, s1
 	add.w r1, #64
-	bl __polymul_64x256
+	bl __polymul_64x256_jump_head
 	vmov.w r1, s2
 	vmov.w r2, s0
 	add.w r1, #128
 	sub.w r0, #1
-	bl __polymul_64x256
+	bl __polymul_64x256_jump_head
 	vmov.w r1, s2
 	vmov.w r2, s1
 	add.w r1, #192
-	bl __polymul_64x256
+	bl __polymul_64x256_jump_head
 	mov.w r10, sp
 	vmov.w r0, r1, s0, s1
-	add.w r10, #64
+	add.w r10, #4
 	add.w lr, r0, #256
 add_loop_256:
-	ldr.w r2, [r10, #640]
-	ldr.w r3, [r10, #644]
-	ldr.w r4, [r10, #648]
-	ldr.w r5, [r10, #652]
-	ldr.w r6, [r10, #960]
-	ldr.w r7, [r10, #964]
-	ldr.w r8, [r10, #968]
-	ldr.w r9, [r10, #972]
+	ldr.w r2, [r10, #520]
+	ldr.w r3, [r10, #524]
+	ldr.w r4, [r10, #528]
+	ldr.w r5, [r10, #532]
+	ldr.w r6, [r10, #780]
+	ldr.w r7, [r10, #784]
+	ldr.w r8, [r10, #788]
+	ldr.w r9, [r10, #792]
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
@@ -574,10 +574,10 @@ add_loop_256:
 	str.w r4, [r1, #8]
 	str.w r5, [r1, #12]
 	str.w r2, [r1], #16
-	ldr.w r6, [r10, #320]
-	ldr.w r7, [r10, #324]
-	ldr.w r8, [r10, #328]
-	ldr.w r9, [r10, #332]
+	ldr.w r6, [r10, #260]
+	ldr.w r7, [r10, #264]
+	ldr.w r8, [r10, #268]
+	ldr.w r9, [r10, #272]
 	ldr.w r3, [r10, #4]
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
@@ -636,7 +636,7 @@ add_loop_256:
 	str.w r2, [r0], #16
 	cmp.w r0, lr
 	bne.w add_loop_256
-	add.w sp, #1284
+	add.w sp, #1044
 	pop.w {r3-r12,pc}
 // void __update_fg_64x320 (int *f, int*g, int *M1);
 .p2align 2,,3
@@ -649,39 +649,39 @@ __update_fg_64x320:
 	ldr r11, =0x03030303
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
-	sub.w sp, #1540
+	sub.w sp, #1300
 	mov.w r0, sp
 	movw.w lr, #0
 	str.w lr, [r0], #1
 	vmov.w r1, s2
 	vmov.w r2, s0
-	bl __polymul_64x320
+	bl __polymul_64x320_jump_head
 	vmov.w r1, s2
 	vmov.w r2, s1
 	add.w r1, #64
-	bl __polymul_64x320
+	bl __polymul_64x320_jump_head
 	vmov.w r1, s2
 	vmov.w r2, s0
 	add.w r1, #128
 	sub.w r0, #1
-	bl __polymul_64x320
+	bl __polymul_64x320_jump_head
 	vmov.w r1, s2
 	vmov.w r2, s1
 	add.w r1, #192
-	bl __polymul_64x320
+	bl __polymul_64x320_jump_head
 	mov.w r10, sp
 	vmov.w r0, r1, s0, s1
-	add.w r10, #64
+	add.w r10, #4
 	add.w lr, r0, #320
 add_loop_320:
-	ldr.w r2, [r10, #768]
-	ldr.w r3, [r10, #772]
-	ldr.w r4, [r10, #776]
-	ldr.w r5, [r10, #780]
-	ldr.w r6, [r10, #1152]
-	ldr.w r7, [r10, #1156]
-	ldr.w r8, [r10, #1160]
-	ldr.w r9, [r10, #1164]
+	ldr.w r2, [r10, #648]
+	ldr.w r3, [r10, #652]
+	ldr.w r4, [r10, #656]
+	ldr.w r5, [r10, #660]
+	ldr.w r6, [r10, #972]
+	ldr.w r7, [r10, #976]
+	ldr.w r8, [r10, #980]
+	ldr.w r9, [r10, #984]
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
@@ -734,10 +734,10 @@ add_loop_320:
 	str.w r4, [r1, #8]
 	str.w r5, [r1, #12]
 	str.w r2, [r1], #16
-	ldr.w r6, [r10, #384]
-	ldr.w r7, [r10, #388]
-	ldr.w r8, [r10, #392]
-	ldr.w r9, [r10, #396]
+	ldr.w r6, [r10, #324]
+	ldr.w r7, [r10, #328]
+	ldr.w r8, [r10, #332]
+	ldr.w r9, [r10, #336]
 	ldr.w r3, [r10, #4]
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
@@ -796,7 +796,7 @@ add_loop_320:
 	str.w r2, [r0], #16
 	cmp.w r0, lr
 	bne.w add_loop_320
-	add.w sp, #1540
+	add.w sp, #1300
 	pop.w {r3-r12,pc}
 // void __update_fg_64x384 (int *f, int*g, int *M1);
 .p2align 2,,3
@@ -809,39 +809,39 @@ __update_fg_64x384:
 	ldr r11, =0x03030303
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
-	sub.w sp, #1796
+	sub.w sp, #1556
 	mov.w r0, sp
 	movw.w lr, #0
 	str.w lr, [r0], #1
 	vmov.w r1, s2
 	vmov.w r2, s0
-	bl __polymul_64x384
+	bl __polymul_64x384_jump_head
 	vmov.w r1, s2
 	vmov.w r2, s1
 	add.w r1, #64
-	bl __polymul_64x384
+	bl __polymul_64x384_jump_head
 	vmov.w r1, s2
 	vmov.w r2, s0
 	add.w r1, #128
 	sub.w r0, #1
-	bl __polymul_64x384
+	bl __polymul_64x384_jump_head
 	vmov.w r1, s2
 	vmov.w r2, s1
 	add.w r1, #192
-	bl __polymul_64x384
+	bl __polymul_64x384_jump_head
 	mov.w r10, sp
 	vmov.w r0, r1, s0, s1
-	add.w r10, #64
+	add.w r10, #4
 	add.w lr, r0, #384
 add_loop_384:
-	ldr.w r2, [r10, #896]
-	ldr.w r3, [r10, #900]
-	ldr.w r4, [r10, #904]
-	ldr.w r5, [r10, #908]
-	ldr.w r6, [r10, #1344]
-	ldr.w r7, [r10, #1348]
-	ldr.w r8, [r10, #1352]
-	ldr.w r9, [r10, #1356]
+	ldr.w r2, [r10, #776]
+	ldr.w r3, [r10, #780]
+	ldr.w r4, [r10, #784]
+	ldr.w r5, [r10, #788]
+	ldr.w r6, [r10, #1164]
+	ldr.w r7, [r10, #1168]
+	ldr.w r8, [r10, #1172]
+	ldr.w r9, [r10, #1176]
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
@@ -894,10 +894,10 @@ add_loop_384:
 	str.w r4, [r1, #8]
 	str.w r5, [r1, #12]
 	str.w r2, [r1], #16
-	ldr.w r6, [r10, #448]
-	ldr.w r7, [r10, #452]
-	ldr.w r8, [r10, #456]
-	ldr.w r9, [r10, #460]
+	ldr.w r6, [r10, #388]
+	ldr.w r7, [r10, #392]
+	ldr.w r8, [r10, #396]
+	ldr.w r9, [r10, #400]
 	ldr.w r3, [r10, #4]
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
@@ -956,7 +956,7 @@ add_loop_384:
 	str.w r2, [r0], #16
 	cmp.w r0, lr
 	bne.w add_loop_384
-	add.w sp, #1796
+	add.w sp, #1556
 	pop.w {r3-r12,pc}
 // void __update_fg_64x448 (int *f, int*g, int *M1);
 .p2align 2,,3
@@ -969,39 +969,39 @@ __update_fg_64x448:
 	ldr r11, =0x03030303
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
-	sub.w sp, #2052
+	sub.w sp, #1812
 	mov.w r0, sp
 	movw.w lr, #0
 	str.w lr, [r0], #1
 	vmov.w r1, s2
 	vmov.w r2, s0
-	bl __polymul_64x448
+	bl __polymul_64x448_jump_head
 	vmov.w r1, s2
 	vmov.w r2, s1
 	add.w r1, #64
-	bl __polymul_64x448
+	bl __polymul_64x448_jump_head
 	vmov.w r1, s2
 	vmov.w r2, s0
 	add.w r1, #128
 	sub.w r0, #1
-	bl __polymul_64x448
+	bl __polymul_64x448_jump_head
 	vmov.w r1, s2
 	vmov.w r2, s1
 	add.w r1, #192
-	bl __polymul_64x448
+	bl __polymul_64x448_jump_head
 	mov.w r10, sp
 	vmov.w r0, r1, s0, s1
-	add.w r10, #64
+	add.w r10, #4
 	add.w lr, r0, #448
 add_loop_448:
-	ldr.w r2, [r10, #1024]
-	ldr.w r3, [r10, #1028]
-	ldr.w r4, [r10, #1032]
-	ldr.w r5, [r10, #1036]
-	ldr.w r6, [r10, #1536]
-	ldr.w r7, [r10, #1540]
-	ldr.w r8, [r10, #1544]
-	ldr.w r9, [r10, #1548]
+	ldr.w r2, [r10, #904]
+	ldr.w r3, [r10, #908]
+	ldr.w r4, [r10, #912]
+	ldr.w r5, [r10, #916]
+	ldr.w r6, [r10, #1356]
+	ldr.w r7, [r10, #1360]
+	ldr.w r8, [r10, #1364]
+	ldr.w r9, [r10, #1368]
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
@@ -1054,10 +1054,10 @@ add_loop_448:
 	str.w r4, [r1, #8]
 	str.w r5, [r1, #12]
 	str.w r2, [r1], #16
-	ldr.w r6, [r10, #512]
-	ldr.w r7, [r10, #516]
-	ldr.w r8, [r10, #520]
-	ldr.w r9, [r10, #524]
+	ldr.w r6, [r10, #452]
+	ldr.w r7, [r10, #456]
+	ldr.w r8, [r10, #460]
+	ldr.w r9, [r10, #464]
 	ldr.w r3, [r10, #4]
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
@@ -1116,7 +1116,7 @@ add_loop_448:
 	str.w r2, [r0], #16
 	cmp.w r0, lr
 	bne.w add_loop_448
-	add.w sp, #2052
+	add.w sp, #1812
 	pop.w {r3-r12,pc}
 // void __update_fg_64x512 (int *f, int*g, int *M1);
 .p2align 2,,3
@@ -1129,39 +1129,39 @@ __update_fg_64x512:
 	ldr r11, =0x03030303
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
-	sub.w sp, #2308
+	sub.w sp, #2068
 	mov.w r0, sp
 	movw.w lr, #0
 	str.w lr, [r0], #1
 	vmov.w r1, s2
 	vmov.w r2, s0
-	bl __polymul_64x512
+	bl __polymul_64x512_jump_head
 	vmov.w r1, s2
 	vmov.w r2, s1
 	add.w r1, #64
-	bl __polymul_64x512
+	bl __polymul_64x512_jump_head
 	vmov.w r1, s2
 	vmov.w r2, s0
 	add.w r1, #128
 	sub.w r0, #1
-	bl __polymul_64x512
+	bl __polymul_64x512_jump_head
 	vmov.w r1, s2
 	vmov.w r2, s1
 	add.w r1, #192
-	bl __polymul_64x512
+	bl __polymul_64x512_jump_head
 	mov.w r10, sp
 	vmov.w r0, r1, s0, s1
-	add.w r10, #64
+	add.w r10, #4
 	add.w lr, r0, #512
 add_loop_512:
-	ldr.w r2, [r10, #1152]
-	ldr.w r3, [r10, #1156]
-	ldr.w r4, [r10, #1160]
-	ldr.w r5, [r10, #1164]
-	ldr.w r6, [r10, #1728]
-	ldr.w r7, [r10, #1732]
-	ldr.w r8, [r10, #1736]
-	ldr.w r9, [r10, #1740]
+	ldr.w r2, [r10, #1032]
+	ldr.w r3, [r10, #1036]
+	ldr.w r4, [r10, #1040]
+	ldr.w r5, [r10, #1044]
+	ldr.w r6, [r10, #1548]
+	ldr.w r7, [r10, #1552]
+	ldr.w r8, [r10, #1556]
+	ldr.w r9, [r10, #1560]
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
@@ -1214,10 +1214,10 @@ add_loop_512:
 	str.w r4, [r1, #8]
 	str.w r5, [r1, #12]
 	str.w r2, [r1], #16
-	ldr.w r6, [r10, #576]
-	ldr.w r7, [r10, #580]
-	ldr.w r8, [r10, #584]
-	ldr.w r9, [r10, #588]
+	ldr.w r6, [r10, #516]
+	ldr.w r7, [r10, #520]
+	ldr.w r8, [r10, #524]
+	ldr.w r9, [r10, #528]
 	ldr.w r3, [r10, #4]
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
@@ -1276,7 +1276,7 @@ add_loop_512:
 	str.w r2, [r0], #16
 	cmp.w r0, lr
 	bne.w add_loop_512
-	add.w sp, #2308
+	add.w sp, #2068
 	pop.w {r3-r12,pc}
 // void __update_fg_64x576 (int *f, int*g, int *M1);
 .p2align 2,,3
@@ -1289,39 +1289,39 @@ __update_fg_64x576:
 	ldr r11, =0x03030303
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
-	sub.w sp, #2564
+	sub.w sp, #2324
 	mov.w r0, sp
 	movw.w lr, #0
 	str.w lr, [r0], #1
 	vmov.w r1, s2
 	vmov.w r2, s0
-	bl __polymul_64x576
+	bl __polymul_64x576_jump_head
 	vmov.w r1, s2
 	vmov.w r2, s1
 	add.w r1, #64
-	bl __polymul_64x576
+	bl __polymul_64x576_jump_head
 	vmov.w r1, s2
 	vmov.w r2, s0
 	add.w r1, #128
 	sub.w r0, #1
-	bl __polymul_64x576
+	bl __polymul_64x576_jump_head
 	vmov.w r1, s2
 	vmov.w r2, s1
 	add.w r1, #192
-	bl __polymul_64x576
+	bl __polymul_64x576_jump_head
 	mov.w r10, sp
 	vmov.w r0, r1, s0, s1
-	add.w r10, #64
+	add.w r10, #4
 	add.w lr, r0, #576
 add_loop_576:
-	ldr.w r2, [r10, #1280]
-	ldr.w r3, [r10, #1284]
-	ldr.w r4, [r10, #1288]
-	ldr.w r5, [r10, #1292]
-	ldr.w r6, [r10, #1920]
-	ldr.w r7, [r10, #1924]
-	ldr.w r8, [r10, #1928]
-	ldr.w r9, [r10, #1932]
+	ldr.w r2, [r10, #1160]
+	ldr.w r3, [r10, #1164]
+	ldr.w r4, [r10, #1168]
+	ldr.w r5, [r10, #1172]
+	ldr.w r6, [r10, #1740]
+	ldr.w r7, [r10, #1744]
+	ldr.w r8, [r10, #1748]
+	ldr.w r9, [r10, #1752]
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
@@ -1374,10 +1374,10 @@ add_loop_576:
 	str.w r4, [r1, #8]
 	str.w r5, [r1, #12]
 	str.w r2, [r1], #16
-	ldr.w r6, [r10, #640]
-	ldr.w r7, [r10, #644]
-	ldr.w r8, [r10, #648]
-	ldr.w r9, [r10, #652]
+	ldr.w r6, [r10, #580]
+	ldr.w r7, [r10, #584]
+	ldr.w r8, [r10, #588]
+	ldr.w r9, [r10, #592]
 	ldr.w r3, [r10, #4]
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
@@ -1436,7 +1436,7 @@ add_loop_576:
 	str.w r2, [r0], #16
 	cmp.w r0, lr
 	bne.w add_loop_576
-	add.w sp, #2564
+	add.w sp, #2324
 	pop.w {r3-r12,pc}
 // void __update_fg_64x640 (int *f, int*g, int *M1);
 .p2align 2,,3
@@ -1449,39 +1449,39 @@ __update_fg_64x640:
 	ldr r11, =0x03030303
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
-	sub.w sp, #2820
+	sub.w sp, #2580
 	mov.w r0, sp
 	movw.w lr, #0
 	str.w lr, [r0], #1
 	vmov.w r1, s2
 	vmov.w r2, s0
-	bl __polymul_64x640
+	bl __polymul_64x640_jump_head
 	vmov.w r1, s2
 	vmov.w r2, s1
 	add.w r1, #64
-	bl __polymul_64x640
+	bl __polymul_64x640_jump_head
 	vmov.w r1, s2
 	vmov.w r2, s0
 	add.w r1, #128
 	sub.w r0, #1
-	bl __polymul_64x640
+	bl __polymul_64x640_jump_head
 	vmov.w r1, s2
 	vmov.w r2, s1
 	add.w r1, #192
-	bl __polymul_64x640
+	bl __polymul_64x640_jump_head
 	mov.w r10, sp
 	vmov.w r0, r1, s0, s1
-	add.w r10, #64
+	add.w r10, #4
 	add.w lr, r0, #640
 add_loop_640:
-	ldr.w r2, [r10, #1408]
-	ldr.w r3, [r10, #1412]
-	ldr.w r4, [r10, #1416]
-	ldr.w r5, [r10, #1420]
-	ldr.w r6, [r10, #2112]
-	ldr.w r7, [r10, #2116]
-	ldr.w r8, [r10, #2120]
-	ldr.w r9, [r10, #2124]
+	ldr.w r2, [r10, #1288]
+	ldr.w r3, [r10, #1292]
+	ldr.w r4, [r10, #1296]
+	ldr.w r5, [r10, #1300]
+	ldr.w r6, [r10, #1932]
+	ldr.w r7, [r10, #1936]
+	ldr.w r8, [r10, #1940]
+	ldr.w r9, [r10, #1944]
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
@@ -1534,10 +1534,10 @@ add_loop_640:
 	str.w r4, [r1, #8]
 	str.w r5, [r1, #12]
 	str.w r2, [r1], #16
-	ldr.w r6, [r10, #704]
-	ldr.w r7, [r10, #708]
-	ldr.w r8, [r10, #712]
-	ldr.w r9, [r10, #716]
+	ldr.w r6, [r10, #644]
+	ldr.w r7, [r10, #648]
+	ldr.w r8, [r10, #652]
+	ldr.w r9, [r10, #656]
 	ldr.w r3, [r10, #4]
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
@@ -1596,7 +1596,7 @@ add_loop_640:
 	str.w r2, [r0], #16
 	cmp.w r0, lr
 	bne.w add_loop_640
-	add.w sp, #2820
+	add.w sp, #2580
 	pop.w {r3-r12,pc}
 // void __update_fg_64x704 (int *f, int*g, int *M1);
 .p2align 2,,3
@@ -1609,39 +1609,39 @@ __update_fg_64x704:
 	ldr r11, =0x03030303
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
-	sub.w sp, #3076
+	sub.w sp, #2836
 	mov.w r0, sp
 	movw.w lr, #0
 	str.w lr, [r0], #1
 	vmov.w r1, s2
 	vmov.w r2, s0
-	bl __polymul_64x704
+	bl __polymul_64x704_jump_head
 	vmov.w r1, s2
 	vmov.w r2, s1
 	add.w r1, #64
-	bl __polymul_64x704
+	bl __polymul_64x704_jump_head
 	vmov.w r1, s2
 	vmov.w r2, s0
 	add.w r1, #128
 	sub.w r0, #1
-	bl __polymul_64x704
+	bl __polymul_64x704_jump_head
 	vmov.w r1, s2
 	vmov.w r2, s1
 	add.w r1, #192
-	bl __polymul_64x704
+	bl __polymul_64x704_jump_head
 	mov.w r10, sp
 	vmov.w r0, r1, s0, s1
-	add.w r10, #64
+	add.w r10, #4
 	add.w lr, r0, #704
 add_loop_704:
-	ldr.w r2, [r10, #1536]
-	ldr.w r3, [r10, #1540]
-	ldr.w r4, [r10, #1544]
-	ldr.w r5, [r10, #1548]
-	ldr.w r6, [r10, #2304]
-	ldr.w r7, [r10, #2308]
-	ldr.w r8, [r10, #2312]
-	ldr.w r9, [r10, #2316]
+	ldr.w r2, [r10, #1416]
+	ldr.w r3, [r10, #1420]
+	ldr.w r4, [r10, #1424]
+	ldr.w r5, [r10, #1428]
+	ldr.w r6, [r10, #2124]
+	ldr.w r7, [r10, #2128]
+	ldr.w r8, [r10, #2132]
+	ldr.w r9, [r10, #2136]
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
@@ -1694,10 +1694,10 @@ add_loop_704:
 	str.w r4, [r1, #8]
 	str.w r5, [r1, #12]
 	str.w r2, [r1], #16
-	ldr.w r6, [r10, #768]
-	ldr.w r7, [r10, #772]
-	ldr.w r8, [r10, #776]
-	ldr.w r9, [r10, #780]
+	ldr.w r6, [r10, #708]
+	ldr.w r7, [r10, #712]
+	ldr.w r8, [r10, #716]
+	ldr.w r9, [r10, #720]
 	ldr.w r3, [r10, #4]
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
@@ -1756,7 +1756,7 @@ add_loop_704:
 	str.w r2, [r0], #16
 	cmp.w r0, lr
 	bne.w add_loop_704
-	add.w sp, #3076
+	add.w sp, #2836
 	pop.w {r3-r12,pc}
 // void __update_fg_64x768 (int *f, int*g, int *M1);
 .p2align 2,,3
@@ -1769,39 +1769,39 @@ __update_fg_64x768:
 	ldr r11, =0x03030303
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
-	sub.w sp, #3332
+	sub.w sp, #3092
 	mov.w r0, sp
 	movw.w lr, #0
 	str.w lr, [r0], #1
 	vmov.w r1, s2
 	vmov.w r2, s0
-	bl __polymul_64x768
+	bl __polymul_64x768_jump_head
 	vmov.w r1, s2
 	vmov.w r2, s1
 	add.w r1, #64
-	bl __polymul_64x768
+	bl __polymul_64x768_jump_head
 	vmov.w r1, s2
 	vmov.w r2, s0
 	add.w r1, #128
 	sub.w r0, #1
-	bl __polymul_64x768
+	bl __polymul_64x768_jump_head
 	vmov.w r1, s2
 	vmov.w r2, s1
 	add.w r1, #192
-	bl __polymul_64x768
+	bl __polymul_64x768_jump_head
 	mov.w r10, sp
 	vmov.w r0, r1, s0, s1
-	add.w r10, #64
+	add.w r10, #4
 	add.w lr, r0, #768
 add_loop_768:
-	ldr.w r2, [r10, #1664]
-	ldr.w r3, [r10, #1668]
-	ldr.w r4, [r10, #1672]
-	ldr.w r5, [r10, #1676]
-	ldr.w r6, [r10, #2496]
-	ldr.w r7, [r10, #2500]
-	ldr.w r8, [r10, #2504]
-	ldr.w r9, [r10, #2508]
+	ldr.w r2, [r10, #1544]
+	ldr.w r3, [r10, #1548]
+	ldr.w r4, [r10, #1552]
+	ldr.w r5, [r10, #1556]
+	ldr.w r6, [r10, #2316]
+	ldr.w r7, [r10, #2320]
+	ldr.w r8, [r10, #2324]
+	ldr.w r9, [r10, #2328]
 	add.w r2, r6
 	add.w r3, r7
 	add.w r4, r8
@@ -1854,10 +1854,10 @@ add_loop_768:
 	str.w r4, [r1, #8]
 	str.w r5, [r1, #12]
 	str.w r2, [r1], #16
-	ldr.w r6, [r10, #832]
-	ldr.w r7, [r10, #836]
-	ldr.w r8, [r10, #840]
-	ldr.w r9, [r10, #844]
+	ldr.w r6, [r10, #772]
+	ldr.w r7, [r10, #776]
+	ldr.w r8, [r10, #780]
+	ldr.w r9, [r10, #784]
 	ldr.w r3, [r10, #4]
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
@@ -1916,5 +1916,5 @@ add_loop_768:
 	str.w r2, [r0], #16
 	cmp.w r0, lr
 	bne.w add_loop_768
-	add.w sp, #3332
+	add.w sp, #3092
 	pop.w {r3-r12,pc}

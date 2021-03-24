@@ -1,6 +1,64 @@
 .p2align 2,,3
 .syntax unified
 .text
+mul_head_jump_base:
+ // increasing thread length
+	push.w {lr}
+	mov	r12, r1
+	mov	r14, r2
+	ldr	r2, [r12, #0]
+	ldr	r8, [r12, #4]
+	ldr	r9, [r12, #8]
+	ldr	r10, [r12, #12]
+	ldr	r3, [r14, #60]
+	ldr	r4, [r14, #56]
+	ldr	r5, [r14, #52]
+	ldr	r1, [r14, #48]
+	umull	r6, r7, r2, r3
+	umlal	r6, r7, r8, r4
+	umlal	r6, r7, r9, r5
+	umlal	r6, r7, r10, r1
+	ldr	r2, [r12, #16]
+	ldr	r8, [r12, #20]
+	ldr	r9, [r12, #24]
+	ldr	r10, [r12, #28]
+	ldr	r3, [r14, #44]
+	ldr	r4, [r14, #40]
+	ldr	r5, [r14, #36]
+	ldr	r1, [r14, #32]
+	umlal	r6, r7, r2, r3
+	umlal	r6, r7, r8, r4
+	umlal	r6, r7, r9, r5
+	umlal	r6, r7, r10, r1
+	ldr	r2, [r12, #32]
+	ldr	r8, [r12, #36]
+	ldr	r9, [r12, #40]
+	ldr	r10, [r12, #44]
+	ldr	r3, [r14, #28]
+	ldr	r4, [r14, #24]
+	ldr	r5, [r14, #20]
+	ldr	r1, [r14, #16]
+	umlal	r6, r7, r2, r3
+	umlal	r6, r7, r8, r4
+	umlal	r6, r7, r9, r5
+	umlal	r6, r7, r10, r1
+	ldr	r2, [r12, #48]
+	ldr	r8, [r12, #52]
+	ldr	r9, [r12, #56]
+	ldr	r10, [r12, #60]
+	ldr	r3, [r14, #12]
+	ldr	r4, [r14, #8]
+	ldr	r5, [r14, #4]
+	ldr	r1, [r14, #0]
+	umlal	r6, r7, r2, r3
+	umlal	r6, r7, r8, r4
+	umlal	r6, r7, r9, r5
+	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
+	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
+	add	r6, r6, r2, LSR #4	// range < 31
+	umlal	r6, r7, r10, r1
+	str.w r6, [r0], #4
+	pop.w {pc}
 mul_head:
  // increasing thread length
 	push.w {lr}
@@ -6616,6 +6674,17 @@ mul_64:
 .p2align 2,,3
 .syntax unified
 .text
+.global __polymul_64x64_jump_head
+.type  __polymul_64x64_jump_head, %function
+__polymul_64x64_jump_head:
+	push.w {lr}
+	bl.w mul_head_jump_base
+	mov.w r6, r7
+	sub.w r14, #736
+	b.w mul_64
+.p2align 2,,3
+.syntax unified
+.text
 .global __polymul_64x64
 .type  __polymul_64x64, %function
 __polymul_64x64:
@@ -6624,6 +6693,17 @@ __polymul_64x64:
 	mov.w r6, r7
 	sub.w r14, #736
 	b.w mul_64
+.p2align 2,,3
+.syntax unified
+.text
+.global __polymul_64x128_jump_head
+.type  __polymul_64x128_jump_head, %function
+__polymul_64x128_jump_head:
+	push.w {lr}
+	bl.w mul_head_jump_base
+	mov.w r10, r7
+	sub.w r14, #672
+	b.w mul_128
 .p2align 2,,3
 .syntax unified
 .text
@@ -6638,6 +6718,17 @@ __polymul_64x128:
 .p2align 2,,3
 .syntax unified
 .text
+.global __polymul_64x192_jump_head
+.type  __polymul_64x192_jump_head, %function
+__polymul_64x192_jump_head:
+	push.w {lr}
+	bl.w mul_head_jump_base
+	mov.w r9, r7
+	sub.w r14, #608
+	b.w mul_192
+.p2align 2,,3
+.syntax unified
+.text
 .global __polymul_64x192
 .type  __polymul_64x192, %function
 __polymul_64x192:
@@ -6646,6 +6737,17 @@ __polymul_64x192:
 	mov.w r9, r7
 	sub.w r14, #608
 	b.w mul_192
+.p2align 2,,3
+.syntax unified
+.text
+.global __polymul_64x256_jump_head
+.type  __polymul_64x256_jump_head, %function
+__polymul_64x256_jump_head:
+	push.w {lr}
+	bl.w mul_head_jump_base
+	mov.w r8, r7
+	sub.w r14, #544
+	b.w mul_256
 .p2align 2,,3
 .syntax unified
 .text
@@ -6660,14 +6762,34 @@ __polymul_64x256:
 .p2align 2,,3
 .syntax unified
 .text
+.global __polymul_64x320_jump_head
+.type  __polymul_64x320_jump_head, %function
+__polymul_64x320_jump_head:
+	push.w {lr}
+	bl.w mul_head_jump_base
+	sub.w r14, #480
+	b.w mul_320
+.p2align 2,,3
+.syntax unified
+.text
 .global __polymul_64x320
 .type  __polymul_64x320, %function
 __polymul_64x320:
 	push.w {lr}
 	bl.w mul_head
-	mov.w r7, r7
 	sub.w r14, #480
 	b.w mul_320
+.p2align 2,,3
+.syntax unified
+.text
+.global __polymul_64x384_jump_head
+.type  __polymul_64x384_jump_head, %function
+__polymul_64x384_jump_head:
+	push.w {lr}
+	bl.w mul_head_jump_base
+	mov.w r6, r7
+	sub.w r14, #416
+	b.w mul_384
 .p2align 2,,3
 .syntax unified
 .text
@@ -6682,6 +6804,17 @@ __polymul_64x384:
 .p2align 2,,3
 .syntax unified
 .text
+.global __polymul_64x448_jump_head
+.type  __polymul_64x448_jump_head, %function
+__polymul_64x448_jump_head:
+	push.w {lr}
+	bl.w mul_head_jump_base
+	mov.w r10, r7
+	sub.w r14, #352
+	b.w mul_448
+.p2align 2,,3
+.syntax unified
+.text
 .global __polymul_64x448
 .type  __polymul_64x448, %function
 __polymul_64x448:
@@ -6690,6 +6823,17 @@ __polymul_64x448:
 	mov.w r10, r7
 	sub.w r14, #352
 	b.w mul_448
+.p2align 2,,3
+.syntax unified
+.text
+.global __polymul_64x512_jump_head
+.type  __polymul_64x512_jump_head, %function
+__polymul_64x512_jump_head:
+	push.w {lr}
+	bl.w mul_head_jump_base
+	mov.w r9, r7
+	sub.w r14, #288
+	b.w mul_512
 .p2align 2,,3
 .syntax unified
 .text
@@ -6704,6 +6848,17 @@ __polymul_64x512:
 .p2align 2,,3
 .syntax unified
 .text
+.global __polymul_64x576_jump_head
+.type  __polymul_64x576_jump_head, %function
+__polymul_64x576_jump_head:
+	push.w {lr}
+	bl.w mul_head_jump_base
+	mov.w r8, r7
+	sub.w r14, #224
+	b.w mul_576
+.p2align 2,,3
+.syntax unified
+.text
 .global __polymul_64x576
 .type  __polymul_64x576, %function
 __polymul_64x576:
@@ -6715,14 +6870,34 @@ __polymul_64x576:
 .p2align 2,,3
 .syntax unified
 .text
+.global __polymul_64x640_jump_head
+.type  __polymul_64x640_jump_head, %function
+__polymul_64x640_jump_head:
+	push.w {lr}
+	bl.w mul_head_jump_base
+	sub.w r14, #160
+	b.w mul_640
+.p2align 2,,3
+.syntax unified
+.text
 .global __polymul_64x640
 .type  __polymul_64x640, %function
 __polymul_64x640:
 	push.w {lr}
 	bl.w mul_head
-	mov.w r7, r7
 	sub.w r14, #160
 	b.w mul_640
+.p2align 2,,3
+.syntax unified
+.text
+.global __polymul_64x704_jump_head
+.type  __polymul_64x704_jump_head, %function
+__polymul_64x704_jump_head:
+	push.w {lr}
+	bl.w mul_head_jump_base
+	mov.w r6, r7
+	sub.w r14, #96
+	b.w mul_704
 .p2align 2,,3
 .syntax unified
 .text
@@ -6734,6 +6909,17 @@ __polymul_64x704:
 	mov.w r6, r7
 	sub.w r14, #96
 	b.w mul_704
+.p2align 2,,3
+.syntax unified
+.text
+.global __polymul_64x768_jump_head
+.type  __polymul_64x768_jump_head, %function
+__polymul_64x768_jump_head:
+	push.w {lr}
+	bl.w mul_head_jump_base
+	mov.w r10, r7
+	sub.w r14, #32
+	b.w mul_768
 .p2align 2,,3
 .syntax unified
 .text
