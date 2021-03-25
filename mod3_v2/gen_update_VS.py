@@ -31,6 +31,8 @@ def main(LENGTH):
     base_coeffi = BASE # jump N divsteps
     coeffi = LENGTH # BASE x n
     result_coeffi = base_coeffi + coeffi
+    if coeffi == 768:
+        result_coeffi = 768
     __polymul_name = "__polymul_" + str(base_coeffi) + "x" + str(coeffi)
     STACK_SPACE = result_coeffi * 4 + 4
 
@@ -79,7 +81,8 @@ def main(LENGTH):
     printIn("vmov.w %s, %s, %s, %s" % (V, S, s_V, s_S))
     
     flag_bytes = result_coeffi
-    if flag_bytes > 800: flag_bytes = 800
+    if flag_bytes > 768: flag_bytes = 768
+    if coeffi == 800: flag_bytes = 800
 
     printIn("add.w %s, %s, #%d" % (flag, V, flag_bytes))
     add_loop = "add_loop_vs_%d" % (coeffi)

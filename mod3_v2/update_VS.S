@@ -4034,7 +4034,7 @@ __update_VS_32x768:
 	ldr r11, =0x03030303
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
-	sub.w sp, #3204
+	sub.w sp, #3076
 	mov.w r0, sp
 	movw.w lr, #0
 	str.w lr, [r0], #1
@@ -4056,16 +4056,16 @@ __update_VS_32x768:
 	bl __polymul_32x768
 	mov.w r10, sp
 	vmov.w r0, r1, s0, s1
-	add.w lr, r0, #800
+	add.w lr, r0, #768
 add_loop_vs_768:
-	ldr.w r2, [r10, #800]
-	ldr.w r3, [r10, #804]
-	ldr.w r4, [r10, #808]
-	ldr.w r5, [r10, #812]
-	ldr.w r6, [r10, #2400]
-	ldr.w r7, [r10, #2404]
-	ldr.w r8, [r10, #2408]
-	ldr.w r9, [r10, #2412]
+	ldr.w r2, [r10, #768]
+	ldr.w r3, [r10, #772]
+	ldr.w r4, [r10, #776]
+	ldr.w r5, [r10, #780]
+	ldr.w r6, [r10, #2304]
+	ldr.w r7, [r10, #2308]
+	ldr.w r8, [r10, #2312]
+	ldr.w r9, [r10, #2316]
 	usub8.w r12, r2, r11 // >= 3 ?
 	sel.w r2, r12, r2 // select
 	usub8.w r12, r3, r11 // >= 3 ?
@@ -4126,10 +4126,10 @@ add_loop_vs_768:
 	str.w r4, [r1, #8]
 	str.w r5, [r1, #12]
 	str.w r2, [r1], #16
-	ldr.w r6, [r10, #1600]
-	ldr.w r7, [r10, #1604]
-	ldr.w r8, [r10, #1608]
-	ldr.w r9, [r10, #1612]
+	ldr.w r6, [r10, #1536]
+	ldr.w r7, [r10, #1540]
+	ldr.w r8, [r10, #1544]
+	ldr.w r9, [r10, #1548]
 	ldr.w r3, [r10, #4]
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
@@ -4196,7 +4196,7 @@ add_loop_vs_768:
 	str.w r2, [r0], #16
 	cmp.w r0, lr
 	bne.w add_loop_vs_768
-	add.w sp, #3204
+	add.w sp, #3076
 	pop.w {r3-r12,pc}
 // void __update_VS_32x800 (int *V, int *S, int *M1);
 .p2align 2,,3
