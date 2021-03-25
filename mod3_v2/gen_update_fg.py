@@ -63,7 +63,8 @@ def main(LENGTH):
     base_coeffi = BASE # jump N divsteps
     coeffi = LENGTH # BASE x n
     # result_coeffi = base_coeffi + coeffi
-    result_coeffi = 4 + coeffi
+    denominator_x_power = 4
+    result_coeffi = coeffi # base_coeffi x coeffi[base_coeffi - 4: -4] -> coeffi
     __polymul_name = "__polymul_" + str(base_coeffi) + "x" + str(coeffi) + "_jump_head"
     STACK_SPACE = result_coeffi * 4 + 4
 
@@ -113,7 +114,7 @@ def main(LENGTH):
     
     # printIn("add.w %s, #%d" % (sp, base_coeffi))
 
-    printIn("add.w %s, #%d" % (sp, 4))
+    printIn("add.w %s, #%d" % (sp, denominator_x_power))
 
     # if not base_coeffi == 32:
     #     half_reduce_str(sp, result_coeffi, h1, h2, half_reduce = "-3")
@@ -123,7 +124,10 @@ def main(LENGTH):
     # else:
     #     printIn("add.w %s, %s, #%d" % (flag, f, coeffi-64))
 
-    printIn("add.w %s, %s, #%d" % (flag, f, coeffi))
+    str_coeffi = (coeffi - denominator_x_power)
+    loop_times = str_coeffi // 16
+    loop_last = (str_coeffi - loop_times * 16) // 4
+    printIn("add.w %s, %s, #%d" % (flag, f, loop_times * 16))
 
     add_loop = "add_loop_%d" % (coeffi)
     print(add_loop + ":")
@@ -159,6 +163,36 @@ def main(LENGTH):
     
     printIn("cmp.w %s, %s" % (f, flag))
     printIn("bne.w " + add_loop)
+
+    if loop_last:
+        for count in range(2): # 0: g, 1: f
+            str_target = f
+            if count == 0:
+                str_target = g
+                # first mul
+                for i in range(loop_last):
+                    printIn("ldr.w %s, [%s, #%d]" % (h1[i], sp, i*4 + g_to_f_distance))
+                # second mul
+                for i in range(loop_last):
+                    printIn("ldr.w %s, [%s, #%d]" % (h2[i], sp, i*4 + result_coeffi + g_to_f_distance))
+            else:
+                # second mul
+                for i in range(loop_last):
+                    printIn("ldr.w %s, [%s, #%d]" % (h2[i], sp, i*4 + result_coeffi))
+                # first mul
+                for i in range(1, loop_last):
+                    printIn("ldr.w %s, [%s, #%d]" % (h1[i], sp, i*4))
+                printIn("ldr.w %s, [%s], #%d" % (h1[0], sp, loop_last * 4))
+
+            # add
+            if base_coeffi == 32:
+                for i in range(loop_last):
+                    u.reduce_mod3_5(h1[i], scr, r03)
+            for i in range(loop_last):
+                printIn("add.w %s, %s" % (h1[i], h2[i]))
+            # store
+            tmp_arr = h1[:loop_last]
+            reduce_str(tmp_arr,str_target)
 
     printIn("add.w sp, #%d" % (STACK_SPACE))
     u.epilogue_mod3(f_regs)
