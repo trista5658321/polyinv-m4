@@ -2,46 +2,10 @@
 import sys
 import re
 from math import log,ceil,floor,sqrt
+from utility import do_reduction_continue, do_reduction_continue_id4, do_reduction_end, pre_id4_lazy
 
 N = 0
 N1 = 0
-C1 = 14
-C2 = 18
-MAX1 = 15
-MAX2 = 21
-
-def do_reduction_continue(j):
-    block_counts = j+1
-    # 第一次需 lazy (63 adds // 4 = 15) & 後續需 lazy (56 adds // 4 = 14)
-    if block_counts >= MAX1 and (block_counts - MAX1) % C1 == 0: 
-        return True
-    return False
-
-def do_reduction_continue_id4(j): # ac(i, 4)
-    block_counts = j+1
-    # 第一次需 lazy (63 adds // 3 = 21) & 後續需 lazy (56 adds // 3 = 18)
-    if block_counts >= MAX2 and (block_counts - MAX2) % C2 == 0: 
-        return True
-    return False
-
-def do_reduction_end(j):
-    block_counts = j+1
-    if do_reduction_continue(j):
-        return True
-    # lazy + lazy: 2*(30 + 24 adds) = 252 <= 255 (max 6 blocks)
-    if block_counts > 7 and block_counts < MAX1:
-        ## for N1 == 32 (do -3 before addition)
-        if N1 == 32: return False
-        return True
-    if block_counts >= MAX1 and (block_counts - MAX1) % C1 > 6: 
-        return True
-    return False
-
-def pre_id4_lazy(j):
-    block_counts = j+1
-    if block_counts >= MAX2:
-        return True
-    return False
 
 r_f = "r1"
 r_g = "r2"
@@ -72,17 +36,9 @@ def reduce_mod3_32 (X, scr, r03) : # r03 = 0x03030303, good for 8 adds
     reduce_mod3_11 (X, scr, r03)
     
 def reduce_mod3_lazy (X, scr, r03) :
-    # print("#ifdef __thumb2__"	)
     print("	and	%s, %s, #0xF0F0F0F0	// top 4b < 16" % (scr, X))
     print("	and	%s, %s, #0x0F0F0F0F	// bot 4b < 16" % (X, X))
     print("	add	%s, %s, %s, LSR #4	// range < 31" % (X, X, scr))
-    # print("#else")
-    # print_ldr(r03, "F", "reload #0x0F0F0F0F")
-    # print("	bic	%s, %s, %s	// top 4b < 16" % (scr, X, r03))
-    # print("	and	%s, %s, %s	// bot 4b < 16" % (X, X, r03))
-    # print("	add	%s, %s, %s, LSR #4	// range < 31" % (X, X, scr))
-    # print_ldr(r03, "3", "reload #0x03030303")
-    # print("#endif")
     
 def reduce_mod3_full (X, scr, r03) :  
     reduce_mod3_lazy (X, scr, r03)
@@ -263,24 +219,16 @@ def end_strip_bot (i) :
     print("	str.w %s, [r0, #12]" % (ac(i,3)))
     print("	str.w %s, [r0], #16" % (ac(i,0)))
   
-def SCH_polymul_N1xN_mod3(N1,N,C1,C2,rf,rg,rh) :
-
-    globals()["C1"]=C1
-    globals()["C2"]=C2
-    globals()["N1"]=N1
-    globals()["N"]=N
-    
-    # print("sch3_0:			// increasing thread length")
+def SCH_polymul_N1xN_mod3(N1,N) :
     print("mul_head:")
     print(" // increasing thread length")
     print("	push.w {lr}")
     print("	mov	%s, #0" % (ac(0,0)))
-    print("	mov	r12, %s" % rf)
-    print("	mov	r14, %s" % rg)
+    print("	mov	r12, %s" % r_f)
+    print("	mov	r14, %s" % r_g)
     if N1 > 32:
         print("	ldr	r11, =0x03030303")
     
-    # print("sch3_1:			// later blocks")
     print(" // later blocks")
     first_component_blocks = N % N1
     second_label = first_component_blocks // 16 + N1 // 16
@@ -290,8 +238,7 @@ def SCH_polymul_N1xN_mod3(N1,N,C1,C2,rf,rg,rh) :
             print("mul_%d:" % (N))
         if i >= second_label and (i-second_label) % (N1//16) == 0:
             print("mul_%d:" % (N - first_component_blocks - 16*(i-second_label) ))
-            # if i == N//16-1:
-            #     print("	push.w {lr}")
+            
         start_strip_top (i)
 
         if i < N1//16:
@@ -307,12 +254,9 @@ def SCH_polymul_N1xN_mod3(N1,N,C1,C2,rf,rg,rh) :
                 print("	pop.w {pc}")
         else:
             end_strip_top_2(i)
-            # if i == N//16-1:
-            #     print("	pop.w {pc}")
 
     print("mul_%d:" % (N1))
-    # print("	push.w {lr}")
-    # print("sch3_10:			// decreasing thread length")
+    
     print(" // decreasing thread length")
     # for i in range(N//16, N//8-1) :
     for i in range(N//16, (N1+N)//16-1) :
@@ -321,16 +265,14 @@ def SCH_polymul_N1xN_mod3(N1,N,C1,C2,rf,rg,rh) :
             continue_strip_bot (i,j)
         end_strip_bot (i) 
         
-        
-    # print("sch3_20:			// mv hh back to h")
     print(" // mv hh back to h")
-    # i = N//8 - 1
+
     i = (N1+N)//16-1
     print("	mov	%s, #0" % (ac(i,1)))
     print("	mov	%s, #0" % (ac(i,2)))
     print("	mov	%s, #0" % (ac(i,3)))
     print("	mov	%s, #0" % (ac(i,4)))
-    # j = N // 4
+
     j = N1 // 4
     print("	ldr	%s, [r14, #%d]" % (ar(i,j,1), N-12))
     print("	ldr	%s, [r14, #%d]" % (ar(i,j,2), N-8))
@@ -338,13 +280,12 @@ def SCH_polymul_N1xN_mod3(N1,N,C1,C2,rf,rg,rh) :
     end_strip_bot(i)
     print("	pop.w {pc}")
 
-def SCH_polymul_N1xN_mod3_jump_end(N1,N,C1,C2,rf,rg,rh) :
-    # print("sch3_0:			// increasing thread length")
+def SCH_polymul_N1xN_mod3_jump_end(N1,N) :
     print(" // increasing thread length")
     print("	push.w {lr}")
     print("	mov	%s, #0" % (ac(0,0)))
-    print("	mov	r12, %s" % rf)
-    print("	mov	r14, %s" % rg)
+    print("	mov	r12, %s" % r_f)
+    print("	mov	r14, %s" % r_g)
 
     for i in range(0,N//16) : # i is thread count
         start_strip_top (i)
@@ -400,19 +341,20 @@ def func_head(BASE, N, coeffi, jump_head = False):
 
     print("	b.w mul_%d" % (coeffi))
 
-def polymul(N1, NN, C1, C2):
+def polymul(N1, NN):
     # N >= N1
+    globals()["N1"]=N1
+    globals()["N"]=NN
+
     print(".p2align 2,,3")
     print(".syntax unified")
     print(".text")
-    SCH_polymul_N1xN_mod3(N1,NN,C1,C2,"r1","r2","r0")
+    SCH_polymul_N1xN_mod3(N1,NN)
 
 def gen_mul():
     BASE = 64
-    C1 = 14
-    C2 = 18
     N = 800
-    polymul(BASE, 800, C1, C2)
+    polymul(BASE, 800)
 
     for i in range(1, N//BASE+1):
         coeffi = BASE * i
@@ -429,6 +371,6 @@ def gen_mul():
     print(".global " + __polymul_name + "")
     print(".type  " + __polymul_name + ", %function")
     print(__polymul_name + ":")
-    SCH_polymul_N1xN_mod3_jump_end(BASE, 768, C1, C2, "r1","r2","r0")
+    SCH_polymul_N1xN_mod3_jump_end(BASE, 768)
 
 gen_mul()
