@@ -11,9 +11,17 @@ r_f = "r1"
 r_g = "r2"
 r_h = "r0"
 
+r_12 = "r1"
+r_14 = "r2"
+
 # rotating holder for array elements
 def ar (i,j,k) : # five registers
-    return('r' + str(1+(4*i+k-j) % 5))
+    num = 1 + (4*i+k-j) % 5
+    if num == 1:
+        num = 12
+    if num == 2:
+        num = 14
+    return('r' + str(num))
 
 # rotating accumulator k during round i
 def ac (i,k) : # five registers
@@ -46,11 +54,11 @@ def reduce_mod3_full (X, scr, r03) :
 
 def start_strip_top (i) :
     print("	// ([%d-%d], 0) blocks" % (4*i, 4*i+3))
-    print("	ldr	%s, [r12]" % (ar(i,0,4)))
-    print("	ldr	%s, [r14, #%d]" % (ar(i,0,3), 16*i+12))
-    print("	ldr	%s, [r14, #%d]" % (ar(i,0,2), 16*i+8))
-    print("	ldr	%s, [r14, #%d]" % (ar(i,0,1), 16*i+4))
-    print("	ldr	%s, [r14, #%d]" % (ar(i,0,0), 16*i))
+    print("	ldr.w	%s, [%s]" % (ar(i,0,4), r_12))
+    print("	ldr.w	%s, [%s, #%d]" % (ar(i,0,3), r_14, 16*i+12))
+    print("	ldr.w	%s, [%s, #%d]" % (ar(i,0,2), r_14, 16*i+8))
+    print("	ldr.w	%s, [%s, #%d]" % (ar(i,0,1), r_14, 16*i+4))
+    print("	ldr.w	%s, [%s, #%d]" % (ar(i,0,0), r_14, 16*i))
     print("	umull	%s, %s, %s, %s" % (ac(i,1),ac(i,2),ar(i,0,1),ar(i,0,4)))
     print("	umull	%s, %s, %s, %s" % (ac(i,3),ac(i,4),ar(i,0,3),ar(i,0,4)))
     print("	umlal	%s, %s, %s, %s" % (ac(i,0),ac(i,1),ar(i,0,0),ar(i,0,4)))
@@ -58,11 +66,11 @@ def start_strip_top (i) :
 
 def start_strip_bot (i, j) :
     print("	// ([%d-%d], %d) blocks" % (4*i-N1/4+1, 4*i-N1/4+4, j))
-    print("	ldr	%s, [r12, #%d]" % (ar(i,j,4), 4*j))
-    print("	ldr	%s, [r14, #%d]" % (ar(i,j,3), 16*i-N1+16))
-    print("	ldr	%s, [r14, #%d]" % (ar(i,j,2), 16*i-N1+12))
-    print("	ldr	%s, [r14, #%d]" % (ar(i,j,1), 16*i-N1+8))
-    print("	ldr	%s, [r14, #%d]" % (ar(i,j,0), 16*i-N1+4))
+    print("	ldr.w	%s, [%s, #%d]" % (ar(i,j,4), r_12, 4*j))
+    print("	ldr.w	%s, [%s, #%d]" % (ar(i,j,3), r_14, 16*i-N1+16))
+    print("	ldr.w	%s, [%s, #%d]" % (ar(i,j,2), r_14, 16*i-N1+12))
+    print("	ldr.w	%s, [%s, #%d]" % (ar(i,j,1), r_14, 16*i-N1+8))
+    print("	ldr.w	%s, [%s, #%d]" % (ar(i,j,0), r_14, 16*i-N1+4))
     print("	umull	%s, %s, %s, %s" % (ac(i,1),ac(i,2),ar(i,j,1),ar(i,j,4)))
     print("	umull	%s, %s, %s, %s" % (ac(i,3),ac(i,4),ar(i,j,3),ar(i,j,4)))
     print("	umlal	%s, %s, %s, %s" % (ac(i,0),ac(i,1),ar(i,j,0),ar(i,j,4)))
@@ -70,8 +78,8 @@ def start_strip_bot (i, j) :
     
 def continue_strip_top (i,j) :
     print("	// ([%d-%d], %d) blocks" % (4*i-j, 4*i-j+3, j))
-    print("	ldr	%s, [r12, #%d]" % (ar(i,j,4), 4*j))
-    print("	ldr	%s, [r14, #%d]" % (ar(i,j,0), 16*i-4*j))
+    print("	ldr.w	%s, [%s, #%d]" % (ar(i,j,4), r_12, 4*j))
+    print("	ldr.w	%s, [%s, #%d]" % (ar(i,j,0), r_14, 16*i-4*j))
     print("	umlal	%s, %s, %s, %s" % (ac(i,0),ac(i,1),ar(i,j,0),ar(i,j,4)))
     print("	umlal	%s, %s, %s, %s" % (ac(i,1),ac(i,2),ar(i,j,1),ar(i,j,4)))
     print("	umlal	%s, %s, %s, %s" % (ac(i,2),ac(i,3),ar(i,j,2),ar(i,j,4)))
@@ -86,8 +94,8 @@ def continue_strip_top (i,j) :
 
 def continue_strip_bot (i,j) :
     print("	// ([%d-%d], %d) blocks" % (4*i-j, 4*i-j+3, j))
-    print("	ldr	%s, [r12, #%d]" % (ar(i,j,4), 4*j))
-    print("	ldr	%s, [r14, #%d]" % (ar(i,j,3), 16*i-4*j+12))
+    print("	ldr.w	%s, [%s, #%d]" % (ar(i,j,4), r_12, 4*j))
+    print("	ldr.w	%s, [%s, #%d]" % (ar(i,j,3), r_14, 16*i-4*j+12))
     print("	umlal	%s, %s, %s, %s" % (ac(i,0),ac(i,1),ar(i,j,0),ar(i,j,4)))
     print("	umlal	%s, %s, %s, %s" % (ac(i,1),ac(i,2),ar(i,j,1),ar(i,j,4)))
     print("	umlal	%s, %s, %s, %s" % (ac(i,2),ac(i,3),ar(i,j,2),ar(i,j,4)))
@@ -109,7 +117,7 @@ def end_strip_top (i) :
     if do_reduction_end(j):
         reduce_mod3_lazy(ac(i,0),ar(i,j,4),"r11")
 
-    print("	ldr	%s, [r12, #%d]" % (ar(i,j,4), 16*i+4))
+    print("	ldr.w	%s, [%s, #%d]" % (ar(i,j,4), r_12, 16*i+4))
     print("	umlal	%s, %s, %s, %s" % (ac(i,3),ac(i,4),ar(i,j,2),ar(i,j,4)))
     print("	umlal	%s, %s, %s, %s" % (ac(i,2),ac(i,3),ar(i,j,1),ar(i,j,4)))
     print("	umlal	%s, %s, %s, %s" % (ac(i,1),ac(i,2),ar(i,j,0),ar(i,j,4)))
@@ -124,7 +132,7 @@ def end_strip_top (i) :
     if do_reduction_continue_id4(j+1):
         reduce_mod3_lazy(ac(i,4),ar(i,j,4),"r11")
     
-    print("	ldr	%s, [r12, #%d]" % (ar(i,j,4), 16*i+8))
+    print("	ldr.w	%s, [%s, #%d]" % (ar(i,j,4), r_12, 16*i+8))
     print("	umlal	%s, %s, %s, %s" % (ac(i,3),ac(i,4),ar(i,j,1),ar(i,j,4)))
     print("	umlal	%s, %s, %s, %s" % (ac(i,2),ac(i,3),ar(i,j,0),ar(i,j,4)))
 
@@ -137,7 +145,7 @@ def end_strip_top (i) :
     if do_reduction_continue_id4(j+2):
         reduce_mod3_lazy(ac(i,4),ar(i,j,4),"r11")
 
-    print("	ldr	%s, [r12, #%d]" % (ar(i,j,4), 16*i+12))
+    print("	ldr.w	%s, [%s, #%d]" % (ar(i,j,4), r_12, 16*i+12))
     print("	umlal	%s, %s, %s, %s" % (ac(i,3),ac(i,4),ar(i,j,0),ar(i,j,4)))
     
     # [3] reduction (before store)
@@ -171,7 +179,7 @@ def end_strip_bot (i) :
 
     print("	// ([%d-%d],%d),([%d-%d],%d),(%d,%d) blocks" % (N//4-3,N//4-1,j-1,N//4-2,N//4-1,j-2,N//4-1,j-3))
 
-    print("	ldr	%s, [r12, #%d]" % (ar(i,j,4), 16*i-N+12))
+    print("	ldr.w	%s, [%s, #%d]" % (ar(i,j,4), r_12, 16*i-N+12))
     print("	umlal	%s, %s, %s, %s" % (ac(i,2),ac(i,3),ar(i,j,3),ar(i,j,4)))
     print("	umlal	%s, %s, %s, %s" % (ac(i,1),ac(i,2),ar(i,j,2),ar(i,j,4)))
     print("	umlal	%s, %s, %s, %s" % (ac(i,0),ac(i,1),ar(i,j,1),ar(i,j,4)))
@@ -185,7 +193,7 @@ def end_strip_bot (i) :
         reduce_mod3_lazy(ac(i,1),ar(i,j,4),"r11")
         reduce_mod3_lazy(ac(i,2),ar(i,j,4),"r11")
 
-    print("	ldr	%s, [r12, #%d]" % (ar(i,j,4), 16*i-N+8))
+    print("	ldr.w	%s, [%s, #%d]" % (ar(i,j,4), r_12, 16*i-N+8))
     print("	umlal	%s, %s, %s, %s" % (ac(i,1),ac(i,2),ar(i,j,3),ar(i,j,4)))
     print("	umlal	%s, %s, %s, %s" % (ac(i,0),ac(i,1),ar(i,j,2),ar(i,j,4)))
     
@@ -197,7 +205,7 @@ def end_strip_bot (i) :
         reduce_mod3_lazy(ac(i,0),ar(i,j,4),"r11")
         reduce_mod3_lazy(ac(i,1),ar(i,j,4),"r11")
 
-    print("	ldr	%s, [r12, #%d]" % (ar(i,j,4), 16*i-N+4))
+    print("	ldr.w	%s, [%s, #%d]" % (ar(i,j,4), r_12, 16*i-N+4))
     print("	umlal	%s, %s, %s, %s" % (ac(i,0),ac(i,1),ar(i,j,3),ar(i,j,4)))
     
     # [0,1] reduction (before store)
@@ -224,10 +232,10 @@ def SCH_polymul_N1xN_mod3(N1,N) :
     print(" // increasing thread length")
     print("	push.w {lr}")
     print("	mov	%s, #0" % (ac(0,0)))
-    print("	mov	r12, %s" % r_f)
-    print("	mov	r14, %s" % r_g)
-    if N1 > 32:
-        print("	ldr	r11, =0x03030303")
+    # print("	mov	%s, %s" % (r_12, r_f))
+    # print("	mov	%s, %s" % (r_14, r_g))
+    # if N1 > 32:
+    #     print("	ldr.w	r11, =0x03030303")
     
     print(" // later blocks")
     first_component_blocks = N % N1
@@ -274,9 +282,9 @@ def SCH_polymul_N1xN_mod3(N1,N) :
     print("	mov	%s, #0" % (ac(i,4)))
 
     j = N1 // 4
-    print("	ldr	%s, [r14, #%d]" % (ar(i,j,1), N-12))
-    print("	ldr	%s, [r14, #%d]" % (ar(i,j,2), N-8))
-    print("	ldr	%s, [r14, #%d]" % (ar(i,j,3), N-4))
+    print("	ldr.w	%s, [%s, #%d]" % (ar(i,j,1), r_14, N-12))
+    print("	ldr.w	%s, [%s, #%d]" % (ar(i,j,2), r_14, N-8))
+    print("	ldr.w	%s, [%s, #%d]" % (ar(i,j,3), r_14, N-4))
     end_strip_bot(i)
     print("	pop.w {pc}")
 
@@ -284,8 +292,8 @@ def SCH_polymul_N1xN_mod3_jump_end(N1,N) :
     print(" // increasing thread length")
     print("	push.w {lr}")
     print("	mov	%s, #0" % (ac(0,0)))
-    print("	mov	r12, %s" % r_f)
-    print("	mov	r14, %s" % r_g)
+    # print("	mov	%s, %s" % (r_12, r_f))
+    # print("	mov	%s, %s" % (r_14, r_g))
 
     for i in range(0,N//16) : # i is thread count
         start_strip_top (i)
@@ -321,13 +329,13 @@ def func_head(BASE, N, coeffi, jump_head = False):
     mul_head_id4_reg = ac(BASE//16-1,4)
     mul_coeffi_id0_reg = ac(label_i,0)
 
-    # change r14 initial index
+    # change horizontal initial index
     shift_blocks = N - coeffi
 
     if jump_head:
         print("	mov.w %s, #%d" % (mul_coeffi_id0_reg, 0))
-        print("	mov r12, r1")
-        print("	mov r14, r2")
+        # print("	mov %s, r1" % (r_12))
+        # print("	mov %s, r2" % (r_14))
         shift_blocks += 4
 
     else:
@@ -337,7 +345,7 @@ def func_head(BASE, N, coeffi, jump_head = False):
             print("	mov.w %s, %s" % (mul_coeffi_id0_reg, mul_head_id4_reg))
     
     if shift_blocks != 0:
-        print("	sub.w r14, #%d" % (shift_blocks))
+        print("	sub.w %s, #%d" % (r_14, shift_blocks))
 
     print("	b.w mul_%d" % (coeffi))
 
