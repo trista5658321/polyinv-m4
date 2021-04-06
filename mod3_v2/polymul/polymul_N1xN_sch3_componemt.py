@@ -361,8 +361,8 @@ def polymul(N1, NN):
 
 def gen_mul():
     BASE = 64
-    N = 800
-    polymul(BASE, 800)
+    N = 784
+    polymul(BASE, 784)
 
     for i in range(1, N//BASE+1):
         coeffi = BASE * i

@@ -82,7 +82,7 @@ def main(LENGTH):
     
     flag_bytes = result_coeffi
     if flag_bytes > 768: flag_bytes = 768
-    if coeffi == 800: flag_bytes = 800
+    if coeffi == 784: flag_bytes = 784
 
     printIn("add.w %s, %s, #%d" % (flag, V, flag_bytes))
     add_loop = "add_loop_vs_%d" % (coeffi)
@@ -125,4 +125,4 @@ def main(LENGTH):
 
 for i in range(1, 768//BASE+1):
     main(BASE*i)
-main(800)
+main(784)

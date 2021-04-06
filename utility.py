@@ -10,7 +10,7 @@ if argv_len > 1:
 LENGTH_1 = LENGTH
 LENGTH_2 = LENGTH
 
-if argv_len > 2:
+if argv_len > 3:
     LENGTH_1 = LENGTH * int(sys.argv[2])
     LENGTH_2 = LENGTH * int(sys.argv[3])
 
