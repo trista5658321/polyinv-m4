@@ -1,6 +1,6 @@
 import sys, pathlib
 sys.path.append(str(pathlib.Path(__file__).parent.parent.absolute().parent))
-from utility_mod3 import BASE, _N, max_V_coeffi
+from utility_mod3 import BASE, _P, max_V_coeffi
 from utility import printIn
 import utility as u
 
@@ -27,8 +27,8 @@ def main(LENGTH):
     base_coeffi = BASE # jump N divsteps
     coeffi = LENGTH # BASE x n
     result_coeffi = base_coeffi + coeffi
-    if coeffi == _N:
-        result_coeffi = _N
+    if coeffi == _P:
+        result_coeffi = _P
     __polymul_name = "__polymul_" + str(base_coeffi) + "x" + str(coeffi)
     STACK_SPACE = result_coeffi * 4 + 4
 
@@ -77,7 +77,7 @@ def main(LENGTH):
     printIn("vmov.w %s, %s, %s, %s" % (V, S, s_V, s_S))
     
     flag_bytes = result_coeffi
-    if flag_bytes > _N: flag_bytes = _N
+    if flag_bytes > _P: flag_bytes = _P
     if coeffi == max_V_coeffi: flag_bytes = max_V_coeffi
 
     printIn("add.w %s, %s, #%d" % (flag, V, flag_bytes))
@@ -119,9 +119,9 @@ def main(LENGTH):
     printIn("add.w sp, #%d" % (STACK_SPACE))
     u.epilogue_mod3(f_regs)
 
-for i in range(1, _N//BASE+1):
+for i in range(1, _P//BASE+1):
     main(BASE*i)
-if _N % BASE != 0:
-    main(_N)
-if _N != max_V_coeffi:
+if _P % BASE != 0:
+    main(_P)
+if _P != max_V_coeffi:
     main(max_V_coeffi)

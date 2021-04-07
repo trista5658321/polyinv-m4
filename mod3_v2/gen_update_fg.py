@@ -1,6 +1,6 @@
 import sys, pathlib
 sys.path.append(str(pathlib.Path(__file__).parent.parent.absolute().parent))
-from utility_mod3 import BASE, _N
+from utility_mod3 import BASE, _P
 from utility import printIn
 import utility as u
 
@@ -193,7 +193,7 @@ def main(LENGTH):
     printIn("add.w sp, #%d" % (STACK_SPACE))
     u.epilogue_mod3(f_regs)
 
-for i in range(1, _N//BASE + 1):
+for i in range(1, _P//BASE + 1):
     main(BASE*i)
-if _N % BASE != 0:
-    main(_N)
+if _P % BASE != 0:
+    main(_P)

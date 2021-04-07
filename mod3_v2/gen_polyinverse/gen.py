@@ -2,17 +2,13 @@ import sys, pathlib, math
 sys.path.append(str(pathlib.Path(__file__).parent.parent.absolute().parent))
 
 from utility import printIn
+from mod3_v2.utility_mod3 import _P, max_V_coeffi
 
-N = int(sys.argv[1])
-_N = int(sys.argv[2])
-over_divsteps = 2*(_N - N) + 1
-max_V_coeffi = math.ceil((over_divsteps + N) / 16) * 16
 V_space = max_V_coeffi // 4
-
-round_half = _N // 64
+round_half = _P // 64
 
 print("#include <inttypes.h>\n")
-print("int jump%ddivsteps_mod3_64(int minusdelta, int32_t *M, int32_t *f, int32_t *g){" % (_N*2))
+print("int jump%ddivsteps_mod3_64(int minusdelta, int32_t *M, int32_t *f, int32_t *g){" % (_P*2))
 printIn("uint32_t V[%d];" % V_space)
 printIn("uint32_t S[%d];" % V_space)
 printIn("uint32_t M1[96]; // 64 coefficients * 6")
@@ -31,7 +27,7 @@ printIn("*(S) = 1;")
 printIn("// 1: %d" % (round_half))
 for i in range(round_half):
     printIn("minusdelta = jump64divsteps_mod3(minusdelta,M1,f,g);")
-    printIn("__update_fg_64x%d(f, g, M1+32);" % (_N))
+    printIn("__update_fg_64x%d(f, g, M1+32);" % (_P))
     if i == 0:
         printIn("__update_VS_64x%d(V, S, M1+32);" % (64))
     else:
@@ -40,10 +36,10 @@ for i in range(round_half):
 # Phase 2:
 printIn("// 2")
 printIn("minusdelta = jump64divsteps_mod3(minusdelta,M1,f,g);")
-printIn("__update_fg_64x%d(f, g, M1+32);" % (_N))
+printIn("__update_fg_64x%d(f, g, M1+32);" % (_P))
 printIn("__update_VS_64x%d(V, S, M1+32);" % (64*round_half))
 
-_N_max = _N - 64 + (_N % 64)
+_N_max = _P - 64 + (_P % 64)
 round_half_2 = _N_max // 64
 
 # Phase 3:
@@ -54,7 +50,7 @@ for i in range(round_half_2):
     if i == round_half_2 - 1 and _N_max % 64 == 0:
         printIn("__update_VS_64x%d(V, S, M1+32);" % (max_V_coeffi))
     else:
-        printIn("__update_VS_64x%d(V, S, M1+32);" % (_N))
+        printIn("__update_VS_64x%d(V, S, M1+32);" % (_P))
 
 # Phase 4:
 if _N_max % 64 != 0:

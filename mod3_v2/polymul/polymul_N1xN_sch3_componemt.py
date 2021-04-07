@@ -2,7 +2,7 @@
 import sys
 import re
 from math import log,ceil,floor,sqrt
-from utility import do_reduction_continue, do_reduction_continue_id4, do_reduction_end, pre_id4_lazy
+from utility import do_reduction_continue, do_reduction_continue_id4, do_reduction_end, pre_id4_lazy, BASE, P, _P, max_V_coeffi
 
 N = 0
 N1 = 0
@@ -227,7 +227,7 @@ def end_strip_bot (i) :
     print("	str.w %s, [r0, #12]" % (ac(i,3)))
     print("	str.w %s, [r0], #16" % (ac(i,0)))
   
-def SCH_polymul_N1xN_mod3(N1,N, _N) :
+def SCH_polymul_N1xN_mod3(N1,N, _P) :
     print("mul_head:")
     print(" // increasing thread length")
     print("	push.w {lr}")
@@ -240,15 +240,15 @@ def SCH_polymul_N1xN_mod3(N1,N, _N) :
     print(" // later blocks")
     first_component_blocks = N % N1
     plus_label = -1
-    if _N % N1 != 0:
-        plus_label = first_component_blocks // 16 + (_N % N1) // 16
+    if _P % N1 != 0:
+        plus_label = first_component_blocks // 16 + (_P % N1) // 16
     second_label = first_component_blocks // 16 + N1 // 16
 
     for i in range(0,N//16) : # i is thread count
         if i == N1 // 16:
             print("mul_%d:" % (N))
         if plus_label > 0 and i == plus_label:
-            print("mul_%d:" % (_N))
+            print("mul_%d:" % (_P))
         if i >= second_label and (i-second_label) % (N1//16) == 0:
             print("mul_%d:" % (N - first_component_blocks - 16*(i-second_label) ))
             
@@ -318,7 +318,7 @@ def SCH_polymul_N1xN_mod3_jump_end(N1,N) :
     print("	pop.w {pc}")
 
 
-def func_head(BASE, N, coeffi, jump_head = False):
+def func_head(N, coeffi, jump_head = False):
     __polymul_name = "__polymul_" + str(BASE) + "x" + str(coeffi)
     if jump_head:
         __polymul_name += "_jump_head"
@@ -365,36 +365,30 @@ def polymul(N1, NN, _N):
     SCH_polymul_N1xN_mod3(N1,NN,_N)
 
 def gen_mul():
-    BASE = 64
-    N = int(sys.argv[1])
-    _N = int(sys.argv[2])
-    over_divsteps = 2*(_N - N) + 1
-    max_V_coeffi = ceil((over_divsteps + N) / 16) * 16
-
     max_coeffi = max_V_coeffi
 
-    polymul(BASE, max_coeffi, _N)
+    polymul(BASE, max_coeffi, _P)
 
-    for i in range(1, _N//BASE+1):
+    for i in range(1, _P//BASE+1):
         coeffi = BASE * i
-        func_head(BASE, max_coeffi, coeffi, True)
-        if coeffi != _N: # for update_VS
-            func_head(BASE, max_coeffi, coeffi, False)
+        func_head(max_coeffi, coeffi, True)
+        if coeffi != _P: # for update_VS
+            func_head(max_coeffi, coeffi, False)
     
-    if _N % BASE != 0: # for update_fg
-        func_head(BASE, max_coeffi, _N, True)
+    if _P % BASE != 0: # for update_fg
+        func_head(max_coeffi, _P, True)
     
-    if max_coeffi != _N:
-        func_head(BASE, max_coeffi, max_coeffi, False)
+    if max_coeffi != _P:
+        func_head(max_coeffi, max_coeffi, False)
     
     # for update_VS
-    __polymul_name = "__polymul_" + str(BASE) + "x" + str(_N)
+    __polymul_name = "__polymul_" + str(BASE) + "x" + str(_P)
     print(".p2align 2,,3")
     print(".syntax unified")
     print(".text")
     print(".global " + __polymul_name + "")
     print(".type  " + __polymul_name + ", %function")
     print(__polymul_name + ":")
-    SCH_polymul_N1xN_mod3_jump_end(BASE, _N)
+    SCH_polymul_N1xN_mod3_jump_end(BASE, _P)
 
 gen_mul()

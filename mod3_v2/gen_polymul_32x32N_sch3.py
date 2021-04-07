@@ -1,11 +1,10 @@
 import sys, pathlib
 sys.path.append(str(pathlib.Path(__file__).parent.parent.absolute().parent))
-from utility_mod3 import get_BASE
+from utility_mod3 import BASE
 from utility import printIn
 import utility as u
 from polymul_32x32N_sch3 import polymul
 
-BASE = get_BASE()
 C1 = 14
 C2 = 14
 

@@ -1,3 +1,8 @@
+import sys, pathlib
+sys.path.append(str(pathlib.Path(__file__).parent.parent.absolute().parent))
+
+from mod3_v2.utility_mod3 import BASE, P, _P, max_V_coeffi
+
 C1 = 14
 C2 = 18
 MAX1 = 15
