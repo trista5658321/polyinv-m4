@@ -1,12 +1,8 @@
 import sys, pathlib
 sys.path.append(str(pathlib.Path(__file__).parent.parent.absolute().parent))
-from utility_mod3 import get_BASE
+from utility_mod3 import BASE, _N, max_V_coeffi
 from utility import printIn
 import utility as u
-
-BASE = get_BASE()
-C1 = 14
-C2 = 14
 
 V = "r0"
 S = "r1"
@@ -31,8 +27,8 @@ def main(LENGTH):
     base_coeffi = BASE # jump N divsteps
     coeffi = LENGTH # BASE x n
     result_coeffi = base_coeffi + coeffi
-    if coeffi == 768:
-        result_coeffi = 768
+    if coeffi == _N:
+        result_coeffi = _N
     __polymul_name = "__polymul_" + str(base_coeffi) + "x" + str(coeffi)
     STACK_SPACE = result_coeffi * 4 + 4
 
@@ -81,8 +77,8 @@ def main(LENGTH):
     printIn("vmov.w %s, %s, %s, %s" % (V, S, s_V, s_S))
     
     flag_bytes = result_coeffi
-    if flag_bytes > 768: flag_bytes = 768
-    if coeffi == 784: flag_bytes = 784
+    if flag_bytes > _N: flag_bytes = _N
+    if coeffi == max_V_coeffi: flag_bytes = max_V_coeffi
 
     printIn("add.w %s, %s, #%d" % (flag, V, flag_bytes))
     add_loop = "add_loop_vs_%d" % (coeffi)
@@ -123,6 +119,9 @@ def main(LENGTH):
     printIn("add.w sp, #%d" % (STACK_SPACE))
     u.epilogue_mod3(f_regs)
 
-for i in range(1, 768//BASE+1):
+for i in range(1, _N//BASE+1):
     main(BASE*i)
-main(784)
+if _N % BASE != 0:
+    main(_N)
+if _N != max_V_coeffi:
+    main(max_V_coeffi)

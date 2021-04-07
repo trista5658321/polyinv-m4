@@ -1,10 +1,10 @@
-import sys
+import sys, math
 
-BASE = 0 # jump N divsteps
+BASE = int(sys.argv[1]) # jump N divsteps
+N = int(sys.argv[2])
+_N = int(sys.argv[3])
+over_divsteps = 2*(_N - N) + 1
+max_V_coeffi = math.ceil((over_divsteps + N) / 16) * 16
 
 def get_BASE():
-    argv_len = len(sys.argv)
-    if argv_len > 1:
-        BASE = int(sys.argv[1])
-    
     return BASE

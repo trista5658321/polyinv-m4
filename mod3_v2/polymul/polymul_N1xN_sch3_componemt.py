@@ -227,7 +227,7 @@ def end_strip_bot (i) :
     print("	str.w %s, [r0, #12]" % (ac(i,3)))
     print("	str.w %s, [r0], #16" % (ac(i,0)))
   
-def SCH_polymul_N1xN_mod3(N1,N) :
+def SCH_polymul_N1xN_mod3(N1,N, _N) :
     print("mul_head:")
     print(" // increasing thread length")
     print("	push.w {lr}")
@@ -239,11 +239,16 @@ def SCH_polymul_N1xN_mod3(N1,N) :
     
     print(" // later blocks")
     first_component_blocks = N % N1
+    plus_label = -1
+    if _N % N1 != 0:
+        plus_label = first_component_blocks // 16 + (_N % N1) // 16
     second_label = first_component_blocks // 16 + N1 // 16
 
     for i in range(0,N//16) : # i is thread count
         if i == N1 // 16:
             print("mul_%d:" % (N))
+        if plus_label > 0 and i == plus_label:
+            print("mul_%d:" % (_N))
         if i >= second_label and (i-second_label) % (N1//16) == 0:
             print("mul_%d:" % (N - first_component_blocks - 16*(i-second_label) ))
             
@@ -349,7 +354,7 @@ def func_head(BASE, N, coeffi, jump_head = False):
 
     print("	b.w mul_%d" % (coeffi))
 
-def polymul(N1, NN):
+def polymul(N1, NN, _N):
     # N >= N1
     globals()["N1"]=N1
     globals()["N"]=NN
@@ -357,28 +362,39 @@ def polymul(N1, NN):
     print(".p2align 2,,3")
     print(".syntax unified")
     print(".text")
-    SCH_polymul_N1xN_mod3(N1,NN)
+    SCH_polymul_N1xN_mod3(N1,NN,_N)
 
 def gen_mul():
     BASE = 64
-    N = 784
-    polymul(BASE, 784)
+    N = int(sys.argv[1])
+    _N = int(sys.argv[2])
+    over_divsteps = 2*(_N - N) + 1
+    max_V_coeffi = ceil((over_divsteps + N) / 16) * 16
 
-    for i in range(1, N//BASE+1):
+    max_coeffi = max_V_coeffi
+
+    polymul(BASE, max_coeffi, _N)
+
+    for i in range(1, _N//BASE+1):
         coeffi = BASE * i
-        func_head(BASE, N, coeffi, True)
-        if coeffi != 768:
-            func_head(BASE, N, coeffi, False)
-    if N % BASE != 0:
-        func_head(BASE, N, N, False)
+        func_head(BASE, max_coeffi, coeffi, True)
+        if coeffi != _N: # for update_VS
+            func_head(BASE, max_coeffi, coeffi, False)
     
-    __polymul_name = "__polymul_" + str(BASE) + "x" + str(768)
+    if _N % BASE != 0: # for update_fg
+        func_head(BASE, max_coeffi, _N, True)
+    
+    if max_coeffi != _N:
+        func_head(BASE, max_coeffi, max_coeffi, False)
+    
+    # for update_VS
+    __polymul_name = "__polymul_" + str(BASE) + "x" + str(_N)
     print(".p2align 2,,3")
     print(".syntax unified")
     print(".text")
     print(".global " + __polymul_name + "")
     print(".type  " + __polymul_name + ", %function")
     print(__polymul_name + ":")
-    SCH_polymul_N1xN_mod3_jump_end(BASE, 768)
+    SCH_polymul_N1xN_mod3_jump_end(BASE, _N)
 
 gen_mul()
