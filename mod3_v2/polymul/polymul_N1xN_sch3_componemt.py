@@ -2,7 +2,7 @@
 import sys
 import re
 from math import log,ceil,floor,sqrt
-from utility import do_reduction_continue, do_reduction_continue_id4, do_reduction_end, pre_id4_lazy, BASE, P, _P, max_V_coeffi
+from utility_polymul import do_reduction_continue, do_reduction_continue_id4, do_reduction_end, pre_id4_lazy, BASE, P, _P, max_V_coeffi
 
 N = 0
 N1 = 0

@@ -1,8 +1,4 @@
-import sys, pathlib
-sys.path.append(str(pathlib.Path(__file__).parent.parent.absolute().parent))
-from utility_mod3 import BASE
-from utility import printIn
-import utility as u
+from utility_polymul import BASE, printIn, reduce_mod3_32
 from polymul_32x32N_sch3 import polymul
 
 C1 = 14
@@ -15,7 +11,7 @@ scr = "r12"
 
 def reduce_str(rs, base = 0):
     for i in range(len(rs)):
-        u.reduce_mod3_32(rs[i], scr, r03)
+        reduce_mod3_32(rs[i], scr, r03)
 
     if base:
         for i in range(len(rs)):
