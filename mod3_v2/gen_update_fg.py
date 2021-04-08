@@ -1,7 +1,7 @@
 import sys, pathlib
 sys.path.append(str(pathlib.Path(__file__).parent.parent.absolute().parent))
 from utility_mod3 import BASE, _P
-from utility import printIn
+from utility import printIn, set_stack
 import utility as u
 
 f = "r0"
@@ -73,7 +73,7 @@ def main(LENGTH):
     printIn("vmov.w %s, %s" % (s_M, M))
 
     # stack initial
-    printIn("sub.w sp, #%d" % (STACK_SPACE))
+    set_stack(STACK_SPACE)
     printIn("mov.w r0, sp")
     printIn("movw.w lr, #0")
     printIn("str.w lr, [r0], #1")
@@ -190,7 +190,7 @@ def main(LENGTH):
             tmp_arr = h1[:loop_last]
             reduce_str(tmp_arr,str_target)
 
-    printIn("add.w sp, #%d" % (STACK_SPACE))
+    set_stack(STACK_SPACE, "end")
     u.epilogue_mod3(f_regs)
 
 for i in range(1, _P//BASE + 1):

@@ -124,3 +124,16 @@ def reduce_mod3_lazy (X, scr, r03) : # r03 = 0x03030303, good for 16 adds
 def reduce_mod3_full (X, scr, r03) :
     reduce_mod3_lazy(X, scr, r03)
     reduce_mod3_32(X, scr, r03)
+
+# For stack
+VALID_CONST_MAX_12 = 4092
+def set_stack(space, pos = "start", tmp = "r12"):
+    cmd = "sub.w"
+    if pos != "start":
+        cmd = "add.w"
+    
+    if space > VALID_CONST_MAX_12:
+        printIn("movw.w %s, #%d" % (tmp, space))
+        printIn("%s sp, %s" % (cmd, tmp))
+    else:
+        printIn("%s sp, #%d" % (cmd, space))
