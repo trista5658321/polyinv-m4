@@ -1,13 +1,34 @@
 import sys, pathlib
 sys.path.append(str(pathlib.Path(__file__).parent.parent.absolute().parent))
 
-from utility import printIn, reduce_mod3_32
-from mod3_v2.utility_mod3 import BASE, P, _P, max_V_coeffi
+from utility import printIn, reduce_mod3_32, reduce_mod3_lazy
+from mod3_v2.utility_mod3 import BASE, P, _P, max_V_coeffi, _P_ZERO_coeffi
 
 C1 = 14
 C2 = 18
 MAX1 = 15
 MAX2 = 21
+
+r_f = "r1"
+r_g = "r2"
+
+r_12 = "r1"
+r_14 = "r2"
+
+MUL_LABEL_HAED_LAST = "mul_head_last"
+
+# rotating holder for array elements
+def ar (i,j,k) : # five registers
+    num = 1 + (4*i+k-j) % 5
+    if num == 1:
+        num = 12
+    if num == 2:
+        num = 14
+    return('r' + str(num))
+
+# rotating accumulator k during round i
+def ac (i,k) : # five registers
+    return('r' + str(6+(4*i+k) % 5))
 
 def do_reduction_continue(j):
     block_counts = j+1

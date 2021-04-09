@@ -28,3 +28,8 @@ python gen_polyinverse/gen.py 64 1013 1024 > final/sntrup1013/jump2048divsteps_m
 python polymul/polymul_N1xN_sch3_componemt.py 64 1013 1024 > final/sntrup1013/mod3_mul64xN.S
 python gen_update_fg.py 64 1013 1024 > final/sntrup1013/mod3_update_fg_64.S
 python gen_update_VS.py 64 1013 1024 > final/sntrup1013/mod3_update_VS_64.S
+
+python gen_polyinverse/gen.py 64 1277 1280 > final/sntrup1277/jump2560divsteps_mod3_64.c
+python polymul/polymul_N1xN_sch3_componemt.py 64 1277 1280 > final/sntrup1277/mod3_mul64xN.S
+python gen_update_fg.py 64 1277 1280 > final/sntrup1277/mod3_update_fg_64.S
+python gen_update_VS.py 64 1277 1280 > final/sntrup1277/mod3_update_VS_64.S

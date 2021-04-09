@@ -1,6 +1,6 @@
 import sys, pathlib
 sys.path.append(str(pathlib.Path(__file__).parent.parent.absolute().parent))
-from utility_mod3 import BASE, _P
+from utility_mod3 import BASE, _P, _P_ZERO_coeffi
 from utility import printIn, set_stack
 import utility as u
 
@@ -58,9 +58,12 @@ def reduce_str(rs, target = f):
 def main(LENGTH):
     base_coeffi = BASE # jump N divsteps
     coeffi = LENGTH # BASE x n
-    # result_coeffi = base_coeffi + coeffi
     denominator_x_power = 4
+
     result_coeffi = coeffi # base_coeffi x coeffi[base_coeffi - 4: -4] -> coeffi
+    if _P_ZERO_coeffi < 4:
+        result_coeffi += 4
+
     __polymul_name = "__polymul_" + str(base_coeffi) + "x" + str(coeffi) + "_jump_head"
     STACK_SPACE = result_coeffi * 4 + 4
 
@@ -120,7 +123,7 @@ def main(LENGTH):
     # else:
     #     printIn("add.w %s, %s, #%d" % (flag, f, coeffi-64))
 
-    str_coeffi = (coeffi - denominator_x_power)
+    str_coeffi = (result_coeffi - denominator_x_power)
     loop_times = str_coeffi // 16
     loop_last = (str_coeffi - loop_times * 16) // 4
     printIn("add.w %s, %s, #%d" % (flag, f, loop_times * 16))

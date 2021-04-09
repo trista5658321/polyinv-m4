@@ -2,30 +2,14 @@
 import sys
 import re
 from math import log,ceil,floor,sqrt
-from utility_polymul import do_reduction_continue, do_reduction_continue_id4, do_reduction_end, pre_id4_lazy, BASE, P, _P, max_V_coeffi
+from utility_polymul import r_f, r_g, r_12, r_14, ac, ar, do_reduction_continue, do_reduction_continue_id4, do_reduction_end, pre_id4_lazy, BASE, P, _P, max_V_coeffi, _P_ZERO_coeffi
+from func_composite import mul_full, mul_jump_head_4_4, mul_jump_head_4_0
+from polymul_head_last import SCH_polymul_mod3_head_last
 
 N = 0
 N1 = 0
 
-r_f = "r1"
-r_g = "r2"
 r_h = "r0"
-
-r_12 = "r1"
-r_14 = "r2"
-
-# rotating holder for array elements
-def ar (i,j,k) : # five registers
-    num = 1 + (4*i+k-j) % 5
-    if num == 1:
-        num = 12
-    if num == 2:
-        num = 14
-    return('r' + str(num))
-
-# rotating accumulator k during round i
-def ac (i,k) : # five registers
-    return('r' + str(6+(4*i+k) % 5))
     
 def reduce_mod3_5 (X, scr, r03) : # at most 5, r03 = 0x03030303 
     print("	usub8	%s, %s, %s		// >= 3 ?" % (scr, X, r03))
@@ -317,43 +301,6 @@ def SCH_polymul_N1xN_mod3_jump_end(N1,N) :
 
     print("	pop.w {pc}")
 
-
-def func_head(N, coeffi, jump_head = False):
-    __polymul_name = "__polymul_" + str(BASE) + "x" + str(coeffi)
-    if jump_head:
-        __polymul_name += "_jump_head"
-    print(".p2align 2,,3")
-    print(".syntax unified")
-    print(".text")
-    print(".global " + __polymul_name + "")
-    print(".type  " + __polymul_name + ", %function")
-    print(__polymul_name + ":")
-    print("	push.w {lr}")
-
-    label_i = (BASE+N) // 16 - coeffi // 16
-    mul_head_id4_reg = ac(BASE//16-1,4)
-    mul_coeffi_id0_reg = ac(label_i,0)
-
-    # change horizontal initial index
-    shift_blocks = N - coeffi
-
-    if jump_head:
-        print("	mov.w %s, #%d" % (mul_coeffi_id0_reg, 0))
-        # print("	mov %s, r1" % (r_12))
-        # print("	mov %s, r2" % (r_14))
-        shift_blocks += 4
-
-    else:
-        print("	bl.w mul_head")
-
-        if mul_coeffi_id0_reg != mul_head_id4_reg:
-            print("	mov.w %s, %s" % (mul_coeffi_id0_reg, mul_head_id4_reg))
-    
-    if shift_blocks != 0:
-        print("	sub.w %s, #%d" % (r_14, shift_blocks))
-
-    print("	b.w mul_%d" % (coeffi))
-
 def polymul(N1, NN, _N):
     # N >= N1
     globals()["N1"]=N1
@@ -362,24 +309,30 @@ def polymul(N1, NN, _N):
     print(".p2align 2,,3")
     print(".syntax unified")
     print(".text")
+    if _P_ZERO_coeffi < 4:
+        SCH_polymul_mod3_head_last()
+
     SCH_polymul_N1xN_mod3(N1,NN,_N)
 
 def gen_mul():
     max_coeffi = max_V_coeffi
+    mul_jump_head = mul_jump_head_4_4
+    if _P_ZERO_coeffi < 4:
+        mul_jump_head = mul_jump_head_4_0
 
     polymul(BASE, max_coeffi, _P)
 
     for i in range(1, _P//BASE+1):
         coeffi = BASE * i
-        func_head(max_coeffi, coeffi, True)
+        mul_jump_head(coeffi) # for update_fg
         if coeffi != _P: # for update_VS
-            func_head(max_coeffi, coeffi, False)
+            mul_full(coeffi)
     
     if _P % BASE != 0: # for update_fg
-        func_head(max_coeffi, _P, True)
+        mul_jump_head(_P)
     
     if max_coeffi != _P:
-        func_head(max_coeffi, max_coeffi, False)
+        mul_full(max_coeffi)
     
     # for update_VS
     __polymul_name = "__polymul_" + str(BASE) + "x" + str(_P)
