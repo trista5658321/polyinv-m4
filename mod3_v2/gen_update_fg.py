@@ -55,9 +55,9 @@ def reduce_str(rs, target = f):
         printIn("str.w %s, [%s, #%d]" % (rs[i], target, 4*i))
     printIn("str.w %s, [%s], #%d" % (rs[0], target, 4*len(rs)))
 
-def main(LENGTH):
-    base_coeffi = BASE # jump N divsteps
-    coeffi = LENGTH # BASE x n
+def main(base, LENGTH):
+    base_coeffi = base # jump N divsteps
+    coeffi = LENGTH # base x n
     denominator_x_power = 4
 
     result_coeffi = coeffi # base_coeffi x coeffi[base_coeffi - 4: -4] -> coeffi
@@ -197,6 +197,7 @@ def main(LENGTH):
     u.epilogue_mod3(f_regs)
 
 for i in range(1, _P//BASE + 1):
-    main(BASE*i)
+    main(BASE, BASE*i)
+
 if _P % BASE != 0:
-    main(_P)
+    main(BASE, _P)

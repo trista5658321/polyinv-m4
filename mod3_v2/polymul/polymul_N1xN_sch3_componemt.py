@@ -223,18 +223,21 @@ def SCH_polymul_N1xN_mod3(N1,N, _P) :
     
     print(" // later blocks")
     first_component_blocks = N % N1
-    plus_label = -1
-    if _P % N1 != 0:
-        plus_label = first_component_blocks // 16 + (_P % N1) // 16
+    first_label = N1 // 16
     second_label = first_component_blocks // 16 + N1 // 16
 
+    plus_label = -1
+    if _P % N1 != 0:
+        plus_label = (N - _P) // 16 + first_label
+
     for i in range(0,N//16) : # i is thread count
-        if i == N1 // 16:
+        if i == first_label:
             print("mul_%d:" % (N))
+        elif i >= second_label and (i-second_label) % (N1//16) == 0:
+            print("mul_%d:" % (N - first_component_blocks - 16*(i-second_label) ))
+        
         if plus_label > 0 and i == plus_label:
             print("mul_%d:" % (_P))
-        if i >= second_label and (i-second_label) % (N1//16) == 0:
-            print("mul_%d:" % (N - first_component_blocks - 16*(i-second_label) ))
             
         start_strip_top (i)
 
@@ -343,5 +346,3 @@ def gen_mul():
     print(".type  " + __polymul_name + ", %function")
     print(__polymul_name + ":")
     SCH_polymul_N1xN_mod3_jump_end(BASE, _P)
-
-gen_mul()

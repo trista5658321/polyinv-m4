@@ -38,7 +38,7 @@ def mul_jump_head_4_4(coeffi):
     epilogue(coeffi)
 
 # Case 2: head - 4 ~ end
-def mul_jump_head_4_0(coeffi):
+def mul_jump_head_4_0(coeffi, mul_max_coeffi = mul_max_coeffi):
     prologue(coeffi, "_jump_head")
 
     mul_head_id4_reg = get_mul_head_id4_reg(coeffi)
