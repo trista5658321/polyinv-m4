@@ -18,13 +18,13 @@ def epilogue(coeffi):
 def get_mul_head_id4_reg(coeffi):
     return ac(BASE//16 - 1, 4)
 
-def get_mul_label_id0_reg(coeffi):
+def get_mul_label_id0_reg(coeffi, mul_max_coeffi = mul_max_coeffi):
     label_i = (BASE + mul_max_coeffi) // 16 - coeffi // 16
     return ac(label_i,0)
 
 
 # Case 1: head - 4 ~ end - 4
-def mul_jump_head_4_4(coeffi):
+def mul_jump_head_4_4(coeffi, mul_max_coeffi = mul_max_coeffi):
     prologue(coeffi, "_jump_head")
 
     mul_label_id0_reg = get_mul_label_id0_reg(coeffi)
@@ -56,7 +56,7 @@ def mul_jump_head_4_0(coeffi, mul_max_coeffi = mul_max_coeffi):
     
     epilogue(coeffi)
 
-def mul_full(coeffi):
+def mul_full(coeffi, mul_max_coeffi = mul_max_coeffi):
     
     prologue(coeffi)
 

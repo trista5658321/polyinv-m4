@@ -1606,7 +1606,7 @@ __update_VS_64x640:
 	bl __polymul_64x640
 	mov.w r10, sp
 	vmov.w r0, r1, s0, s1
-	add.w lr, r0, #672
+	add.w lr, r0, #656
 add_loop_vs_640:
 	ldr.w r2, [r10, #704]
 	ldr.w r3, [r10, #708]
@@ -1748,13 +1748,188 @@ add_loop_vs_640:
 	bne.w add_loop_vs_640
 	add.w sp, #2820
 	pop.w {r3-r12,pc}
-// void __update_VS_64x672 (int *V, int *S, int *M1);
+// void __update_VS_64x656 (int *V, int *S, int *M1);
 .p2align 2,,3
 .syntax unified
 .text
-.global __update_VS_64x672
-.type __update_VS_64x672, %function
-__update_VS_64x672:
+.global __update_VS_64x656
+.type __update_VS_64x656, %function
+__update_VS_64x656:
+	push.w {r3-r12,lr}
+	ldr r11, =0x03030303
+	vmov.w s0, s1, r0, r1
+	vmov.w s2, r2
+	sub.w sp, #2628
+	mov.w r0, sp
+	movw.w lr, #0
+	str.w lr, [r0], #1
+	vmov.w r1, s2
+	vmov.w r2, s0
+	bl __polymul_64x656
+	vmov.w r1, s2
+	vmov.w r2, s0
+	add.w r1, #128
+	bl __polymul_64x656
+	vmov.w r1, s2
+	vmov.w r2, s1
+	add.w r1, #64
+	sub.w r0, #1
+	bl __polymul_64x656
+	vmov.w r1, s2
+	vmov.w r2, s1
+	add.w r1, #192
+	bl __polymul_64x656
+	mov.w r10, sp
+	vmov.w r0, r1, s0, s1
+	add.w lr, r0, #656
+add_loop_vs_656:
+	ldr.w r2, [r10, #656]
+	ldr.w r3, [r10, #660]
+	ldr.w r4, [r10, #664]
+	ldr.w r5, [r10, #668]
+	ldr.w r6, [r10, #1968]
+	ldr.w r7, [r10, #1972]
+	ldr.w r8, [r10, #1976]
+	ldr.w r9, [r10, #1980]
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
+	add.w r2, r6
+	add.w r3, r7
+	add.w r4, r8
+	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
+	bic.w r12, r2, r11 // top 3b < 8
+	and.w r2, r2, r11 // bot 2b < 4
+	add.w r2, r2, r12, LSR #2 // range <=10
+	bic.w r12, r2, r11 // top 3b < 3
+	and.w r2, r2, r11 // bot 2b < 4
+	add.w r2, r2, r12, LSR #2 // range <=5
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
+	bic.w r12, r3, r11 // top 3b < 8
+	and.w r3, r3, r11 // bot 2b < 4
+	add.w r3, r3, r12, LSR #2 // range <=10
+	bic.w r12, r3, r11 // top 3b < 3
+	and.w r3, r3, r11 // bot 2b < 4
+	add.w r3, r3, r12, LSR #2 // range <=5
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
+	bic.w r12, r4, r11 // top 3b < 8
+	and.w r4, r4, r11 // bot 2b < 4
+	add.w r4, r4, r12, LSR #2 // range <=10
+	bic.w r12, r4, r11 // top 3b < 3
+	and.w r4, r4, r11 // bot 2b < 4
+	add.w r4, r4, r12, LSR #2 // range <=5
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
+	bic.w r12, r5, r11 // top 3b < 8
+	and.w r5, r5, r11 // bot 2b < 4
+	add.w r5, r5, r12, LSR #2 // range <=10
+	bic.w r12, r5, r11 // top 3b < 3
+	and.w r5, r5, r11 // bot 2b < 4
+	add.w r5, r5, r12, LSR #2 // range <=5
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
+	str.w r3, [r1, #4]
+	str.w r4, [r1, #8]
+	str.w r5, [r1, #12]
+	str.w r2, [r1], #16
+	ldr.w r6, [r10, #1312]
+	ldr.w r7, [r10, #1316]
+	ldr.w r8, [r10, #1320]
+	ldr.w r9, [r10, #1324]
+	ldr.w r3, [r10, #4]
+	ldr.w r4, [r10, #8]
+	ldr.w r5, [r10, #12]
+	ldr.w r2, [r10], #16
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
+	add.w r2, r6
+	add.w r3, r7
+	add.w r4, r8
+	add.w r5, r9
+	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
+	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
+	add.w r2, r2, r12, LSR #4 // range < 31
+	bic.w r12, r2, r11 // top 3b < 8
+	and.w r2, r2, r11 // bot 2b < 4
+	add.w r2, r2, r12, LSR #2 // range <=10
+	bic.w r12, r2, r11 // top 3b < 3
+	and.w r2, r2, r11 // bot 2b < 4
+	add.w r2, r2, r12, LSR #2 // range <=5
+	usub8.w r12, r2, r11 // >= 3 ?
+	sel.w r2, r12, r2 // select
+	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
+	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
+	add.w r3, r3, r12, LSR #4 // range < 31
+	bic.w r12, r3, r11 // top 3b < 8
+	and.w r3, r3, r11 // bot 2b < 4
+	add.w r3, r3, r12, LSR #2 // range <=10
+	bic.w r12, r3, r11 // top 3b < 3
+	and.w r3, r3, r11 // bot 2b < 4
+	add.w r3, r3, r12, LSR #2 // range <=5
+	usub8.w r12, r3, r11 // >= 3 ?
+	sel.w r3, r12, r3 // select
+	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
+	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
+	add.w r4, r4, r12, LSR #4 // range < 31
+	bic.w r12, r4, r11 // top 3b < 8
+	and.w r4, r4, r11 // bot 2b < 4
+	add.w r4, r4, r12, LSR #2 // range <=10
+	bic.w r12, r4, r11 // top 3b < 3
+	and.w r4, r4, r11 // bot 2b < 4
+	add.w r4, r4, r12, LSR #2 // range <=5
+	usub8.w r12, r4, r11 // >= 3 ?
+	sel.w r4, r12, r4 // select
+	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
+	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
+	add.w r5, r5, r12, LSR #4 // range < 31
+	bic.w r12, r5, r11 // top 3b < 8
+	and.w r5, r5, r11 // bot 2b < 4
+	add.w r5, r5, r12, LSR #2 // range <=10
+	bic.w r12, r5, r11 // top 3b < 3
+	and.w r5, r5, r11 // bot 2b < 4
+	add.w r5, r5, r12, LSR #2 // range <=5
+	usub8.w r12, r5, r11 // >= 3 ?
+	sel.w r5, r12, r5 // select
+	str.w r3, [r0, #4]
+	str.w r4, [r0, #8]
+	str.w r5, [r0, #12]
+	str.w r2, [r0], #16
+	cmp.w r0, lr
+	bne.w add_loop_vs_656
+	add.w sp, #2628
+	pop.w {r3-r12,pc}
+// void __update_VS_32x672 (int *V, int *S, int *M1);
+.p2align 2,,3
+.syntax unified
+.text
+.global __update_VS_32x672
+.type __update_VS_32x672, %function
+__update_VS_32x672:
 	push.w {r3-r12,lr}
 	ldr r11, =0x03030303
 	vmov.w s0, s1, r0, r1
@@ -1765,20 +1940,20 @@ __update_VS_64x672:
 	str.w lr, [r0], #1
 	vmov.w r1, s2
 	vmov.w r2, s0
-	bl __polymul_64x672
+	bl __polymul_32x672
 	vmov.w r1, s2
 	vmov.w r2, s0
-	add.w r1, #128
-	bl __polymul_64x672
-	vmov.w r1, s2
-	vmov.w r2, s1
 	add.w r1, #64
-	sub.w r0, #1
-	bl __polymul_64x672
+	bl __polymul_32x672
 	vmov.w r1, s2
 	vmov.w r2, s1
-	add.w r1, #192
-	bl __polymul_64x672
+	add.w r1, #32
+	sub.w r0, #1
+	bl __polymul_32x672
+	vmov.w r1, s2
+	vmov.w r2, s1
+	add.w r1, #96
+	bl __polymul_32x672
 	mov.w r10, sp
 	vmov.w r0, r1, s0, s1
 	add.w lr, r0, #672
@@ -1922,179 +2097,4 @@ add_loop_vs_672:
 	cmp.w r0, lr
 	bne.w add_loop_vs_672
 	add.w sp, #2692
-	pop.w {r3-r12,pc}
-// void __update_VS_64x704 (int *V, int *S, int *M1);
-.p2align 2,,3
-.syntax unified
-.text
-.global __update_VS_64x704
-.type __update_VS_64x704, %function
-__update_VS_64x704:
-	push.w {r3-r12,lr}
-	ldr r11, =0x03030303
-	vmov.w s0, s1, r0, r1
-	vmov.w s2, r2
-	sub.w sp, #3076
-	mov.w r0, sp
-	movw.w lr, #0
-	str.w lr, [r0], #1
-	vmov.w r1, s2
-	vmov.w r2, s0
-	bl __polymul_64x704
-	vmov.w r1, s2
-	vmov.w r2, s0
-	add.w r1, #128
-	bl __polymul_64x704
-	vmov.w r1, s2
-	vmov.w r2, s1
-	add.w r1, #64
-	sub.w r0, #1
-	bl __polymul_64x704
-	vmov.w r1, s2
-	vmov.w r2, s1
-	add.w r1, #192
-	bl __polymul_64x704
-	mov.w r10, sp
-	vmov.w r0, r1, s0, s1
-	add.w lr, r0, #704
-add_loop_vs_704:
-	ldr.w r2, [r10, #768]
-	ldr.w r3, [r10, #772]
-	ldr.w r4, [r10, #776]
-	ldr.w r5, [r10, #780]
-	ldr.w r6, [r10, #2304]
-	ldr.w r7, [r10, #2308]
-	ldr.w r8, [r10, #2312]
-	ldr.w r9, [r10, #2316]
-	usub8.w r12, r2, r11 // >= 3 ?
-	sel.w r2, r12, r2 // select
-	usub8.w r12, r3, r11 // >= 3 ?
-	sel.w r3, r12, r3 // select
-	usub8.w r12, r4, r11 // >= 3 ?
-	sel.w r4, r12, r4 // select
-	usub8.w r12, r5, r11 // >= 3 ?
-	sel.w r5, r12, r5 // select
-	add.w r2, r6
-	add.w r3, r7
-	add.w r4, r8
-	add.w r5, r9
-	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
-	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
-	add.w r2, r2, r12, LSR #4 // range < 31
-	bic.w r12, r2, r11 // top 3b < 8
-	and.w r2, r2, r11 // bot 2b < 4
-	add.w r2, r2, r12, LSR #2 // range <=10
-	bic.w r12, r2, r11 // top 3b < 3
-	and.w r2, r2, r11 // bot 2b < 4
-	add.w r2, r2, r12, LSR #2 // range <=5
-	usub8.w r12, r2, r11 // >= 3 ?
-	sel.w r2, r12, r2 // select
-	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
-	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
-	add.w r3, r3, r12, LSR #4 // range < 31
-	bic.w r12, r3, r11 // top 3b < 8
-	and.w r3, r3, r11 // bot 2b < 4
-	add.w r3, r3, r12, LSR #2 // range <=10
-	bic.w r12, r3, r11 // top 3b < 3
-	and.w r3, r3, r11 // bot 2b < 4
-	add.w r3, r3, r12, LSR #2 // range <=5
-	usub8.w r12, r3, r11 // >= 3 ?
-	sel.w r3, r12, r3 // select
-	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
-	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
-	add.w r4, r4, r12, LSR #4 // range < 31
-	bic.w r12, r4, r11 // top 3b < 8
-	and.w r4, r4, r11 // bot 2b < 4
-	add.w r4, r4, r12, LSR #2 // range <=10
-	bic.w r12, r4, r11 // top 3b < 3
-	and.w r4, r4, r11 // bot 2b < 4
-	add.w r4, r4, r12, LSR #2 // range <=5
-	usub8.w r12, r4, r11 // >= 3 ?
-	sel.w r4, r12, r4 // select
-	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
-	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
-	add.w r5, r5, r12, LSR #4 // range < 31
-	bic.w r12, r5, r11 // top 3b < 8
-	and.w r5, r5, r11 // bot 2b < 4
-	add.w r5, r5, r12, LSR #2 // range <=10
-	bic.w r12, r5, r11 // top 3b < 3
-	and.w r5, r5, r11 // bot 2b < 4
-	add.w r5, r5, r12, LSR #2 // range <=5
-	usub8.w r12, r5, r11 // >= 3 ?
-	sel.w r5, r12, r5 // select
-	str.w r3, [r1, #4]
-	str.w r4, [r1, #8]
-	str.w r5, [r1, #12]
-	str.w r2, [r1], #16
-	ldr.w r6, [r10, #1536]
-	ldr.w r7, [r10, #1540]
-	ldr.w r8, [r10, #1544]
-	ldr.w r9, [r10, #1548]
-	ldr.w r3, [r10, #4]
-	ldr.w r4, [r10, #8]
-	ldr.w r5, [r10, #12]
-	ldr.w r2, [r10], #16
-	usub8.w r12, r2, r11 // >= 3 ?
-	sel.w r2, r12, r2 // select
-	usub8.w r12, r3, r11 // >= 3 ?
-	sel.w r3, r12, r3 // select
-	usub8.w r12, r4, r11 // >= 3 ?
-	sel.w r4, r12, r4 // select
-	usub8.w r12, r5, r11 // >= 3 ?
-	sel.w r5, r12, r5 // select
-	add.w r2, r6
-	add.w r3, r7
-	add.w r4, r8
-	add.w r5, r9
-	and.w r12, r2, #0xF0F0F0F0 // top 4b < 16
-	and.w r2, r2, #0x0F0F0F0F // bot 4b < 16
-	add.w r2, r2, r12, LSR #4 // range < 31
-	bic.w r12, r2, r11 // top 3b < 8
-	and.w r2, r2, r11 // bot 2b < 4
-	add.w r2, r2, r12, LSR #2 // range <=10
-	bic.w r12, r2, r11 // top 3b < 3
-	and.w r2, r2, r11 // bot 2b < 4
-	add.w r2, r2, r12, LSR #2 // range <=5
-	usub8.w r12, r2, r11 // >= 3 ?
-	sel.w r2, r12, r2 // select
-	and.w r12, r3, #0xF0F0F0F0 // top 4b < 16
-	and.w r3, r3, #0x0F0F0F0F // bot 4b < 16
-	add.w r3, r3, r12, LSR #4 // range < 31
-	bic.w r12, r3, r11 // top 3b < 8
-	and.w r3, r3, r11 // bot 2b < 4
-	add.w r3, r3, r12, LSR #2 // range <=10
-	bic.w r12, r3, r11 // top 3b < 3
-	and.w r3, r3, r11 // bot 2b < 4
-	add.w r3, r3, r12, LSR #2 // range <=5
-	usub8.w r12, r3, r11 // >= 3 ?
-	sel.w r3, r12, r3 // select
-	and.w r12, r4, #0xF0F0F0F0 // top 4b < 16
-	and.w r4, r4, #0x0F0F0F0F // bot 4b < 16
-	add.w r4, r4, r12, LSR #4 // range < 31
-	bic.w r12, r4, r11 // top 3b < 8
-	and.w r4, r4, r11 // bot 2b < 4
-	add.w r4, r4, r12, LSR #2 // range <=10
-	bic.w r12, r4, r11 // top 3b < 3
-	and.w r4, r4, r11 // bot 2b < 4
-	add.w r4, r4, r12, LSR #2 // range <=5
-	usub8.w r12, r4, r11 // >= 3 ?
-	sel.w r4, r12, r4 // select
-	and.w r12, r5, #0xF0F0F0F0 // top 4b < 16
-	and.w r5, r5, #0x0F0F0F0F // bot 4b < 16
-	add.w r5, r5, r12, LSR #4 // range < 31
-	bic.w r12, r5, r11 // top 3b < 8
-	and.w r5, r5, r11 // bot 2b < 4
-	add.w r5, r5, r12, LSR #2 // range <=10
-	bic.w r12, r5, r11 // top 3b < 3
-	and.w r5, r5, r11 // bot 2b < 4
-	add.w r5, r5, r12, LSR #2 // range <=5
-	usub8.w r12, r5, r11 // >= 3 ?
-	sel.w r5, r12, r5 // select
-	str.w r3, [r0, #4]
-	str.w r4, [r0, #8]
-	str.w r5, [r0, #12]
-	str.w r2, [r0], #16
-	cmp.w r0, lr
-	bne.w add_loop_vs_704
-	add.w sp, #3076
 	pop.w {r3-r12,pc}

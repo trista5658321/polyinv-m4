@@ -196,8 +196,15 @@ def main(base, LENGTH):
     set_stack(STACK_SPACE, "end")
     u.epilogue_mod3(f_regs)
 
-for i in range(1, _P//BASE + 1):
-    main(BASE, BASE*i)
-
-if _P % BASE != 0:
+if (2 * _P) % 64 == 32:
     main(BASE, _P)
+    for i in range(0, _P//BASE-1):
+        first_coeffi = BASE - (_P % BASE)
+        main(BASE, _P - first_coeffi - BASE * i)
+    main(BASE//2, 2*_P % BASE)
+else:
+    for i in range(1, _P//BASE + 1):
+        main(BASE, BASE*i)
+
+    if _P % BASE != 0:
+        main(BASE, _P)

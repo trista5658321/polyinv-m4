@@ -23,12 +23,9 @@ def reduce_str(rs, target = V):
         printIn("str.w %s, [%s, #%d]" % (rs[i], target, 4*i))
     printIn("str.w %s, [%s], #%d" % (rs[0], target, 4*len(rs)))
 
-def main(LENGTH):
-    base_coeffi = BASE # jump N divsteps
+def main(base, LENGTH, result_coeffi):
+    base_coeffi = base # jump N divsteps
     coeffi = LENGTH # BASE x n
-    result_coeffi = base_coeffi + coeffi
-    if coeffi == _P:
-        result_coeffi = _P
     __polymul_name = "__polymul_" + str(base_coeffi) + "x" + str(coeffi)
     STACK_SPACE = result_coeffi * 4 + 4
 
@@ -121,8 +118,16 @@ def main(LENGTH):
     u.epilogue_mod3(f_regs)
 
 for i in range(1, _P//BASE+1):
-    main(BASE*i)
+    length = BASE*i
+    result_coeffi = BASE + length
+    if length == _P:
+        result_coeffi = _P
+    main(BASE, BASE*i, result_coeffi)
 if _P % BASE != 0:
-    main(_P)
-if _P != max_V_coeffi:
-    main(max_V_coeffi)
+    main(BASE, _P, _P)
+
+if (2 * _P) % 64 == 32:
+    main(BASE//2, max_V_coeffi, max_V_coeffi)
+else:
+    if _P != max_V_coeffi:
+        main(BASE, max_V_coeffi, BASE+max_V_coeffi)

@@ -2,7 +2,7 @@ import sys, pathlib
 sys.path.append(str(pathlib.Path(__file__).parent.parent.absolute().parent))
 
 from utility import printIn, reduce_mod3_32, reduce_mod3_lazy
-from mod3_v2.utility_mod3 import BASE, P, _P, max_V_coeffi, _P_ZERO_coeffi
+from mod3_v2.utility_mod3 import BASE, P, _P, over_divsteps, max_V_coeffi, _P_ZERO_coeffi
 
 C1 = 14
 C2 = 18
