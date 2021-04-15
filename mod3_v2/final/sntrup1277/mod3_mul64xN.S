@@ -10656,9 +10656,6 @@ mul_64:
 	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
 	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
 	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]

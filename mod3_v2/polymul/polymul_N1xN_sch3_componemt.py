@@ -200,7 +200,7 @@ def end_strip_bot (i) :
     if do_reduction_end(id0_blocks_count-1):
         reduce_mod3_lazy(ac(i,0),ar(i,j,4),"r11")
 
-    if not pre_id4_lazy(id0_blocks_count+1):
+    elif not pre_id4_lazy(id0_blocks_count+1):
         id0_blocks_count += 1
         if do_reduction_end(id0_blocks_count-1):
             reduce_mod3_lazy(ac(i,0),ar(i,j,4),"r11")
