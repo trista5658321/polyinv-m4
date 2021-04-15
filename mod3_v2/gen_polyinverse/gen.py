@@ -2,16 +2,16 @@ import sys, pathlib, math
 sys.path.append(str(pathlib.Path(__file__).parent.parent.absolute().parent))
 
 from utility import printIn
-from mod3_v2.utility_mod3 import _P, max_V_coeffi
+from mod3_v2.utility_mod3 import BASE, _P, max_V_coeffi
 
 V_space = max_V_coeffi // 4
-round_half = _P // 64
+round_half = _P // BASE
 
 print("#include <inttypes.h>\n")
-print("int jump%ddivsteps_mod3_64(int minusdelta, int32_t *M, int32_t *f, int32_t *g){" % (_P*2))
+print("int jump%ddivsteps_mod3_%d(int minusdelta, int32_t *M, int32_t *f, int32_t *g){" % (_P*2, BASE))
 printIn("uint32_t V[%d];" % V_space)
 printIn("uint32_t S[%d];" % V_space)
-printIn("uint32_t M1[96]; // 64 coefficients * 6")
+printIn("uint32_t M1[%d]; // %d coefficients * 6" % ((BASE*6)//4, BASE))
 printIn("uint32_t *ptr = M;")
 
 printIn("for(int i = 0; i < %d; i++){" % V_space)
@@ -22,39 +22,40 @@ printIn("}")
 printIn("uint8_t * p_S = (uint8_t *)S;")
 printIn("*(S) = 1;")
 
+uvrs_pos = (BASE//4)*2
 
 # Phase 1:
 printIn("// 1: %d" % (round_half))
 for i in range(round_half):
-    printIn("minusdelta = jump64divsteps_mod3(minusdelta,M1,f,g);")
-    printIn("__update_fg_64x%d(f, g, M1+32);" % (_P))
+    printIn("minusdelta = jump%ddivsteps_mod3(minusdelta,M1,f,g);" % (BASE))
+    printIn("__update_fg_%dx%d(f, g, M1+%d);" % (BASE, _P, uvrs_pos))
     if i == 0:
-        printIn("__update_VS_64x%d(V, S, M1+32);" % (64))
+        printIn("__update_VS_%dx%d(V, S, M1+%d);" % (BASE, BASE, uvrs_pos))
     else:
-        printIn("__update_VS_64x%d(V, S, M1+32);" % (64*i))
+        printIn("__update_VS_%dx%d(V, S, M1+%d);" % (BASE, BASE*i, uvrs_pos))
 
 # Phase 2:
 printIn("// 2")
-printIn("minusdelta = jump64divsteps_mod3(minusdelta,M1,f,g);")
-printIn("__update_fg_64x%d(f, g, M1+32);" % (_P))
-printIn("__update_VS_64x%d(V, S, M1+32);" % (64*round_half))
+printIn("minusdelta = jump%ddivsteps_mod3(minusdelta,M1,f,g);" % (BASE))
+printIn("__update_fg_%dx%d(f, g, M1+%d);" % (BASE, _P, uvrs_pos))
+printIn("__update_VS_%dx%d(V, S, M1+%d);" % (BASE, BASE*round_half, uvrs_pos))
 
-_N_max = _P - 64 + (_P % 64)
-round_half_2 = _N_max // 64
+_N_max = _P - BASE + (_P % BASE)
+round_half_2 = _N_max // BASE
 
 # Phase 3:
 printIn("// 3")
 for i in range(round_half_2):
-    printIn("minusdelta = jump64divsteps_mod3(minusdelta,M1,f,g);")
-    printIn("__update_fg_64x%d(f, g, M1+32);" % (_N_max - 64*i))
-    if i == round_half_2 - 1 and _N_max % 64 == 0:
-        printIn("__update_VS_64x%d(V, S, M1+32);" % (max_V_coeffi))
+    printIn("minusdelta = jump%ddivsteps_mod3(minusdelta,M1,f,g);" % (BASE))
+    printIn("__update_fg_%dx%d(f, g, M1+%d);" % (BASE, _N_max - BASE*i, uvrs_pos))
+    if i == round_half_2 - 1 and _N_max % BASE == 0:
+        printIn("__update_VS_%dx%d(V, S, M1+%d);" % (BASE, max_V_coeffi, uvrs_pos))
     else:
-        printIn("__update_VS_64x%d(V, S, M1+32);" % (_P))
+        printIn("__update_VS_%dx%d(V, S, M1+%d);" % (BASE, _P, uvrs_pos))
 
 # Phase 4:
-if _N_max % 64 != 0:
-    _N_max_2 = _N_max % 64 
+if _N_max % BASE != 0:
+    _N_max_2 = _N_max % BASE 
     printIn("// 4")
     if _N_max_2 <= 32:
         printIn("minusdelta = jump32divsteps_mod3(minusdelta,M1,f,g);")

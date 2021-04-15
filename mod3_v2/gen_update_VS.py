@@ -126,8 +126,8 @@ for i in range(1, _P//BASE+1):
 if _P % BASE != 0:
     main(BASE, _P, _P)
 
-if (2 * _P) % 64 == 32:
-    main(BASE//2, max_V_coeffi, max_V_coeffi)
-else:
+if (2 * _P) % BASE == 0:
     if _P != max_V_coeffi:
         main(BASE, max_V_coeffi, BASE+max_V_coeffi)
+elif (2 * _P) % BASE == 32:
+    main(BASE//2, max_V_coeffi, max_V_coeffi)

@@ -3,7 +3,7 @@ from func_composite import mul_full, mul_jump_head_4_4, mul_jump_head_4_0
 from polymul_N1xN_sch3_componemt import SCH_polymul_N1xN_mod3_jump_end, polymul
     
 
-def gen_mul_32():
+def gen_mul_without_over_P():
     mul_jump_head = mul_jump_head_4_4
     if _P_ZERO_coeffi < 4:
         mul_jump_head = mul_jump_head_4_0
@@ -60,21 +60,8 @@ def gen_mul():
     print(__polymul_name + ":")
     SCH_polymul_N1xN_mod3_jump_end(BASE, _P)
 
-if BASE == 64:
-    if (2 * _P) % 64 == 0:
-        gen_mul()
-    elif (2 * _P) % 64 == 32:
-        gen_mul_32()
-    
-elif BASE == 32:
-    polymul(BASE,32,32)
-    mul_jump_head_4_0(32, 32)
-
-    __polymul_name = "__polymul_" + str(BASE) + "x" + str(max_coeffi)
-    print(".p2align 2,,3")
-    print(".syntax unified")
-    print(".text")
-    print(".global " + __polymul_name + "")
-    print(".type  " + __polymul_name + ", %function")
-    print(__polymul_name + ":")
-    SCH_polymul_N1xN_mod3_jump_end(BASE, max_coeffi)
+if (2 * _P) % BASE == 0:
+    gen_mul()
+# elif (2 * _P) % BASE == BASE // 2:
+else:
+    gen_mul_without_over_P()
