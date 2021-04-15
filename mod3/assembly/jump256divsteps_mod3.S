@@ -81,9 +81,9 @@ sch3_1:			// later blocks
 	umlal	r7, r8, r1, r5
 	ldr	r5, [r12, #28]
 	umlal	r8, r9, r1, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
+	and.w r5, r8, #0xF0F0F0F0 // top 4b < 16
+	and.w r8, r8, #0x0F0F0F0F // bot 4b < 16
+	add.w r8, r8, r5, LSR #4 // range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -155,27 +155,27 @@ sch3_1:			// later blocks
 	umlal	r6, r7, r3, r5
 	umlal	r7, r8, r4, r5
 	// ([0-2],9), ([0-1],10), (0,11) blocks
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
+	and.w r5, r9, #0xF0F0F0F0 // top 4b < 16
+	and.w r9, r9, #0x0F0F0F0F // bot 4b < 16
+	add.w r9, r9, r5, LSR #4 // range < 31
 	ldr	r5, [r12, #36]
 	umlal	r7, r8, r3, r5
 	umlal	r6, r7, r2, r5
 	umlal	r10, r6, r1, r5
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
+	and.w r5, r10, #0xF0F0F0F0 // top 4b < 16
+	and.w r10, r10, #0x0F0F0F0F // bot 4b < 16
+	add.w r10, r10, r5, LSR #4 // range < 31
 	ldr	r5, [r12, #40]
 	umlal	r7, r8, r2, r5
 	umlal	r6, r7, r1, r5
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
+	and.w r5, r6, #0xF0F0F0F0 // top 4b < 16
+	and.w r6, r6, #0x0F0F0F0F // bot 4b < 16
+	add.w r6, r6, r5, LSR #4 // range < 31
 	ldr	r5, [r12, #44]
 	umlal	r7, r8, r1, r5
-	and	r5, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r5, LSR #4	// range < 31
+	and.w r5, r7, #0xF0F0F0F0 // top 4b < 16
+	and.w r7, r7, #0x0F0F0F0F // bot 4b < 16
+	add.w r7, r7, r5, LSR #4 // range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -275,28 +275,25 @@ sch3_1:			// later blocks
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
 	// ([0-2],13), ([0-1],14), (0,15) blocks
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
+	and.w r5, r8, #0xF0F0F0F0 // top 4b < 16
+	and.w r8, r8, #0x0F0F0F0F // bot 4b < 16
+	add.w r8, r8, r5, LSR #4 // range < 31
 	ldr	r5, [r12, #52]
 	umlal	r6, r7, r3, r5
 	umlal	r10, r6, r2, r5
 	umlal	r9, r10, r1, r5
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
-	and	r5, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r5, LSR #4	// range < 31
+	and.w r5, r9, #0xF0F0F0F0 // top 4b < 16
+	and.w r9, r9, #0x0F0F0F0F // bot 4b < 16
+	add.w r9, r9, r5, LSR #4 // range < 31
 	ldr	r5, [r12, #56]
 	umlal	r6, r7, r2, r5
 	umlal	r10, r6, r1, r5
+	and.w r5, r10, #0xF0F0F0F0 // top 4b < 16
+	and.w r10, r10, #0x0F0F0F0F // bot 4b < 16
+	add.w r10, r10, r5, LSR #4 // range < 31
+	and.w r5, r6, #0xF0F0F0F0 // top 4b < 16
+	and.w r6, r6, #0x0F0F0F0F // bot 4b < 16
+	add.w r6, r6, r5, LSR #4 // range < 31
 	ldr	r5, [r12, #60]
 	umlal	r6, r7, r1, r5
 	str.w r9, [r0, #4]
@@ -404,21 +401,6 @@ sch3_1:			// later blocks
 	umlal	r8, r9, r5, r3
 	umlal	r9, r10, r1, r3
 	umlal	r10, r6, r2, r3
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
-	and	r3, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r3, LSR #4	// range < 31
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
 	// ([2-5], 14) blocks
 	ldr	r2, [r12, #56]
 	ldr	r3, [r14, #8]
@@ -426,6 +408,18 @@ sch3_1:			// later blocks
 	umlal	r8, r9, r4, r2
 	umlal	r9, r10, r5, r2
 	umlal	r10, r6, r1, r2
+	and.w r2, r7, #0xF0F0F0F0 // top 4b < 16
+	and.w r7, r7, #0x0F0F0F0F // bot 4b < 16
+	add.w r7, r7, r2, LSR #4 // range < 31
+	and.w r2, r8, #0xF0F0F0F0 // top 4b < 16
+	and.w r8, r8, #0x0F0F0F0F // bot 4b < 16
+	add.w r8, r8, r2, LSR #4 // range < 31
+	and.w r2, r9, #0xF0F0F0F0 // top 4b < 16
+	and.w r9, r9, #0x0F0F0F0F // bot 4b < 16
+	add.w r9, r9, r2, LSR #4 // range < 31
+	and.w r2, r10, #0xF0F0F0F0 // top 4b < 16
+	and.w r10, r10, #0x0F0F0F0F // bot 4b < 16
+	add.w r10, r10, r2, LSR #4 // range < 31
 	// ([1-4], 15) blocks
 	ldr	r1, [r12, #60]
 	ldr	r2, [r14, #4]
@@ -450,9 +444,6 @@ sch3_1:			// later blocks
 	umlal	r9, r10, r1, r5
 	ldr	r5, [r12, #76]
 	umlal	r10, r6, r1, r5
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -558,21 +549,6 @@ sch3_1:			// later blocks
 	umlal	r7, r8, r4, r2
 	umlal	r8, r9, r5, r2
 	umlal	r9, r10, r1, r2
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
-	and	r2, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r2, LSR #4	// range < 31
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
 	// ([6-9], 14) blocks
 	ldr	r1, [r12, #56]
 	ldr	r2, [r14, #24]
@@ -580,6 +556,18 @@ sch3_1:			// later blocks
 	umlal	r7, r8, r3, r1
 	umlal	r8, r9, r4, r1
 	umlal	r9, r10, r5, r1
+	and.w r1, r6, #0xF0F0F0F0 // top 4b < 16
+	and.w r6, r6, #0x0F0F0F0F // bot 4b < 16
+	add.w r6, r6, r1, LSR #4 // range < 31
+	and.w r1, r7, #0xF0F0F0F0 // top 4b < 16
+	and.w r7, r7, #0x0F0F0F0F // bot 4b < 16
+	add.w r7, r7, r1, LSR #4 // range < 31
+	and.w r1, r8, #0xF0F0F0F0 // top 4b < 16
+	and.w r8, r8, #0x0F0F0F0F // bot 4b < 16
+	add.w r8, r8, r1, LSR #4 // range < 31
+	and.w r1, r9, #0xF0F0F0F0 // top 4b < 16
+	and.w r9, r9, #0x0F0F0F0F // bot 4b < 16
+	add.w r9, r9, r1, LSR #4 // range < 31
 	// ([5-8], 15) blocks
 	ldr	r5, [r12, #60]
 	ldr	r1, [r14, #20]
@@ -622,28 +610,28 @@ sch3_1:			// later blocks
 	umlal	r7, r8, r2, r5
 	umlal	r8, r9, r3, r5
 	umlal	r9, r10, r4, r5
+	and.w r5, r10, #0xF0F0F0F0 // top 4b < 16
+	and.w r10, r10, #0x0F0F0F0F // bot 4b < 16
+	add.w r10, r10, r5, LSR #4 // range < 31
 	// ([0-2],21), ([0-1],22), (0,23) blocks
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
 	ldr	r5, [r12, #84]
 	umlal	r9, r10, r3, r5
 	umlal	r8, r9, r2, r5
 	umlal	r7, r8, r1, r5
-	and	r5, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r5, LSR #4	// range < 31
+	and.w r5, r7, #0xF0F0F0F0 // top 4b < 16
+	and.w r7, r7, #0x0F0F0F0F // bot 4b < 16
+	add.w r7, r7, r5, LSR #4 // range < 31
 	ldr	r5, [r12, #88]
 	umlal	r9, r10, r2, r5
 	umlal	r8, r9, r1, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
+	and.w r5, r8, #0xF0F0F0F0 // top 4b < 16
+	and.w r8, r8, #0x0F0F0F0F // bot 4b < 16
+	add.w r8, r8, r5, LSR #4 // range < 31
 	ldr	r5, [r12, #92]
 	umlal	r9, r10, r1, r5
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
+	and.w r5, r9, #0xF0F0F0F0 // top 4b < 16
+	and.w r9, r9, #0x0F0F0F0F // bot 4b < 16
+	add.w r9, r9, r5, LSR #4 // range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -749,21 +737,6 @@ sch3_1:			// later blocks
 	umlal	r6, r7, r3, r1
 	umlal	r7, r8, r4, r1
 	umlal	r8, r9, r5, r1
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
-	and	r1, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r1, LSR #4	// range < 31
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
 	// ([10-13], 14) blocks
 	ldr	r5, [r12, #56]
 	ldr	r1, [r14, #40]
@@ -771,6 +744,18 @@ sch3_1:			// later blocks
 	umlal	r6, r7, r2, r5
 	umlal	r7, r8, r3, r5
 	umlal	r8, r9, r4, r5
+	and.w r5, r10, #0xF0F0F0F0 // top 4b < 16
+	and.w r10, r10, #0x0F0F0F0F // bot 4b < 16
+	add.w r10, r10, r5, LSR #4 // range < 31
+	and.w r5, r6, #0xF0F0F0F0 // top 4b < 16
+	and.w r6, r6, #0x0F0F0F0F // bot 4b < 16
+	add.w r6, r6, r5, LSR #4 // range < 31
+	and.w r5, r7, #0xF0F0F0F0 // top 4b < 16
+	and.w r7, r7, #0x0F0F0F0F // bot 4b < 16
+	add.w r7, r7, r5, LSR #4 // range < 31
+	and.w r5, r8, #0xF0F0F0F0 // top 4b < 16
+	and.w r8, r8, #0x0F0F0F0F // bot 4b < 16
+	add.w r8, r8, r5, LSR #4 // range < 31
 	// ([9-12], 15) blocks
 	ldr	r4, [r12, #60]
 	ldr	r5, [r14, #36]
@@ -813,6 +798,9 @@ sch3_1:			// later blocks
 	umlal	r6, r7, r1, r4
 	umlal	r7, r8, r2, r4
 	umlal	r8, r9, r3, r4
+	and.w r4, r9, #0xF0F0F0F0 // top 4b < 16
+	and.w r9, r9, #0x0F0F0F0F // bot 4b < 16
+	add.w r9, r9, r4, LSR #4 // range < 31
 	// ([3-6], 21) blocks
 	ldr	r3, [r12, #84]
 	ldr	r4, [r14, #12]
@@ -842,30 +830,27 @@ sch3_1:			// later blocks
 	umlal	r7, r8, r3, r5
 	umlal	r8, r9, r4, r5
 	// ([0-2],25), ([0-1],26), (0,27) blocks
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
+	and.w r5, r10, #0xF0F0F0F0 // top 4b < 16
+	and.w r10, r10, #0x0F0F0F0F // bot 4b < 16
+	add.w r10, r10, r5, LSR #4 // range < 31
 	ldr	r5, [r12, #100]
 	umlal	r8, r9, r3, r5
 	umlal	r7, r8, r2, r5
 	umlal	r6, r7, r1, r5
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
+	and.w r5, r6, #0xF0F0F0F0 // top 4b < 16
+	and.w r6, r6, #0x0F0F0F0F // bot 4b < 16
+	add.w r6, r6, r5, LSR #4 // range < 31
 	ldr	r5, [r12, #104]
 	umlal	r8, r9, r2, r5
 	umlal	r7, r8, r1, r5
-	and	r5, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r5, LSR #4	// range < 31
+	and.w r5, r7, #0xF0F0F0F0 // top 4b < 16
+	and.w r7, r7, #0x0F0F0F0F // bot 4b < 16
+	add.w r7, r7, r5, LSR #4 // range < 31
 	ldr	r5, [r12, #108]
 	umlal	r8, r9, r1, r5
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
+	and.w r5, r8, #0xF0F0F0F0 // top 4b < 16
+	and.w r8, r8, #0x0F0F0F0F // bot 4b < 16
+	add.w r8, r8, r5, LSR #4 // range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -971,21 +956,6 @@ sch3_1:			// later blocks
 	umlal	r10, r6, r2, r5
 	umlal	r6, r7, r3, r5
 	umlal	r7, r8, r4, r5
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
-	and	r5, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r5, LSR #4	// range < 31
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
 	// ([14-17], 14) blocks
 	ldr	r4, [r12, #56]
 	ldr	r5, [r14, #56]
@@ -993,6 +963,18 @@ sch3_1:			// later blocks
 	umlal	r10, r6, r1, r4
 	umlal	r6, r7, r2, r4
 	umlal	r7, r8, r3, r4
+	and.w r4, r9, #0xF0F0F0F0 // top 4b < 16
+	and.w r9, r9, #0x0F0F0F0F // bot 4b < 16
+	add.w r9, r9, r4, LSR #4 // range < 31
+	and.w r4, r10, #0xF0F0F0F0 // top 4b < 16
+	and.w r10, r10, #0x0F0F0F0F // bot 4b < 16
+	add.w r10, r10, r4, LSR #4 // range < 31
+	and.w r4, r6, #0xF0F0F0F0 // top 4b < 16
+	and.w r6, r6, #0x0F0F0F0F // bot 4b < 16
+	add.w r6, r6, r4, LSR #4 // range < 31
+	and.w r4, r7, #0xF0F0F0F0 // top 4b < 16
+	and.w r7, r7, #0x0F0F0F0F // bot 4b < 16
+	add.w r7, r7, r4, LSR #4 // range < 31
 	// ([13-16], 15) blocks
 	ldr	r3, [r12, #60]
 	ldr	r4, [r14, #52]
@@ -1035,6 +1017,9 @@ sch3_1:			// later blocks
 	umlal	r10, r6, r5, r3
 	umlal	r6, r7, r1, r3
 	umlal	r7, r8, r2, r3
+	and.w r3, r8, #0xF0F0F0F0 // top 4b < 16
+	and.w r8, r8, #0x0F0F0F0F // bot 4b < 16
+	add.w r8, r8, r3, LSR #4 // range < 31
 	// ([7-10], 21) blocks
 	ldr	r2, [r12, #84]
 	ldr	r3, [r14, #28]
@@ -1084,21 +1069,6 @@ sch3_1:			// later blocks
 	umlal	r10, r6, r3, r1
 	umlal	r6, r7, r4, r1
 	umlal	r7, r8, r5, r1
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
-	and	r1, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r1, LSR #4	// range < 31
 	// ([0-3], 28) blocks
 	ldr	r5, [r12, #112]
 	ldr	r1, [r14, #0]
@@ -1106,7 +1076,22 @@ sch3_1:			// later blocks
 	umlal	r10, r6, r2, r5
 	umlal	r6, r7, r3, r5
 	umlal	r7, r8, r4, r5
+	and.w r5, r9, #0xF0F0F0F0 // top 4b < 16
+	and.w r9, r9, #0x0F0F0F0F // bot 4b < 16
+	add.w r9, r9, r5, LSR #4 // range < 31
+	and.w r5, r10, #0xF0F0F0F0 // top 4b < 16
+	and.w r10, r10, #0x0F0F0F0F // bot 4b < 16
+	add.w r10, r10, r5, LSR #4 // range < 31
+	and.w r5, r6, #0xF0F0F0F0 // top 4b < 16
+	and.w r6, r6, #0x0F0F0F0F // bot 4b < 16
+	add.w r6, r6, r5, LSR #4 // range < 31
+	and.w r5, r7, #0xF0F0F0F0 // top 4b < 16
+	and.w r7, r7, #0x0F0F0F0F // bot 4b < 16
+	add.w r7, r7, r5, LSR #4 // range < 31
 	// ([0-2],29), ([0-1],30), (0,31) blocks
+	and.w r5, r9, #0xF0F0F0F0 // top 4b < 16
+	and.w r9, r9, #0x0F0F0F0F // bot 4b < 16
+	add.w r9, r9, r5, LSR #4 // range < 31
 	ldr	r5, [r12, #116]
 	umlal	r7, r8, r3, r5
 	umlal	r6, r7, r2, r5
@@ -1215,21 +1200,6 @@ sch3_10:			// decreasing thread length
 	umlal	r9, r10, r5, r3
 	umlal	r10, r6, r1, r3
 	umlal	r6, r7, r2, r3
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
-	and	r3, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r3, LSR #4	// range < 31
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
 	// ([14-17], 18) blocks
 	ldr	r4, [r12, #72]
 	ldr	r3, [r14, #68]
@@ -1244,6 +1214,18 @@ sch3_10:			// decreasing thread length
 	umlal	r9, r10, r2, r5
 	umlal	r10, r6, r3, r5
 	umlal	r6, r7, r4, r5
+	and.w r5, r8, #0xF0F0F0F0 // top 4b < 16
+	and.w r8, r8, #0x0F0F0F0F // bot 4b < 16
+	add.w r8, r8, r5, LSR #4 // range < 31
+	and.w r5, r9, #0xF0F0F0F0 // top 4b < 16
+	and.w r9, r9, #0x0F0F0F0F // bot 4b < 16
+	add.w r9, r9, r5, LSR #4 // range < 31
+	and.w r5, r10, #0xF0F0F0F0 // top 4b < 16
+	and.w r10, r10, #0x0F0F0F0F // bot 4b < 16
+	add.w r10, r10, r5, LSR #4 // range < 31
+	and.w r5, r6, #0xF0F0F0F0 // top 4b < 16
+	and.w r6, r6, #0x0F0F0F0F // bot 4b < 16
+	add.w r6, r6, r5, LSR #4 // range < 31
 	// ([16-19], 16) blocks
 	ldr	r1, [r12, #64]
 	ldr	r5, [r14, #76]
@@ -1286,6 +1268,9 @@ sch3_10:			// decreasing thread length
 	umlal	r9, r10, r3, r1
 	umlal	r10, r6, r4, r1
 	umlal	r6, r7, r5, r1
+	and.w r1, r7, #0xF0F0F0F0 // top 4b < 16
+	and.w r7, r7, #0x0F0F0F0F // bot 4b < 16
+	add.w r7, r7, r1, LSR #4 // range < 31
 	// ([22-25], 10) blocks
 	ldr	r2, [r12, #40]
 	ldr	r1, [r14, #100]
@@ -1328,21 +1313,6 @@ sch3_10:			// decreasing thread length
 	umlal	r9, r10, r4, r2
 	umlal	r10, r6, r5, r2
 	umlal	r6, r7, r1, r2
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
-	and	r2, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r2, LSR #4	// range < 31
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
 	// ([28-31], 4) blocks
 	ldr	r3, [r12, #16]
 	ldr	r2, [r14, #124]
@@ -1355,6 +1325,18 @@ sch3_10:			// decreasing thread length
 	umlal	r10, r6, r2, r3
 	umlal	r9, r10, r1, r3
 	umlal	r8, r9, r5, r3
+	and.w r3, r6, #0xF0F0F0F0 // top 4b < 16
+	and.w r6, r6, #0x0F0F0F0F // bot 4b < 16
+	add.w r6, r6, r3, LSR #4 // range < 31
+	and.w r3, r8, #0xF0F0F0F0 // top 4b < 16
+	and.w r8, r8, #0x0F0F0F0F // bot 4b < 16
+	add.w r8, r8, r3, LSR #4 // range < 31
+	and.w r3, r9, #0xF0F0F0F0 // top 4b < 16
+	and.w r9, r9, #0x0F0F0F0F // bot 4b < 16
+	add.w r9, r9, r3, LSR #4 // range < 31
+	and.w r3, r10, #0xF0F0F0F0 // top 4b < 16
+	and.w r10, r10, #0x0F0F0F0F // bot 4b < 16
+	add.w r10, r10, r3, LSR #4 // range < 31
 	ldr	r3, [r12, #8]
 	umlal	r9, r10, r2, r3
 	umlal	r8, r9, r1, r3
@@ -1458,21 +1440,6 @@ sch3_10:			// decreasing thread length
 	umlal	r8, r9, r4, r2
 	umlal	r9, r10, r5, r2
 	umlal	r10, r6, r1, r2
-	and	r2, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r2, LSR #4	// range < 31
-	and	r2, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r2, LSR #4	// range < 31
-	and	r2, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r2, LSR #4	// range < 31
-	and	r2, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r2, LSR #4	// range < 31
-	and	r2, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r2, LSR #4	// range < 31
 	// ([18-21], 18) blocks
 	ldr	r3, [r12, #72]
 	ldr	r2, [r14, #84]
@@ -1487,6 +1454,18 @@ sch3_10:			// decreasing thread length
 	umlal	r8, r9, r1, r4
 	umlal	r9, r10, r2, r4
 	umlal	r10, r6, r3, r4
+	and.w r4, r7, #0xF0F0F0F0 // top 4b < 16
+	and.w r7, r7, #0x0F0F0F0F // bot 4b < 16
+	add.w r7, r7, r4, LSR #4 // range < 31
+	and.w r4, r8, #0xF0F0F0F0 // top 4b < 16
+	and.w r8, r8, #0x0F0F0F0F // bot 4b < 16
+	add.w r8, r8, r4, LSR #4 // range < 31
+	and.w r4, r9, #0xF0F0F0F0 // top 4b < 16
+	and.w r9, r9, #0x0F0F0F0F // bot 4b < 16
+	add.w r9, r9, r4, LSR #4 // range < 31
+	and.w r4, r10, #0xF0F0F0F0 // top 4b < 16
+	and.w r10, r10, #0x0F0F0F0F // bot 4b < 16
+	add.w r10, r10, r4, LSR #4 // range < 31
 	// ([20-23], 16) blocks
 	ldr	r5, [r12, #64]
 	ldr	r4, [r14, #92]
@@ -1529,6 +1508,9 @@ sch3_10:			// decreasing thread length
 	umlal	r8, r9, r2, r5
 	umlal	r9, r10, r3, r5
 	umlal	r10, r6, r4, r5
+	and.w r5, r6, #0xF0F0F0F0 // top 4b < 16
+	and.w r6, r6, #0x0F0F0F0F // bot 4b < 16
+	add.w r6, r6, r5, LSR #4 // range < 31
 	// ([26-29], 10) blocks
 	ldr	r1, [r12, #40]
 	ldr	r5, [r14, #116]
@@ -1555,20 +1537,23 @@ sch3_10:			// decreasing thread length
 	umlal	r9, r10, r2, r3
 	umlal	r8, r9, r1, r3
 	umlal	r7, r8, r5, r3
-	and	r3, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r3, LSR #4	// range < 31
+	and.w r3, r10, #0xF0F0F0F0 // top 4b < 16
+	and.w r10, r10, #0x0F0F0F0F // bot 4b < 16
+	add.w r10, r10, r3, LSR #4 // range < 31
 	ldr	r3, [r12, #24]
 	umlal	r8, r9, r2, r3
 	umlal	r7, r8, r1, r3
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
+	and.w r3, r9, #0xF0F0F0F0 // top 4b < 16
+	and.w r9, r9, #0x0F0F0F0F // bot 4b < 16
+	add.w r9, r9, r3, LSR #4 // range < 31
 	ldr	r3, [r12, #20]
 	umlal	r7, r8, r2, r3
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
+	and.w r3, r8, #0xF0F0F0F0 // top 4b < 16
+	and.w r8, r8, #0x0F0F0F0F // bot 4b < 16
+	add.w r8, r8, r3, LSR #4 // range < 31
+	and.w r3, r7, #0xF0F0F0F0 // top 4b < 16
+	and.w r7, r7, #0x0F0F0F0F // bot 4b < 16
+	add.w r7, r7, r3, LSR #4 // range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -1667,21 +1652,6 @@ sch3_10:			// decreasing thread length
 	umlal	r7, r8, r3, r1
 	umlal	r8, r9, r4, r1
 	umlal	r9, r10, r5, r1
-	and	r1, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r1, LSR #4	// range < 31
-	and	r1, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r1, LSR #4	// range < 31
-	and	r1, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r1, LSR #4	// range < 31
-	and	r1, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r1, LSR #4	// range < 31
-	and	r1, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r1, LSR #4	// range < 31
 	// ([22-25], 18) blocks
 	ldr	r2, [r12, #72]
 	ldr	r1, [r14, #100]
@@ -1696,6 +1666,18 @@ sch3_10:			// decreasing thread length
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
+	and.w r3, r6, #0xF0F0F0F0 // top 4b < 16
+	and.w r6, r6, #0x0F0F0F0F // bot 4b < 16
+	add.w r6, r6, r3, LSR #4 // range < 31
+	and.w r3, r7, #0xF0F0F0F0 // top 4b < 16
+	and.w r7, r7, #0x0F0F0F0F // bot 4b < 16
+	add.w r7, r7, r3, LSR #4 // range < 31
+	and.w r3, r8, #0xF0F0F0F0 // top 4b < 16
+	and.w r8, r8, #0x0F0F0F0F // bot 4b < 16
+	add.w r8, r8, r3, LSR #4 // range < 31
+	and.w r3, r9, #0xF0F0F0F0 // top 4b < 16
+	and.w r9, r9, #0x0F0F0F0F // bot 4b < 16
+	add.w r9, r9, r3, LSR #4 // range < 31
 	// ([24-27], 16) blocks
 	ldr	r4, [r12, #64]
 	ldr	r3, [r14, #108]
@@ -1736,23 +1718,20 @@ sch3_10:			// decreasing thread length
 	umlal	r8, r9, r2, r3
 	umlal	r7, r8, r1, r3
 	umlal	r6, r7, r5, r3
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
 	ldr	r3, [r12, #40]
 	umlal	r7, r8, r2, r3
 	umlal	r6, r7, r1, r3
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
+	and.w r3, r8, #0xF0F0F0F0 // top 4b < 16
+	and.w r8, r8, #0x0F0F0F0F // bot 4b < 16
+	add.w r8, r8, r3, LSR #4 // range < 31
 	ldr	r3, [r12, #36]
 	umlal	r6, r7, r2, r3
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
+	and.w r3, r7, #0xF0F0F0F0 // top 4b < 16
+	and.w r7, r7, #0x0F0F0F0F // bot 4b < 16
+	add.w r7, r7, r3, LSR #4 // range < 31
+	and.w r3, r6, #0xF0F0F0F0 // top 4b < 16
+	and.w r6, r6, #0x0F0F0F0F // bot 4b < 16
+	add.w r6, r6, r3, LSR #4 // range < 31
 	str.w r7, [r0, #4]
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
@@ -1851,21 +1830,6 @@ sch3_10:			// decreasing thread length
 	umlal	r6, r7, r2, r5
 	umlal	r7, r8, r3, r5
 	umlal	r8, r9, r4, r5
-	and	r5, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r5, LSR #4	// range < 31
-	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r5, LSR #4	// range < 31
-	and	r5, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r5, LSR #4	// range < 31
-	and	r5, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r5, LSR #4	// range < 31
-	and	r5, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r5, LSR #4	// range < 31
 	// ([26-29], 18) blocks
 	ldr	r1, [r12, #72]
 	ldr	r5, [r14, #116]
@@ -1880,6 +1844,18 @@ sch3_10:			// decreasing thread length
 	umlal	r6, r7, r4, r2
 	umlal	r7, r8, r5, r2
 	umlal	r8, r9, r1, r2
+	and.w r2, r10, #0xF0F0F0F0 // top 4b < 16
+	and.w r10, r10, #0x0F0F0F0F // bot 4b < 16
+	add.w r10, r10, r2, LSR #4 // range < 31
+	and.w r2, r6, #0xF0F0F0F0 // top 4b < 16
+	and.w r6, r6, #0x0F0F0F0F // bot 4b < 16
+	add.w r6, r6, r2, LSR #4 // range < 31
+	and.w r2, r7, #0xF0F0F0F0 // top 4b < 16
+	and.w r7, r7, #0x0F0F0F0F // bot 4b < 16
+	add.w r7, r7, r2, LSR #4 // range < 31
+	and.w r2, r8, #0xF0F0F0F0 // top 4b < 16
+	and.w r8, r8, #0x0F0F0F0F // bot 4b < 16
+	add.w r8, r8, r2, LSR #4 // range < 31
 	// ([28-31], 16) blocks
 	ldr	r3, [r12, #64]
 	ldr	r2, [r14, #124]
@@ -1897,9 +1873,6 @@ sch3_10:			// decreasing thread length
 	umlal	r10, r6, r1, r3
 	ldr	r3, [r12, #52]
 	umlal	r10, r6, r2, r3
-	and	r3, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r3, LSR #4	// range < 31
 	str.w r6, [r0, #4]
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
@@ -1996,23 +1969,23 @@ sch3_10:			// decreasing thread length
 	umlal	r6, r7, r2, r3
 	umlal	r10, r6, r1, r3
 	umlal	r9, r10, r5, r3
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
-	and	r3, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r3, LSR #4	// range < 31
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
+	and.w r3, r7, #0xF0F0F0F0 // top 4b < 16
+	and.w r7, r7, #0x0F0F0F0F // bot 4b < 16
+	add.w r7, r7, r3, LSR #4 // range < 31
 	ldr	r3, [r12, #72]
 	umlal	r10, r6, r2, r3
 	umlal	r9, r10, r1, r3
+	and.w r3, r6, #0xF0F0F0F0 // top 4b < 16
+	and.w r6, r6, #0x0F0F0F0F // bot 4b < 16
+	add.w r6, r6, r3, LSR #4 // range < 31
 	ldr	r3, [r12, #68]
 	umlal	r9, r10, r2, r3
+	and.w r3, r10, #0xF0F0F0F0 // top 4b < 16
+	and.w r10, r10, #0x0F0F0F0F // bot 4b < 16
+	add.w r10, r10, r3, LSR #4 // range < 31
+	and.w r3, r9, #0xF0F0F0F0 // top 4b < 16
+	and.w r9, r9, #0x0F0F0F0F // bot 4b < 16
+	add.w r9, r9, r3, LSR #4 // range < 31
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
@@ -2081,23 +2054,23 @@ sch3_10:			// decreasing thread length
 	umlal	r10, r6, r2, r3
 	umlal	r9, r10, r1, r3
 	umlal	r8, r9, r5, r3
-	and	r3, r6, #0xF0F0F0F0	// top 4b < 16
-	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
-	add	r6, r6, r3, LSR #4	// range < 31
+	and.w r3, r6, #0xF0F0F0F0 // top 4b < 16
+	and.w r6, r6, #0x0F0F0F0F // bot 4b < 16
+	add.w r6, r6, r3, LSR #4 // range < 31
 	ldr	r3, [r12, #88]
 	umlal	r9, r10, r2, r3
 	umlal	r8, r9, r1, r3
-	and	r3, r10, #0xF0F0F0F0	// top 4b < 16
-	and	r10, r10, #0x0F0F0F0F	// bot 4b < 16
-	add	r10, r10, r3, LSR #4	// range < 31
+	and.w r3, r10, #0xF0F0F0F0 // top 4b < 16
+	and.w r10, r10, #0x0F0F0F0F // bot 4b < 16
+	add.w r10, r10, r3, LSR #4 // range < 31
 	ldr	r3, [r12, #84]
 	umlal	r8, r9, r2, r3
-	and	r3, r9, #0xF0F0F0F0	// top 4b < 16
-	and	r9, r9, #0x0F0F0F0F	// bot 4b < 16
-	add	r9, r9, r3, LSR #4	// range < 31
-	and	r3, r8, #0xF0F0F0F0	// top 4b < 16
-	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
-	add	r8, r8, r3, LSR #4	// range < 31
+	and.w r3, r9, #0xF0F0F0F0 // top 4b < 16
+	and.w r9, r9, #0x0F0F0F0F // bot 4b < 16
+	add.w r9, r9, r3, LSR #4 // range < 31
+	and.w r3, r8, #0xF0F0F0F0 // top 4b < 16
+	and.w r8, r8, #0x0F0F0F0F // bot 4b < 16
+	add.w r8, r8, r3, LSR #4 // range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -2143,9 +2116,9 @@ sch3_10:			// decreasing thread length
 	umlal	r7, r8, r1, r3
 	ldr	r3, [r12, #100]
 	umlal	r7, r8, r2, r3
-	and	r3, r7, #0xF0F0F0F0	// top 4b < 16
-	and	r7, r7, #0x0F0F0F0F	// bot 4b < 16
-	add	r7, r7, r3, LSR #4	// range < 31
+	and.w r3, r7, #0xF0F0F0F0 // top 4b < 16
+	and.w r7, r7, #0x0F0F0F0F // bot 4b < 16
+	add.w r7, r7, r3, LSR #4 // range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
