@@ -54,13 +54,23 @@ for i in range(round_half_2):
         printIn("__update_VS_%dx%d(V, S, M1+%d);" % (BASE, _P, uvrs_pos))
 
 # Phase 4:
-if _N_max % BASE != 0:
-    _N_max_2 = _N_max % BASE 
+_N_max_2 = _N_max % BASE
+base = BASE
+while(base > _N_max_2):
+    base //= 2
+
+while(_N_max_2 != 0):
     printIn("// 4")
-    if _N_max_2 <= 32:
-        printIn("minusdelta = jump32divsteps_mod3(minusdelta,M1,f,g);")
-        printIn("__update_fg_32x%d(f, g, M1+16);" % (_N_max_2))
-        printIn("__update_VS_32x%d(V, S, M1+16);" % (max_V_coeffi))
+    _uvrs_pos = (base//4)*2
+    printIn("minusdelta = jump%ddivsteps_mod3(minusdelta,M1,f,g);" % (base))
+    printIn("__update_fg_%dx%d(f, g, M1+%d);" % (base, _N_max_2, _uvrs_pos))
+    if _N_max_2 - base == 0:
+        printIn("__update_VS_%dx%d(V, S, M1+%d);" % (base, max_V_coeffi, _uvrs_pos))
+    else:
+        printIn("__update_VS_%dx%d(V, S, M1+%d);" % (base, _P, _uvrs_pos))
+    
+    _N_max_2 -= base
+    base //= 2
 
 printIn("\n")
 printIn("for (int i = 0; i < %d; i++)" % (V_space))

@@ -1,6 +1,6 @@
 import sys, pathlib
 sys.path.append(str(pathlib.Path(__file__).parent.parent.absolute().parent))
-from utility_mod3 import BASE, _P, _P_ZERO_coeffi
+from utility_mod3 import BASE, _P, _P_ZERO_coeffi, _N_max_2
 from utility import printIn, set_stack
 import utility as u
 
@@ -196,16 +196,19 @@ def main(base, LENGTH):
     set_stack(STACK_SPACE, "end")
     u.epilogue_mod3(f_regs)
 
-if (2 * _P) % BASE == 0:
+if _N_max_2 == 0:
     for i in range(1, _P//BASE + 1):
         main(BASE, BASE*i)
 
     if _P % BASE != 0:
         main(BASE, _P)
 
-elif (2 * _P) % BASE == 32:
+else:
     main(BASE, _P)
-    for i in range(0, _P//BASE-1):
-        first_coeffi = BASE - (_P % BASE)
-        main(BASE, _P - first_coeffi - BASE * i)
-    main(BASE//2, 2*_P % BASE)
+    
+    _N_max = _P - BASE + (_P % BASE)
+    round_half_2 = _N_max // BASE
+    for i in range(0, round_half_2):
+        main(BASE, _N_max - BASE * i)
+
+    main(_N_max_2, _N_max_2)

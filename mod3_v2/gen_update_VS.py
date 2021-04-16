@@ -1,6 +1,6 @@
 import sys, pathlib
 sys.path.append(str(pathlib.Path(__file__).parent.parent.absolute().parent))
-from utility_mod3 import BASE, _P, max_V_coeffi
+from utility_mod3 import BASE, _P, max_V_coeffi, _N_max_2
 from utility import printIn, set_stack
 import utility as u
 
@@ -126,8 +126,10 @@ for i in range(1, _P//BASE+1):
 if _P % BASE != 0:
     main(BASE, _P, _P)
 
-if (2 * _P) % BASE == 0:
+if _N_max_2 == 0:
     if _P != max_V_coeffi:
         main(BASE, max_V_coeffi, BASE+max_V_coeffi)
-elif (2 * _P) % BASE == 32:
-    main(BASE//2, max_V_coeffi, max_V_coeffi)
+else:
+    main(_N_max_2, max_V_coeffi, max_V_coeffi)
+# elif (2 * _P) % BASE == 32:
+#     main(BASE//2, max_V_coeffi, max_V_coeffi)

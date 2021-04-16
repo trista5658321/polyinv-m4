@@ -12,9 +12,11 @@ def gen_mul_without_over_P():
     
     # for update_fg
     mul_jump_head(_P)
-    for i in range(0, _P//BASE-1):
-        first_coeffi = BASE - (_P % BASE)
-        mul_jump_head(_P - first_coeffi - BASE * i) 
+
+    _N_max = _P - BASE + (_P % BASE)
+    round_half_2 = _N_max // BASE
+    for i in range(0, round_half_2):
+        mul_jump_head(_N_max - BASE * i) 
     
     # for update_VS
     for i in range(1, _P//BASE+1):

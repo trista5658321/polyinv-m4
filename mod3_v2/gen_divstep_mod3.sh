@@ -44,10 +44,22 @@ python gen_update_fg.py 64 1277 1280 > final/sntrup1277/mod3_update_fg_64.S
 python gen_update_VS.py 64 1277 1280 > final/sntrup1277/mod3_update_VS_64.S
 
 # 128
+python gen_polyinverse/gen.py 128 653 656 > final/sntrup653/jump1312divsteps_mod3_128.c
+python polymul/gen_mul.py 128 653 656 > final/sntrup653/mod3_mul128xN.S
+python polymul/gen_mul_last.py 32 653 656 > final/sntrup653/mod3_mul32xN.S
+python gen_update_fg.py 128 653 656 > final/sntrup653/mod3_update_fg_128.S
+python gen_update_VS.py 128 653 656 > final/sntrup653/mod3_update_VS_128.S
+
 python gen_polyinverse/gen.py 128 761 768 > final/sntrup761/jump1536divsteps_mod3_128.c
 python polymul/gen_mul.py 128 761 768 > final/sntrup761/mod3_mul128xN.S
 python gen_update_fg.py 128 761 768 > final/sntrup761/mod3_update_fg_128.S
 python gen_update_VS.py 128 761 768 > final/sntrup761/mod3_update_VS_128.S
+
+python gen_polyinverse/gen.py 128 857 864 > final/sntrup857/jump1728divsteps_mod3_128.c
+python polymul/gen_mul.py 128 857 864 > final/sntrup857/mod3_mul128xN.S
+python polymul/gen_mul_last.py 64 857 864 > final/sntrup857/mod3_mul64xN_128.S
+python gen_update_fg.py 128 857 864 > final/sntrup857/mod3_update_fg_128.S
+python gen_update_VS.py 128 857 864 > final/sntrup857/mod3_update_VS_128.S
 
 python gen_polyinverse/gen.py 128 953 960 > final/sntrup953/jump1920divsteps_mod3_128.c
 python polymul/gen_mul.py 128 953 960 > final/sntrup953/mod3_mul128xN.S
