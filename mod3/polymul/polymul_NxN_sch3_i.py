@@ -194,9 +194,6 @@ def end_strip_bot (i) :
    
     
 def SCH_polymulNxN_mod3(N,C1,C2,rf,rg,rh) :
-    global V, NV, r_f, r_g, r_h, r_N
-    r_f = rf; r_g = rg; r_h = rh
-
     globals()["C1"]=C1
     globals()["C2"]=C2
     globals()["N"]=N

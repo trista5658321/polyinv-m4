@@ -10,31 +10,11 @@ N1 = 0
 
 r_h = "r0"
     
-def reduce_mod3_5 (X, scr, r03) : # at most 5, r03 = 0x03030303 
-    print("	usub8	%s, %s, %s		// >= 3 ?" % (scr, X, r03))
-    print("	sel	%s, %s, %s		// select" % (X, scr, X))
-
-def reduce_mod3_11 (X, scr, r03) : # r03 = 0x03030303, good for 4 adds
-    print("	bic	%s, %s, %s		// top 3b < 3" % (scr, X, r03))
-    print("	and	%s, %s, %s		// bot 2b < 4" % (X, X, r03))
-    print("	add	%s, %s, %s, LSR #2	// range <=5" % (X, X, scr))
-    reduce_mod3_5 (X, scr, r03)
-    
-def reduce_mod3_32 (X, scr, r03) : # r03 = 0x03030303, good for 8 adds
-    print("	bic	%s, %s, %s		// top 3b < 8" % (scr, X, r03))
-    print("	and	%s, %s, %s		// bot 2b < 4" % (X, X, r03))
-    print("	add	%s, %s, %s, LSR #2	// range <=10" % (X, X, scr))
-    reduce_mod3_11 (X, scr, r03)
-    
 def reduce_mod3_lazy (X, scr, r03) :
-    print("	and	%s, %s, #0xF0F0F0F0	// top 4b < 16" % (scr, X))
-    print("	and	%s, %s, #0x0F0F0F0F	// bot 4b < 16" % (X, X))
-    print("	add	%s, %s, %s, LSR #4	// range < 31" % (X, X, scr))
+    print("	and.w	%s, %s, #0xF0F0F0F0	// top 4b < 16" % (scr, X))
+    print("	and.w	%s, %s, #0x0F0F0F0F	// bot 4b < 16" % (X, X))
+    print("	add.w	%s, %s, %s, LSR #4	// range < 31" % (X, X, scr))
     
-def reduce_mod3_full (X, scr, r03) :  
-    reduce_mod3_lazy (X, scr, r03)
-    reduce_mod3_32 (X, scr, r03) 
-
 def start_strip_top (i) :
     print("	// ([%d-%d], 0) blocks" % (4*i, 4*i+3))
     print("	ldr.w	%s, [%s]" % (ar(i,0,4), r_12))
