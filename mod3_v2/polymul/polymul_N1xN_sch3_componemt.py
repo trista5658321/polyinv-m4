@@ -2,7 +2,7 @@
 import sys
 import re
 from math import log,ceil,floor,sqrt
-from utility_polymul import r_f, r_g, r_12, r_14, ac, ar, do_reduction_continue, do_reduction_continue_id4, do_reduction_end, pre_id4_lazy, BASE, P, _P, max_V_coeffi, _P_ZERO_coeffi
+from utility_polymul import r_f, r_g, r_12, r_14, ac, ar, do_reduction_continue, do_reduction_continue_id4, do_reduction_end, pre_id4_lazy, do_reduction_before_add_pre_id4, BASE, P, _P, max_V_coeffi, _P_ZERO_coeffi
 from polymul_head_last import SCH_polymul_mod3_head_last
 
 N = 0
@@ -135,7 +135,8 @@ def end_strip_top (i) :
     if do_reduction_end(j+3):
         reduce_mod3_lazy(ac(i,3),ar(i,j,4),"r11")
 
-    if do_reduction_continue_id4(j+3):
+    # [4]
+    if do_reduction_before_add_pre_id4(j+3):
         reduce_mod3_lazy(ac(i,4),ar(i,j,4),"r11")
     
     print("	str.w %s, [r0, #4]" % (ac(i,1)))
@@ -151,6 +152,9 @@ def end_strip_top_2 (i) :
         reduce_mod3_lazy(ac(i,2),ar(i,j,4),"r11")
         reduce_mod3_lazy(ac(i,3),ar(i,j,4),"r11")
 
+    if do_reduction_before_add_pre_id4(j):
+        reduce_mod3_lazy(ac(i,4),ar(i,j,4),"r11")
+
     print("	str.w %s, [r0, #4]" % (ac(i,1)))
     print("	str.w %s, [r0, #8]" % (ac(i,2)))
     print("	str.w %s, [r0, #12]" % (ac(i,3)))
@@ -159,6 +163,10 @@ def end_strip_top_2 (i) :
 def end_strip_bot (i) :
     j = 4 * i - N // 4 + 4 # [4]
     id4_blocks_count = N1//4-j # [4]
+
+    # [4]
+    if do_reduction_before_add_pre_id4(id4_blocks_count-1):
+        reduce_mod3_lazy(ac(i,4),ar(i,j,4),"r11")
 
     print("	// ([%d-%d],%d),([%d-%d],%d),(%d,%d) blocks" % (N//4-3,N//4-1,j-1,N//4-2,N//4-1,j-2,N//4-1,j-3))
 

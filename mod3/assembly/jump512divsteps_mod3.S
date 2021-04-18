@@ -444,6 +444,9 @@ sch3_1:			// later blocks
 	umlal	r9, r10, r1, r5
 	ldr	r5, [r12, #76]
 	umlal	r10, r6, r1, r5
+	and.w r5, r6, #0xF0F0F0F0 // top 4b < 16
+	and.w r6, r6, #0x0F0F0F0F // bot 4b < 16
+	add.w r6, r6, r5, LSR #4 // range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -1379,6 +1382,9 @@ sch3_1:			// later blocks
 	and.w r5, r6, #0xF0F0F0F0 // top 4b < 16
 	and.w r6, r6, #0x0F0F0F0F // bot 4b < 16
 	add.w r6, r6, r5, LSR #4 // range < 31
+	and.w r5, r7, #0xF0F0F0F0 // top 4b < 16
+	and.w r7, r7, #0x0F0F0F0F // bot 4b < 16
+	add.w r7, r7, r5, LSR #4 // range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -3270,6 +3276,9 @@ sch3_1:			// later blocks
 	and.w r5, r6, #0xF0F0F0F0 // top 4b < 16
 	and.w r6, r6, #0x0F0F0F0F // bot 4b < 16
 	add.w r6, r6, r5, LSR #4 // range < 31
+	and.w r5, r7, #0xF0F0F0F0 // top 4b < 16
+	and.w r7, r7, #0x0F0F0F0F // bot 4b < 16
+	add.w r7, r7, r5, LSR #4 // range < 31
 	str.w r9, [r0, #4]
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
@@ -5186,6 +5195,9 @@ sch3_10:			// decreasing thread length
 	umlal	r10, r6, r2, r5
 	umlal	r6, r7, r3, r5
 	umlal	r7, r8, r4, r5
+	and.w r5, r8, #0xF0F0F0F0 // top 4b < 16
+	and.w r8, r8, #0x0F0F0F0F // bot 4b < 16
+	add.w r8, r8, r5, LSR #4 // range < 31
 	// ([61-63],7),([62-63],6),(63,5) blocks
 	ldr	r5, [r12, #28]
 	umlal	r6, r7, r4, r5
@@ -7039,6 +7051,9 @@ sch3_10:			// decreasing thread length
 	umlal	r10, r6, r2, r5
 	umlal	r6, r7, r3, r5
 	umlal	r7, r8, r4, r5
+	and.w r5, r8, #0xF0F0F0F0 // top 4b < 16
+	and.w r8, r8, #0x0F0F0F0F // bot 4b < 16
+	add.w r8, r8, r5, LSR #4 // range < 31
 	// ([61-63],27),([62-63],26),(63,25) blocks
 	ldr	r5, [r12, #108]
 	umlal	r6, r7, r4, r5
@@ -7940,6 +7955,9 @@ sch3_10:			// decreasing thread length
 	umlal	r6, r7, r2, r5
 	umlal	r7, r8, r3, r5
 	umlal	r8, r9, r4, r5
+	and.w r5, r9, #0xF0F0F0F0 // top 4b < 16
+	and.w r9, r9, #0x0F0F0F0F // bot 4b < 16
+	add.w r9, r9, r5, LSR #4 // range < 31
 	// ([61-63],43),([62-63],42),(63,41) blocks
 	ldr	r5, [r12, #172]
 	umlal	r7, r8, r4, r5

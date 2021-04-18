@@ -1,4 +1,4 @@
-from mod3.polymul.utility_polymul import printIn, C1, C2, ar, ac, reduce_mod3_lazy, do_reduction_continue, do_reduction_continue_id4, do_reduction_end, pre_id4_lazy
+from mod3.polymul.utility_polymul import printIn, C1, C2, ar, ac, reduce_mod3_lazy, do_reduction_continue, do_reduction_continue_id4, do_reduction_end, pre_id4_lazy, do_reduction_before_add_pre_id4
 
 import sys
 import re
@@ -25,10 +25,6 @@ r_g = "r2"
 r_h = "r0"
 
 def start_strip_top (i) :
-    # empty_r = ar(i,0,4)
-    # if do_reduction_before_add_pre_id4(4*i):
-    #     reduce_mod3_lazy(ac(i,0), empty_r, "r11")
-
     printIn("// ([%d-%d], 0) blocks" % (4*i, 4*i+3))
     printIn("ldr	%s, [r12]" % (ar(i,0,4)))
     printIn("ldr	%s, [r14, #%d]" % (ar(i,0,3), 16*i+12))
@@ -128,7 +124,7 @@ def end_strip_top (i) :
     if do_reduction_end(j+3):
         reduce_mod3_lazy(ac(i,3),ar(i,j,4),"r11")
 
-    if do_reduction_continue_id4(j+3):
+    if do_reduction_before_add_pre_id4(j+3):
         reduce_mod3_lazy(ac(i,4),ar(i,j,4),"r11")
     
     print("	str.w %s, [r0, #4]" % (ac(i,1)))
@@ -139,6 +135,10 @@ def end_strip_top (i) :
 def end_strip_bot (i) :
     j = 4 * i - N // 4 + 4
     id4_blocks_count = N//4-j
+
+    # [4]
+    if do_reduction_before_add_pre_id4(id4_blocks_count-1):
+        reduce_mod3_lazy(ac(i,4),ar(i,j,4),"r11")
 
     print("	// ([%d-%d],%d),([%d-%d],%d),(%d,%d) blocks" % (N//4-3,N//4-1,j-1,N//4-2,N//4-1,j-2,N//4-1,j-3))
 

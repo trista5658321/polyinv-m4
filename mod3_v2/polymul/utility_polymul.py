@@ -44,6 +44,21 @@ def do_reduction_continue_id4(j): # ac(i, 4)
         return True
     return False
 
+def do_reduction_before_add_pre_id4(j):
+    block_counts = j+1 
+    top_bound_value = 255 - MAX1*4
+    
+    if pre_id4_lazy(j): # lazy
+        block_counts -= MAX2
+        block_counts %= C2
+        top_bound_value -= 30
+    
+    adds_bound = top_bound_value // 4
+    blocks_bound = adds_bound // 3
+    if block_counts > blocks_bound:
+        return True
+    return False
+
 def do_reduction_end(j, no_mid_reduction = False):
     block_counts = j+1
     if do_reduction_continue(j):

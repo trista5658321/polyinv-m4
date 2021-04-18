@@ -441,6 +441,9 @@ mul_head:
 	umlal	r9, r10, r12, r5
 	ldr.w	r5, [r1, #76]
 	umlal	r10, r6, r12, r5
+	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
+	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
+	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -16426,6 +16429,9 @@ mul_128:
 	umlal	r10, r6, r3, r12
 	umlal	r6, r7, r4, r12
 	umlal	r7, r8, r5, r12
+	and	r12, r8, #0xF0F0F0F0	// top 4b < 16
+	and	r8, r8, #0x0F0F0F0F	// bot 4b < 16
+	add	r8, r8, r12, LSR #4	// range < 31
 	// ([257-259],11),([258-259],10),(259,9) blocks
 	ldr.w	r12, [r1, #44]
 	umlal	r6, r7, r5, r12
@@ -17468,6 +17474,9 @@ __polymul_128x1024:
 	umlal	r9, r10, r12, r5
 	ldr.w	r5, [r1, #76]
 	umlal	r10, r6, r12, r5
+	and	r5, r6, #0xF0F0F0F0	// top 4b < 16
+	and	r6, r6, #0x0F0F0F0F	// bot 4b < 16
+	add	r6, r6, r5, LSR #4	// range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]

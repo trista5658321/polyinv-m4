@@ -444,6 +444,9 @@ sch3_1:			// later blocks
 	umlal	r9, r10, r1, r5
 	ldr	r5, [r12, #76]
 	umlal	r10, r6, r1, r5
+	and.w r5, r6, #0xF0F0F0F0 // top 4b < 16
+	and.w r6, r6, #0x0F0F0F0F // bot 4b < 16
+	add.w r6, r6, r5, LSR #4 // range < 31
 	str.w r8, [r0, #4]
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
@@ -1713,6 +1716,9 @@ sch3_10:			// decreasing thread length
 	umlal	r7, r8, r5, r3
 	umlal	r8, r9, r1, r3
 	umlal	r9, r10, r2, r3
+	and.w r3, r10, #0xF0F0F0F0 // top 4b < 16
+	and.w r10, r10, #0x0F0F0F0F // bot 4b < 16
+	add.w r10, r10, r3, LSR #4 // range < 31
 	// ([29-31],11),([30-31],10),(31,9) blocks
 	ldr	r3, [r12, #44]
 	umlal	r8, r9, r2, r3
