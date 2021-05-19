@@ -1,5 +1,8 @@
-import sys
-from ntt_python.gen_wpad import gen_iwpad
+import sys, pathlib
+d_root = pathlib.Path(__file__).parent.absolute().parent.parent.parent
+sys.path.append(str(d_root))
+
+from mod_q.ntt.utility_ntt import gen_iwpad
 
 q = "r11"
 qinv = "r12"
