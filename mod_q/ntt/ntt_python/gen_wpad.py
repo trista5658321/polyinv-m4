@@ -119,5 +119,75 @@ def gen_iwpad(p, n, w):
                 print_w(cal_w_inverse(p, __arr[2*j], True))
                 print_w(cal_w_inverse(p, __arr[2*j+1], True))
 
+def combine_w1w2(w1, w2):
+    if w1 < 0:
+        w1 += 65536
+    if w2 < 0:
+        w2 += 65536 #(1 << 16)
+    return ((w2 << 16) + w1)
+
+# for 16 bit
+def gen_wpad_16b(p, n, w):
+    arr = get_w(w, n)
+    print("wpad:")
+    print_w(p)
+    print_w(round(2**32 / p))
+
+    for i in range(len(arr)):
+        _arr = arr[i]
+        if i == 0 or i == 1:
+            continue
+        elif i == 2:
+            print("@ =012=")
+            # print(_arr)
+            for i in range(1,len(_arr),3):
+                w0 = cal_w(p, _arr[i], False)
+                w1 = cal_w(p, _arr[i+1], False)
+                w2 = cal_w(p, _arr[i+2], False)
+                print_w(w0)
+                print_w(combine_w1w2(w1, w2))
+        elif i & 1:
+            print("@ =%d%d=" % (i, i+1))
+            for j in range(len(_arr)):
+                next_layer_arr = arr[i+1]
+                w0 = cal_w(p, _arr[j], False)
+                w1 = cal_w(p, next_layer_arr[2*j], False)
+                w2 = cal_w(p, next_layer_arr[2*j+1], False)
+                print_w(w0)
+                print_w(combine_w1w2(w1, w2))
+
+def gen_iwpad_16b(p, n, w):
+    arr = get_w(w, n)
+    print("wpad:")
+    print_w(p)
+    print_w(round(2**32 / p))
+
+    for i in range(len(arr)-1, -1, -1):
+        _arr = arr[i]
+        if i == 0 or i == 1:
+            continue
+        elif i == 2:
+            print("@ =012=")
+            # print(_arr)
+            for i in range(1,len(_arr),3):
+                w0 = cal_w_inverse(p, _arr[i], False)
+                w1 = cal_w_inverse(p, _arr[i+1], False)
+                w2 = cal_w_inverse(p, _arr[i+2], False)
+                print_w(w0)
+                print_w(combine_w1w2(w1, w2))
+        elif i & 1:
+            print("@ =%d%d=" % (i, i+1))
+            for j in range(len(_arr)):
+                next_layer_arr = arr[i+1]
+                w0 = cal_w_inverse(p, _arr[j], False)
+                w1 = cal_w_inverse(p, next_layer_arr[2*j], False)
+                w2 = cal_w_inverse(p, next_layer_arr[2*j+1], False)
+                # print(_arr[j])
+                print_w(w0)
+                print_w(combine_w1w2(w1, w2))
+
 # gen_wpad(518657, 512, 1595)
 # print(inverse_modq(2**7, 518657))
+# print(get_w(62, 512))
+
+# gen_iwpad_16b(7681, 512, 62)

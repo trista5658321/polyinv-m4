@@ -13,8 +13,9 @@ def ntt41():
     n = 512
     layer = 7
     final_deg = 4
-    p = 518657
-    w = 1595
+    # p = 518657
+    p = 7681
+    w = 62
     # f = [-8,-1,-7,-2,0,0,0,0]
     # g = [8,4,0,2,0,0,0,0]
     f0 = [0] * 512
@@ -28,8 +29,8 @@ def ntt41():
     ntt(n,layer,p,w,c,f0)
     # ntt(n,layer,p,w,c,g)
     intt(n, layer, p, w, c, f0)
-    # intt(n, layer, p, w, c, f, g)
     print(f0)
+    # intt(n, layer, p, w, c, f, g)
     print((f0 == f1))
 
 ntt41()

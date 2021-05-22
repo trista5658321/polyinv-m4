@@ -32,8 +32,8 @@ def intt(n, layer, p, w, c, f, g = []):
     for i in range(layer-1, -1, -1):
         poly_len = n // (2 ** (i+1))
         times = pow(2, i)
+        print("===== -> %d %d =====" % (poly_len, times))
         print(f)
-        print("===== %d %d =====" % (poly_len, times))
         for j in range(times):
             _c = inverse_modq(c[i][j], p)
             # print("_c = %d" % (_c))

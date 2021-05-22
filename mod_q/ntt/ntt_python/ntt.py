@@ -21,8 +21,9 @@ def ntt(n, layer, p, w, c, f):
     for i in range(layer):
         poly_len //= 2
         times = pow(2, i)
+        # print(f)
         # print("= %d =" % (i))
-        # print("%d %d" % (poly_len, times))
+        # print("-> %d %d" % (poly_len, times))
         for j in range(times):
             _c = c[i][j]
             shift = j * poly_len*2
