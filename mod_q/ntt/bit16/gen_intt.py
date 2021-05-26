@@ -2,7 +2,7 @@ import sys, pathlib
 d_root = pathlib.Path(__file__).parent.absolute().parent.parent.parent
 sys.path.append(str(d_root))
 
-from utility import printIn, barrett
+from utility import printIn, barrett, barrett_16x2i, get_2P15
 from mod_q.ntt.utility_ntt import q, qinv, s_r0_start, gen_iwpad_16b
 
 per_bytes = 2 # coeffi
@@ -11,13 +11,14 @@ r_wapd = "r10"
 r_w0 = "r8"
 r_w12 = "r9"
 butterfly_tmp = ["r6", "r7"]
+r_2P15 = "r5"
 r_r0_end = "lr"
 coeffi = ["r" + str(x) for x in range(1,5)]
-
 # w0 = "r1"
 # w1 = "r2"
 # w2 = "r3"
 
+s_r0_end = "s3"
 s_w0 = "s4"
 s_w12 = "s5"
 
@@ -55,7 +56,7 @@ def get_w():
     printIn("ldr.w %s, [%s], #8" % (r_w0, r_wapd))
 
 # degree: Lowest poly degree, end: done last pair
-def i_2_layer_two_coeffi(degree, end):
+def i_2_layer_two_coeffi(degree, end, reduce_list_bot = [], reduce_list_top = []):
     for i in range(len(coeffi)):
             if i == 0:
                 printIn("ldr.w %s, [r0]" % (coeffi[i]))
@@ -64,8 +65,18 @@ def i_2_layer_two_coeffi(degree, end):
 
     i_butterfly(coeffi[0], coeffi[1], r_w12, butterfly_tmp, "b")
     i_butterfly(coeffi[2], coeffi[3], r_w12, butterfly_tmp, "t")
+    
+    if len(reduce_list_bot) or len(reduce_list_top):
+        print("@ reduce layer")
+        get_2P15(r_2P15)
+    for r in reduce_list_bot:
+        barrett_16x2i(r, q, qinv, r_2P15, butterfly_tmp[0], butterfly_tmp[1])
+
     i_butterfly(coeffi[0], coeffi[2], r_w0, butterfly_tmp, "b")
     i_butterfly(coeffi[1], coeffi[3], r_w0, butterfly_tmp, "b")
+
+    for r in reduce_list_top:
+        barrett_16x2i(r, q, qinv, r_2P15, butterfly_tmp[0], butterfly_tmp[1])
 
     for i in range(1, len(coeffi)):
         printIn("str.w %s, [r0, #%d]" % (coeffi[i], degree*per_bytes*i))
@@ -84,24 +95,29 @@ def i_2_layer(layer, degree, loop_flag = "lr"):
     print(label + str(":"))
     get_w()
     for i in range(degree//2):
-        i_2_layer_two_coeffi(degree, i == degree//2 -1)
+        if layer == 4:
+            i_2_layer_two_coeffi(degree, i == degree//2 -1, [coeffi[0],coeffi[2]])
+        else:    
+            i_2_layer_two_coeffi(degree, i == degree//2 -1)
     printIn("cmp.w r0, %s" % (loop_flag))
     printIn("bne.w %s" % (label))
 
+# reduction at layer 1 end
 def i_layer_012(layer, degree, loop_flag = "lr"):
     r_w0 = "r1"
     r_w12 = "r2"
 
-    printIn("vmov r0, %s" % (s_r0_start))
+    printIn("vmov.w r0, %s" % (s_r0_start))
     printIn("ldr.w %s, [%s, #4]" % ("r2", r_wapd))
     printIn("ldr.w %s, [%s], #8" % ("r1", r_wapd))
     printIn("vmov %s, %s, %s, %s" % (s_w0, s_w12, r_w0, r_w12))
-    printIn("add.w lr, r0, #%d @ %d" % (degree * per_bytes, degree))
+    printIn("add.w %s, r0, #%d @ %d" % (r_r0_end, degree * per_bytes, degree))
+    printIn("vmov.w %s, %s" % (s_r0_end, r_r0_end))
     
     label = "intt2_layer_%d_%d_%d" % (0, layer-1, layer)
     # loop: 7 butterfly per round
     print(label + str(":"))
-    printIn("vmov %s, %s, %s, %s" % (r_w0, r_w12, s_w0, s_w12))
+    printIn("vmov.w %s, %s, %s, %s" % (r_w0, r_w12, s_w0, s_w12))
 
     coeffi_2 = ["r" + str(x) for x in range(7,11)]
     tmp_2 = ["r" + str(x) for x in range(5,7)]
@@ -130,6 +146,12 @@ def i_layer_012(layer, degree, loop_flag = "lr"):
     i_butterfly_without_mul(tmp_1[1], coeffi_1[2], coeffi_1[0])
     i_butterfly_without_mul(coeffi_1[1], coeffi_1[3], tmp_1[1])
 
+    print("@reduction:")
+    get_2P15("lr")
+    for r in [coeffi_1[0], coeffi_1[2], coeffi_2[0]]:
+        barrett_16x2i(r, q, qinv, "lr", tmp_1[0], coeffi_1[1])
+
+
     printIn("@ layer 0")
     i_butterfly_without_mul(coeffi_1[3], coeffi_2[3], coeffi_1[4])
     i_butterfly_without_mul(coeffi_1[2], coeffi_2[2], coeffi_1[3])
@@ -142,6 +164,7 @@ def i_layer_012(layer, degree, loop_flag = "lr"):
         printIn("str.w %s, [r0, #%d]" % (coeffi[i+1], degree*per_bytes*i))
     printIn("str.w %s, [r0], #%d" % (coeffi[1], per_bytes*coeffi_num))
 
+    printIn("vmov.w %s, %s" % (r_r0_end, s_r0_end))
     printIn("cmp.w r0, %s" % (loop_flag))
     printIn("bne.w %s" % (label))
 
