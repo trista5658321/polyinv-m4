@@ -22,18 +22,15 @@ def ibutterfly(p, poly_len, f, c, shift): # f +- cg
         f[i+shift] = reduce_center(p, _f + _g)
         f[i+poly_len+shift] = reduce_center(p, (_f - _g) * c)
 
-def intt(n, layer, p, w, c, f, g = []):
+def intt(n, layer, p, w, c, f):
     for i in range(len(f)):
-        if len(g) == 0:
-            pass
-            # f[i] = (f[i]*inverse_modq(2**layer, p)) % p
-        else:
-            f[i] = (f[i]*g[i]*inverse_modq(n, p)) % p
+        f[i] = (f[i]*inverse_modq(2**layer, p)) % p
+        # pass
     for i in range(layer-1, -1, -1):
         poly_len = n // (2 ** (i+1))
         times = pow(2, i)
-        print("===== -> %d %d =====" % (poly_len, times))
-        print(f)
+        # print("===== -> %d %d =====" % (poly_len, times))
+        # print(f)
         for j in range(times):
             _c = inverse_modq(c[i][j], p)
             # print("_c = %d" % (_c))
