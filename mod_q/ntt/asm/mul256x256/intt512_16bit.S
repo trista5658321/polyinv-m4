@@ -99,7 +99,7 @@ intt512_16bit:
 	vmov.w s0, r0
 	add.w lr, r0, #1024
 @ degree = 4
-	vmov r0, s0
+	vmov.w r0, s0
 intt2_layer_5_6:
 	ldr.w r9, [r10, #4]
 	ldr.w r8, [r10], #8
@@ -110,36 +110,36 @@ intt2_layer_5_6:
 	ssub16.w r6, r1, r2
 	sadd16.w r1, r1, r2
 	smulbb r2, r9, r6
+	smulbt r6, r9, r6
 	smmulr r7, r2, r12
 	mls r2, r7, r11, r2
-	smulbt r6, r9, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r2, r2, r6, lsl #16
 	ssub16.w r6, r3, r4
 	sadd16.w r3, r3, r4
 	smultb r4, r9, r6
+	smultt r6, r9, r6
 	smmulr r7, r4, r12
 	mls r4, r7, r11, r4
-	smultt r6, r9, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r4, r4, r6, lsl #16
 	ssub16.w r6, r1, r3
 	sadd16.w r1, r1, r3
 	smulbb r3, r8, r6
+	smulbt r6, r8, r6
 	smmulr r7, r3, r12
 	mls r3, r7, r11, r3
-	smulbt r6, r8, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r3, r3, r6, lsl #16
 	ssub16.w r6, r2, r4
 	sadd16.w r2, r2, r4
 	smulbb r4, r8, r6
+	smulbt r6, r8, r6
 	smmulr r7, r4, r12
 	mls r4, r7, r11, r4
-	smulbt r6, r8, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r4, r4, r6, lsl #16
@@ -154,36 +154,36 @@ intt2_layer_5_6:
 	ssub16.w r6, r1, r2
 	sadd16.w r1, r1, r2
 	smulbb r2, r9, r6
+	smulbt r6, r9, r6
 	smmulr r7, r2, r12
 	mls r2, r7, r11, r2
-	smulbt r6, r9, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r2, r2, r6, lsl #16
 	ssub16.w r6, r3, r4
 	sadd16.w r3, r3, r4
 	smultb r4, r9, r6
+	smultt r6, r9, r6
 	smmulr r7, r4, r12
 	mls r4, r7, r11, r4
-	smultt r6, r9, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r4, r4, r6, lsl #16
 	ssub16.w r6, r1, r3
 	sadd16.w r1, r1, r3
 	smulbb r3, r8, r6
+	smulbt r6, r8, r6
 	smmulr r7, r3, r12
 	mls r3, r7, r11, r3
-	smulbt r6, r8, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r3, r3, r6, lsl #16
 	ssub16.w r6, r2, r4
 	sadd16.w r2, r2, r4
 	smulbb r4, r8, r6
+	smulbt r6, r8, r6
 	smmulr r7, r4, r12
 	mls r4, r7, r11, r4
-	smulbt r6, r8, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r4, r4, r6, lsl #16
@@ -194,7 +194,7 @@ intt2_layer_5_6:
 	cmp.w r0, lr
 	bne.w intt2_layer_5_6
 @ degree = 16
-	vmov r0, s0
+	vmov.w r0, s0
 intt2_layer_3_4:
 	ldr.w r9, [r10, #4]
 	ldr.w r8, [r10], #8
@@ -205,18 +205,18 @@ intt2_layer_3_4:
 	ssub16.w r6, r1, r2
 	sadd16.w r1, r1, r2
 	smulbb r2, r9, r6
+	smulbt r6, r9, r6
 	smmulr r7, r2, r12
 	mls r2, r7, r11, r2
-	smulbt r6, r9, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r2, r2, r6, lsl #16
 	ssub16.w r6, r3, r4
 	sadd16.w r3, r3, r4
 	smultb r4, r9, r6
+	smultt r6, r9, r6
 	smmulr r7, r4, r12
 	mls r4, r7, r11, r4
-	smultt r6, r9, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r4, r4, r6, lsl #16
@@ -237,18 +237,18 @@ intt2_layer_3_4:
 	ssub16.w r6, r1, r3
 	sadd16.w r1, r1, r3
 	smulbb r3, r8, r6
+	smulbt r6, r8, r6
 	smmulr r7, r3, r12
 	mls r3, r7, r11, r3
-	smulbt r6, r8, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r3, r3, r6, lsl #16
 	ssub16.w r6, r2, r4
 	sadd16.w r2, r2, r4
 	smulbb r4, r8, r6
+	smulbt r6, r8, r6
 	smmulr r7, r4, r12
 	mls r4, r7, r11, r4
-	smulbt r6, r8, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r4, r4, r6, lsl #16
@@ -263,18 +263,18 @@ intt2_layer_3_4:
 	ssub16.w r6, r1, r2
 	sadd16.w r1, r1, r2
 	smulbb r2, r9, r6
+	smulbt r6, r9, r6
 	smmulr r7, r2, r12
 	mls r2, r7, r11, r2
-	smulbt r6, r9, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r2, r2, r6, lsl #16
 	ssub16.w r6, r3, r4
 	sadd16.w r3, r3, r4
 	smultb r4, r9, r6
+	smultt r6, r9, r6
 	smmulr r7, r4, r12
 	mls r4, r7, r11, r4
-	smultt r6, r9, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r4, r4, r6, lsl #16
@@ -295,18 +295,18 @@ intt2_layer_3_4:
 	ssub16.w r6, r1, r3
 	sadd16.w r1, r1, r3
 	smulbb r3, r8, r6
+	smulbt r6, r8, r6
 	smmulr r7, r3, r12
 	mls r3, r7, r11, r3
-	smulbt r6, r8, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r3, r3, r6, lsl #16
 	ssub16.w r6, r2, r4
 	sadd16.w r2, r2, r4
 	smulbb r4, r8, r6
+	smulbt r6, r8, r6
 	smmulr r7, r4, r12
 	mls r4, r7, r11, r4
-	smulbt r6, r8, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r4, r4, r6, lsl #16
@@ -321,18 +321,18 @@ intt2_layer_3_4:
 	ssub16.w r6, r1, r2
 	sadd16.w r1, r1, r2
 	smulbb r2, r9, r6
+	smulbt r6, r9, r6
 	smmulr r7, r2, r12
 	mls r2, r7, r11, r2
-	smulbt r6, r9, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r2, r2, r6, lsl #16
 	ssub16.w r6, r3, r4
 	sadd16.w r3, r3, r4
 	smultb r4, r9, r6
+	smultt r6, r9, r6
 	smmulr r7, r4, r12
 	mls r4, r7, r11, r4
-	smultt r6, r9, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r4, r4, r6, lsl #16
@@ -353,18 +353,18 @@ intt2_layer_3_4:
 	ssub16.w r6, r1, r3
 	sadd16.w r1, r1, r3
 	smulbb r3, r8, r6
+	smulbt r6, r8, r6
 	smmulr r7, r3, r12
 	mls r3, r7, r11, r3
-	smulbt r6, r8, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r3, r3, r6, lsl #16
 	ssub16.w r6, r2, r4
 	sadd16.w r2, r2, r4
 	smulbb r4, r8, r6
+	smulbt r6, r8, r6
 	smmulr r7, r4, r12
 	mls r4, r7, r11, r4
-	smulbt r6, r8, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r4, r4, r6, lsl #16
@@ -379,18 +379,18 @@ intt2_layer_3_4:
 	ssub16.w r6, r1, r2
 	sadd16.w r1, r1, r2
 	smulbb r2, r9, r6
+	smulbt r6, r9, r6
 	smmulr r7, r2, r12
 	mls r2, r7, r11, r2
-	smulbt r6, r9, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r2, r2, r6, lsl #16
 	ssub16.w r6, r3, r4
 	sadd16.w r3, r3, r4
 	smultb r4, r9, r6
+	smultt r6, r9, r6
 	smmulr r7, r4, r12
 	mls r4, r7, r11, r4
-	smultt r6, r9, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r4, r4, r6, lsl #16
@@ -411,18 +411,18 @@ intt2_layer_3_4:
 	ssub16.w r6, r1, r3
 	sadd16.w r1, r1, r3
 	smulbb r3, r8, r6
+	smulbt r6, r8, r6
 	smmulr r7, r3, r12
 	mls r3, r7, r11, r3
-	smulbt r6, r8, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r3, r3, r6, lsl #16
 	ssub16.w r6, r2, r4
 	sadd16.w r2, r2, r4
 	smulbb r4, r8, r6
+	smulbt r6, r8, r6
 	smmulr r7, r4, r12
 	mls r4, r7, r11, r4
-	smulbt r6, r8, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r4, r4, r6, lsl #16
@@ -437,18 +437,18 @@ intt2_layer_3_4:
 	ssub16.w r6, r1, r2
 	sadd16.w r1, r1, r2
 	smulbb r2, r9, r6
+	smulbt r6, r9, r6
 	smmulr r7, r2, r12
 	mls r2, r7, r11, r2
-	smulbt r6, r9, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r2, r2, r6, lsl #16
 	ssub16.w r6, r3, r4
 	sadd16.w r3, r3, r4
 	smultb r4, r9, r6
+	smultt r6, r9, r6
 	smmulr r7, r4, r12
 	mls r4, r7, r11, r4
-	smultt r6, r9, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r4, r4, r6, lsl #16
@@ -469,18 +469,18 @@ intt2_layer_3_4:
 	ssub16.w r6, r1, r3
 	sadd16.w r1, r1, r3
 	smulbb r3, r8, r6
+	smulbt r6, r8, r6
 	smmulr r7, r3, r12
 	mls r3, r7, r11, r3
-	smulbt r6, r8, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r3, r3, r6, lsl #16
 	ssub16.w r6, r2, r4
 	sadd16.w r2, r2, r4
 	smulbb r4, r8, r6
+	smulbt r6, r8, r6
 	smmulr r7, r4, r12
 	mls r4, r7, r11, r4
-	smulbt r6, r8, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r4, r4, r6, lsl #16
@@ -495,18 +495,18 @@ intt2_layer_3_4:
 	ssub16.w r6, r1, r2
 	sadd16.w r1, r1, r2
 	smulbb r2, r9, r6
+	smulbt r6, r9, r6
 	smmulr r7, r2, r12
 	mls r2, r7, r11, r2
-	smulbt r6, r9, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r2, r2, r6, lsl #16
 	ssub16.w r6, r3, r4
 	sadd16.w r3, r3, r4
 	smultb r4, r9, r6
+	smultt r6, r9, r6
 	smmulr r7, r4, r12
 	mls r4, r7, r11, r4
-	smultt r6, r9, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r4, r4, r6, lsl #16
@@ -527,18 +527,18 @@ intt2_layer_3_4:
 	ssub16.w r6, r1, r3
 	sadd16.w r1, r1, r3
 	smulbb r3, r8, r6
+	smulbt r6, r8, r6
 	smmulr r7, r3, r12
 	mls r3, r7, r11, r3
-	smulbt r6, r8, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r3, r3, r6, lsl #16
 	ssub16.w r6, r2, r4
 	sadd16.w r2, r2, r4
 	smulbb r4, r8, r6
+	smulbt r6, r8, r6
 	smmulr r7, r4, r12
 	mls r4, r7, r11, r4
-	smulbt r6, r8, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r4, r4, r6, lsl #16
@@ -553,18 +553,18 @@ intt2_layer_3_4:
 	ssub16.w r6, r1, r2
 	sadd16.w r1, r1, r2
 	smulbb r2, r9, r6
+	smulbt r6, r9, r6
 	smmulr r7, r2, r12
 	mls r2, r7, r11, r2
-	smulbt r6, r9, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r2, r2, r6, lsl #16
 	ssub16.w r6, r3, r4
 	sadd16.w r3, r3, r4
 	smultb r4, r9, r6
+	smultt r6, r9, r6
 	smmulr r7, r4, r12
 	mls r4, r7, r11, r4
-	smultt r6, r9, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r4, r4, r6, lsl #16
@@ -585,18 +585,18 @@ intt2_layer_3_4:
 	ssub16.w r6, r1, r3
 	sadd16.w r1, r1, r3
 	smulbb r3, r8, r6
+	smulbt r6, r8, r6
 	smmulr r7, r3, r12
 	mls r3, r7, r11, r3
-	smulbt r6, r8, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r3, r3, r6, lsl #16
 	ssub16.w r6, r2, r4
 	sadd16.w r2, r2, r4
 	smulbb r4, r8, r6
+	smulbt r6, r8, r6
 	smmulr r7, r4, r12
 	mls r4, r7, r11, r4
-	smulbt r6, r8, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r4, r4, r6, lsl #16
@@ -611,18 +611,18 @@ intt2_layer_3_4:
 	ssub16.w r6, r1, r2
 	sadd16.w r1, r1, r2
 	smulbb r2, r9, r6
+	smulbt r6, r9, r6
 	smmulr r7, r2, r12
 	mls r2, r7, r11, r2
-	smulbt r6, r9, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r2, r2, r6, lsl #16
 	ssub16.w r6, r3, r4
 	sadd16.w r3, r3, r4
 	smultb r4, r9, r6
+	smultt r6, r9, r6
 	smmulr r7, r4, r12
 	mls r4, r7, r11, r4
-	smultt r6, r9, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r4, r4, r6, lsl #16
@@ -643,18 +643,18 @@ intt2_layer_3_4:
 	ssub16.w r6, r1, r3
 	sadd16.w r1, r1, r3
 	smulbb r3, r8, r6
+	smulbt r6, r8, r6
 	smmulr r7, r3, r12
 	mls r3, r7, r11, r3
-	smulbt r6, r8, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r3, r3, r6, lsl #16
 	ssub16.w r6, r2, r4
 	sadd16.w r2, r2, r4
 	smulbb r4, r8, r6
+	smulbt r6, r8, r6
 	smmulr r7, r4, r12
 	mls r4, r7, r11, r4
-	smulbt r6, r8, r6
 	smmulr r7, r6, r12
 	mls r6, r7, r11, r6
 	pkhbt r4, r4, r6, lsl #16
@@ -679,36 +679,36 @@ intt2_layer_0_1_2:
 	ssub16.w r5, r7, r8
 	sadd16.w r7, r7, r8
 	smulbb r8, r2, r5
+	smulbt r5, r2, r5
 	smmulr r6, r8, r12
 	mls r8, r6, r11, r8
-	smulbt r5, r2, r5
 	smmulr r6, r5, r12
 	mls r5, r6, r11, r5
 	pkhbt r8, r8, r5, lsl #16
 	ssub16.w r5, r9, r10
 	sadd16.w r9, r9, r10
 	smultb r10, r2, r5
+	smultt r5, r2, r5
 	smmulr r6, r10, r12
 	mls r10, r6, r11, r10
-	smultt r5, r2, r5
 	smmulr r6, r5, r12
 	mls r5, r6, r11, r5
 	pkhbt r10, r10, r5, lsl #16
 	ssub16.w r5, r7, r9
 	sadd16.w r7, r7, r9
 	smulbb r9, r1, r5
+	smulbt r5, r1, r5
 	smmulr r6, r9, r12
 	mls r9, r6, r11, r9
-	smulbt r5, r1, r5
 	smmulr r6, r5, r12
 	mls r5, r6, r11, r5
 	pkhbt r9, r9, r5, lsl #16
 	ssub16.w r5, r8, r10
 	sadd16.w r8, r8, r10
 	smulbb r10, r1, r5
+	smulbt r5, r1, r5
 	smmulr r6, r10, r12
 	mls r10, r6, r11, r10
-	smulbt r5, r1, r5
 	smmulr r6, r5, r12
 	mls r5, r6, r11, r5
 	pkhbt r10, r10, r5, lsl #16

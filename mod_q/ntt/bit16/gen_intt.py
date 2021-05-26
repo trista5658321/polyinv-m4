@@ -24,8 +24,8 @@ s_w12 = "s5"
 
 def b_reduce(x, w, w_pos, t_x, tmp):
     printIn("smul%sb %s, %s, %s" % (w_pos, x, w, t_x))
-    barrett(x, q, qinv, tmp)
     printIn("smul%st %s, %s, %s" % (w_pos, t_x, w, t_x))
+    barrett(x, q, qinv, tmp)
     barrett(t_x, q, qinv, tmp)
     printIn("pkhbt %s, %s, %s, lsl #16" % (x, x, t_x))
 
@@ -40,16 +40,6 @@ def i_butterfly(a, b, w, tmp, w_pos = "b"):
     printIn("ssub16.w %s, %s, %s" % (t_x, a, b))
     printIn("sadd16.w %s, %s, %s" % (a, a, b))
     b_reduce(b, w, w_pos, t_x, _tmp)
-
-def i_butterfly_for_last(a, b, w, t_x):
-    x = b
-    printIn("ssub16.w %s, %s, %s" % (t_x, a, b))
-    printIn("sadd16.w %s, %s, %s" % (a, a, b))
-    printIn("smulbb %s, %s, %s" % (x, w, t_x))
-    printIn("smulbt %s, %s, %s" % (t_x, w, t_x))
-    barrett(x, q, qinv, w)
-    barrett(t_x, q, qinv, w)
-    printIn("pkhbt %s, %s, %s, lsl #16" % (x, x, t_x))
 
 def get_w():
     printIn("ldr.w %s, [%s, #4]" % (r_w12, r_wapd))
@@ -89,7 +79,7 @@ def i_2_layer_two_coeffi(degree, end, reduce_list_bot = [], reduce_list_top = []
 # degree: Lowest poly degree
 def i_2_layer(layer, degree, loop_flag = "lr"):
     print("@ degree = " + str(degree))
-    printIn("vmov r0, %s" % (s_r0_start))
+    printIn("vmov.w r0, %s" % (s_r0_start))
     label = "intt2_layer_%d_%d" % (layer-1, layer)
     # loop: 3 butterfly per round
     print(label + str(":"))
@@ -140,8 +130,7 @@ def i_layer_012(layer, degree, loop_flag = "lr"):
         else:
             printIn("ldr.w %s, [r0, #%d]" % (coeffi_1[i], degree*per_bytes*i))
     
-    # i_butterfly_for_last(coeffi_1[2], coeffi_1[3], r_w0, tmp_1, "b")
-    i_butterfly_for_last(coeffi_1[2], coeffi_1[3], r_w0, tmp_1[0])
+    i_butterfly(coeffi_1[2], coeffi_1[3], r_w0, tmp_1, "b")
     i_butterfly_without_mul(coeffi_1[0], coeffi_1[1], tmp_1[1])
     i_butterfly_without_mul(tmp_1[1], coeffi_1[2], coeffi_1[0])
     i_butterfly_without_mul(coeffi_1[1], coeffi_1[3], tmp_1[1])
