@@ -130,9 +130,420 @@ wpad:
 	.word -211837
 	.word -37203
 	.word 482
-// void intt512_32bit (int *v);
-.global intt512_32bit
-.type intt512_32bit, %function
-intt512_32bit:
+// void ntt512_32bit (int *v);
+.global ntt512_32bit
+.type ntt512_32bit, %function
+ntt512_32bit:
 	push {r4-r11, lr}
+	add.w lr, r0, #2048
+	add.w r9, r0, #256
+	adr.w r10, wpad
+	ldm r10!, {r11-r12}
+	vldm r10!, {s4-s6}
+	vmov s0, s1, r0, lr
+	vmov s2, s3, r10, r9
+@ degree = 64
+ntt2_layer_0_1_2:
+	vmov.w r10, s4
+	ldrsh.w r3, [r1, #128]
+	ldrsh.w r4, [r1, #256]
+	ldrsh.w r5, [r1, #384]
+	ldrsh.w r2, [r1], #2
+	smull r7, r9, r4, r10
+	mul.w lr, r7, r12
+	smlal r7, r9, lr, r11
+	add.w r6, r2, r9
+	sub.w r8, r2, r9
+	smull r7, r9, r5, r10
+	mul.w lr, r7, r12
+	smlal r7, r9, lr, r11
+	add.w r7, r3, r9
+	sub.w r9, r3, r9
+	add.w r2, r2, r4
+	sub.w r4, r2, r4, lsl #1
+	add.w r3, r3, r5
+	sub.w r5, r3, r5, lsl #1
+	smull r10, r5, r5, r10
+	mul.w lr, r10, r12
+	smlal r10, r5, lr, r11
+	add.w r4, r4, r5
+	sub.w r5, r4, r5, lsl #1
+	add.w r2, r2, r3
+	sub.w r3, r2, r3, lsl #1
+	str.w r2, [r0]
+	str.w r3, [r0, #256]
+	str.w r4, [r0, #512]
+	str.w r5, [r0, #768]
+	vmov r2, r3, s5, s6
+	smull r4, r7, r7, r2
+	mul.w r5, r4, r12
+	smlal r4, r7, r5, r11
+	add.w r6, r6, r7
+	sub.w r7, r6, r7, lsl #1
+	smull r4, r9, r9, r3
+	mul.w r5, r4, r12
+	smlal r4, r9, r5, r11
+	add.w r8, r8, r9
+	sub.w r9, r8, r9, lsl #1
+	str.w r6, [r0, #1024]
+	str.w r7, [r0, #1280]
+	str.w r8, [r0, #1536]
+	str.w r9, [r0, #1792]
+	add.w r0, r0, #4
+	vmov.w lr, s3
+	cmp.w r0, lr
+	bne.w ntt2_layer_0_1_2
+	vmov r0, s0
+	vmov r10, s2
+ntt2_layer_3_4:
+	add.w lr, r0, #64 @ 16
+	ldm r10!, {r1-r3}
+ntt2_layer_3_4inner:
+	ldr.w r4, [r0]
+	ldr.w r5, [r0, #64]
+	ldr.w r6, [r0, #128]
+	ldr.w r7, [r0, #192]
+	smull r8, r6, r6, r1
+	mul.w r9, r8, r12
+	smlal r8, r6, r9, r11
+	add.w r4, r4, r6
+	sub.w r6, r4, r6, lsl #1
+	smull r8, r7, r7, r1
+	mul.w r9, r8, r12
+	smlal r8, r7, r9, r11
+	add.w r5, r5, r7
+	sub.w r7, r5, r7, lsl #1
+	smull r8, r5, r5, r2
+	mul.w r9, r8, r12
+	smlal r8, r5, r9, r11
+	add.w r4, r4, r5
+	sub.w r5, r4, r5, lsl #1
+	smull r8, r7, r7, r3
+	mul.w r9, r8, r12
+	smlal r8, r7, r9, r11
+	add.w r6, r6, r7
+	sub.w r7, r6, r7, lsl #1
+	str.w r5, [r0, #64]
+	str.w r6, [r0, #128]
+	str.w r7, [r0, #192]
+	str.w r4, [r0], #4
+	ldr.w r4, [r0]
+	ldr.w r5, [r0, #64]
+	ldr.w r6, [r0, #128]
+	ldr.w r7, [r0, #192]
+	smull r8, r6, r6, r1
+	mul.w r9, r8, r12
+	smlal r8, r6, r9, r11
+	add.w r4, r4, r6
+	sub.w r6, r4, r6, lsl #1
+	smull r8, r7, r7, r1
+	mul.w r9, r8, r12
+	smlal r8, r7, r9, r11
+	add.w r5, r5, r7
+	sub.w r7, r5, r7, lsl #1
+	smull r8, r5, r5, r2
+	mul.w r9, r8, r12
+	smlal r8, r5, r9, r11
+	add.w r4, r4, r5
+	sub.w r5, r4, r5, lsl #1
+	smull r8, r7, r7, r3
+	mul.w r9, r8, r12
+	smlal r8, r7, r9, r11
+	add.w r6, r6, r7
+	sub.w r7, r6, r7, lsl #1
+	str.w r5, [r0, #64]
+	str.w r6, [r0, #128]
+	str.w r7, [r0, #192]
+	str.w r4, [r0], #4
+	ldr.w r4, [r0]
+	ldr.w r5, [r0, #64]
+	ldr.w r6, [r0, #128]
+	ldr.w r7, [r0, #192]
+	smull r8, r6, r6, r1
+	mul.w r9, r8, r12
+	smlal r8, r6, r9, r11
+	add.w r4, r4, r6
+	sub.w r6, r4, r6, lsl #1
+	smull r8, r7, r7, r1
+	mul.w r9, r8, r12
+	smlal r8, r7, r9, r11
+	add.w r5, r5, r7
+	sub.w r7, r5, r7, lsl #1
+	smull r8, r5, r5, r2
+	mul.w r9, r8, r12
+	smlal r8, r5, r9, r11
+	add.w r4, r4, r5
+	sub.w r5, r4, r5, lsl #1
+	smull r8, r7, r7, r3
+	mul.w r9, r8, r12
+	smlal r8, r7, r9, r11
+	add.w r6, r6, r7
+	sub.w r7, r6, r7, lsl #1
+	str.w r5, [r0, #64]
+	str.w r6, [r0, #128]
+	str.w r7, [r0, #192]
+	str.w r4, [r0], #4
+	ldr.w r4, [r0]
+	ldr.w r5, [r0, #64]
+	ldr.w r6, [r0, #128]
+	ldr.w r7, [r0, #192]
+	smull r8, r6, r6, r1
+	mul.w r9, r8, r12
+	smlal r8, r6, r9, r11
+	add.w r4, r4, r6
+	sub.w r6, r4, r6, lsl #1
+	smull r8, r7, r7, r1
+	mul.w r9, r8, r12
+	smlal r8, r7, r9, r11
+	add.w r5, r5, r7
+	sub.w r7, r5, r7, lsl #1
+	smull r8, r5, r5, r2
+	mul.w r9, r8, r12
+	smlal r8, r5, r9, r11
+	add.w r4, r4, r5
+	sub.w r5, r4, r5, lsl #1
+	smull r8, r7, r7, r3
+	mul.w r9, r8, r12
+	smlal r8, r7, r9, r11
+	add.w r6, r6, r7
+	sub.w r7, r6, r7, lsl #1
+	str.w r5, [r0, #64]
+	str.w r6, [r0, #128]
+	str.w r7, [r0, #192]
+	str.w r4, [r0], #4
+	ldr.w r4, [r0]
+	ldr.w r5, [r0, #64]
+	ldr.w r6, [r0, #128]
+	ldr.w r7, [r0, #192]
+	smull r8, r6, r6, r1
+	mul.w r9, r8, r12
+	smlal r8, r6, r9, r11
+	add.w r4, r4, r6
+	sub.w r6, r4, r6, lsl #1
+	smull r8, r7, r7, r1
+	mul.w r9, r8, r12
+	smlal r8, r7, r9, r11
+	add.w r5, r5, r7
+	sub.w r7, r5, r7, lsl #1
+	smull r8, r5, r5, r2
+	mul.w r9, r8, r12
+	smlal r8, r5, r9, r11
+	add.w r4, r4, r5
+	sub.w r5, r4, r5, lsl #1
+	smull r8, r7, r7, r3
+	mul.w r9, r8, r12
+	smlal r8, r7, r9, r11
+	add.w r6, r6, r7
+	sub.w r7, r6, r7, lsl #1
+	str.w r5, [r0, #64]
+	str.w r6, [r0, #128]
+	str.w r7, [r0, #192]
+	str.w r4, [r0], #4
+	ldr.w r4, [r0]
+	ldr.w r5, [r0, #64]
+	ldr.w r6, [r0, #128]
+	ldr.w r7, [r0, #192]
+	smull r8, r6, r6, r1
+	mul.w r9, r8, r12
+	smlal r8, r6, r9, r11
+	add.w r4, r4, r6
+	sub.w r6, r4, r6, lsl #1
+	smull r8, r7, r7, r1
+	mul.w r9, r8, r12
+	smlal r8, r7, r9, r11
+	add.w r5, r5, r7
+	sub.w r7, r5, r7, lsl #1
+	smull r8, r5, r5, r2
+	mul.w r9, r8, r12
+	smlal r8, r5, r9, r11
+	add.w r4, r4, r5
+	sub.w r5, r4, r5, lsl #1
+	smull r8, r7, r7, r3
+	mul.w r9, r8, r12
+	smlal r8, r7, r9, r11
+	add.w r6, r6, r7
+	sub.w r7, r6, r7, lsl #1
+	str.w r5, [r0, #64]
+	str.w r6, [r0, #128]
+	str.w r7, [r0, #192]
+	str.w r4, [r0], #4
+	ldr.w r4, [r0]
+	ldr.w r5, [r0, #64]
+	ldr.w r6, [r0, #128]
+	ldr.w r7, [r0, #192]
+	smull r8, r6, r6, r1
+	mul.w r9, r8, r12
+	smlal r8, r6, r9, r11
+	add.w r4, r4, r6
+	sub.w r6, r4, r6, lsl #1
+	smull r8, r7, r7, r1
+	mul.w r9, r8, r12
+	smlal r8, r7, r9, r11
+	add.w r5, r5, r7
+	sub.w r7, r5, r7, lsl #1
+	smull r8, r5, r5, r2
+	mul.w r9, r8, r12
+	smlal r8, r5, r9, r11
+	add.w r4, r4, r5
+	sub.w r5, r4, r5, lsl #1
+	smull r8, r7, r7, r3
+	mul.w r9, r8, r12
+	smlal r8, r7, r9, r11
+	add.w r6, r6, r7
+	sub.w r7, r6, r7, lsl #1
+	str.w r5, [r0, #64]
+	str.w r6, [r0, #128]
+	str.w r7, [r0, #192]
+	str.w r4, [r0], #4
+	ldr.w r4, [r0]
+	ldr.w r5, [r0, #64]
+	ldr.w r6, [r0, #128]
+	ldr.w r7, [r0, #192]
+	smull r8, r6, r6, r1
+	mul.w r9, r8, r12
+	smlal r8, r6, r9, r11
+	add.w r4, r4, r6
+	sub.w r6, r4, r6, lsl #1
+	smull r8, r7, r7, r1
+	mul.w r9, r8, r12
+	smlal r8, r7, r9, r11
+	add.w r5, r5, r7
+	sub.w r7, r5, r7, lsl #1
+	smull r8, r5, r5, r2
+	mul.w r9, r8, r12
+	smlal r8, r5, r9, r11
+	add.w r4, r4, r5
+	sub.w r5, r4, r5, lsl #1
+	smull r8, r7, r7, r3
+	mul.w r9, r8, r12
+	smlal r8, r7, r9, r11
+	add.w r6, r6, r7
+	sub.w r7, r6, r7, lsl #1
+	str.w r5, [r0, #64]
+	str.w r6, [r0, #128]
+	str.w r7, [r0, #192]
+	str.w r4, [r0], #4
+	cmp.w r0, lr
+	bne.w ntt2_layer_3_4inner
+	add.w r0, r0, #192
+	vmov lr, s1
+	cmp.w r0, lr
+	bne.w ntt2_layer_3_4
+	vmov r0, lr, s0, s1
+ntt2_layer_5_6:
+	ldm r10!, {r1-r3}
+	ldr.w r4, [r0]
+	ldr.w r5, [r0, #16]
+	ldr.w r6, [r0, #32]
+	ldr.w r7, [r0, #48]
+	smull r8, r6, r6, r1
+	mul.w r9, r8, r12
+	smlal r8, r6, r9, r11
+	add.w r4, r4, r6
+	sub.w r6, r4, r6, lsl #1
+	smull r8, r7, r7, r1
+	mul.w r9, r8, r12
+	smlal r8, r7, r9, r11
+	add.w r5, r5, r7
+	sub.w r7, r5, r7, lsl #1
+	smull r8, r5, r5, r2
+	mul.w r9, r8, r12
+	smlal r8, r5, r9, r11
+	add.w r4, r4, r5
+	sub.w r5, r4, r5, lsl #1
+	smull r8, r7, r7, r3
+	mul.w r9, r8, r12
+	smlal r8, r7, r9, r11
+	add.w r6, r6, r7
+	sub.w r7, r6, r7, lsl #1
+	str.w r5, [r0, #16]
+	str.w r6, [r0, #32]
+	str.w r7, [r0, #48]
+	str.w r4, [r0], #4
+	ldr.w r4, [r0]
+	ldr.w r5, [r0, #16]
+	ldr.w r6, [r0, #32]
+	ldr.w r7, [r0, #48]
+	smull r8, r6, r6, r1
+	mul.w r9, r8, r12
+	smlal r8, r6, r9, r11
+	add.w r4, r4, r6
+	sub.w r6, r4, r6, lsl #1
+	smull r8, r7, r7, r1
+	mul.w r9, r8, r12
+	smlal r8, r7, r9, r11
+	add.w r5, r5, r7
+	sub.w r7, r5, r7, lsl #1
+	smull r8, r5, r5, r2
+	mul.w r9, r8, r12
+	smlal r8, r5, r9, r11
+	add.w r4, r4, r5
+	sub.w r5, r4, r5, lsl #1
+	smull r8, r7, r7, r3
+	mul.w r9, r8, r12
+	smlal r8, r7, r9, r11
+	add.w r6, r6, r7
+	sub.w r7, r6, r7, lsl #1
+	str.w r5, [r0, #16]
+	str.w r6, [r0, #32]
+	str.w r7, [r0, #48]
+	str.w r4, [r0], #4
+	ldr.w r4, [r0]
+	ldr.w r5, [r0, #16]
+	ldr.w r6, [r0, #32]
+	ldr.w r7, [r0, #48]
+	smull r8, r6, r6, r1
+	mul.w r9, r8, r12
+	smlal r8, r6, r9, r11
+	add.w r4, r4, r6
+	sub.w r6, r4, r6, lsl #1
+	smull r8, r7, r7, r1
+	mul.w r9, r8, r12
+	smlal r8, r7, r9, r11
+	add.w r5, r5, r7
+	sub.w r7, r5, r7, lsl #1
+	smull r8, r5, r5, r2
+	mul.w r9, r8, r12
+	smlal r8, r5, r9, r11
+	add.w r4, r4, r5
+	sub.w r5, r4, r5, lsl #1
+	smull r8, r7, r7, r3
+	mul.w r9, r8, r12
+	smlal r8, r7, r9, r11
+	add.w r6, r6, r7
+	sub.w r7, r6, r7, lsl #1
+	str.w r5, [r0, #16]
+	str.w r6, [r0, #32]
+	str.w r7, [r0, #48]
+	str.w r4, [r0], #4
+	ldr.w r4, [r0]
+	ldr.w r5, [r0, #16]
+	ldr.w r6, [r0, #32]
+	ldr.w r7, [r0, #48]
+	smull r8, r6, r6, r1
+	mul.w r9, r8, r12
+	smlal r8, r6, r9, r11
+	add.w r4, r4, r6
+	sub.w r6, r4, r6, lsl #1
+	smull r8, r7, r7, r1
+	mul.w r9, r8, r12
+	smlal r8, r7, r9, r11
+	add.w r5, r5, r7
+	sub.w r7, r5, r7, lsl #1
+	smull r8, r5, r5, r2
+	mul.w r9, r8, r12
+	smlal r8, r5, r9, r11
+	add.w r4, r4, r5
+	sub.w r5, r4, r5, lsl #1
+	smull r8, r7, r7, r3
+	mul.w r9, r8, r12
+	smlal r8, r7, r9, r11
+	add.w r6, r6, r7
+	sub.w r7, r6, r7, lsl #1
+	str.w r5, [r0, #16]
+	str.w r6, [r0, #32]
+	str.w r7, [r0, #48]
+	str.w r4, [r0], #52
+	cmp.w r0, lr
+	bne.w ntt2_layer_5_6
 	pop {r4-r11, pc}

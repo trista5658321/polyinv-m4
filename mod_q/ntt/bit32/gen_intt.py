@@ -2,7 +2,7 @@ import sys, pathlib
 d_root = pathlib.Path(__file__).parent.absolute().parent.parent.parent
 sys.path.append(str(d_root))
 
-from mod_q.ntt.utility_ntt import gen_iwpad
+from mod_q.ntt.utility_ntt import gen_iwpad, butterfly_without_mul_32
 
 q = "r11"
 qinv = "r12"
@@ -26,10 +26,6 @@ def get_w(tmp, s_id = w0, e_id = w2):
     printIn("vmov %s, %s" % (tmp, s_wpad))
     printIn("ldm %s!, {%s-%s}" % (tmp, s_id, e_id))
     printIn("vmov %s, %s" % (s_wpad, tmp))
-
-def i_butterfly_without_mul(a, b):
-    printIn("add.w %s, %s, %s" % (a, a, b))
-    printIn("sub.w %s, %s, %s, lsl #1" % (b, a, b))
 
 def i_butterfly(a, b, w, tmp):
     _b = tmp[2]
@@ -143,16 +139,16 @@ def i_layer_012(layer, degree, loop_flag = "lr"):
         else:
             printIn("ldr.w %s, [r0, #%d]" % (coeffi_1[i], degree*per_bytes*i))
     
-    i_butterfly_without_mul(coeffi_1[0], coeffi_1[1])
+    butterfly_without_mul_32(coeffi_1[0], coeffi_1[1])
     i_butterfly(coeffi_1[2], coeffi_1[3], w0, tmp_1)
-    i_butterfly_without_mul(coeffi_1[0], coeffi_1[2])
-    i_butterfly_without_mul(coeffi_1[1], coeffi_1[3])
+    butterfly_without_mul_32(coeffi_1[0], coeffi_1[2])
+    butterfly_without_mul_32(coeffi_1[1], coeffi_1[3])
 
     printIn("@ layer 0")
-    i_butterfly_without_mul(coeffi_1[0], coeffi_2[0])
-    i_butterfly_without_mul(coeffi_1[1], coeffi_2[1])
-    i_butterfly_without_mul(coeffi_1[2], coeffi_2[2])
-    i_butterfly_without_mul(coeffi_1[3], coeffi_2[3])
+    butterfly_without_mul_32(coeffi_1[0], coeffi_2[0])
+    butterfly_without_mul_32(coeffi_1[1], coeffi_2[1])
+    butterfly_without_mul_32(coeffi_1[2], coeffi_2[2])
+    butterfly_without_mul_32(coeffi_1[3], coeffi_2[3])
     
     # store back
     coeffi = coeffi_1 + coeffi_2
