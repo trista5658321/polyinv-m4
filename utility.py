@@ -69,6 +69,10 @@ def barrett(x, q, qR2inv, tmp):
     printIn("smmulr " + tmp + ", " + x + ", " + qR2inv)
     printIn("mls " + x + ", " + tmp + ", " + q + ", " + x)
 
+def montgomery(low, high, tmp, q, qinv):
+    printIn("mul.w %s, %s, %s" % (tmp, low, qinv))
+    printIn("smlal %s, %s, %s, %s" % (low, high, tmp, q))
+
 def barrett_16x2i (x, q, qR2inv, _2P15, high_16, low_16):
     printIn("smlawb.w " + low_16 + ", " + qR2inv + ", " + x + ", " + _2P15)
     printIn("smlawt.w " + high_16 + ", " + qR2inv + ", " + x + ", " + _2P15)

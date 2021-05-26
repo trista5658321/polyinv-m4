@@ -186,8 +186,44 @@ def gen_iwpad_16b(p, n, w):
                 print_w(w0)
                 print_w(combine_w1w2(w1, w2))
 
+def gen_basemul_wpad_16b(p, n, w):
+    arr = get_w(w, n)
+    final = arr[len(arr) - 1]
+    # print(final)
+    print("wpad:")
+    print_w(p)
+    print_w(round(2**32 / p))
+    for c in final:
+        left = c
+        right = (w, n//2)
+        if c != 1:
+            right = (w, c[1]+n//2)
+
+        print_w(cal_w(p, left, False))
+        print_w(cal_w(p, right, False))
+
+def gen_basemul_wpad_32b(p, n, w):
+    arr = get_w(w, n)
+    final = arr[len(arr) - 1]
+    # print(final)
+    print("wpad:")
+    print_w(p)
+    print_w(-inverse_modq(p, 2**32))
+
+    for c in final:
+        left = c
+        right = (w, n//2)
+        if c != 1:
+            right = (w, c[1]+n//2)
+
+        print_w(cal_w(p, left, True))
+        print_w(cal_w(p, right, True))
+
+
 # gen_wpad(518657, 512, 1595)
-# print(inverse_modq(2**7, 518657))
+# print(inverse_modq(2**7, 7681)) #7621
+# print(inverse_modq(2**7, 518657)) #514605
 # print(get_w(62, 512))
 
-# gen_iwpad_16b(7681, 512, 62)
+# gen_basemul_wpad_16b(7681, 512, 62)
+# gen_basemul_wpad_32b(518657, 512, 1595)
