@@ -132,10 +132,10 @@ wpad:
 	.word 242732
 	.word 11188
 	.word -11188
-// void basemul_32bit_4x4 (int *h, int *f, int *g);
-.global basemul_32bit_4x4
-.type basemul_32bit_4x4, %function
-basemul_32bit_4x4:
+// void basemul512_32bit_4x4 (int *h, int *f, int *g);
+.global basemul512_32bit_4x4
+.type basemul512_32bit_4x4, %function
+basemul512_32bit_4x4:
 	push {r4-r11, lr}
 	adr.w lr, wpad
 	ldm lr!, {r11-r12}

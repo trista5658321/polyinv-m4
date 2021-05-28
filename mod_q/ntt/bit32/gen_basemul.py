@@ -120,10 +120,10 @@ def prologue(p, n, w):
 
     gen_basemul_wpad_32b(p, n, w)
 
-    print("// void basemul_32bit_%dx%d (int *h, int *f, int *g);" % (_n, _n))
-    print(".global basemul_32bit_%dx%d" % (_n, _n))
-    print(".type basemul_32bit_%dx%d, %%function" % (_n, _n))
-    print("basemul_32bit_%dx%d:" % (_n, _n))
+    print("// void basemul%d_32bit_%dx%d (int *h, int *f, int *g);" % (n, _n, _n))
+    print(".global basemul%d_32bit_%dx%d" % (n, _n, _n))
+    print(".type basemul%d_32bit_%dx%d, %%function" % (n, _n, _n))
+    print("basemul%d_32bit_%dx%d:" % (n, _n, _n))
     printIn("push {r4-r11, lr}")
     printIn("adr.w %s, wpad" % (r_wapd))
     printIn("ldm %s!, {%s-%s}" % (r_wapd, q, qinv))
