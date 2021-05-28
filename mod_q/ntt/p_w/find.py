@@ -1,3 +1,9 @@
+import sys, pathlib
+d_root = pathlib.Path(__file__).parent.absolute().parent.parent.parent
+sys.path.append(str(d_root))
+
+from mod_q.ntt.ntt_python.qinv import inverse_modq
+
 # top: j in [bot-top], n: w^n = 1 (mod j)
 def find_p_w(bot, top, n):
     for j in range(bot, top):
@@ -12,12 +18,12 @@ def find_p_w(bot, top, n):
 # top: multiplier(j) in [bot - top], x in [n * j + 1], n: w^n = 1 (mod x)
 def find_p_w_v2(bot, top, n):
     for j in range(bot, top):
-        x = n*j+1
-        print("======= j, x = %d, %d ==========" % (j, x))
-        for i in range(x):
+        p = n*j+1
+        print("======= j, p = %d, %d ==========" % (j, p))
+        for i in range(p):
             val = pow(i, n//2)
-            if val % x == -1 or val % x == x-1:
-                print((x, i))
+            if val % p == -1 or val % p == p-1:
+                print((p, i))
                 break
         
 # p = 73
@@ -58,4 +64,4 @@ def find_p_w_v2(bot, top, n):
 # s_q = 3939
 # mul_len = 256
 # bot = pow(s_q, 2) * mul_len
-# find_p_w_v2(1010, 1020, 512)
+# find_p_w_v2(2020, 2030, 512)
