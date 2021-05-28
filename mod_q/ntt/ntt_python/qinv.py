@@ -32,4 +32,16 @@ def inverse_modq(tar : int, mod : int):
         res += mod
     return res
 
-# print(inverse_modq(128, 518657))
+# p = 1038337
+# p = 518657
+p = 7879
+# p = 7681
+
+# mont_qinv = -inverse_modq(p, 2**32)
+# print(mont_qinv)
+# mont_basemul = (2 ** 32) * (2 ** 32) % p
+# print(mont_basemul)
+# mont_layer = inverse_modq(128, p) * (2 ** 32) % p
+# print(mont_layer)
+# mont_layer_mul2_32 = inverse_modq(128, p) * (2**32) * (2 ** 32) % p
+# print(mont_layer_mul2_32)
