@@ -12,6 +12,14 @@ s_r0_start = "s0"
 s_r0_end = "s2"
 s_wpad = "s1"
 
+def reduce_center(p,x):
+    x = x % p
+    if x > p//2:
+        x-=p
+    elif x< -p//2:
+        x+=p
+    return x
+
 def butterfly_without_mul_32(a, b):
     printIn("add.w %s, %s, %s" % (a, a, b))
     printIn("sub.w %s, %s, %s, lsl #1" % (b, a, b))
