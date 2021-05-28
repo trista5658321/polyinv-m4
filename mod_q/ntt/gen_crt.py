@@ -139,21 +139,23 @@ def get_u():
     printIn("pkhbt %s, %s, %s, lsl #16" % (r_u0_b, r_u0_b, r_u0_t))
     printIn("str.w %s, [%s], #%d" % (r_u0_b, r_0, 4))
 
-def loop_2_coeffi():
-    label = "start"
-    print(label + str(":"))
-
-    print("@ phase 1")
+def coeffi_2():
+    # print("@ phase 1")
     printIn("vmov %s, %s, %s, %s" % (r_mont_layer_mul_2_32, r_u1_layer_inv, s_mont_layer_mul_2_32, s_u1_layer_inv))
     printIn("vmov %s, %s, %s, %s" % (r_q0inv_m, r_q0inv, s_q0inv_m, s_q0inv))
     printIn("vmov.w %s, %s" % (r_q0, s_q0))
     get_final_u0_u1_16b()
 
-    print("@ phase 2")
+    # print("@ phase 2")
     printIn("vmov %s, %s, %s, %s" % (r_q0inv_mod_q1, r_q0_modq, s_q0inv_mod_q1, s_q0_modq))
     printIn("vmov %s, %s, %s, %s" % (r_qinv, r_q, s_qinv, s_q))
     get_u()
 
+def loop(pairs_per_round = 4):
+    label = "start"
+    print(label + str(":"))
+    for i in range(pairs_per_round):
+        coeffi_2()
     printIn("vmov.w %s, %s" % (loop_flag, s_loop_flag))
     printIn("cmp.w %s, %s" % (r_0, loop_flag))
     printIn("bne.w %s" % (label))
@@ -187,7 +189,7 @@ def epilogue():
 
 def crt(p, n, q0, q1, layer, jump = 2):
     prologue(p, n, q0, q1, layer-jump)
-    loop_2_coeffi()
+    loop()
     epilogue()
 
 p = int(sys.argv[1])
