@@ -56,7 +56,7 @@ def i_2_layer_two_coeffi(degree, end, reduce_list_bot = [], reduce_list_top = []
     i_butterfly(coeffi[0], coeffi[1], r_w12, butterfly_tmp, "b")
     i_butterfly(coeffi[2], coeffi[3], r_w12, butterfly_tmp, "t")
     
-    if len(reduce_list_bot) or len(reduce_list_top):
+    if len(reduce_list_bot):
         print("@ reduce layer")
         get_2P15(r_2P15)
     for r in reduce_list_bot:
@@ -65,6 +65,9 @@ def i_2_layer_two_coeffi(degree, end, reduce_list_bot = [], reduce_list_top = []
     i_butterfly(coeffi[0], coeffi[2], r_w0, butterfly_tmp, "b")
     i_butterfly(coeffi[1], coeffi[3], r_w0, butterfly_tmp, "b")
 
+    if not len(reduce_list_bot) and len(reduce_list_top):
+        print("@ reduce layer")
+        get_2P15(r_2P15)
     for r in reduce_list_top:
         barrett_16x2i(r, q, qinv, r_2P15, butterfly_tmp[0], butterfly_tmp[1])
 
@@ -85,10 +88,7 @@ def i_2_layer(layer, degree, loop_flag = "lr"):
     print(label + str(":"))
     get_w()
     for i in range(degree//2):
-        if layer == 4:
-            i_2_layer_two_coeffi(degree, i == degree//2 -1, [coeffi[0],coeffi[2]])
-        else:    
-            i_2_layer_two_coeffi(degree, i == degree//2 -1)
+        i_2_layer_two_coeffi(degree, i == degree//2 -1, [], [coeffi[0]])
     printIn("cmp.w r0, %s" % (loop_flag))
     printIn("bne.w %s" % (label))
 
@@ -137,7 +137,7 @@ def i_layer_012(layer, degree, loop_flag = "lr"):
 
     print("@reduction:")
     get_2P15("lr")
-    for r in [coeffi_1[0], coeffi_1[2], coeffi_2[0]]:
+    for r in [coeffi_1[0], coeffi_2[0]]:
         barrett_16x2i(r, q, qinv, "lr", tmp_1[0], coeffi_1[1])
 
 
