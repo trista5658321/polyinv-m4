@@ -166,7 +166,7 @@ void __gf_polymul_256x256_2x2_x2p2(int *V, int *M_16, int *M_32, int *fh, int *g
 }
 
 int jump512divsteps(int minusdelta, int *M, int *f, int *g){
-  int M1[1536], M2[1536], fg[512];
+  int M1[768], M2[768], fg[512];
   int M1_16[1024]={0}, M1_32[2048];
   int M2_16[1024]={0}, M2_32[2048]; // 512 * 4 / 2, 512 * 4
 
