@@ -107,27 +107,10 @@ void __gf_polymul_256x256_2x2_x2p2(int *V, int *M_16, int *M_32, int *fh, int *g
   int tmp_16_1[256];
   int tmp_32_0[512], tmp_32_1[512];
 
-  int16_t x[512] = {0};
-  x[1]=1;
-  int x_ntt_16[256];
-  int x_ntt_32[512];
-  ntt512_16bit(x_ntt_16, x);
-  ntt512_32bit(x_ntt_32, x);
-
-  basemul_16bit_4x4(M_16, M_16, x_ntt_16);  // u x
-  basemul_16bit_4x4(M_16+256, M_16+256, x_ntt_16); // v x
-  basemul_32bit_4x4(M_32, M_32, x_ntt_32); // u x
-  basemul_32bit_4x4(M_32+512, M_32+512, x_ntt_32); // v x
-  int *mont_ptr_u = M_32;
-  int *mont_ptr_v = M_32+512;
-  for (int i = 0; i < 512; i++)
-  {
-      int a = *mont_ptr_u;
-      int b = *mont_ptr_v;
-      *mont_ptr_u++ = inverse_layer( a, 1038337, -103819265, mont_basemul);
-      *mont_ptr_v++ = inverse_layer( b, 1038337, -103819265, mont_basemul);
-  }
-  /* M(ntt): ux vx r s */
+  basemul_x_512_16bit_4x4(M_16); // u x
+  basemul_x_512_16bit_4x4(M_16+256); // v x
+  basemul_x_512_32bit_4x4(M_32); // u x
+  basemul_x_512_32bit_4x4(M_32+512); // v x
 
   ntt512_16bit(fh_16, fh);
   ntt512_32bit(fh_32, fh);
