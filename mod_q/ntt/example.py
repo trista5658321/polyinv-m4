@@ -65,11 +65,11 @@ def ntt_16(f0, g0):
     basemul_c = get_base_w(p,w,n,final_deg)
     # print(len(c))
     ntt(n,layer,p,w,c,_f,f0)
-    # print(f0)
+    # print(_f)
     ntt(n,layer,p,w,c,_g,g0)
-    # print(g0)
+    # print(_g)
     basemul_4x4(p,h0,_f,_g,basemul_c)
-    # print(h0)
+    print(h0)
 
     intt(n, layer, p, w, c, h0)
 
@@ -106,7 +106,7 @@ def ntt_32(f0, g0):
     ntt(n,layer,p,w,c,_f,f0)
     # print(f0)
     ntt(n,layer,p,w,c,_g,g0)
-    # print(g0)
+    # print(_g)
     basemul_4x4(p,h0,_f,_g,basemul_c)
     # print(h0)
 

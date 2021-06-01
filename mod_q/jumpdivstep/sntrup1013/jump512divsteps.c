@@ -3,13 +3,14 @@
 #include <stdio.h>
 
 extern int jump256divsteps(int minusdelta, int *M, int *f, int *g);
-void gf_polymul_256x256_2x2_x2p2 (int *V,int *M,int *fh,int *gh);
-void gf_polymul_256x256_2x2_x_2x2 (int *M, int *M1, int *M2);
+void __gf_polymul_256x256_2x2_x2p2 (int *V, int *M_16, int *M_32, int *fh, int *gh, int *M);
+void __gf_polymul_256x256_2x2_x_2x2 (int * M, int * M1_16, int * M1_32, int * M2_16, int * M2_32);
 int jump512divsteps(int minusdelta, int *M, int *f, int *g);
 
 #define q 7177
 #define qR2inv 598435 // round(2^32/q)
 #define _2P15 (1 << 15)
+#define mont_basemul 119749 // x * 2^32 * 2^32 % q0
 
 #if 1
 // result range: +- 2295 (note: 3 loads for _2P15 and the longer qR2inv)
@@ -24,139 +25,198 @@ static inline int barrett_16x2i(int X) {
 #else 
 #define barrett_16x2i(A) (A)
 #endif
-//static
-int B512_1[257];
-int * BB512_1 = (int *)((void *)B512_1 + 2);
 
-void gf_polymul_256x256(int *h, int *f, int *g){
-    int16_t *ptr = (int16_t *)h;
-    for (int i = 0; i < 512; i++) *ptr++ = 0;
-    
-    for (int i = 0; i < 256; i++)
-    {
-        int16_t *result = (int16_t *)h + i;
-        int16_t *f_i = (int16_t *)f + i;
-        for (int j = 0; j < 256; j++)
-        {
-            int16_t *g_i = (int16_t *)g + j;
-            int new_val = (*f_i * *g_i) + *(result);
-            *(result++) = (int16_t)(new_val % q);
-        }
-    }
-}
-
-void gf_polymul_256x256_2x2_x2p2 (int *V,int *M,int *fh,int *gh){
-  int i, T, *X, *Y, *W;
-
-  B512_1[0] = V[0] = 0;
-  gf_polymul_256x256(BB512_1, M+256, fh); 	// x * u * fh
-  gf_polymul_256x256((int*)((void*)V+2), M+384, gh);	// x * v * gh
-  for (X=V, Y=B512_1, W=M, i=128; i>0; i--) {// x(u fh+v gh)+f1
-    //V[i] = barrett_16x2i(__SADD16(__SADD16(M[i],B256_1[i]),B256_2[i]));
-    T = barrett_16x2i(__SADD16(__SADD16(*(W++),*(Y++)),*X)); *(X++) = T;
-  }  
-  for (i=128; i>0; i--) {  
-    //V[i+64] = barrett_16x2i(__SADD16(B64_1[i+256],B64_2[i+256]));
-    T = barrett_16x2i(__SADD16(*(Y++),*X)); *(X++) = T;
-  } 
-  gf_polymul_256x256(V+256, M+512, fh);	// r * fh
-  gf_polymul_256x256(BB512_1, M+640, gh);	// s * gh
-  for (Y=BB512_1, i=128; i>0; i--) {	// x(r fh+s gh) + g1
-    //V[i+128] = barrett_16x2i(__SADD16(__SADD16((BB256_1[i],V[i+128])),M[i+64]);
-    T = barrett_16x2i(__SADD16(__SADD16(*(W++),*(Y++)),*X)); *(X++) = T;
-  } 
-  for (i=128; i>0; i--) {  
-    //V[i+192] = barrett_16x2i(__SADD16(BB256_1[i+64],V[i+192]));
-    T = barrett_16x2i(__SADD16(*X, *(Y++))); *(X++) = T;
-  } 
-}
-
-void gf_polymul_256x256_2x2_x_2x2 (int *M, int *M1, int *M2) {
+void __gf_polymul_256x256_2x2_x_2x2(int * M, int * M1_16, int * M1_32, int * M2_16, int * M2_32){
+  int tmp_16_1[256];
+  int tmp_32_0[512], tmp_32_1[512];
   int i, T, *X, *Y;
 
-  B512_1[0] = 0;
-  gf_polymul_256x256(BB512_1, M2, M1); 	// x * u2 * u1
-  gf_polymul_256x256(M, M2+128, M1+256); 	// v2 * r1
-  for (i=256, X=M, Y=B512_1; i>0; i--) {	// u = x u2 u1 + v2 r1
-    //M[i] =  barrett_16x2i(__SADD16(M[i],B256_1[i]));
-    T = barrett_16x2i(__SADD16(*X,*(Y++))); *(X++) = T;
+  /* u */
+  basemul_16bit_4x4(M, M2_16, M1_16); // uux
+  basemul_16bit_4x4(tmp_16_1, M2_16+256, M1_16+512); // vr
+  basemul_32bit_4x4(tmp_32_0, M2_32, M1_32); // uux
+  basemul_32bit_4x4(tmp_32_1, M2_32+512, M1_32+1024); // vr
+  for (X=M, Y=tmp_16_1, i=256; i>0; i--) {  
+    T = __SADD16(*(Y++),*X);
+    *(X++) = T;
   }
-  gf_polymul_256x256(BB512_1, M2, M1+128); 	// x * u2 * v1
-  gf_polymul_256x256(M+256, M2+128, M1+384); 	// v2 * s1
-  for (i=256, Y=B512_1; i > 0; i--) {	// v = x u2 v1 + v2 s1
-    //M[128+i] =  barrett_16x2i(__SADD16(M[128+i],B256_1[i]));
-    T = barrett_16x2i(__SADD16(*X,*(Y++))); *(X++) = T;
+  intt512_16bit(M);
+  for (X=tmp_32_0, Y=tmp_32_1, i=512; i>0; i--) {  
+    T = *(Y++) + *X;
+    *(X++) = T;
   }
-  gf_polymul_256x256(BB512_1, M2+256, M1); 	// x * r2 * u1
-  gf_polymul_256x256(M+512, M2+384, M1+256); 	// s2 * r1
-  for (i=256, Y = B512_1; i > 0; i--) {	// s = x r2 u1 + s2 r1
-    //M[256+i] =  barrett_16x2i(__SADD16(M[256+i],B256_1[i]));
-    T = barrett_16x2i(__SADD16(*X,*(Y++))); *(X++) = T;
+  intt512_32bit(tmp_32_0);
+  crt512(M, tmp_32_0);
+
+  /* v */
+  basemul_16bit_4x4(M+256, M2_16, M1_16+256); // uvx
+  basemul_16bit_4x4(tmp_16_1, M2_16+256, M1_16+768); // vs
+  basemul_32bit_4x4(tmp_32_0, M2_32, M1_32+512); // uvx
+  basemul_32bit_4x4(tmp_32_1, M2_32+512, M1_32+1536); // vs
+  for (X=M+256, Y=tmp_16_1, i=256; i>0; i--) {  
+    T = __SADD16(*(Y++),*X);
+    *(X++) = T;
   }
-  gf_polymul_256x256(BB512_1, M2+256, M1+128); 	// x * r2 * v1
-  gf_polymul_256x256(M+768, M2+384, M1+384); 	// s2 * s1
-  for (i=256, Y = B512_1; i > 0; i--) {	// s = x r2 v1 + s2 s1
-    //M[384+i] =  barrett_16x2i(__SADD16(M[384+i],B256_1[i]));
-    T = barrett_16x2i(__SADD16(*X,*(Y++))); *(X++) = T;
+  intt512_16bit(M+256);
+  for (X=tmp_32_0, Y=tmp_32_1, i=512; i>0; i--) {  
+    T = *(Y++) + *X;
+    *(X++) = T;
+  }
+  intt512_32bit(tmp_32_0);
+  crt512(M+256, tmp_32_0);
+  
+  /* r */
+  basemul_16bit_4x4(M+512, M2_16+512, M1_16); // r2 u1 x
+  basemul_16bit_4x4(tmp_16_1, M2_16+768, M1_16+512); // s2 r1
+  basemul_32bit_4x4(tmp_32_0, M2_32+1024, M1_32); // r2 u1 x
+  basemul_32bit_4x4(tmp_32_1, M2_32+1536, M1_32+1024); // s2 r1
+  for (X=M+512, Y=tmp_16_1, i=256; i>0; i--) {  
+    T = __SADD16(*(Y++),*X);
+    *(X++) = T;
+  }
+  intt512_16bit(M+512);
+  for (X=tmp_32_0, Y=tmp_32_1, i=512; i>0; i--) {  
+    T = *(Y++) + *X;
+    *(X++) = T;
+  }
+  intt512_32bit(tmp_32_0);
+  crt512(M+512, tmp_32_0);
+
+  
+  /* s */
+  basemul_16bit_4x4(M+768, M2_16+512, M1_16+256); // rvx
+  basemul_16bit_4x4(tmp_16_1, M2_16+768, M1_16+768); // ss
+  basemul_32bit_4x4(tmp_32_0, M2_32+1024, M1_32+512); // rvx
+  basemul_32bit_4x4(tmp_32_1, M2_32+1536, M1_32+1536); // ss
+  for (X=M+768, Y=tmp_16_1, i=256; i>0; i--) {  
+    T = __SADD16(*(Y++),*X);
+    *(X++) = T;
+  }
+  intt512_16bit(M+768);
+  for (X=tmp_32_0, Y=tmp_32_1, i=512; i>0; i--) {  
+    T = *(Y++) + *X;
+    *(X++) = T;
+  }
+  intt512_32bit(tmp_32_0);
+  crt512(M+768, tmp_32_0);
+}
+
+void __gf_polymul_256x256_2x2_x2p2(int *V, int *M_16, int *M_32, int *fh, int *gh, int *M){
+  int fh_16[256], gh_16[256];
+  int fh_32[512], gh_32[512];
+  int tmp_16_1[256];
+  int tmp_32_0[512], tmp_32_1[512];
+
+  int16_t x[512] = {0};
+  x[1]=1;
+  int x_ntt_16[256];
+  int x_ntt_32[512];
+  ntt512_16bit(x_ntt_16, x);
+  ntt512_32bit(x_ntt_32, x);
+
+  basemul_16bit_4x4(M_16, M_16, x_ntt_16);  // u x
+  basemul_16bit_4x4(M_16+256, M_16+256, x_ntt_16); // v x
+  basemul_32bit_4x4(M_32, M_32, x_ntt_32); // u x
+  basemul_32bit_4x4(M_32+512, M_32+512, x_ntt_32); // v x
+  int *mont_ptr_u = M_32;
+  int *mont_ptr_v = M_32+512;
+  for (int i = 0; i < 512; i++)
+  {
+      int a = *mont_ptr_u;
+      int b = *mont_ptr_v;
+      *mont_ptr_u++ = inverse_layer( a, 1038337, -103819265, mont_basemul);
+      *mont_ptr_v++ = inverse_layer( b, 1038337, -103819265, mont_basemul);
+  }
+  /* M(ntt): ux vx r s */
+
+  ntt512_16bit(fh_16, fh);
+  ntt512_32bit(fh_32, fh);
+  ntt512_16bit(gh_16, gh);
+  ntt512_32bit(gh_32, gh);
+
+  basemul_16bit_4x4(V, M_16, fh_16); // ux * fh
+  basemul_16bit_4x4(tmp_16_1, M_16+256, gh_16); // vx * gh
+  basemul_32bit_4x4(tmp_32_0, M_32, fh_32); // ux * fh
+  basemul_32bit_4x4(tmp_32_1, M_32+512, gh_32); // vx * gh
+
+  int i, T, *X, *Y, *W;
+  for (X=V, Y=tmp_16_1, i=256; i>0; i--) {  
+    T = __SADD16(*(Y++),*X);
+    *(X++) = T;
+  } 
+  intt512_16bit(V);
+
+  for (X=tmp_32_0, Y=tmp_32_1, i=512; i>0; i--) {  
+    T = *(Y++) + *X;
+    *(X++) = T;
+  }
+  intt512_32bit(tmp_32_0);
+
+  crt512(V, tmp_32_0);
+
+  basemul_16bit_4x4(V+256, M_16+512, fh_16); // r * fh
+  basemul_16bit_4x4(tmp_16_1, M_16+768, gh_16); // s * gh
+  basemul_32bit_4x4(tmp_32_0, M_32+1024, fh_32); // r * fh
+  basemul_32bit_4x4(tmp_32_1, M_32+1536, gh_32); // s * gh
+
+  for (X=V+256, Y=tmp_16_1, i=256; i>0; i--) {  
+    T = __SADD16(*(Y++),*X);
+    *(X++) = T;
+  } 
+  intt512_16bit(V+256);
+
+  for (X=tmp_32_0, Y=tmp_32_1, i=512; i>0; i--) {  
+    T = *(Y++) + *X;
+    *(X++) = T;
+  }
+  intt512_32bit(tmp_32_0);
+
+  crt512(V+256, tmp_32_0);
+
+
+  for (X=V, Y=M, i=128; i>0; i--) {  // + f'
+    T = barrett_16x2i(__SADD16(*(Y++),*X)); *(X++) = T;
+  } 
+  for (X=V+256, Y=M+128, i=128; i>0; i--) {  // + g'
+    T = barrett_16x2i(__SADD16(*(Y++),*X)); *(X++) = T;
   }
 }
 
 int jump512divsteps(int minusdelta, int *M, int *f, int *g){
-int M1[1536], M2[1536], fg[512];
+  int M1[1536], M2[1536], fg[512];
+  int M1_16[1024]={0}, M1_32[2048];
+  int M2_16[1024]={0}, M2_32[2048]; // 512 * 4 / 2, 512 * 4
+
   minusdelta = jump256divsteps(minusdelta, M1, f, g);
-  /*
-  printf("u1 = GF4591x(");
-  printn((short *)(M1+128),128);
-  printf(")\n");
-  printf("v1 = GF4591x(");
-  printn((short *)(M1+192),128);
-  printf(")\n");
-  printf("r1 = GF4591x(");
-  printn((short *)(M1+256),128);
-  printf(")\n");
-  printf("s1 = GF4591x(");
-  printn((short *)(M1+320),128);
-  printf(")\n");
 
-  printf("f1 = GF4591x(");
-  printn((short *)(M1),128);
-  printf(")\n");
-  printf("g1 = GF4591x(");
-  printn((short *)(M1+64),128);
-  printf(")\n");
-  */
-  gf_polymul_256x256_2x2_x2p2 (fg, M1, f+128, g+128);
-  /*
-  printf("f2 = GF4591x(");
-  printn((short *)(fg),256);
-  printf(")\n");
-  printf("g2 = GF4591x(");
-  printn((short *)(fg+128),256);
-  printf(")\n");
-  */
+  // step: 512/2, 256/2
+  ntt512_16bit(M1_16, M1+256); // u
+  ntt512_16bit(M1_16+256, M1+384); // v1
+  ntt512_16bit(M1_16+512, M1+512); // r
+  ntt512_16bit(M1_16+768, M1+640); // s
+  
+  // step: 512, 256/2
+  ntt512_32bit(M1_32, M1+256); // u
+  ntt512_32bit(M1_32+512, M1+384); // v
+  ntt512_32bit(M1_32+1024, M1+512); // r
+  ntt512_32bit(M1_32+1536, M1+640); // s
+
+  __gf_polymul_256x256_2x2_x2p2(fg, M1_16, M1_32, f+128, g+128, M1);
+
   minusdelta = jump256divsteps(minusdelta, M2, fg, fg+256);
-  /*
-  printf("u2 = GF4591x(");
-  printn((short *)(M2+128),128);
-  printf(")\n");
-  printf("v2 = GF4591x(");
-  printn((short *)(M2+192),128);
-  printf(")\n");
-  printf("r2 = GF4591x(");
-  printn((short *)(M2+256),128);
-  printf(")\n");
-  printf("s2 = GF4591x(");
-  printn((short *)(M2+320),128);
-  printf(")\n");
 
-  printf("f3 = GF4591x(");
-  printn((short *)(M2),128);
-  printf(")\n");
-  printf("g3 = GF4591x(");
-  printn((short *)(M2+64),128);
-  printf(")\n");
-  */
-  gf_polymul_256x256_2x2_x2p2 (M, M2, fg+128, fg+384);
-  gf_polymul_256x256_2x2_x_2x2(M+512, M1+256, M2+256);
+  ntt512_16bit(M2_16, M2+256); // u2
+  ntt512_16bit(M2_16+256, M2+384); // v2
+  ntt512_16bit(M2_16+512, M2+512);
+  ntt512_16bit(M2_16+768, M2+640);
+  
+  ntt512_32bit(M2_32, M2+256); // u2
+  ntt512_32bit(M2_32+512, M2+384); // v2
+  ntt512_32bit(M2_32+1024, M2+512);
+  ntt512_32bit(M2_32+1536, M2+640);
+
+  __gf_polymul_256x256_2x2_x_2x2(M+512, M1_16, M1_32, M2_16, M2_32);
+  __gf_polymul_256x256_2x2_x2p2(M, M2_16, M2_32, fg+128, fg+384, M2);
+
   return(minusdelta);
 }
