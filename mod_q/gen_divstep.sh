@@ -1,4 +1,19 @@
 #!/bin/bash
+
+# jump 512
+python gen_jumpdivsteps/gen_n_full.py 512 7177 > jumpdivstep/sntrup1013/jump512divsteps.c
+
+
+
+
+
+
+
+
+
+
+
+
 # === v1 ===
 python v_1/gen_recip/gen_divsteps_653.py 512 653 656 > v_1/final/sntrup653/jump656divsteps.c
 
