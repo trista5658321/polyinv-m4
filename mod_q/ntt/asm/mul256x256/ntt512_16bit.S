@@ -362,7 +362,7 @@ ntt2_layer_3_4inner:
 	bne.w ntt2_layer_3_4
 @ degree = 4
 	vmov.w r0, s0
-intt2_layer_5_6:
+ntt2_layer_5_6:
 	ldr.w r9, [r10, #4]
 	ldr.w r8, [r10], #8
 	ldr.w r1, [r0]
@@ -454,5 +454,5 @@ intt2_layer_5_6:
 	str.w r4, [r0, #24]
 	str.w r1, [r0], #28
 	cmp.w r0, lr
-	bne.w intt2_layer_5_6
+	bne.w ntt2_layer_5_6
 	pop {r4-r11, pc}

@@ -114,7 +114,7 @@ def _2_layer(layer, degree, loop_flag = "lr"):
     print("@ degree = " + str(degree))
     # printIn("vmov.w lr, %s" % (s_r0_end))
     printIn("vmov.w r0, %s" % (s_r0_start))
-    label = "intt2_layer_%d_%d" % (layer-1, layer)
+    label = "ntt2_layer_%d_%d" % (layer-1, layer)
     # loop: 3 butterfly per round
     print(label + str(":"))
     get_w()
