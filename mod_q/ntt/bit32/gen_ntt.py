@@ -33,9 +33,7 @@ s_w2 = "s6"
 fold_num = 8 # 8 coeffis per round
 
 def get_w(tmp, s_id = r_w0, e_id = r_w2):
-    # printIn("vmov %s, %s" % (tmp, s_wpad))
     printIn("ldm %s!, {%s-%s}" % (tmp, s_id, e_id))
-    # printIn("vmov %s, %s" % (s_wpad, tmp))
 
 def butterfly(a, b, w, tmp):
     low = tmp[0]
@@ -83,10 +81,7 @@ def _2_layer_one_coeffi(degree, end):
 
 # required: s_r0_end <- r0 end
 def _2_layer_fold(layer, degree, loop_flag = "lr"):
-    tmp_reg = "r10"
-    # printIn("vmov %s, %s, %s, %s" % (r_h, loop_flag, s_r0_start, s_r0_end))
     printIn("vmov %s, %s" % (r_h, s_r0_start))
-    printIn("vmov %s, %s" % (tmp_reg, s_wpad))
     label = "ntt2_layer_%d_%d" % (layer-1, layer)
     label_inner = label + "inner"
 
@@ -95,7 +90,7 @@ def _2_layer_fold(layer, degree, loop_flag = "lr"):
 
     # inner loop setting:
     printIn("add.w %s, r0, #%d @ %d" % (loop_flag, degree * per_bytes, degree))
-    get_w(tmp_reg)
+    get_w(r_wpad)
     print(label_inner + str(":"))
 
     for i in range(fold_num):
@@ -111,12 +106,11 @@ def _2_layer_fold(layer, degree, loop_flag = "lr"):
 
 # required: lr <- r0 end
 def _2_layer(layer, degree, loop_flag = "lr"):
-    tmp_reg = "r10"
     printIn("vmov %s, %s, %s, %s" % (r_h, loop_flag, s_r0_start, s_r0_end))
     label = "ntt2_layer_%d_%d" % (layer-1, layer)
     # loop: 3 butterfly per round
     print(label + str(":"))
-    get_w(tmp_reg)
+    get_w(r_wpad)
     for i in range(degree):
         _2_layer_one_coeffi(degree, i == degree -1)
     printIn("cmp.w r0, %s" % (loop_flag))
@@ -198,6 +192,8 @@ def epilogue():
     printIn("pop {r4-r11, pc}")
 
 def ntt(p, n, w, layer, jump = 2):
+    if not layer & 1:
+        jump = 1
     prologue(p, n, w)
     ini_layer = layer - jump # jump 2
     for i in range(2, ini_layer):
@@ -209,6 +205,7 @@ def ntt(p, n, w, layer, jump = 2):
             # print((i, degree))
             if i == 2:
                 _layer_012(i, degree)
+                printIn("vmov %s, %s" % (r_wpad, s_wpad))
             else:
                 if degree > fold_num:
                     _2_layer_fold(i, degree)

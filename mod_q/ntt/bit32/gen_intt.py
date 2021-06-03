@@ -184,6 +184,8 @@ def epilogue():
     printIn("pop {r4-r11, pc}")
 
 def intt(p, n, w, layer, jump = 2):
+    if not layer & 1:
+        jump = 1
     prologue(p, n, w)
     ini_layer = layer - jump # jump 2
     for i in range(ini_layer-1, 0, -1):
