@@ -25,3 +25,16 @@ def basemul_4x4(p,h,f,g,w_list):
             for x in range(4):
                 h[i+x] = reduce_center(p, _h[x])
 
+def basemul_2x2(p,h,f,g,w_list):
+    for i in range(len(f)):
+        w = w_list[i//2]
+        if i % 2 == 0:
+            _f = [ f[i+x] for x in range(2)]
+            _g = [ g[i+x] for x in range(2)]
+            _h = [0] * 2
+            _h[0] = _f[0]*_g[0] + (_f[1]*_g[1]) * w
+            _h[1] = _f[0]*_g[1] + _f[1]*_g[0]
+            
+            for x in range(2):
+                h[i+x] = reduce_center(p, _h[x])
+
