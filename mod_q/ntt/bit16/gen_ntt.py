@@ -110,10 +110,13 @@ def _2_layer_fold(layer, degree, loop_flag = "lr"):
     printIn("bne.w %s" % (label))
 
 # degree: Lowest poly degree
-def _2_layer(layer, degree, loop_flag = "lr"):
+def _2_layer(layer, degree, is_flag_set, loop_flag = "lr"):
     print("@ degree = " + str(degree))
     # printIn("vmov.w lr, %s" % (s_r0_end))
-    printIn("vmov.w r0, %s" % (s_r0_start))
+    if is_flag_set:
+        printIn("vmov.w r0, %s" % (s_r0_start))
+    else:
+        printIn("vmov %s, %s, %s, %s" % (r_h, loop_flag, s_r0_start, s_r0_end))
     label = "ntt2_layer_%d_%d" % (layer-1, layer)
     # loop: 3 butterfly per round
     print(label + str(":"))
@@ -204,8 +207,11 @@ def epilogue():
     printIn("pop {r4-r11, pc}")
 
 def ntt(p, n, w, layer, jump = 2):
+    if not layer & 1:
+        jump = 1
     prologue(p, n, w)
     end_layer = layer - jump # jump 2
+    is_flag_set = False
     for i in range(2, end_layer):
         if not i & 1:
             # i: do ntt to layer i
@@ -219,8 +225,10 @@ def ntt(p, n, w, layer, jump = 2):
             else:
                 if degree > fold_num:
                     _2_layer_fold(i, degree)
+                    is_flag_set = True
                 else:
-                    _2_layer(i, degree)
+                    _2_layer(i, degree, is_flag_set)
+                    is_flag_set = True
     epilogue()
 
 p = int(sys.argv[1])

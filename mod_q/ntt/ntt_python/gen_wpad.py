@@ -1,23 +1,24 @@
-# (7681, 62)
-# (518657, 1595)
 import sys, pathlib
 d_root = pathlib.Path(__file__).parent.absolute()
 sys.path.append(str(d_root))
 
 from qinv import inverse_modq
 
-def get_layer(n, final_deg):
-    layer = 0
-    while(n!=final_deg):
+def get_layer(n):
+    power = 0
+    jump = 2 # let final deg = 4
+    while(n!=1):
+        power+=1
         n//=2
-        layer+=1
-    return layer-1
+    if not power & 1:
+        jump = 1
+    return power-jump-1
 
-def get_w(w, n, final_deg = 4):
+def get_w(w, n):
     arr = [[1]]
     c_id = 1
-    # print(get_layer(n, final_deg))
-    for i in range(get_layer(n, final_deg)):
+    # print(get_layer(n))
+    for i in range(get_layer(n)):
         _arr = []
         for elem in arr[i]:
             if elem == 1:
@@ -201,6 +202,23 @@ def gen_basemul_wpad_16b(p, n, w):
 
         print_w(cal_w(p, left, False))
         print_w(cal_w(p, right, False))
+
+def gen_basemul_wpad_16b_2x2(p, n, w):
+    arr = get_w(w, n)
+    final = arr[len(arr) - 1]
+    # print(len(final))
+    print("wpad:")
+    print_w(p)
+    print_w(round(2**32 / p))
+    for c in final:
+        left = c
+        right = (w, n//2)
+        if c != 1:
+            right = (w, c[1]+n//2)
+
+        w_left = cal_w(p, left, False)
+        w_right = cal_w(p, right, False)
+        print_w(combine_w1w2(w_left, w_right))
 
 def gen_basemul_wpad_32b(p, n, w):
     arr = get_w(w, n)
