@@ -1,4 +1,6 @@
 import sys, pathlib
+from math import ceil, sqrt
+
 d_root = pathlib.Path(__file__).parent.absolute().parent.parent.parent
 sys.path.append(str(d_root))
 
@@ -25,7 +27,75 @@ def find_p_w_v2(bot, top, n):
             if val % p == -1 or val % p == p-1:
                 print((p, i))
                 break
-        
+
+# w^n = 1 (mod p)
+def find_w(n, p):
+    for i in range(2, p):
+        ans = (i**(n//2)) % p
+        if ans == p-1:
+            return i
+
+def isPrime(num):
+    if num == 1 or not num % 2:
+        return False
+    for i in range(3, ceil(sqrt(num))):
+        if num % i == 0:
+            return False
+    return True
+
+def find_q1(n, num_th = 1):
+    counter = 0
+    for j in range(num_th):
+        counter+=1
+        while(not isPrime(n*counter + 1)):
+            counter+=1
+    return (n*counter+1)
+
+def find_q0(n, q1, q=(7879//2)):
+    min = (q*q*2*(n//2)) // q1
+    counter = min // n
+    while(not isPrime(n*counter + 1)):
+        counter+=1
+    return (n*counter+1)
+
+n = 256
+layer = 7
+q1 = find_q1(n, 2)
+w1 = find_w(n, q1)
+q0 = find_q0(n, q1)
+w0 = find_w(n, q0)
+print("= 256 =")
+print((q0, w0))
+print((q1, w1))
+print(("q1_layer_inv", inverse_modq(2**layer, q1)-q1))
+mont_qinv = -inverse_modq(q0, 2**32)
+print(("mont_qinv", mont_qinv))
+mont_basemul = (2 ** 32) * (2 ** 32) % q0
+print(("mont_basemul", mont_basemul))
+mont_layer = inverse_modq(2**layer, q0) * (2 ** 32) % q0
+print(("mont_layer", mont_layer))
+mont_layer_mul2_32 = inverse_modq(2**layer, q0) * (2**32) * (2 ** 32) % q0
+print(("mont_layer_mul2_32", mont_layer_mul2_32))
+
+n = 512
+layer = 7
+q1 = find_q1(n, 1)
+w1 = find_w(n, q1)
+q0 = find_q0(n, q1)
+w0 = find_w(n, q0)
+print("\n= 512 =")
+print((q0, w0))
+print((q1, w1))
+print(("q1_layer_inv", inverse_modq(2**layer, q1)-q1))
+mont_qinv = -inverse_modq(q0, 2**32)
+print(("mont_qinv", mont_qinv))
+mont_basemul = (2 ** 32) * (2 ** 32) % q0
+print(("mont_basemul", mont_basemul))
+mont_layer = inverse_modq(2**layer, q0) * (2 ** 32) % q0
+print(("mont_layer", mont_layer))
+mont_layer_mul2_32 = inverse_modq(2**layer, q0) * (2**32) * (2 ** 32) % q0
+print(("mont_layer_mul2_32", mont_layer_mul2_32))
+
 # p = 73
 # find_inv(p, 2)
 # find_inv(p, 4)
@@ -65,3 +135,5 @@ def find_p_w_v2(bot, top, n):
 # mul_len = 256
 # bot = pow(s_q, 2) * mul_len
 # find_p_w_v2(2020, 2030, 512)
+# find_p_w_v2(2020, 2030, 256)
+
