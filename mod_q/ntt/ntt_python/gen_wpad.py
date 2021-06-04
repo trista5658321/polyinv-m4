@@ -14,7 +14,7 @@ def get_layer(n):
         jump = 1
     return power-jump-1
 
-def get_w(w, n):
+def get_w(w, n, w_power):
     arr = [[1]]
     c_id = 1
     # print(get_layer(n))
@@ -23,10 +23,10 @@ def get_w(w, n):
         for elem in arr[i]:
             if elem == 1:
                 _arr.append(1)
-                _arr.append((w, n//4))
+                _arr.append((w, w_power//4))
             else:
                 _arr.append((w, elem[1]//2, "c%d" % (c_id)))
-                _arr.append((w, elem[1]//2 + n//4, "c%d" % (c_id+1)))
+                _arr.append((w, elem[1]//2 + w_power//4, "c%d" % (c_id+1)))
             c_id+=2
         arr.append(_arr)
     return arr
@@ -67,8 +67,8 @@ def print_w(w):
     print("\t.word %d" % (w))
 
 # w^n = 1
-def gen_wpad(p, n, w):
-    arr = get_w(w, n)
+def gen_wpad(p, n, w, w_power):
+    arr = get_w(w, n, w_power)
     # for _arr in arr:
     #     print("-")
     #     print(_arr)
@@ -94,8 +94,8 @@ def gen_wpad(p, n, w):
                 print_w(cal_w(p, __arr[2*j], True))
                 print_w(cal_w(p, __arr[2*j+1], True))
 
-def gen_iwpad(p, n, w):
-    arr = get_w(w, n)
+def gen_iwpad(p, n, w, w_power):
+    arr = get_w(w, n, w_power)
     print("wpad:")
     print_w(p)
     print_w(-inverse_modq(p, 2**32))
@@ -128,8 +128,8 @@ def combine_w1w2(w1, w2):
     return ((w2 << 16) + w1)
 
 # for 16 bit
-def gen_wpad_16b(p, n, w):
-    arr = get_w(w, n)
+def gen_wpad_16b(p, n, w, w_power):
+    arr = get_w(w, n, w_power)
     print("wpad:")
     print_w(p)
     print_w(round(2**32 / p))
@@ -157,8 +157,8 @@ def gen_wpad_16b(p, n, w):
                 print_w(w0)
                 print_w(combine_w1w2(w1, w2))
 
-def gen_iwpad_16b(p, n, w):
-    arr = get_w(w, n)
+def gen_iwpad_16b(p, n, w, w_power):
+    arr = get_w(w, n, w_power)
     print("wpad:")
     print_w(p)
     print_w(round(2**32 / p))
@@ -187,8 +187,8 @@ def gen_iwpad_16b(p, n, w):
                 print_w(w0)
                 print_w(combine_w1w2(w1, w2))
 
-def gen_basemul_wpad_16b(p, n, w):
-    arr = get_w(w, n)
+def gen_basemul_wpad_16b(p, n, w, w_power):
+    arr = get_w(w, n, w_power)
     final = arr[len(arr) - 1]
     # print(final)
     print("wpad:")
@@ -203,8 +203,8 @@ def gen_basemul_wpad_16b(p, n, w):
         print_w(cal_w(p, left, False))
         print_w(cal_w(p, right, False))
 
-def gen_basemul_wpad_16b_2x2(p, n, w):
-    arr = get_w(w, n)
+def gen_basemul_wpad_16b_2x2(p, n, w, w_power):
+    arr = get_w(w, n, w_power)
     final = arr[len(arr) - 1]
     # print(len(final))
     print("wpad:")
@@ -220,8 +220,8 @@ def gen_basemul_wpad_16b_2x2(p, n, w):
         w_right = cal_w(p, right, False)
         print_w(combine_w1w2(w_left, w_right))
 
-def gen_basemul_wpad_32b(p, n, w):
-    arr = get_w(w, n)
+def gen_basemul_wpad_32b(p, n, w, w_power):
+    arr = get_w(w, n, w_power)
     final = arr[len(arr) - 1]
     # print(final)
     print("wpad:")

@@ -113,12 +113,12 @@ def poly_4x4_mod4():
     printIn("cmp.w r0, %s" % (r_r0_end))
     printIn("bne.w %s" % (label))
 
-def prologue(p, n, w):
+def prologue(p, n, w, w_power):
     print(".p2align 2,,3")
     print(".syntax unified")
     print(".text")
 
-    gen_basemul_wpad_32b(p, n, w)
+    gen_basemul_wpad_32b(p, n, w, w_power)
 
     print("// void basemul%d_32bit_%dx%d (int *h, int *f, int *g);" % (n, _n, _n))
     print(".global basemul%d_32bit_%dx%d" % (n, _n, _n))
@@ -137,8 +137,8 @@ def prologue(p, n, w):
 def epilogue():
     printIn("pop {r4-r11, pc}")
     
-def basemul(p, n, w, layer):
-    prologue(p, n, w)
+def basemul(p, n, w, layer, w_power):
+    prologue(p, n, w, w_power)
     poly_4x4_mod4()
     epilogue()
 
@@ -146,4 +146,5 @@ p = int(sys.argv[1])
 n = int(sys.argv[2])
 w = int(sys.argv[3])
 layer = int(sys.argv[4]) # 2^layer = n
-basemul(p, n, w, layer)
+w_power = int(sys.argv[5]) # w^w_power = 1
+basemul(p, n, w, layer, w_power)

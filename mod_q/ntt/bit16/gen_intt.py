@@ -157,12 +157,12 @@ def i_layer_012(layer, degree, loop_flag = "lr"):
     printIn("cmp.w r0, %s" % (loop_flag))
     printIn("bne.w %s" % (label))
 
-def prologue(p, n, w):
+def prologue(p, n, w, w_power):
     print(".p2align 2,,3")
     print(".syntax unified")
     print(".text")
 
-    gen_iwpad_16b(p, n, w)
+    gen_iwpad_16b(p, n, w, w_power)
 
     print("// void intt%d_16bit (int *v);" % (n))
     print(".global intt%d_16bit" % (n))
@@ -182,10 +182,10 @@ def prologue(p, n, w):
 def epilogue():
     printIn("pop {r4-r11, pc}")
 
-def intt(p, n, w, layer, jump = 2):
+def intt(p, n, w, layer, w_power, jump = 2):
     if not layer & 1:
         jump = 1
-    prologue(p, n, w)
+    prologue(p, n, w, w_power)
     ini_layer = layer - jump # jump 2
     for i in range(ini_layer-1, 0, -1):
         if not i & 1:
@@ -202,4 +202,5 @@ p = int(sys.argv[1])
 n = int(sys.argv[2])
 w = int(sys.argv[3])
 layer = int(sys.argv[4]) # 2^layer = n
-intt(p, n, w, layer)
+w_power = int(sys.argv[5]) # w^w_power = 1
+intt(p, n, w, layer, w_power)

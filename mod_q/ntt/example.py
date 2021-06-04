@@ -14,21 +14,21 @@ def reduce_center(p,x):
         x+=p
     return x
 
-def get_c(p,w,n):
-    c = get_w(w,n)
+def get_c(p,w,n,w_power):
+    c = get_w(w,n,w_power)
     for w_list in c:
         for i in range(len(w_list)):
             w_list[i] = cal_w(p, w_list[i])
     return c
 
-def get_base_w(p,w,n):
-    final = get_w(w,n)[-1]
+def get_base_w(p,w,n,w_power):
+    final = get_w(w,n,w_power)[-1]
     base_w = []
     for c in final:
         left = c
-        right = (w, n//2)
+        right = (w, w_power//2)
         if c != 1:
-            right = (w, c[1]+n//2)
+            right = (w, c[1]+w_power//2)
 
         base_w.append(cal_w(p, left, False))
         base_w.append(cal_w(p, right, False))
@@ -43,15 +43,15 @@ def polymul(p, h, f, g):
             h[i+j] = reduce_center(p, _f * _g + h[i+j])
 
 
-def ntt_16(n, p, w, f0, g0, layer):
+def ntt_16(n, p, w, f0, g0, layer, w_power):
     _f = [0] * n
     _g = [0] * n
     h0 = [0] * n
     fxg = [0] * n
     
     polymul(p, fxg, f0, g0)
-    c = get_c(p,w,n)
-    basemul_c = get_base_w(p,w,n)
+    c = get_c(p,w,n, w_power)
+    basemul_c = get_base_w(p,w,n, w_power)
     # print(len(c))
     ntt(n,layer,p,w,c,_f,f0)
     # print(_f)
@@ -74,15 +74,15 @@ def ntt_16(n, p, w, f0, g0, layer):
 
     return h0
 
-def ntt_32(n, p, w, f0, g0, layer):
+def ntt_32(n, p, w, f0, g0, layer, w_power):
     _f = [0] * n
     _g = [0] * n
     h0 = [0] * n
     fxg = [0] * n
 
     polymul(p, fxg, f0, g0)
-    c = get_c(p,w,n)
-    basemul_c = get_base_w(p,w,n)
+    c = get_c(p,w,n,w_power)
+    basemul_c = get_base_w(p,w,n,w_power)
     # print(len(c))
     ntt(n,layer,p,w,c,_f,f0)
     # print(f0)
@@ -106,7 +106,7 @@ def ntt_32(n, p, w, f0, g0, layer):
     return h0
 
     
-def mul(n, q, q0, w0, q1, w1, layer):
+def mul(n, q, q0, w0, q1, w1, layer, w_power):
     f0 = [0] * n
     g0 = [0] * n
     for i in range(n//2):
@@ -122,8 +122,8 @@ def mul(n, q, q0, w0, q1, w1, layer):
 
     polymul(q, correct, f0, g0)
 
-    h0 = ntt_32(n, q0, w0, f0, g0, layer)
-    h1 = ntt_16(n, q1, w1, f0, g0, layer)
+    h0 = ntt_32(n, q0, w0, f0, g0, layer, w_power)
+    h1 = ntt_16(n, q1, w1, f0, g0, layer, w_power)
 
     print("=== crt ===")
     flag = 1
@@ -143,16 +143,18 @@ def mul(n, q, q0, w0, q1, w1, layer):
     #         print("qq")
 
 # 256
-n = 256
-q = 7879
-q0 = 5168129
-w0 = 27827
-q1 = 769
-w1 = 7
-layer = 7
+# n = 256
+# w_power = 256
+# q = 7879
+# q0 = 5168129
+# w0 = 27827
+# q1 = 769
+# w1 = 7
+# layer = 7
 
 # 512
 # n = 512
+# w_power = 512
 # q = 7879
 # q0 = 1038337
 # w0 = 1151
@@ -160,4 +162,14 @@ layer = 7
 # w1 = 62
 # layer = 7
 
-mul(n, q, q0, w0, q1, w1, layer)
+# 1024
+n = 1024
+w_power = 512
+q = 7879
+q0 = 1038337
+w0 = 1151
+q1 = 7681
+w1 = 62
+layer = 9
+
+mul(n, q, q0, w0, q1, w1, layer, w_power)
