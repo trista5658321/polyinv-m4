@@ -196,9 +196,9 @@ def gen_basemul_wpad_16b(p, n, w, w_power):
     print_w(round(2**32 / p))
     for c in final:
         left = c
-        right = (w, n//2)
+        right = (w, w_power//2)
         if c != 1:
-            right = (w, c[1]+n//2)
+            right = (w, c[1]+w_power//2)
 
         print_w(cal_w(p, left, False))
         print_w(cal_w(p, right, False))
@@ -212,9 +212,9 @@ def gen_basemul_wpad_16b_2x2(p, n, w, w_power):
     print_w(round(2**32 / p))
     for c in final:
         left = c
-        right = (w, n//2)
+        right = (w, w_power//2)
         if c != 1:
-            right = (w, c[1]+n//2)
+            right = (w, c[1]+w_power//2)
 
         w_left = cal_w(p, left, False)
         w_right = cal_w(p, right, False)
@@ -230,9 +230,9 @@ def gen_basemul_wpad_32b(p, n, w, w_power):
 
     for c in final:
         left = c
-        right = (w, n//2)
+        right = (w, w_power//2)
         if c != 1:
-            right = (w, c[1]+n//2)
+            right = (w, c[1]+w_power//2)
 
         print_w(cal_w(p, left, True))
         print_w(cal_w(p, right, True))
