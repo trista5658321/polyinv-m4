@@ -41,3 +41,6 @@ python bit32/gen_intt.py 1038337 1024 1151 10 512 > asm/mul512x512/intt1024_32bi
 python bit32/gen_ntt.py 1038337 1024 1151 10 512 > asm/mul512x512/ntt1024_32bit.S
 python bit32/gen_basemul_2x2.py 1038337 1024 1151 10 512 > asm/mul512x512/basemul1024_32bit_2x2.S
 python bit32/gen_basemul_x_2x2.py 1038337 1024 1151 10 512 > asm/mul512x512/basemul_x_1024_32bit_2x2.S
+
+python ./gen_crt.py 7879 1024 1038337 7681 10 > asm/mul512x512/crt1024_7879.S
+python ./gen_crt.py 7177 1024 1038337 7681 10 > asm/mul512x512/crt1024_7177.S
