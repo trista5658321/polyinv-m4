@@ -29,3 +29,10 @@ python bit16/gen_basemul_x.py 7681 512 62 9 512 > asm/mul256x256/basemul_x_512_1
 
 python ./gen_crt.py 7879 512 1038337 7681 9 > asm/mul256x256/crt512.S
 python ./gen_crt.py 7177 512 1038337 7681 9 > asm/mul256x256/crt512_7177.S
+
+# 1024
+
+python bit16/gen_ntt.py 7681 1024 62 10 512 > asm/mul512x512/ntt1024_16bit.S
+python bit16/gen_intt.py 7681 1024 62 10 512 > asm/mul512x512/intt1024_16bit.S
+python bit16/gen_basemul_2x2.py 7681 1024 62 10 512 > asm/mul512x512/basemul1024_16bit_2x2.S
+python bit16/gen_basemul_x_2x2.py 7681 1024 62 10 512 > asm/mul512x512/basemul_x_1024_16bit_2x2.S
