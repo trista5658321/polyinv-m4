@@ -5,7 +5,7 @@
 python bit16/gen_ntt.py 769 256 7 8 > asm/mul128x128/ntt256_16bit.S
 python bit16/gen_intt.py 769 256 7 8 > asm/mul128x128/intt256_16bit.S
 python bit16/gen_basemul_2x2.py 769 256 7 8 > asm/mul128x128/basemul256_16bit_2x2.S
-# python bit16/gen_basemul_x_2x2.py 769 256 7 8 > asm/mul128x128/basemul_x_256_16bit_2x2.S
+python bit16/gen_basemul_x_2x2.py 769 256 7 8 > asm/mul128x128/basemul_x_256_16bit_2x2.S
 
 python bit32/gen_ntt.py 5168129 256 27827 8 > asm/mul128x128/ntt256_32bit.S
 python bit32/gen_intt.py 5168129 256 27827 8 > asm/mul128x128/intt256_32bit.S
