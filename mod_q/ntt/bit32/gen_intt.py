@@ -59,7 +59,12 @@ def i_2_layer_one_coeffi(degree, end):
             printIn("str.w %s, [r0, #%d]" % (coeffi[i], degree*per_bytes*i))
 
         if end:
-            printIn("str.w %s, [r0], #%d" % (coeffi[0], degree * per_bytes * 3 + per_bytes))
+            add_space = degree * per_bytes * 3 + per_bytes
+            if add_space > 256:
+                printIn("str.w %s, [r0]" % (coeffi[0]))
+                printIn("add.w r0, #%d" % (add_space))
+            else:
+                printIn("str.w %s, [r0], #%d" % (coeffi[0], add_space))
         else:
             printIn("str.w %s, [r0], #%d" % (coeffi[0], per_bytes))
 
