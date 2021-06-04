@@ -96,6 +96,22 @@ print(("mont_layer", mont_layer))
 mont_layer_mul2_32 = inverse_modq(2**layer, q0) * (2**32) * (2 ** 32) % q0
 print(("mont_layer_mul2_32", mont_layer_mul2_32))
 
+n = 1024
+layer = 9
+# 使用 n = 512 的參數
+print("\n= 1024 =")
+print((q0, w0))
+print((q1, w1))
+print(("q1_layer_inv", inverse_modq(2**layer, q1)-q1))
+mont_qinv = -inverse_modq(q0, 2**32)
+print(("mont_qinv", mont_qinv))
+mont_basemul = (2 ** 32) * (2 ** 32) % q0
+print(("mont_basemul", mont_basemul))
+mont_layer = inverse_modq(2**layer, q0) * (2 ** 32) % q0
+print(("mont_layer", mont_layer))
+mont_layer_mul2_32 = inverse_modq(2**layer, q0) * (2**32) * (2 ** 32) % q0
+print(("mont_layer_mul2_32", mont_layer_mul2_32))
+
 # p = 73
 # find_inv(p, 2)
 # find_inv(p, 4)
