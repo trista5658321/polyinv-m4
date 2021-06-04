@@ -30,7 +30,8 @@ commit: f7a99d8fc54cdd509c0c6b5cfad86a38a659a8cd
 - input: +-q (e.g. u2u1x + v2r1 )
 - output: 16bit
 - final ans = output value * (2^layer)^-1 % q1
-做兩層 reduction 一次 (e.g. 65 "r" 43 "r" 21 "r" 0)
+- 兩層 reduction 一次 (e.g. 65 "r" 43 "r" 21 "r" 0)
+    - q <= 7681
 
 # 32bit
 - basemul 完結果需再乘 2^32 % q0，此運算保留至 crt 再做
