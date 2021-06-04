@@ -188,6 +188,8 @@ def epilogue():
     printIn("pop {r4-r11, pc}")
 
 def crt(p, n, q0, q1, layer, jump = 2):
+    if not layer & 1:
+        jump = 1
     prologue(p, n, q0, q1, layer-jump)
     loop()
     epilogue()
