@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # jump 512
+python gen_jumpdivsteps/gen_n_full.py 256 7177 > jumpdivstep/sntrup1013/jump256divsteps.c
 python gen_jumpdivsteps/gen_n_full.py 512 7177 > jumpdivstep/sntrup1013/jump512divsteps.c
 
 

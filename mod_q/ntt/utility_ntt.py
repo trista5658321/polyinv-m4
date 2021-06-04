@@ -23,3 +23,10 @@ def reduce_center(p,x):
 def butterfly_without_mul_32(a, b):
     printIn("add.w %s, %s, %s" % (a, a, b))
     printIn("sub.w %s, %s, %s, lsl #1" % (b, a, b))
+
+def get_power(n):
+    power = 0
+    while(n!=1):
+        power+=1
+        n//=2
+    return power

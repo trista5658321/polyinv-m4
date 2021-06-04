@@ -13,6 +13,7 @@ python bit32/gen_basemul_2x2.py 5168129 256 27827 8 > asm/mul128x128/basemul256_
 python bit32/gen_basemul_x_2x2.py 5168129 256 27827 8 > asm/mul128x128/basemul_x_256_32bit_2x2.S
 
 python ./gen_crt.py 7879 256 5168129 769 8 > asm/mul128x128/crt256_7879.S
+python ./gen_crt.py 7177 256 5168129 769 8 > asm/mul128x128/crt256_7177.S
 
 # 512
 

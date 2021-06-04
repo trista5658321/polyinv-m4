@@ -31,10 +31,10 @@ void __gf_polymul_256x256_2x2_x_2x2(int * M, int * M1_16, int * M1_32, int * M2_
   int i, T, *X, *Y;
 
   /* u */
-  basemul_16bit_4x4(M, M2_16, M1_16); // uux
-  basemul_16bit_4x4(tmp_16_1, M2_16+256, M1_16+512); // vr
-  basemul_32bit_4x4(tmp_32_0, M2_32, M1_32); // uux
-  basemul_32bit_4x4(tmp_32_1, M2_32+512, M1_32+1024); // vr
+  basemul512_16bit_4x4(M, M2_16, M1_16); // uux
+  basemul512_16bit_4x4(tmp_16_1, M2_16+256, M1_16+512); // vr
+  basemul512_32bit_4x4(tmp_32_0, M2_32, M1_32); // uux
+  basemul512_32bit_4x4(tmp_32_1, M2_32+512, M1_32+1024); // vr
   for (X=M, Y=tmp_16_1, i=256; i>0; i--) {
     T = __SADD16(*(Y++),*X);
     *(X++) = T;
@@ -48,10 +48,10 @@ void __gf_polymul_256x256_2x2_x_2x2(int * M, int * M1_16, int * M1_32, int * M2_
   crt512(M, tmp_32_0);
 
   /* v */
-  basemul_16bit_4x4(M+256, M2_16, M1_16+256); // uvx
-  basemul_16bit_4x4(tmp_16_1, M2_16+256, M1_16+768); // vs
-  basemul_32bit_4x4(tmp_32_0, M2_32, M1_32+512); // uvx
-  basemul_32bit_4x4(tmp_32_1, M2_32+512, M1_32+1536); // vs
+  basemul512_16bit_4x4(M+256, M2_16, M1_16+256); // uvx
+  basemul512_16bit_4x4(tmp_16_1, M2_16+256, M1_16+768); // vs
+  basemul512_32bit_4x4(tmp_32_0, M2_32, M1_32+512); // uvx
+  basemul512_32bit_4x4(tmp_32_1, M2_32+512, M1_32+1536); // vs
   for (X=M+256, Y=tmp_16_1, i=256; i>0; i--) {  
     T = __SADD16(*(Y++),*X);
     *(X++) = T;
@@ -65,10 +65,10 @@ void __gf_polymul_256x256_2x2_x_2x2(int * M, int * M1_16, int * M1_32, int * M2_
   crt512(M+256, tmp_32_0);
 
   /* r */
-  basemul_16bit_4x4(M+512, M2_16+512, M1_16); // r2 u1 x
-  basemul_16bit_4x4(tmp_16_1, M2_16+768, M1_16+512); // s2 r1
-  basemul_32bit_4x4(tmp_32_0, M2_32+1024, M1_32); // r2 u1 x
-  basemul_32bit_4x4(tmp_32_1, M2_32+1536, M1_32+1024); // s2 r1
+  basemul512_16bit_4x4(M+512, M2_16+512, M1_16); // r2 u1 x
+  basemul512_16bit_4x4(tmp_16_1, M2_16+768, M1_16+512); // s2 r1
+  basemul512_32bit_4x4(tmp_32_0, M2_32+1024, M1_32); // r2 u1 x
+  basemul512_32bit_4x4(tmp_32_1, M2_32+1536, M1_32+1024); // s2 r1
   for (X=M+512, Y=tmp_16_1, i=256; i>0; i--) {
     T = __SADD16(*(Y++),*X);
     *(X++) = T;
@@ -82,10 +82,10 @@ void __gf_polymul_256x256_2x2_x_2x2(int * M, int * M1_16, int * M1_32, int * M2_
   crt512(M+512, tmp_32_0);
 
   /* s */
-  basemul_16bit_4x4(M+768, M2_16+512, M1_16+256); // rvx
-  basemul_16bit_4x4(tmp_16_1, M2_16+768, M1_16+768); // ss
-  basemul_32bit_4x4(tmp_32_0, M2_32+1024, M1_32+512); // rvx
-  basemul_32bit_4x4(tmp_32_1, M2_32+1536, M1_32+1536); // ss
+  basemul512_16bit_4x4(M+768, M2_16+512, M1_16+256); // rvx
+  basemul512_16bit_4x4(tmp_16_1, M2_16+768, M1_16+768); // ss
+  basemul512_32bit_4x4(tmp_32_0, M2_32+1024, M1_32+512); // rvx
+  basemul512_32bit_4x4(tmp_32_1, M2_32+1536, M1_32+1536); // ss
   for (X=M+768, Y=tmp_16_1, i=256; i>0; i--) {
     T = __SADD16(*(Y++),*X);
     *(X++) = T;
@@ -115,10 +115,10 @@ void __gf_polymul_256x256_2x2_x2p2(int *V, int *M_16, int *M_32, int *fh, int *g
   ntt512_16bit(gh_16, gh);
   ntt512_32bit(gh_32, gh);
 
-  basemul_16bit_4x4(V, M_16, fh_16); // ux * fh
-  basemul_16bit_4x4(tmp_16_1, M_16+256, gh_16); // vx * gh
-  basemul_32bit_4x4(tmp_32_0, M_32, fh_32); // ux * fh
-  basemul_32bit_4x4(tmp_32_1, M_32+512, gh_32); // vx * gh
+  basemul512_16bit_4x4(V, M_16, fh_16); // ux * fh
+  basemul512_16bit_4x4(tmp_16_1, M_16+256, gh_16); // vx * gh
+  basemul512_32bit_4x4(tmp_32_0, M_32, fh_32); // ux * fh
+  basemul512_32bit_4x4(tmp_32_1, M_32+512, gh_32); // vx * gh
 
   int i, T, *X, *Y, *W;
   for (X=V, Y=tmp_16_1, i=256; i>0; i--) {
@@ -135,10 +135,10 @@ void __gf_polymul_256x256_2x2_x2p2(int *V, int *M_16, int *M_32, int *fh, int *g
 
   crt512(V, tmp_32_0);
 
-  basemul_16bit_4x4(V+256, M_16+512, fh_16); // r * fh
-  basemul_16bit_4x4(tmp_16_1, M_16+768, gh_16); // s * gh
-  basemul_32bit_4x4(tmp_32_0, M_32+1024, fh_32); // r * fh
-  basemul_32bit_4x4(tmp_32_1, M_32+1536, gh_32); // s * gh
+  basemul512_16bit_4x4(V+256, M_16+512, fh_16); // r * fh
+  basemul512_16bit_4x4(tmp_16_1, M_16+768, gh_16); // s * gh
+  basemul512_32bit_4x4(tmp_32_0, M_32+1024, fh_32); // r * fh
+  basemul512_32bit_4x4(tmp_32_1, M_32+1536, gh_32); // s * gh
 
   for (X=V+256, Y=tmp_16_1, i=256; i>0; i--) {
     T = __SADD16(*(Y++),*X);
