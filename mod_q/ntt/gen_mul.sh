@@ -14,6 +14,7 @@ python bit32/gen_basemul_x_2x2.py 5168129 256 27827 8 256 > asm/mul128x128/basem
 
 python ./gen_crt.py 7879 256 5168129 769 8 > asm/mul128x128/crt256_7879.S
 python ./gen_crt.py 7177 256 5168129 769 8 > asm/mul128x128/crt256_7177.S
+python ./gen_crt.py 5167 256 5168129 769 8 > asm/mul128x128/crt256_5167.S
 python ./gen_crt.py 6343 256 5168129 769 8 > asm/mul128x128/crt256_6343.S
 
 # 512
@@ -30,6 +31,7 @@ python bit32/gen_basemul_x.py 1038337 512 1151 9 512 > asm/mul256x256/basemul_x_
 
 python ./gen_crt.py 7879 512 1038337 7681 9 > asm/mul256x256/crt512.S
 python ./gen_crt.py 7177 512 1038337 7681 9 > asm/mul256x256/crt512_7177.S
+python ./gen_crt.py 5167 512 1038337 7681 9 > asm/mul256x256/crt512_5167.S
 python ./gen_crt.py 6343 512 1038337 7681 9 > asm/mul256x256/crt512_6343.S
 
 # 1024
@@ -47,3 +49,4 @@ python bit32/gen_basemul_x_2x2.py 1038337 1024 1151 10 512 > asm/mul512x512/base
 python ./gen_crt.py 7879 1024 1038337 7681 10 > asm/mul512x512/crt1024_7879.S
 python ./gen_crt.py 7177 1024 1038337 7681 10 > asm/mul512x512/crt1024_7177.S
 python ./gen_crt.py 6343 1024 1038337 7681 10 > asm/mul512x512/crt1024_6343.S
+python ./gen_crt.py 5167 1024 1038337 7681 10 > asm/mul512x512/crt1024_5167.S
