@@ -3,8 +3,8 @@
 #include <stdio.h>
 
 extern int jump512divsteps(int minusdelta, int *M, int *f, int *g);
-void gf_polymul_512x512_2x2_x2p2 (int *V,int *M,int *fh,int *gh);
-void gf_polymul_512x512_2x2_x_2x2 (int *M, int *M1, int *M2);
+void __gf_polymul_512x512_2x2_x2p2 (int *V, int *M_16, int *M_16_v, int *M_16_r, int *M_16_s, int *M_32_u, int *M_32_v, int *M_32_r, int *M_32_s, int *fh, int *gh, int *M);
+void __gf_polymul_512x512_2x2_x_2x2 (int * M, int *M1_16_v, int *M1_16_s, int *M1_32_v, int *M1_32_s, int * M2_16_u, int * M2_16_v, int * M2_16_r, int * M2_16_s, int * M2_32_u, int * M2_32_v, int * M2_32_r, int * M2_32_s);
 int jump1024divsteps(int minusdelta, int *M, int *f, int *g);
 
 #define q 5167
