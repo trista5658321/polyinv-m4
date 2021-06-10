@@ -2,14 +2,14 @@
 .syntax unified
 .text
 
-.global gf_polymul_384x384
-.type gf_polymul_384x384, %function
-@ 384x384 Toom-4
-@ void gf_polymul_384x384(uint32_t *h, uint32_t *c, uint32_t *f)
-gf_polymul_384x384:
+.global gf_polymul_192x192
+.type gf_polymul_192x192, %function
+@ 192x192 Toom-4
+@ void gf_polymul_192x192(uint32_t *h, uint32_t *c, uint32_t *f)
+gf_polymul_192x192:
   push.w {r4-r12, lr}
   vpush.w { s16 }
-  sub.w sp, sp, #7296
+  sub.w sp, sp, #3648
   vmov.w s0, r0
   mov.w r0, sp
   vmov.w s1, r2
@@ -17,11 +17,11 @@ gf_polymul_384x384:
   movw.w r3, #32768
   movw.w r4, #44798
   movt.w r4, #12
-  add.w lr, r0, #192
-gf_polymul_384x384_eval_input_c_body:
-  ldr.w r8, [r1, #576]
-  ldr.w r7, [r1, #192]
-  ldr.w r6, [r1, #384]
+  add.w lr, r0, #96
+gf_polymul_192x192_eval_input_c_body:
+  ldr.w r8, [r1, #288]
+  ldr.w r7, [r1, #96]
+  ldr.w r6, [r1, #192]
   ldr.w r5, [r1], #4
   lsl.w r9, r7, #1
   lsl.w r10, r8, #3
@@ -88,25 +88,25 @@ gf_polymul_384x384_eval_input_c_body:
   smulbt.w r6, r2, r6
   pkhbt.w r5, r5, r6, lsl #16
   ssub16.w r7, r7, r5
-  str.w r10, [r0, #768]
-  str.w r11, [r0, #576]
-  str.w r8, [r0, #384]
-  str.w r7, [r0, #192]
+  str.w r10, [r0, #384]
+  str.w r11, [r0, #288]
+  str.w r8, [r0, #192]
+  str.w r7, [r0, #96]
   str.w r9, [r0], #4
   cmp.w r0, lr
-  bne.w gf_polymul_384x384_eval_input_c_body
+  bne.w gf_polymul_192x192_eval_input_c_body
   vmov.w r2, s1
-  add.w r0, r0, #768
+  add.w r0, r0, #384
   vmov.w s1, r1
   movw.w r1, #5167
   movw.w r3, #32768
   movw.w r4, #44798
   movt.w r4, #12
-  add.w lr, r0, #192
-gf_polymul_384x384_eval_input_d_body:
-  ldr.w r8, [r2, #576]
-  ldr.w r7, [r2, #192]
-  ldr.w r6, [r2, #384]
+  add.w lr, r0, #96
+gf_polymul_192x192_eval_input_d_body:
+  ldr.w r8, [r2, #288]
+  ldr.w r7, [r2, #96]
+  ldr.w r6, [r2, #192]
   ldr.w r5, [r2], #4
   lsl.w r9, r7, #1
   lsl.w r10, r8, #3
@@ -173,63 +173,63 @@ gf_polymul_384x384_eval_input_d_body:
   smulbt.w r6, r1, r6
   pkhbt.w r5, r5, r6, lsl #16
   ssub16.w r7, r7, r5
-  str.w r10, [r0, #768]
-  str.w r11, [r0, #576]
-  str.w r8, [r0, #384]
-  str.w r7, [r0, #192]
+  str.w r10, [r0, #384]
+  str.w r11, [r0, #288]
+  str.w r8, [r0, #192]
+  str.w r7, [r0, #96]
   str.w r9, [r0], #4
   cmp.w r0, lr
-  bne.w gf_polymul_384x384_eval_input_d_body
+  bne.w gf_polymul_192x192_eval_input_d_body
   vmov.w r1, s1
-  add.w r0, r0, #768
+  add.w r0, r0, #384
   vmov.w r4, s0
   mov.w r5, r0
-  sub.w r6, r1, #192
-  sub.w r7, r2, #192
+  sub.w r6, r1, #96
+  sub.w r7, r2, #96
   mov.w r1, r6
   mov.w r2, r7
-  bl.w gf_polymul_96x96
-  add.w r0, r5, #1536
-  sub.w r1, r5, #1920
-  sub.w r2, r5, #960
-  bl.w gf_polymul_96x96
-  add.w r0, r5, #384
-  sub.w r1, r5, #1728
-  sub.w r2, r5, #768
-  bl.w gf_polymul_96x96
-  add.w r0, r5, #1920
-  sub.w r1, r5, #1536
-  sub.w r2, r5, #576
-  bl.w gf_polymul_96x96
+  bl.w gf_polymul_48x48
   add.w r0, r5, #768
-  sub.w r1, r5, #1344
+  sub.w r1, r5, #960
+  sub.w r2, r5, #480
+  bl.w gf_polymul_48x48
+  add.w r0, r5, #192
+  sub.w r1, r5, #864
   sub.w r2, r5, #384
-  bl.w gf_polymul_96x96
-  add.w r0, r5, #2304
-  sub.w r1, r5, #1152
+  bl.w gf_polymul_48x48
+  add.w r0, r5, #960
+  sub.w r1, r5, #768
+  sub.w r2, r5, #288
+  bl.w gf_polymul_48x48
+  add.w r0, r5, #384
+  sub.w r1, r5, #672
   sub.w r2, r5, #192
-  bl.w gf_polymul_96x96
+  bl.w gf_polymul_48x48
   add.w r0, r5, #1152
-  add.w r1, r6, #576
-  add.w r2, r7, #576
-  bl.w gf_polymul_96x96
+  sub.w r1, r5, #576
+  sub.w r2, r5, #96
+  bl.w gf_polymul_48x48
+  add.w r0, r5, #576
+  add.w r1, r6, #288
+  add.w r2, r7, #288
+  bl.w gf_polymul_48x48
   vmov.w s0, r4
   mov.w r0, r5
-  add.w lr, r0, #384
+  add.w lr, r0, #192
   movw.w r12, #44798
   movt.w r12, #12
   movw.w r11, #5167
 	 movw.w r10, :lower16:Toom4Table_5167
 	 movt.w r10, :upper16:Toom4Table_5167
 	 vldm	r10, {s1-s16} @ read table
-  add.w r1, r0, #2304
-gf_polymul_384x384_interpol_output_body:
-  ldr.w r10, [r0, #1152]
+  add.w r1, r0, #1152
+gf_polymul_192x192_interpol_output_body:
+  ldr.w r10, [r0, #576]
   ldr.w r9, [r1]
-  ldr.w r8, [r0, #768]
-  ldr.w r7, [r0, #1920]
-  ldr.w r6, [r0, #384]
-  ldr.w r3, [r0, #1536]
+  ldr.w r8, [r0, #384]
+  ldr.w r7, [r0, #960]
+  ldr.w r6, [r0, #192]
+  ldr.w r3, [r0, #768]
   ldr.w r4, [r0], #4
   pkhbt.w r1, r4, r6, lsl #16
   pkhtb.w r2, r6, r4, asr #16
@@ -254,7 +254,7 @@ gf_polymul_384x384_interpol_output_body:
   smmulr.w r10, r12, r9
   mls.w r9, r11, r10, r9
   pkhbt.w r8, r8, r9, lsl #16
-  str.w r8, [r0, #1532]
+  str.w r8, [r0, #764]
   vmov.w r10, s4
   smuadx.w r8, r10, r1
   smuadx.w r9, r10, r2
@@ -269,7 +269,7 @@ gf_polymul_384x384_interpol_output_body:
   smmulr.w r10, r12, r9
   mls.w r9, r11, r10, r9
   pkhbt.w r8, r8, r9, lsl #16
-  str.w r8, [r0, #380]
+  str.w r8, [r0, #188]
   vmov.w r10, s7
   smuad.w r8, r10, r1
   smuad.w r9, r10, r2
@@ -287,7 +287,7 @@ gf_polymul_384x384_interpol_output_body:
   smmulr.w r10, r12, r9
   mls.w r9, r11, r10, r9
   pkhbt.w r8, r8, r9, lsl #16
-  str.w r8, [r0, #1916]
+  str.w r8, [r0, #956]
   vmov.w r10, s10
   smuadx.w r8, r10, r1
   smuadx.w r9, r10, r2
@@ -302,7 +302,7 @@ gf_polymul_384x384_interpol_output_body:
   smmulr.w r10, r12, r9
   mls.w r9, r11, r10, r9
   pkhbt.w r8, r8, r9, lsl #16
-  str.w r8, [r0, #764]
+  str.w r8, [r0, #380]
   vmov.w r10, s13
   smuad.w r8, r10, r1
   smuad.w r9, r10, r2
@@ -320,14 +320,14 @@ gf_polymul_384x384_interpol_output_body:
   smmulr.w r10, r12, r9
   mls.w r9, r11, r10, r9
   pkhbt.w r8, r8, r9, lsl #16
-  add.w r1, r0, #2304
+  add.w r1, r0, #1152
   str.w r8, [r1, #-4]
   cmp.w r0, lr
-  bne.w gf_polymul_384x384_interpol_output_body
-  sub.w r1, r0, #384
+  bne.w gf_polymul_192x192_interpol_output_body
+  sub.w r1, r0, #192
   vmov.w r0, s0
-  add.w lr, r0, #176
-gf_polymul_384x384_copy_output_A:
+  add.w lr, r0, #88
+gf_polymul_192x192_copy_output_A:
   ldr.w r3, [r1, #4]
   ldr.w r4, [r1, #8]
   ldr.w r5, [r1, #12]
@@ -351,26 +351,22 @@ gf_polymul_384x384_copy_output_A:
   str.w r12, [r0, #40]
   str.w r2, [r0], #44
   cmp.w r0, lr
-  bne.w gf_polymul_384x384_copy_output_A
+  bne.w gf_polymul_192x192_copy_output_A
   ldr.w r3, [r1, #4]
-  ldr.w r4, [r1, #8]
-  ldr.w r5, [r1, #12]
-  ldr.w r2, [r1], #16
+  ldr.w r2, [r1], #8
   str.w r3, [r0, #4]
-  str.w r4, [r0, #8]
-  str.w r5, [r0, #12]
-  str.w r2, [r0], #16
-  add.w lr, r0, #1140
-gf_polymul_384x384_copy_output_B:
-  ldr.w r8, [r1, #1348]
+  str.w r2, [r0], #8
+  add.w lr, r0, #560
+gf_polymul_192x192_copy_output_B:
+  ldr.w r8, [r1, #676]
   ldr.w r3, [r1, #4]
-  ldr.w r9, [r1, #1352]
+  ldr.w r9, [r1, #680]
   ldr.w r4, [r1, #8]
-  ldr.w r10, [r1, #1356]
+  ldr.w r10, [r1, #684]
   ldr.w r5, [r1, #12]
-  ldr.w r11, [r1, #1360]
+  ldr.w r11, [r1, #688]
   ldr.w r6, [r1, #16]
-  ldr.w r7, [r1, #1344]
+  ldr.w r7, [r1, #672]
   ldr.w r2, [r1], #20
   sadd16.w r2, r2, r7
   sadd16.w r3, r3, r8
@@ -383,21 +379,25 @@ gf_polymul_384x384_copy_output_B:
   str.w r6, [r0, #16]
   str.w r2, [r0], #20
   cmp.w r0, lr
-  bne.w gf_polymul_384x384_copy_output_B
-  ldr.w r6, [r1, #1348]
+  bne.w gf_polymul_192x192_copy_output_B
+  ldr.w r7, [r1, #676]
   ldr.w r3, [r1, #4]
-  ldr.w r7, [r1, #1352]
+  ldr.w r8, [r1, #680]
   ldr.w r4, [r1, #8]
-  ldr.w r5, [r1, #1344]
-  ldr.w r2, [r1], #12
-  sadd16.w r2, r2, r5
-  sadd16.w r3, r3, r6
-  sadd16.w r4, r4, r7
+  ldr.w r9, [r1, #684]
+  ldr.w r5, [r1, #12]
+  ldr.w r6, [r1, #672]
+  ldr.w r2, [r1], #16
+  sadd16.w r2, r2, r6
+  sadd16.w r3, r3, r7
+  sadd16.w r4, r4, r8
+  sadd16.w r5, r5, r9
   str.w r3, [r0, #4]
   str.w r4, [r0, #8]
-  str.w r2, [r0], #12
-  add.w lr, r0, #176
-gf_polymul_384x384_copy_output_C:
+  str.w r5, [r0, #12]
+  str.w r2, [r0], #16
+  add.w lr, r0, #88
+gf_polymul_192x192_copy_output_C:
   ldr.w r3, [r1, #4]
   ldr.w r4, [r1, #8]
   ldr.w r5, [r1, #12]
@@ -421,16 +421,12 @@ gf_polymul_384x384_copy_output_C:
   str.w r12, [r0, #40]
   str.w r2, [r0], #44
   cmp.w r0, lr
-  bne.w gf_polymul_384x384_copy_output_C
+  bne.w gf_polymul_192x192_copy_output_C
   ldr.w r3, [r1, #4]
-  ldr.w r4, [r1, #8]
-  ldr.w r5, [r1, #12]
-  ldr.w r2, [r1], #16
+  ldr.w r2, [r1], #8
   str.w r3, [r0, #4]
-  str.w r4, [r0, #8]
-  str.w r5, [r0, #12]
-  str.w r2, [r0], #16
-  add.w sp, sp, #7296
+  str.w r2, [r0], #8
+  add.w sp, sp, #3648
   vpop.w { s16 }
   pop.w {r4-r12, pc}
 Toom4Table_5167:
