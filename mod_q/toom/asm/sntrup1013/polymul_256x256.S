@@ -27,13 +27,13 @@ gf_polymul_256x256_eval_input_c_body:
   lsl.w r10, r8, #3
   bfc.w r9, #16, #1
   bfc.w r10, #16, #3
-  sadd16.w r9, r9, r10
-  smlawb.w r10, r4, r9, r3
-  smlawt.w r11, r4, r9, r3
-  smulbt.w r10, r2, r10
+  smlawb.w r12, r4, r10, r3
+  smlawt.w r11, r4, r10, r3
+  smulbt.w r12, r2, r12
   smulbt.w r11, r2, r11
-  pkhbt.w r10, r10, r11, lsl #16
-  ssub16.w r9, r9, r10
+  pkhbt.w r12, r12, r11, lsl #16
+  ssub16.w r10, r10, r12
+  sadd16.w r9, r9, r10
   lsl.w r10, r6, #2
   bfc.w r10, #16, #2
   sadd16.w r10, r10, r5
@@ -55,6 +55,14 @@ gf_polymul_256x256_eval_input_c_body:
   lsl.w r12, r6, #1
   bfc.w r9, #16, #3
   bfc.w r12, #16, #1
+  vmov s3, s4, r5, r6
+  smlawb.w r5, r4, r9, r3
+  smlawt.w r6, r4, r9, r3
+  smulbt.w r5, r2, r5
+  smulbt.w r6, r2, r6
+  pkhbt.w r5, r5, r6, lsl #16
+  ssub16.w r9, r9, r5
+  vmov r5, r6, s3, s4
   sadd16.w r9, r9, r12
   sadd16.w r5, r5, r6
   smlawb.w r6, r4, r9, r3
@@ -112,13 +120,13 @@ gf_polymul_256x256_eval_input_d_body:
   lsl.w r10, r8, #3
   bfc.w r9, #16, #1
   bfc.w r10, #16, #3
-  sadd16.w r9, r9, r10
-  smlawb.w r10, r4, r9, r3
-  smlawt.w r11, r4, r9, r3
-  smulbt.w r10, r1, r10
+  smlawb.w r12, r4, r10, r3
+  smlawt.w r11, r4, r10, r3
+  smulbt.w r12, r1, r12
   smulbt.w r11, r1, r11
-  pkhbt.w r10, r10, r11, lsl #16
-  ssub16.w r9, r9, r10
+  pkhbt.w r12, r12, r11, lsl #16
+  ssub16.w r10, r10, r12
+  sadd16.w r9, r9, r10
   lsl.w r10, r6, #2
   bfc.w r10, #16, #2
   sadd16.w r10, r10, r5
@@ -140,6 +148,14 @@ gf_polymul_256x256_eval_input_d_body:
   lsl.w r12, r6, #1
   bfc.w r9, #16, #3
   bfc.w r12, #16, #1
+  vmov s3, s4, r5, r6
+  smlawb.w r5, r4, r9, r3
+  smlawt.w r6, r4, r9, r3
+  smulbt.w r5, r1, r5
+  smulbt.w r6, r1, r6
+  pkhbt.w r5, r5, r6, lsl #16
+  ssub16.w r9, r9, r5
+  vmov r5, r6, s3, s4
   sadd16.w r9, r9, r12
   sadd16.w r5, r5, r6
   smlawb.w r6, r4, r9, r3

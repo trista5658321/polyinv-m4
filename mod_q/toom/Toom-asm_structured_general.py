@@ -145,10 +145,10 @@ def eval_input_coefs(arr_name):
 	print('  ldr.w r5, [%s], #4' % (source_addr))
 
 	# for read
-	a0 = "r5"
-	a1 = "r7"
-	a2 = "r6"
-	a3 = "r8"
+	# a0 = "r5"
+	# a1 = "r7"
+	# a2 = "r6"
+	# a3 = "r8"
 
 	if arr_name == 'f':
 		print('  and.w r9, r1, r7, lsl #1')
@@ -160,17 +160,30 @@ def eval_input_coefs(arr_name):
 		print('  bfc.w r9, #16, #1') 
 		assert(4*q < 2**15)
 		print('  bfc.w r10, #16, #3')
-	print('  sadd16.w r9, r9, r10')
-	if arr_name != 'f': barrett_16x2('r9', 'r10', 'r11', 'r4', 'r3', unused_addr)
+	
+	reduction_first = not (5*q < 2**15) # r9 + r10
+	if (reduction_first):
+		# print("need reduction")
+		barrett_16x2('r10', 'r12', 'r11', 'r4', 'r3', unused_addr)
+
+	print('  sadd16.w r9, r9, r10') # 2 a1 + 2^3 a3
+	if arr_name != 'f' and not reduction_first: barrett_16x2('r9', 'r10', 'r11', 'r4', 'r3', unused_addr)
+
+	r9_value = q+q//2
 
 	if arr_name == 'f': print('  and.w r10, r3, r6, lsl #2')
 	else:
-		print('  lsl.w r10, r6, #2')
+		print('  lsl.w r10, r6, #2') # 2^2 a2
+		assert(2*q < 2**15)
 		print('  bfc.w r10, #16, #2')
-	print('  sadd16.w r10, r10, r5')
+	assert((2*q+q//2) < 2**15)
+	print('  sadd16.w r10, r10, r5') # 2^2 a2 + a0
+	
+	r10_value = (2*q+q//2)
+	assert((r9_value + r10_value) < 2**15)
+	print('  sadd16.w r11, r10, r9') # h(2) done
+	print('  ssub16.w r10, r10, r9') # h(-2) done
 
-	print('  sadd16.w r11, r10, r9')
-	print('  ssub16.w r10, r10, r9')
 	if arr_name != 'f':
 		barrett_16x2('r11', 'r9', 'r12', 'r4', 'r3', unused_addr)
 		barrett_16x2('r10', 'r9', 'r12', 'r4', 'r3', unused_addr)
@@ -179,26 +192,48 @@ def eval_input_coefs(arr_name):
 		print('  and.w r9, r4, r5, lsl #3')
 		print('  and.w r12, r1, r6, lsl #1')
 	else:
-		print('  lsl.w r9, r5, #3')
-		print('  lsl.w r12, r6, #1')
+		print('  lsl.w r9, r5, #3') # 2^3 a0
+		print('  lsl.w r12, r6, #1') # 2 a2
+		assert(4*q < 2**15)
 		print('  bfc.w r9, #16, #3')
+		assert(q < 2**15)
 		print('  bfc.w r12, #16, #1')
-	print('  sadd16.w r9, r9, r12')
+	
+		reduction_first = not (5*q < 2**15)
+		if (reduction_first):
+			# print("need reduction")
+			print('  vmov s3, s4, r5, r6')
+			barrett_16x2('r9', 'r5', 'r6', 'r4', 'r3', unused_addr)
+			print('  vmov r5, r6, s3, s4')
+
+	print('  sadd16.w r9, r9, r12') # 2^3 a0 + 2 a2
+	assert(q < 2**15)
 	print('  sadd16.w r5, r5, r6')
+	r5_value = q
 	if arr_name != 'f': barrett_16x2('r9', 'r6', 'r12', 'r4', 'r3', unused_addr)
+	r9_value = q//2
 
 	if arr_name == 'f': print('  and.w r12, r3, r7, lsl #2')
 	else:
-		print('  lsl.w r12, r7, #2')
+		print('  lsl.w r12, r7, #2') # 2^2 a1
+		assert(2*q < 2**15)
 		print('  bfc.w r12, #16, #2')
-	print('  sadd16.w r12, r12, r8')
-	print('  sadd16.w r7, r7, r8')
 
-	print('  sadd16.w r9, r9, r12')
+	r12_value = 2*q
+	assert(r12_value+q//2 < 2**15)
+	print('  sadd16.w r12, r12, r8') # 2^2 a1 + a3
+	assert(q < 2**15)
+	print('  sadd16.w r7, r7, r8') # a1 + a3
+	r7_value = q
+
+	assert(r9_value+r12_value < 2**15)
+	print('  sadd16.w r9, r9, r12') # h(1/2) done
 	if arr_name != 'f': barrett_16x2('r9', 'r6', 'r8', 'r4', 'r3', unused_addr)
-
-	print('  ssub16.w r8, r5, r7')
-	print('  sadd16.w r7, r5, r7')
+	r9_value = q//2
+	
+	assert(r5_value+r7_value < 2**15)
+	print('  ssub16.w r8, r5, r7') # h(-1) done
+	print('  sadd16.w r7, r5, r7') # h(1) done
 	if arr_name != 'f':
 		barrett_16x2('r8', 'r5', 'r6', 'r4', 'r3', unused_addr)
 		barrett_16x2('r7', 'r5', 'r6', 'r4', 'r3', unused_addr)
