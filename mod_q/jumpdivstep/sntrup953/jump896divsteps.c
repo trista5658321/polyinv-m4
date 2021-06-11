@@ -1,15 +1,18 @@
 #include <stdint.h>
 #include "cmsis.h"
-#include "api.h"
 
-extern void gf_polymul_512x32_2x2_x2p2 (int *V,int *M,int *fh,int *gh);
-void gf_polymul_128x128_2x2_x_2x2_onlyuv (int *M, int *M1, int *M2);
-
+extern void gf_polymul_128x128(int *h, int *f, int *g);
+extern void gf_polymul_384x384(int *h, int *f, int *g);
 extern int jump512divsteps(int minusdelta, int *M, int *f, int *g);
 extern int jump256divsteps(int minusdelta, int *M, int *f, int *g);
 extern int jump128divsteps(int minusdelta, int *M, int *f, int *g);
-extern void gf_polymul_128x128(int32_t *h, int32_t *f, int32_t *g);
 
+void gf_polymul_128x256(int *h, int *f, int *g);
+void gf_polymul_384x512(int *h, int *f, int *g);
+void gf_polymul_128x128_2x2_x2p2_1 (int *V,int *M,int *fh,int *gh);
+void gf_polymul_384x384_2x2_x2p2_1 (int *V,int *M,int *fh,int *gh);
+void gf_polymul_128x256_2x2_x_2x2_onlyuv (int *M, int *M1, int *M2);
+void gf_polymul_384x512_2x2_x_2x2_onlyuv (int *M, int *M1, int *M2);
 int jump896divsteps(int minusdelta, int *M, int *f, int *g);
 
 #define q 6343
@@ -31,54 +34,25 @@ static inline int barrett_16x2i(int X) {
 #endif
 
 void gf_polymul_128x256(int *h, int *f, int *g){
-    int16_t *ptr = (int16_t *)h;
-    for (int i = 0; i < 384; i++) *ptr++ = 0;
-    
-    for (int i = 0; i < 128; i++)
-    {
-        int16_t *result = (int16_t *)h + i;
-        int16_t *f_i = (int16_t *)f + i;
-        for (int j = 0; j < 256; j++)
-        {
-            int16_t *g_i = (int16_t *)g + j;
-            int new_val = (*f_i * *g_i) + *(result);
-            *(result++) = (int16_t)(new_val % q);
-        }
-    }
+  int i, T, hh[128];
+  int *p, *pp;
+  gf_polymul_128x128(h, f, g);
+  gf_polymul_128x128(hh, f, g+64);
+  for(i=64, p=hh, pp=h+64; i>0; --i){
+    T = barrett_16x2i(__SADD16(*p++, *pp));
+    *(pp++) = T;
+  }
+  for(i=64; i>0; --i){
+    *(pp++) = *(p++);
+  }
 }
 
 void gf_polymul_384x512(int *h, int *f, int *g){
-    int16_t *ptr = (int16_t *)h;
-    for (int i = 0; i < 896; i++) *ptr++ = 0;
-    
-    for (int i = 0; i < 384; i++)
-    {
-        int16_t *result = (int16_t *)h + i;
-        int16_t *f_i = (int16_t *)f + i;
-        for (int j = 0; j < 512; j++)
-        {
-            int16_t *g_i = (int16_t *)g + j;
-            int new_val = (*f_i * *g_i) + *(result);
-            *(result++) = (int16_t)(new_val % q);
-        }
-    }
-}
-
-void gf_polymul_384x384(int *h, int *f, int *g){
-    int16_t *ptr = (int16_t *)h;
-    for (int i = 0; i < 768; i++) *ptr++ = 0;
-    
-    for (int i = 0; i < 384; i++)
-    {
-        int16_t *result = (int16_t *)h + i;
-        int16_t *f_i = (int16_t *)f + i;
-        for (int j = 0; j < 384; j++)
-        {
-            int16_t *g_i = (int16_t *)g + j;
-            int new_val = (*f_i * *g_i) + *(result);
-            *(result++) = (int16_t)(new_val % q);
-        }
-    }
+  int fpad[256]={0}, hh[512];
+  int i;
+  for(i=0;i<192;++i)fpad[i]=f[i];
+  gf_polymul_512x512(hh, fpad, g);
+  for(i=0;i<448;++i)h[i] = hh[i];
 }
 
 void gf_polymul_384x384_2x2_x2p2_1 (int *V,int *M,int *fh,int *gh){
@@ -102,23 +76,6 @@ void gf_polymul_384x384_2x2_x2p2_1 (int *V,int *M,int *fh,int *gh){
     T = barrett_16x2i(__SADD16(__SADD16(*(W++),*(Y++)),*(Z++))); *(X++) = T;
   } 
 }
-
-// void gf_polymul_128x128(int *h, int *f, int *g){
-//     int16_t *ptr = (int16_t *)h;
-//     for (int i = 0; i < 256; i++) *ptr++ = 0;
-    
-//     for (int i = 0; i < 128; i++)
-//     {
-//         int16_t *result = (int16_t *)h + i;
-//         int16_t *f_i = (int16_t *)f + i;
-//         for (int j = 0; j < 128; j++)
-//         {
-//             int16_t *g_i = (int16_t *)g + j;
-//             int new_val = (*f_i * *g_i) + *(result);
-//             *(result++) = (int16_t)(new_val % q);
-//         }
-//     }
-// }
 
 void gf_polymul_128x128_2x2_x2p2_1 (int *V,int *M,int *fh,int *gh){
   int i, T, *X, *Y, *Z, *W;

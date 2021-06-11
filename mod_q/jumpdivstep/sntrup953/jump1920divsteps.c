@@ -3,8 +3,8 @@
 
 extern int jump1024divsteps(int minusdelta, int32_t *M, int32_t *f, int32_t *g);
 extern int jump896divsteps(int minusdelta, int32_t *M, int32_t *f, int32_t *g);
-// extern void gf_polymul_954x954(int32_t *h, int32_t *f, int32_t *g);
 
+void gf_polymul_954x954(int32_t *h, int32_t *f, int32_t *g);
 void gf_polymul_954x954_2x2_x_2x2 (int32_t *M, int32_t *M1, int32_t *M2); // M = M2 x M1 
 int jump1920divsteps(int minusdelta, int32_t *M, int32_t *f, int32_t *g);
 
@@ -21,20 +21,11 @@ static inline int barrett_16x2i(int X) {
 }
 
 void gf_polymul_954x954(int *h, int *f, int *g){
-    int16_t *ptr = (int16_t *)h;
-    for (int i = 0; i < 1908; i++) *ptr++ = 0;
-    
-    for (int i = 0; i < 954; i++)
-    {
-        int16_t *result = (int16_t *)h + i;
-        int16_t *f_i = (int16_t *)f + i;
-        for (int j = 0; j < 954; j++)
-        {
-            int16_t *g_i = (int16_t *)g + j;
-            int new_val = (*f_i * *g_i) + *(result);
-            *(result++) = (int16_t)(new_val % q);
-        }
-    }
+    int pad[1024]={0}, fpad[512]={0}, gpad[512]={0};
+    for(int i=0;i<477;++i)fpad[i]=f[i];
+    for(int i=0;i<477;++i)gpad[i]=g[i];
+    polymul_953x953_mod6343_32bit_16bit_crt(pad, fpad, gpad);
+    for(int i=0;i<954;++i)h[i]=pad[i];
 }
 
 void gf_polymul_954x954_2x2_x_2x2 (int32_t *M, int32_t *M1, int32_t *M2){ //only v = g^-1 mod f
