@@ -3,8 +3,9 @@
 
 extern int jump256divsteps(int minusdelta, int *M, int *f, int *g);
 extern int jump1024divsteps(int minusdelta, int *M, int *f, int *g);
-extern void gf_polymul_256x256(int32_t *h, int32_t *f, int32_t *g);
+extern void gf_polymul_256x256(int *h, int *f, int *g);
 
+void gf_polymul_256x1024(int *h, int *f, int *g);
 void gf_polymul_256x1024_2x2_x2p2 (int *V,int *M,int *fh,int *gh);
 void gf_polymul_1024x256_2x2_x2p2 (int *V,int *M,int *fh,int *gh);
 void gf_polymul_256x256_2x2_x2p2_1 (int *V,int *M,int *fh,int *gh);
@@ -37,20 +38,23 @@ int B1280_1[641];
 int * BB1280_1 = (int *)((void *)B1280_1 + 2);
 
 void gf_polymul_256x1024(int *h, int *f, int *g){
-    int16_t *ptr = (int16_t *)h;
-    for (int i = 0; i < 1280; i++) *ptr++ = 0;
-    
-    for (int i = 0; i < 256; i++)
-    {
-        int16_t *result = (int16_t *)h + i;
-        int16_t *f_i = (int16_t *)f + i;
-        for (int j = 0; j < 1024; j++)
-        {
-            int16_t *g_i = (int16_t *)g + j;
-            int new_val = (*f_i * *g_i) + *(result);
-            *(result++) = (int16_t)(new_val % q);
-        }
-    }
+  int i, T, hh[256];
+  int *p, *pp;
+  gf_polymul_256x256(h, f, g);
+  gf_polymul_256x256(h+256, f, g+256);
+  gf_polymul_256x256(hh, f, g+128);
+  for(i=256, p=hh, pp=h+128;i>0;--i){
+    T = barrett_16x2i(__SADD16(*(p++), *pp));
+    *(pp++)=T;
+  }
+  gf_polymul_256x256(hh, f, g+384);
+  for(i=128, p=hh, pp=h+384;i>0;--i){
+    T = barrett_16x2i(__SADD16(*(p++), *pp));
+    *(pp++)=T;
+  }
+  for(i=128;i>0;--i){
+    *(pp++)=*(p++);
+  }
 }
 
 void gf_polymul_1024x256_2x2_x2p2 (int *V,int *M,int *fh,int *gh){
@@ -151,20 +155,11 @@ void gf_polymul_256x1024_2x2_x_2x2_onlyvs (int *M, int *M1, int *M2) {
 
 // M1: f, g, v, s(1280)
 int jump1280divsteps_onlyvs(int minusdelta, int *M, int *f, int *g){
-  // minusdelta = jump1024divsteps(minusdelta, M1, f, g);
   int M1[3072], M2[768], fg[1280];
-  int M3[1536], M4[1536], fg_1[1024];
-  minusdelta = jump512divsteps(minusdelta, M3, f, g);
-  gf_polymul_512x512_2x2_x2p2 (fg_1, M3, f+256, g+256);
-  minusdelta = jump512divsteps(minusdelta, M4, fg_1, fg_1+512);
-  gf_polymul_512x512_2x2_x2p2 (M1, M4, fg_1+256, fg_1+768);
-  gf_polymul_512x512_2x2_x_2x2(M1+1024, M3+512, M4+512);
-
-  
+  minusdelta = jump1024divsteps(minusdelta, M1, f, g);
   gf_polymul_1024x256_2x2_x2p2 (fg, M1, f+512, g+512);
   minusdelta = jump256divsteps(minusdelta, M2, fg, fg+640);
   gf_polymul_256x1024_2x2_x2p2 (M, M2, fg+128, fg+768);
-
   gf_polymul_256x1024_2x2_x_2x2_onlyvs(M+1280, M1+1024, M2+256);
   return(minusdelta);
 }

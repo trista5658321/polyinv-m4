@@ -1,8 +1,6 @@
 #include <stdint.h>
-#include <stdio.h>
 
 extern int jump4divsteps(int minusdelta, int *M, int *f, int *g);
-
 extern void __polymul_4x4_2x2_x2p2 (int *V, int *M, int *fh, int *gh);
 extern void __polymul_4x4_2x2_x_2x2 (int *M, int *M1, int *M2);
 int jump8divsteps(int minusdelta, int *M, int *f, int *g);

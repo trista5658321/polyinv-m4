@@ -1,6 +1,7 @@
 #include <stdint.h>
 #include "cmsis.h"
 
+extern void gf_polymul_512x512(int *h, int *f, int *g);
 extern int jump512divsteps(int minusdelta, int *M, int *f, int *g);
 void gf_polymul_512x512_2x2_x2p2 (int *V,int *M,int *fh,int *gh);
 void gf_polymul_512x512_2x2_x_2x2 (int *M, int *M1, int *M2);
@@ -26,23 +27,6 @@ static inline int barrett_16x2i(int X) {
 //static
 int B1024_1[513];
 int * BB1024_1 = (int *)((void *)B1024_1 + 2);
-
-void gf_polymul_512x512(int *h, int *f, int *g){
-    int16_t *ptr = (int16_t *)h;
-    for (int i = 0; i < 1024; i++) *ptr++ = 0;
-    
-    for (int i = 0; i < 512; i++)
-    {
-        int16_t *result = (int16_t *)h + i;
-        int16_t *f_i = (int16_t *)f + i;
-        for (int j = 0; j < 512; j++)
-        {
-            int16_t *g_i = (int16_t *)g + j;
-            int new_val = (*f_i * *g_i) + *(result);
-            *(result++) = (int16_t)(new_val % q);
-        }
-    }
-}
 
 void gf_polymul_512x512_2x2_x2p2 (int *V,int *M,int *fh,int *gh){
   int i, T, *X, *Y, *W;
@@ -97,12 +81,11 @@ void gf_polymul_512x512_2x2_x_2x2 (int *M, int *M1, int *M2) {
 }
 
 int jump1024divsteps(int minusdelta, int *M, int *f, int *g){
-int M1[1536], M2[1536], fg[1024];
+  int M1[1536], M2[1536], fg[1024];
   minusdelta = jump512divsteps(minusdelta, M1, f, g);
   gf_polymul_512x512_2x2_x2p2 (fg, M1, f+256, g+256);
   minusdelta = jump512divsteps(minusdelta, M2, fg, fg+512);
   gf_polymul_512x512_2x2_x2p2 (M, M2, fg+256, fg+768);
-  
   gf_polymul_512x512_2x2_x_2x2(M+1024, M1+512, M2+512);
   return(minusdelta);
 }
