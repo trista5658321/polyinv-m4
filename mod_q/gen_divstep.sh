@@ -14,7 +14,7 @@ python gen_jumpdivsteps/gen_n_full.py 512 7879 > jumpdivstep/big_prime_ntt/sntru
 
 # jump 1024
 # python gen_jumpdivsteps/.py 1024 5167 > jumpdivstep/big_prime_ntt/sntrup857/jump1024divsteps.c
-python gen_jumpdivsteps/gen_n_full_v2.py 1024 6343 > jumpdivstep/big_prime_ntt/sntrup953/jump1024divsteps.c
+# python gen_jumpdivsteps/.py 1024 6343 > jumpdivstep/big_prime_ntt/sntrup953/jump1024divsteps.c
 python gen_jumpdivsteps/gen_1024.py 1024 7177 > jumpdivstep/big_prime_ntt/sntrup1013/jump1024divsteps.c
 python gen_jumpdivsteps/gen_n_full.py 1024 7879 > jumpdivstep/big_prime_ntt/sntrup1277/jump1024divsteps.c
 
