@@ -1,6 +1,5 @@
 #include <stdint.h>
 #include "cmsis.h"
-#include <stdio.h>
 
 extern void gf_polymul_128x128(int *h, int *f, int *g);
 extern int jump128divsteps(int minusdelta, int *M, int *f, int *g);
@@ -78,7 +77,7 @@ void gf_polymul_128x128_2x2_x_2x2 (int *M, int *M1, int *M2) {
 }
 
 int jump256divsteps(int minusdelta, int *M, int *f, int *g){
-int M1[384], M2[384], fg[256];
+  int M1[384], M2[384], fg[256];
   minusdelta = jump128divsteps(minusdelta, M1, f, g);
   gf_polymul_128x128_2x2_x2p2 (fg, M1, f+64, g+64);
   minusdelta = jump128divsteps(minusdelta, M2, fg, fg+128);
