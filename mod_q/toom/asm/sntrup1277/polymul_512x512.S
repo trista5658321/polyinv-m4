@@ -65,12 +65,6 @@ gf_polymul_512x512_eval_input_c_body:
   vmov r5, r6, s3, s4
   sadd16.w r9, r9, r12
   sadd16.w r5, r5, r6
-  smlawb.w r6, r4, r9, r3
-  smlawt.w r12, r4, r9, r3
-  smulbt.w r6, r2, r6
-  smulbt.w r12, r2, r12
-  pkhbt.w r6, r6, r12, lsl #16
-  ssub16.w r9, r9, r6
   lsl.w r12, r7, #2
   bfc.w r12, #16, #2
   sadd16.w r12, r12, r8
@@ -158,12 +152,6 @@ gf_polymul_512x512_eval_input_d_body:
   vmov r5, r6, s3, s4
   sadd16.w r9, r9, r12
   sadd16.w r5, r5, r6
-  smlawb.w r6, r4, r9, r3
-  smlawt.w r12, r4, r9, r3
-  smulbt.w r6, r1, r6
-  smulbt.w r12, r1, r12
-  pkhbt.w r6, r6, r12, lsl #16
-  ssub16.w r9, r9, r6
   lsl.w r12, r7, #2
   bfc.w r12, #16, #2
   sadd16.w r12, r12, r8

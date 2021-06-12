@@ -210,8 +210,10 @@ def eval_input_coefs(arr_name):
 	assert(q < 2**15)
 	print('  sadd16.w r5, r5, r6')
 	r5_value = q
-	if arr_name != 'f': barrett_16x2('r9', 'r6', 'r12', 'r4', 'r3', unused_addr)
+	if arr_name != 'f' and (not reduction_first): barrett_16x2('r9', 'r6', 'r12', 'r4', 'r3', unused_addr)
 	r9_value = q//2
+	if not reduction_first:
+		r9_value = q//2 + q
 
 	if arr_name == 'f': print('  and.w r12, r3, r7, lsl #2')
 	else:
