@@ -38,6 +38,20 @@ assert(NN % 8 == 0)
 assert((output_mode == 't') or (output_mode == 'nt')) #TODO: output_mode == 'nt'
 assert((no_small_input == 'y') or (no_small_input == 'n'))
 
+def str_offset_check(rs, offset, tmp):
+	if offset > 4092:
+		print('  movw.w %s, #%d' % (tmp, offset))
+		print('  str.w %s, [r0, %s]' % (rs, tmp))
+	else:
+		print('  str.w %s, [r0, #%d]' % (rs, offset))
+
+def ldr_offset_check(rd, offset, tmp, rs="r0"):
+	if offset > 4092:
+		print('  movw.w %s, #%d' % (tmp, offset))
+		print('  ldr.w %s, [%s, %s]' % (rd, rs, tmp))
+	else:
+		print('  ldr.w %s, [%s, #%d]' % (rd, rs, offset))
+
 #assert intIn is an integer
 def is_constant(intIn):
 	bin_str = numpy.binary_repr(intIn, width=32)
@@ -266,9 +280,11 @@ def interpol_output_coefs_t():
 	print('  ldr.w r10, [r0, #%d]' % (NN * 3))
 	print('  ldr.w r9, [r1]')
 	print('  ldr.w r8, [r0, #%d]' % (NN * 2))
-	print('  ldr.w r7, [r0, #%d]' % (NN * 5))
+	ldr_offset_check("r7", (NN * 5), "r4")
+	# print('  ldr.w r7, [r0, #%d]' % (NN * 5))
 	print('  ldr.w r6, [r0, #%d]' % (NN * 1))
-	print('  ldr.w r3, [r0, #%d]' % (NN * 4))
+	ldr_offset_check("r3", (NN * 4), "r4")
+	# print('  ldr.w r3, [r0, #%d]' % (NN * 4))
 	print('  ldr.w r4, [r0], #4')
 	print('  pkhbt.w r1, r4, r6, lsl #16')
 	print('  pkhtb.w r2, r6, r4, asr #16')
@@ -292,7 +308,8 @@ def interpol_output_coefs_t():
 	print('  smladx.w r8, r10, r6, r8')
 	print('  smladx.w r9, r10, r7, r9')
 	barrett_32x2('r8', 'r9', 'r10', 'r12', 'r11')
-	print('  str.w r8, [r0, #%d]' % (NN * 4 - 4))
+	str_offset_check("r8", (NN * 4 - 4), "r10")
+	# print('  str.w r8, [r0, #%d]' % (NN * 4 - 4))
 
 	print('  vmov.w r10, s4')
 	print('  smuadx.w r8, r10, r1')
@@ -327,7 +344,8 @@ def interpol_output_coefs_t():
 	print('  smlatt.w r9, r10, r7, r9')
 	#
 	barrett_32x2('r8', 'r9', 'r10', 'r12', 'r11')
-	print('  str.w r8, [r0, #%d]' % (NN * 5 - 4))
+	str_offset_check("r8", (NN * 5 - 4), "r10")
+	# print('  str.w r8, [r0, #%d]' % (NN * 5 - 4))
 
 	print('  vmov.w r10, s10')
 	print('  smuadx.w r8, r10, r1')
@@ -415,9 +433,12 @@ def copy_output_coefs():
 		print('  add.w lr, r0, #%d' % ((step_total - step_tail) * 4))
 		print('%s_copy_output_B:' % (ftn_name_T4))
 		for rid in range(1, MAX_MOVE):
-			print('  ldr.w %s, [r1, #%d]' % (tmp_reg[MAX_MOVE + rid], NN // 2 * 7 + 4 * rid))
-			print('  ldr.w %s, [r1, #%d]' % (tmp_reg[rid], 4 * rid))
-		print('  ldr.w %s, [r1, #%d]' % (tmp_reg[MAX_MOVE], NN // 2 * 7))
+			ldr_offset_check(tmp_reg[MAX_MOVE + rid], NN // 2 * 7 + 4 * rid, tmp_reg[0], "r1")
+			# print('  ldr.w %s, [r1, #%d]' % (tmp_reg[MAX_MOVE + rid], NN // 2 * 7 + 4 * rid))
+			ldr_offset_check(tmp_reg[rid], 4 * rid, tmp_reg[0], "r1")
+			# print('  ldr.w %s, [r1, #%d]' % (tmp_reg[rid], 4 * rid))
+		ldr_offset_check(tmp_reg[MAX_MOVE], NN // 2 * 7, tmp_reg[0], "r1")
+		# print('  ldr.w %s, [r1, #%d]' % (tmp_reg[MAX_MOVE], NN // 2 * 7))
 		print('  ldr.w %s, [r1], #%d' % (tmp_reg[0], 4 * MAX_MOVE))
 		for rid in range(MAX_MOVE):
 			print('  sadd16.w %s, %s, %s' % (tmp_reg[rid], tmp_reg[rid], tmp_reg[MAX_MOVE + rid]))

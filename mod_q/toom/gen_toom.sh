@@ -30,3 +30,5 @@ python Toom-asm_structured_general.py 1024 7177 > asm/sntrup1013/polymul_1024x10
 python Toom-asm_structured_general.py 128 7879 > asm/sntrup1277/polymul_128x128.S
 python Toom-asm_structured_general.py 256 7879 > asm/sntrup1277/polymul_256x256.S
 python Toom-asm_structured_general.py 512 7879 > asm/sntrup1277/polymul_512x512.S
+python Toom-asm_structured_general.py 320 7879 > asm/sntrup1277/polymul_320x320.S
+python Toom-asm_structured_general.py 1280 7879 > asm/sntrup1277/polymul_1280x1280.S
