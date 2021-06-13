@@ -31,8 +31,6 @@ no_small_input = 'y'
 # try: no_small_input = sys.argv[5]
 # except: no_small_input = 'n'
 
-
-
 assert(NN > 0)
 assert(NN % 8 == 0)
 assert((output_mode == 't') or (output_mode == 'nt')) #TODO: output_mode == 'nt'
@@ -98,7 +96,12 @@ def print_Toom4():
 	print('%s:' % (ftn_name_T4))
 	print('  push.w {r4-r12, lr}')
 	print('  vpush.w { s16 }')
-	print('  sub.w sp, sp, #%d' % (NN * 5 + NN * 14))
+	sp_space = (NN * 5 + NN * 14)
+	if is_constant(sp_space):
+		print('  sub.w sp, sp, #%d' % (sp_space))
+	else:
+		print('  movw.w %s, #%d' % ("r6", sp_space))
+		print('  sub.w sp, sp, %s' % ("r6"))
 	print('  vmov.w s0, r0')
 	print('  mov.w r0, sp')
 
@@ -131,8 +134,11 @@ def print_Toom4():
 	print('  mov.w r0, r5')
 	interpol_output_coefs_t() #assert all the product arrays are trimmed.
 	copy_output_coefs()
-
-	print('  add.w sp, sp, #%d' % (NN * 5 + NN * 14))
+	if is_constant(sp_space):
+		print('  add.w sp, sp, #%d' % (sp_space))
+	else:
+		print('  movw.w %s, #%d' % ("r6", sp_space))
+		print('  add.w sp, sp, %s' % ("r6"))
 	print('  vpop.w { s16 }')
 	print('  pop.w {r4-r12, pc}')
 	Toom4Table(q)
