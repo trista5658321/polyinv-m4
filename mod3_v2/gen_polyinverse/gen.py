@@ -7,8 +7,52 @@ from mod3_v2.utility_mod3 import BASE, _P, max_V_coeffi
 V_space = max_V_coeffi // 4
 round_half = _P // BASE
 
+def f_proto():
+    print("extern int jump%ddivsteps_mod3(int minusdelta, uint32_t *M1, uint32_t *f, uint32_t *g);" % (BASE))
+    print("int jump%ddivsteps_mod3_%d(int minusdelta, uint32_t *M, uint32_t *f, uint32_t *g);\n" % (_P*2, BASE))
+    print("extern void __update_fg_%dx%d(uint32_t *f, uint32_t *g, uint32_t *M1);" % (BASE, _P))
+    for i in range(1, round_half):
+        print("extern void __update_VS_%dx%d(uint32_t *V, uint32_t *S, uint32_t *M1);" % (BASE, BASE*i))
+    
+    #2
+    if BASE * round_half != _P:
+        print("extern void __update_VS_%dx%d(uint32_t *V, uint32_t *S, uint32_t *M1);" % (BASE, BASE*round_half))
+
+    #3
+    _N_max = _P - BASE + (_P % BASE)
+    round_half_2 = _N_max // BASE
+
+    # Phase 3:
+    print("extern void __update_VS_%dx%d(uint32_t *V, uint32_t *S, uint32_t *M1);" % (BASE, _P))
+    if _N_max % BASE == 0:
+            print("extern void __update_VS_%dx%d(uint32_t *V, uint32_t *S, uint32_t *M1);" % (BASE, max_V_coeffi))
+    for i in range(round_half_2):
+        print("extern void __update_fg_%dx%d(uint32_t *f, uint32_t *g, uint32_t *M1);" % (BASE, _N_max - BASE*i))
+    
+    # Phase 4:
+    _N_max_2 = _N_max % BASE
+    base = BASE
+    while(base > _N_max_2):
+        base //= 2
+
+    while(_N_max_2 != 0):
+        print("extern int jump%ddivsteps_mod3(int minusdelta, uint32_t *M1, uint32_t *f, uint32_t *g);" % (base))
+        print("extern void __update_fg_%dx%d(uint32_t *f, uint32_t *g, uint32_t *M1);" % (base, _N_max_2))
+        if _N_max_2 - base == 0:
+            print("extern void __update_VS_%dx%d(uint32_t *V, uint32_t *S, uint32_t *M1);" % (base, max_V_coeffi))
+        else:
+            print("extern void __update_VS_%dx%d(uint32_t *V, uint32_t *S, uint32_t *M1);" % (base, _P))
+        
+        _N_max_2 -= base
+        base //= 2
+    
+    print("")
+
 print("#include <inttypes.h>\n")
-print("int jump%ddivsteps_mod3_%d(int minusdelta, int32_t *M, int32_t *f, int32_t *g){" % (_P*2, BASE))
+
+f_proto()
+
+print("int jump%ddivsteps_mod3_%d(int minusdelta, uint32_t *M, uint32_t *f, uint32_t *g){" % (_P*2, BASE))
 printIn("uint32_t V[%d];" % V_space)
 printIn("uint32_t S[%d];" % V_space)
 printIn("uint32_t M1[%d]; // %d coefficients * 6" % ((BASE*6)//4, BASE))

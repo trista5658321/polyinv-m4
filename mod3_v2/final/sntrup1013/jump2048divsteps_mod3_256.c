@@ -1,6 +1,19 @@
 #include <inttypes.h>
 
-int jump2048divsteps_mod3_256(int minusdelta, int32_t *M, int32_t *f, int32_t *g){
+extern int jump256divsteps_mod3(int minusdelta, uint32_t *M1, uint32_t *f, uint32_t *g);
+int jump2048divsteps_mod3_256(int minusdelta, uint32_t *M, uint32_t *f, uint32_t *g);
+
+extern void __update_fg_256x1024(uint32_t *f, uint32_t *g, uint32_t *M1);
+extern void __update_VS_256x256(uint32_t *V, uint32_t *S, uint32_t *M1);
+extern void __update_VS_256x512(uint32_t *V, uint32_t *S, uint32_t *M1);
+extern void __update_VS_256x768(uint32_t *V, uint32_t *S, uint32_t *M1);
+extern void __update_VS_256x1024(uint32_t *V, uint32_t *S, uint32_t *M1);
+extern void __update_VS_256x1040(uint32_t *V, uint32_t *S, uint32_t *M1);
+extern void __update_fg_256x768(uint32_t *f, uint32_t *g, uint32_t *M1);
+extern void __update_fg_256x512(uint32_t *f, uint32_t *g, uint32_t *M1);
+extern void __update_fg_256x256(uint32_t *f, uint32_t *g, uint32_t *M1);
+
+int jump2048divsteps_mod3_256(int minusdelta, uint32_t *M, uint32_t *f, uint32_t *g){
 	uint32_t V[260];
 	uint32_t S[260];
 	uint32_t M1[384]; // 256 coefficients * 6
