@@ -63,7 +63,7 @@ printIn("    V[i] = 0;")
 printIn("    S[i] = 0;")
 printIn("}")
 
-printIn("uint8_t * p_S = (uint8_t *)S;")
+# printIn("uint8_t * p_S = (uint8_t *)S;")
 printIn("*(S) = 1;")
 
 uvrs_pos = (BASE//4)*2

@@ -38,7 +38,6 @@ int jump1536divsteps_mod3_64(int minusdelta, uint32_t *M, uint32_t *f, uint32_t 
 	    V[i] = 0;
 	    S[i] = 0;
 	}
-	uint8_t * p_S = (uint8_t *)S;
 	*(S) = 1;
 	// 1: 12
 	minusdelta = jump64divsteps_mod3(minusdelta,M1,f,g);

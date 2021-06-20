@@ -22,7 +22,6 @@ int jump2048divsteps_mod3_256(int minusdelta, uint32_t *M, uint32_t *f, uint32_t
 	    V[i] = 0;
 	    S[i] = 0;
 	}
-	uint8_t * p_S = (uint8_t *)S;
 	*(S) = 1;
 	// 1: 4
 	minusdelta = jump256divsteps_mod3(minusdelta,M1,f,g);
