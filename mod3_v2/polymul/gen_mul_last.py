@@ -4,7 +4,7 @@ from polymul_N1xN_sch3_componemt import SCH_polymul_N1xN_mod3_jump_end, polymul
 
 
 mul_jump_head = mul_jump_head_4_4
-if _P_ZERO_coeffi < 4:
+if _P_ZERO_coeffi < 7:
     mul_jump_head = mul_jump_head_4_0
 
 polymul(BASE, BASE, BASE)

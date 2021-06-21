@@ -301,7 +301,7 @@ def polymul(N1, NN, _N):
     print(".p2align 2,,3")
     print(".syntax unified")
     print(".text")
-    if _P_ZERO_coeffi < 4:
+    if _P_ZERO_coeffi < 7:
         SCH_polymul_mod3_head_last()
 
     SCH_polymul_N1xN_mod3(N1,NN,_N)

@@ -5,7 +5,7 @@ from polymul_N1xN_sch3_componemt import SCH_polymul_N1xN_mod3_jump_end, polymul
 
 def gen_mul_without_over_P():
     mul_jump_head = mul_jump_head_4_4
-    if _P_ZERO_coeffi < 4:
+    if _P_ZERO_coeffi < 7:
         mul_jump_head = mul_jump_head_4_0
 
     polymul(BASE, max_coeffi, _P)
@@ -35,7 +35,7 @@ def gen_mul_without_over_P():
 
 def gen_mul():
     mul_jump_head = mul_jump_head_4_4
-    if _P_ZERO_coeffi < 4:
+    if _P_ZERO_coeffi < 7:
         mul_jump_head = mul_jump_head_4_0
 
     polymul(BASE, max_coeffi, _P)

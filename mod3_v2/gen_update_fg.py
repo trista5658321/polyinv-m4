@@ -61,7 +61,7 @@ def main(base, LENGTH):
     denominator_x_power = 4
 
     result_coeffi = coeffi # base_coeffi x coeffi[base_coeffi - 4: -4] -> coeffi
-    if _P_ZERO_coeffi < 4:
+    if _P_ZERO_coeffi < 7:
         result_coeffi += 4
 
     __polymul_name = "__polymul_" + str(base_coeffi) + "x" + str(coeffi) + "_jump_head"
