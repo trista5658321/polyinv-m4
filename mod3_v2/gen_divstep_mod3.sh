@@ -95,6 +95,16 @@ python polymul/gen_mul.py 64 676 688 > final/ntru677/mod3_mul64xN.S
 python gen_update_fg.py 64 676 688 > final/ntru677/mod3_update_fg_64.S
 python gen_update_VS.py 64 676 688 > final/ntru677/mod3_update_VS_64.S
 
+python gen_polyinverse/gen.py 64 700 704 > final/ntru701/jump1408divsteps_mod3_64.c
+python polymul/gen_mul.py 64 700 704 > final/ntru701/mod3_mul64xN.S
+python gen_update_fg.py 64 700 704 > final/ntru701/mod3_update_fg_64.S
+python gen_update_VS.py 64 700 704 > final/ntru701/mod3_update_VS_64.S
+
+python gen_polyinverse/gen.py 64 820 832 > final/ntru821/jump1664divsteps_mod3_64.c
+python polymul/gen_mul.py 64 820 832 > final/ntru821/mod3_mul64xN.S
+python gen_update_fg.py 64 820 832 > final/ntru821/mod3_update_fg_64.S
+python gen_update_VS.py 64 820 832 > final/ntru821/mod3_update_VS_64.S
+
 ## 128
 python gen_polyinverse/gen.py 128 676 688 > final/ntru677/jump1376divsteps_mod3_128.c
 python polymul/gen_mul.py 128 676 688 > final/ntru677/mod3_mul128xN.S
