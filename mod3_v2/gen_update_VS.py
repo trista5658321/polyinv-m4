@@ -23,7 +23,7 @@ def reduce_str(rs, target = V):
         printIn("str.w %s, [%s, #%d]" % (rs[i], target, 4*i))
     printIn("str.w %s, [%s], #%d" % (rs[0], target, 4*len(rs)))
 
-def main(base, LENGTH, result_coeffi):
+def main(base, LENGTH, result_coeffi, loop_name_postfix=""):
     base_coeffi = base # jump N divsteps
     coeffi = LENGTH # BASE x n
     __polymul_name = "__polymul_" + str(base_coeffi) + "x" + str(coeffi)
@@ -80,6 +80,8 @@ def main(base, LENGTH, result_coeffi):
 
     printIn("add.w %s, %s, #%d" % (flag, V, flag_bytes))
     add_loop = "add_loop_vs_%d" % (coeffi)
+    if loop_name_postfix:
+        add_loop += ("_" + loop_name_postfix)
     print(add_loop + ":")
 
     g_to_f_distance = result_coeffi
@@ -123,6 +125,7 @@ for i in range(1, _P//BASE+1):
     if length == _P:
         result_coeffi = _P
     main(BASE, BASE*i, result_coeffi)
+
 if _P % BASE != 0:
     main(BASE, _P, _P)
 
@@ -130,6 +133,16 @@ if _N_max_2 == 0:
     if _P != max_V_coeffi:
         main(BASE, max_V_coeffi, BASE+max_V_coeffi)
 else:
-    main(_N_max_2, max_V_coeffi, max_V_coeffi)
-# elif (2 * _P) % BASE == 32:
-#     main(BASE//2, max_V_coeffi, max_V_coeffi)
+    base = BASE
+    while(base > _N_max_2):
+        base //= 2
+    
+    last_deg = _N_max_2
+    while(last_deg != 0):
+        if last_deg - base == 0:
+            main(base, max_V_coeffi, max_V_coeffi)
+        else:
+            main(base, _P, _P, str(base))
+            
+        last_deg -= base
+        base //= 2

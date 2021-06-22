@@ -97,6 +97,9 @@ python gen_update_VS.py 64 676 688 > final/ntru677/mod3_update_VS_64.S
 
 ## 128
 python gen_polyinverse/gen.py 128 676 688 > final/ntru677/jump1376divsteps_mod3_128.c
+python polymul/gen_mul.py 128 676 688 > final/ntru677/mod3_mul128xN.S
+python gen_update_fg.py 128 676 688 > final/ntru677/mod3_update_fg_128.S
+python gen_update_VS.py 128 676 688 > final/ntru677/mod3_update_VS_128.S
 
 python gen_polyinverse/gen.py 128 700 704 > final/ntru701/jump1408divsteps_mod3_128.c
 python polymul/gen_mul.py 128 700 704 > final/ntru701/mod3_mul128xN.S

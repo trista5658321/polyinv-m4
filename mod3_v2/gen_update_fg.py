@@ -211,4 +211,12 @@ else:
     for i in range(0, round_half_2):
         main(BASE, _N_max - BASE * i)
 
-    main(_N_max_2, _N_max_2)
+    base = BASE
+    while(base > _N_max_2):
+        base //= 2
+    
+    last_deg = _N_max_2
+    while(last_deg != 0):
+        main(base, last_deg)
+        last_deg -= base
+        base //= 2
