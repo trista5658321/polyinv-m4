@@ -4,6 +4,9 @@
 python Toom-asm_structured_general.py 128 4621 > asm/sntrup653/polymul_128x128.S
 python Toom-asm_structured_general.py 256 4621 > asm/sntrup653/polymul_256x256.S
 
+python Toom-asm_structured_general.py 176 4621 > asm/sntrup653/polymul_176x176.S
+python Toom-asm_structured_general.py 704 4621 > asm/sntrup653/polymul_704x704.S
+
 # 761
 python Toom-asm_structured_general.py 128 4591 > asm/sntrup761/polymul_128x128.S
 python Toom-asm_structured_general.py 256 4591 > asm/sntrup761/polymul_256x256.S

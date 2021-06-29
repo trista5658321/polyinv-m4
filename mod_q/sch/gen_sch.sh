@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # 653
+python polymul_4nx4n.py 44 4621 > sntrup653/polymul_44x44.S
 
 # 761
 
