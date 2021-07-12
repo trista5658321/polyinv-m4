@@ -24,7 +24,7 @@ def gen_mul_without_over_P():
         mul_full(coeffi)
 
     # for update_VS
-    __polymul_name = "__polymul_" + str(BASE) + "x" + str(_P)
+    __polymul_name = "__polymul_" + str(BASE) + "x" + str(_P) + "_mod2"
     print(".p2align 2,,3")
     print(".syntax unified")
     print(".text")
@@ -53,7 +53,7 @@ def gen_mul():
         mul_full(max_coeffi)
     
     # for update_VS
-    __polymul_name = "__polymul_" + str(BASE) + "x" + str(_P)
+    __polymul_name = "__polymul_" + str(BASE) + "x" + str(_P) + "_mod2"
     print(".p2align 2,,3")
     print(".syntax unified")
     print(".text")

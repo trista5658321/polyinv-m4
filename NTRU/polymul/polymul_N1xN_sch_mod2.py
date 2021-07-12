@@ -3,7 +3,7 @@ import sys
 import re
 from math import log,ceil,floor,sqrt
 from utility_polymul import r_12, r_14, ac, ar, BASE, _P_ZERO_coeffi, coeffi_per_strip, coeffi_per_block, bytes_per_block, reduce_mod2
-from polymul_head_last import SCH_polymul_mod3_head_last
+from polymul_head_last import SCH_polymul_mod2_head_last
 
 N = 0
 N1 = 0
@@ -143,7 +143,6 @@ def SCH_polymul_N1xN_mod2(N1,N, _P) :
     strips_of_base = N1 // coeffi_per_strip
     first_label = strips_of_base # max mul start from this
     _P_label = (N - _P) // coeffi_per_strip + first_label
-
     first_component_coeffis = N % N1
     BASE_label = first_component_coeffis // coeffi_per_strip + first_label
 
@@ -208,6 +207,9 @@ def SCH_polymul_N1xN_mod2(N1,N, _P) :
     print("	pop.w {pc}")
 
 def SCH_polymul_N1xN_mod2_jump_end(N1,N) :
+    assert(N1 % coeffi_per_strip == 0)
+    assert(N % coeffi_per_strip == 0)
+
     print(" // increasing thread length")
     print("	push.w {lr}")
     print("	mov	%s, #0" % (ac(0,0)))
@@ -230,7 +232,11 @@ def SCH_polymul_N1xN_mod2_jump_end(N1,N) :
     print("	pop.w {pc}")
 
 def polymul(N1, NN, _N):
-    # N >= N1
+    assert(NN >= N1)
+    assert(N1 % coeffi_per_strip ==0)
+    assert(NN % coeffi_per_strip ==0)
+    assert(_N % coeffi_per_strip ==0)
+
     globals()["N1"]=N1
     globals()["N"]=NN
 
@@ -238,6 +244,6 @@ def polymul(N1, NN, _N):
     print(".syntax unified")
     print(".text")
     if _P_ZERO_coeffi < 7:
-        SCH_polymul_mod3_head_last()
+        SCH_polymul_mod2_head_last()
 
     SCH_polymul_N1xN_mod2(N1,NN,_N)

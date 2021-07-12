@@ -1,28 +1,6 @@
 .p2align 2,,3
 .syntax unified
 .text
-mul_head_last:
-	push.w {lr}
-	ldr	r5, [r1, #0]
-	ldr	r6, [r1, #4]
-	ldr	r7, [r1, #8]
-	ldr	r8, [r1, #12]
-	ldr	r12, [r2, #12]
-	ldr	r14, [r2, #8]
-	ldr	r3, [r2, #4]
-	ldr	r4, [r2, #0]
-	umull	r9, r10, r5, r12
-	umlal	r9, r10, r6, r14
-	and.w	r9, r9, #0x11111111
-	and.w	r10, r10, #0x11111111
-	umlal	r9, r10, r7, r3
-	and.w	r9, r9, #0x11111111
-	and.w	r10, r10, #0x11111111
-	umlal	r9, r10, r8, r4
-	and.w	r9, r9, #0x11111111
-	and.w	r10, r10, #0x11111111
-	str.w r9, [r0], #4
-	pop.w {pc}
 mul_head:
  // increasing thread length
 	push.w {lr}
@@ -67,7 +45,7 @@ mul_head:
 	str.w r9, [r0, #12]
 	str.w r6, [r0], #16
 	pop.w {pc}
-mul_544:
+mul_736:
 	// ([4-7], 0) blocks
 	ldr.w	r4, [r1]
 	ldr.w	r3, [r2, #28]
@@ -123,7 +101,7 @@ mul_544:
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
 	str.w r10, [r0], #16
-mul_512:
+mul_704:
 	// ([8-11], 0) blocks
 	ldr.w	r3, [r1]
 	ldr.w	r14, [r2, #44]
@@ -179,7 +157,7 @@ mul_512:
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
 	str.w r9, [r0], #16
-mul_480:
+mul_672:
 	// ([12-15], 0) blocks
 	ldr.w	r14, [r1]
 	ldr.w	r12, [r2, #60]
@@ -235,7 +213,7 @@ mul_480:
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
 	str.w r8, [r0], #16
-mul_448:
+mul_640:
 	// ([16-19], 0) blocks
 	ldr.w	r12, [r1]
 	ldr.w	r5, [r2, #76]
@@ -291,7 +269,7 @@ mul_448:
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
 	str.w r7, [r0], #16
-mul_416:
+mul_608:
 	// ([20-23], 0) blocks
 	ldr.w	r5, [r1]
 	ldr.w	r4, [r2, #92]
@@ -347,7 +325,7 @@ mul_416:
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
 	str.w r6, [r0], #16
-mul_384:
+mul_576:
 	// ([24-27], 0) blocks
 	ldr.w	r4, [r1]
 	ldr.w	r3, [r2, #108]
@@ -403,7 +381,7 @@ mul_384:
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
 	str.w r10, [r0], #16
-mul_352:
+mul_544:
 	// ([28-31], 0) blocks
 	ldr.w	r3, [r1]
 	ldr.w	r14, [r2, #124]
@@ -459,7 +437,7 @@ mul_352:
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
 	str.w r9, [r0], #16
-mul_320:
+mul_512:
 	// ([32-35], 0) blocks
 	ldr.w	r14, [r1]
 	ldr.w	r12, [r2, #140]
@@ -515,7 +493,7 @@ mul_320:
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
 	str.w r8, [r0], #16
-mul_288:
+mul_480:
 	// ([36-39], 0) blocks
 	ldr.w	r12, [r1]
 	ldr.w	r5, [r2, #156]
@@ -571,7 +549,7 @@ mul_288:
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
 	str.w r7, [r0], #16
-mul_256:
+mul_448:
 	// ([40-43], 0) blocks
 	ldr.w	r5, [r1]
 	ldr.w	r4, [r2, #172]
@@ -627,7 +605,7 @@ mul_256:
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
 	str.w r6, [r0], #16
-mul_224:
+mul_416:
 	// ([44-47], 0) blocks
 	ldr.w	r4, [r1]
 	ldr.w	r3, [r2, #188]
@@ -683,7 +661,7 @@ mul_224:
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
 	str.w r10, [r0], #16
-mul_192:
+mul_384:
 	// ([48-51], 0) blocks
 	ldr.w	r3, [r1]
 	ldr.w	r14, [r2, #204]
@@ -739,7 +717,7 @@ mul_192:
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
 	str.w r9, [r0], #16
-mul_160:
+mul_352:
 	// ([52-55], 0) blocks
 	ldr.w	r14, [r1]
 	ldr.w	r12, [r2, #220]
@@ -795,7 +773,7 @@ mul_160:
 	str.w r10, [r0, #8]
 	str.w r6, [r0, #12]
 	str.w r8, [r0], #16
-mul_128:
+mul_320:
 	// ([56-59], 0) blocks
 	ldr.w	r12, [r1]
 	ldr.w	r5, [r2, #236]
@@ -851,7 +829,7 @@ mul_128:
 	str.w r9, [r0, #8]
 	str.w r10, [r0, #12]
 	str.w r7, [r0], #16
-mul_96:
+mul_288:
 	// ([60-63], 0) blocks
 	ldr.w	r5, [r1]
 	ldr.w	r4, [r2, #252]
@@ -907,7 +885,7 @@ mul_96:
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
 	str.w r6, [r0], #16
-mul_64:
+mul_256:
 	// ([64-67], 0) blocks
 	ldr.w	r4, [r1]
 	ldr.w	r3, [r2, #268]
@@ -963,39 +941,375 @@ mul_64:
 	str.w r7, [r0, #8]
 	str.w r8, [r0, #12]
 	str.w r10, [r0], #16
-mul_32:
- // decreasing thread length
- // mv hh back to h
-	mov	r10, #0
-	mov	r6, #0
-	mov	r7, #0
-	mov	r8, #0
-	ldr.w	r12, [r2, #260]
-	ldr.w	r14, [r2, #264]
-	ldr.w	r3, [r2, #268]
-	// ([65-67],3),([66-67],2),(67,1) blocks
-	ldr.w	r4, [r1, #12]
-	umlal	r6, r7, r3, r4
-	umlal	r10, r6, r14, r4
-	umlal	r9, r10, r12, r4
+mul_224:
+	// ([68-71], 0) blocks
+	ldr.w	r3, [r1]
+	ldr.w	r14, [r2, #284]
+	ldr.w	r12, [r2, #280]
+	ldr.w	r5, [r2, #276]
+	ldr.w	r4, [r2, #272]
+	umull	r10, r6, r5, r3
+	umull	r7, r8, r14, r3
+	umlal	r9, r10, r4, r3
+	umlal	r6, r7, r12, r3
 	and.w	r9, r9, #0x11111111
 	and.w	r10, r10, #0x11111111
 	and.w	r6, r6, #0x11111111
 	and.w	r7, r7, #0x11111111
-	ldr.w	r4, [r1, #8]
-	umlal	r10, r6, r3, r4
-	umlal	r9, r10, r14, r4
+	and.w	r8, r8, #0x11111111
+	// ([67-70], 1) blocks
+	ldr.w	r14, [r1, #4]
+	ldr.w	r3, [r2, #268]
+	umlal	r9, r10, r3, r14
+	umlal	r10, r6, r4, r14
+	umlal	r6, r7, r5, r14
+	umlal	r7, r8, r12, r14
 	and.w	r9, r9, #0x11111111
 	and.w	r10, r10, #0x11111111
 	and.w	r6, r6, #0x11111111
-	ldr.w	r4, [r1, #4]
-	umlal	r9, r10, r3, r4
+	and.w	r7, r7, #0x11111111
+	and.w	r8, r8, #0x11111111
+	// ([66-69], 2) blocks
+	ldr.w	r12, [r1, #8]
+	ldr.w	r14, [r2, #264]
+	umlal	r9, r10, r14, r12
+	umlal	r10, r6, r3, r12
+	umlal	r6, r7, r4, r12
+	umlal	r7, r8, r5, r12
 	and.w	r9, r9, #0x11111111
 	and.w	r10, r10, #0x11111111
+	and.w	r6, r6, #0x11111111
+	and.w	r7, r7, #0x11111111
+	and.w	r8, r8, #0x11111111
+	// ([65-68], 3) blocks
+	ldr.w	r5, [r1, #12]
+	ldr.w	r12, [r2, #260]
+	umlal	r9, r10, r12, r5
+	umlal	r10, r6, r14, r5
+	umlal	r6, r7, r3, r5
+	umlal	r7, r8, r4, r5
+	and.w	r9, r9, #0x11111111
+	and.w	r10, r10, #0x11111111
+	and.w	r6, r6, #0x11111111
+	and.w	r7, r7, #0x11111111
+	and.w	r8, r8, #0x11111111
 	str.w r10, [r0, #4]
 	str.w r6, [r0, #8]
 	str.w r7, [r0, #12]
 	str.w r9, [r0], #16
+mul_192:
+	// ([72-75], 0) blocks
+	ldr.w	r14, [r1]
+	ldr.w	r12, [r2, #300]
+	ldr.w	r5, [r2, #296]
+	ldr.w	r4, [r2, #292]
+	ldr.w	r3, [r2, #288]
+	umull	r9, r10, r4, r14
+	umull	r6, r7, r12, r14
+	umlal	r8, r9, r3, r14
+	umlal	r10, r6, r5, r14
+	and.w	r8, r8, #0x11111111
+	and.w	r9, r9, #0x11111111
+	and.w	r10, r10, #0x11111111
+	and.w	r6, r6, #0x11111111
+	and.w	r7, r7, #0x11111111
+	// ([71-74], 1) blocks
+	ldr.w	r12, [r1, #4]
+	ldr.w	r14, [r2, #284]
+	umlal	r8, r9, r14, r12
+	umlal	r9, r10, r3, r12
+	umlal	r10, r6, r4, r12
+	umlal	r6, r7, r5, r12
+	and.w	r8, r8, #0x11111111
+	and.w	r9, r9, #0x11111111
+	and.w	r10, r10, #0x11111111
+	and.w	r6, r6, #0x11111111
+	and.w	r7, r7, #0x11111111
+	// ([70-73], 2) blocks
+	ldr.w	r5, [r1, #8]
+	ldr.w	r12, [r2, #280]
+	umlal	r8, r9, r12, r5
+	umlal	r9, r10, r14, r5
+	umlal	r10, r6, r3, r5
+	umlal	r6, r7, r4, r5
+	and.w	r8, r8, #0x11111111
+	and.w	r9, r9, #0x11111111
+	and.w	r10, r10, #0x11111111
+	and.w	r6, r6, #0x11111111
+	and.w	r7, r7, #0x11111111
+	// ([69-72], 3) blocks
+	ldr.w	r4, [r1, #12]
+	ldr.w	r5, [r2, #276]
+	umlal	r8, r9, r5, r4
+	umlal	r9, r10, r12, r4
+	umlal	r10, r6, r14, r4
+	umlal	r6, r7, r3, r4
+	and.w	r8, r8, #0x11111111
+	and.w	r9, r9, #0x11111111
+	and.w	r10, r10, #0x11111111
+	and.w	r6, r6, #0x11111111
+	and.w	r7, r7, #0x11111111
+	str.w r9, [r0, #4]
+	str.w r10, [r0, #8]
+	str.w r6, [r0, #12]
+	str.w r8, [r0], #16
+mul_160:
+	// ([76-79], 0) blocks
+	ldr.w	r12, [r1]
+	ldr.w	r5, [r2, #316]
+	ldr.w	r4, [r2, #312]
+	ldr.w	r3, [r2, #308]
+	ldr.w	r14, [r2, #304]
+	umull	r8, r9, r3, r12
+	umull	r10, r6, r5, r12
+	umlal	r7, r8, r14, r12
+	umlal	r9, r10, r4, r12
+	and.w	r7, r7, #0x11111111
+	and.w	r8, r8, #0x11111111
+	and.w	r9, r9, #0x11111111
+	and.w	r10, r10, #0x11111111
+	and.w	r6, r6, #0x11111111
+	// ([75-78], 1) blocks
+	ldr.w	r5, [r1, #4]
+	ldr.w	r12, [r2, #300]
+	umlal	r7, r8, r12, r5
+	umlal	r8, r9, r14, r5
+	umlal	r9, r10, r3, r5
+	umlal	r10, r6, r4, r5
+	and.w	r7, r7, #0x11111111
+	and.w	r8, r8, #0x11111111
+	and.w	r9, r9, #0x11111111
+	and.w	r10, r10, #0x11111111
+	and.w	r6, r6, #0x11111111
+	// ([74-77], 2) blocks
+	ldr.w	r4, [r1, #8]
+	ldr.w	r5, [r2, #296]
+	umlal	r7, r8, r5, r4
+	umlal	r8, r9, r12, r4
+	umlal	r9, r10, r14, r4
+	umlal	r10, r6, r3, r4
+	and.w	r7, r7, #0x11111111
+	and.w	r8, r8, #0x11111111
+	and.w	r9, r9, #0x11111111
+	and.w	r10, r10, #0x11111111
+	and.w	r6, r6, #0x11111111
+	// ([73-76], 3) blocks
+	ldr.w	r3, [r1, #12]
+	ldr.w	r4, [r2, #292]
+	umlal	r7, r8, r4, r3
+	umlal	r8, r9, r5, r3
+	umlal	r9, r10, r12, r3
+	umlal	r10, r6, r14, r3
+	and.w	r7, r7, #0x11111111
+	and.w	r8, r8, #0x11111111
+	and.w	r9, r9, #0x11111111
+	and.w	r10, r10, #0x11111111
+	and.w	r6, r6, #0x11111111
+	str.w r8, [r0, #4]
+	str.w r9, [r0, #8]
+	str.w r10, [r0, #12]
+	str.w r7, [r0], #16
+mul_128:
+	// ([80-83], 0) blocks
+	ldr.w	r5, [r1]
+	ldr.w	r4, [r2, #332]
+	ldr.w	r3, [r2, #328]
+	ldr.w	r14, [r2, #324]
+	ldr.w	r12, [r2, #320]
+	umull	r7, r8, r14, r5
+	umull	r9, r10, r4, r5
+	umlal	r6, r7, r12, r5
+	umlal	r8, r9, r3, r5
+	and.w	r6, r6, #0x11111111
+	and.w	r7, r7, #0x11111111
+	and.w	r8, r8, #0x11111111
+	and.w	r9, r9, #0x11111111
+	and.w	r10, r10, #0x11111111
+	// ([79-82], 1) blocks
+	ldr.w	r4, [r1, #4]
+	ldr.w	r5, [r2, #316]
+	umlal	r6, r7, r5, r4
+	umlal	r7, r8, r12, r4
+	umlal	r8, r9, r14, r4
+	umlal	r9, r10, r3, r4
+	and.w	r6, r6, #0x11111111
+	and.w	r7, r7, #0x11111111
+	and.w	r8, r8, #0x11111111
+	and.w	r9, r9, #0x11111111
+	and.w	r10, r10, #0x11111111
+	// ([78-81], 2) blocks
+	ldr.w	r3, [r1, #8]
+	ldr.w	r4, [r2, #312]
+	umlal	r6, r7, r4, r3
+	umlal	r7, r8, r5, r3
+	umlal	r8, r9, r12, r3
+	umlal	r9, r10, r14, r3
+	and.w	r6, r6, #0x11111111
+	and.w	r7, r7, #0x11111111
+	and.w	r8, r8, #0x11111111
+	and.w	r9, r9, #0x11111111
+	and.w	r10, r10, #0x11111111
+	// ([77-80], 3) blocks
+	ldr.w	r14, [r1, #12]
+	ldr.w	r3, [r2, #308]
+	umlal	r6, r7, r3, r14
+	umlal	r7, r8, r4, r14
+	umlal	r8, r9, r5, r14
+	umlal	r9, r10, r12, r14
+	and.w	r6, r6, #0x11111111
+	and.w	r7, r7, #0x11111111
+	and.w	r8, r8, #0x11111111
+	and.w	r9, r9, #0x11111111
+	and.w	r10, r10, #0x11111111
+	str.w r7, [r0, #4]
+	str.w r8, [r0, #8]
+	str.w r9, [r0, #12]
+	str.w r6, [r0], #16
+mul_96:
+	// ([84-87], 0) blocks
+	ldr.w	r4, [r1]
+	ldr.w	r3, [r2, #348]
+	ldr.w	r14, [r2, #344]
+	ldr.w	r12, [r2, #340]
+	ldr.w	r5, [r2, #336]
+	umull	r6, r7, r12, r4
+	umull	r8, r9, r3, r4
+	umlal	r10, r6, r5, r4
+	umlal	r7, r8, r14, r4
+	and.w	r10, r10, #0x11111111
+	and.w	r6, r6, #0x11111111
+	and.w	r7, r7, #0x11111111
+	and.w	r8, r8, #0x11111111
+	and.w	r9, r9, #0x11111111
+	// ([83-86], 1) blocks
+	ldr.w	r3, [r1, #4]
+	ldr.w	r4, [r2, #332]
+	umlal	r10, r6, r4, r3
+	umlal	r6, r7, r5, r3
+	umlal	r7, r8, r12, r3
+	umlal	r8, r9, r14, r3
+	and.w	r10, r10, #0x11111111
+	and.w	r6, r6, #0x11111111
+	and.w	r7, r7, #0x11111111
+	and.w	r8, r8, #0x11111111
+	and.w	r9, r9, #0x11111111
+	// ([82-85], 2) blocks
+	ldr.w	r14, [r1, #8]
+	ldr.w	r3, [r2, #328]
+	umlal	r10, r6, r3, r14
+	umlal	r6, r7, r4, r14
+	umlal	r7, r8, r5, r14
+	umlal	r8, r9, r12, r14
+	and.w	r10, r10, #0x11111111
+	and.w	r6, r6, #0x11111111
+	and.w	r7, r7, #0x11111111
+	and.w	r8, r8, #0x11111111
+	and.w	r9, r9, #0x11111111
+	// ([81-84], 3) blocks
+	ldr.w	r12, [r1, #12]
+	ldr.w	r14, [r2, #324]
+	umlal	r10, r6, r14, r12
+	umlal	r6, r7, r3, r12
+	umlal	r7, r8, r4, r12
+	umlal	r8, r9, r5, r12
+	and.w	r10, r10, #0x11111111
+	and.w	r6, r6, #0x11111111
+	and.w	r7, r7, #0x11111111
+	and.w	r8, r8, #0x11111111
+	and.w	r9, r9, #0x11111111
+	str.w r6, [r0, #4]
+	str.w r7, [r0, #8]
+	str.w r8, [r0, #12]
+	str.w r10, [r0], #16
+mul_64:
+	// ([88-91], 0) blocks
+	ldr.w	r3, [r1]
+	ldr.w	r14, [r2, #364]
+	ldr.w	r12, [r2, #360]
+	ldr.w	r5, [r2, #356]
+	ldr.w	r4, [r2, #352]
+	umull	r10, r6, r5, r3
+	umull	r7, r8, r14, r3
+	umlal	r9, r10, r4, r3
+	umlal	r6, r7, r12, r3
+	and.w	r9, r9, #0x11111111
+	and.w	r10, r10, #0x11111111
+	and.w	r6, r6, #0x11111111
+	and.w	r7, r7, #0x11111111
+	and.w	r8, r8, #0x11111111
+	// ([87-90], 1) blocks
+	ldr.w	r14, [r1, #4]
+	ldr.w	r3, [r2, #348]
+	umlal	r9, r10, r3, r14
+	umlal	r10, r6, r4, r14
+	umlal	r6, r7, r5, r14
+	umlal	r7, r8, r12, r14
+	and.w	r9, r9, #0x11111111
+	and.w	r10, r10, #0x11111111
+	and.w	r6, r6, #0x11111111
+	and.w	r7, r7, #0x11111111
+	and.w	r8, r8, #0x11111111
+	// ([86-89], 2) blocks
+	ldr.w	r12, [r1, #8]
+	ldr.w	r14, [r2, #344]
+	umlal	r9, r10, r14, r12
+	umlal	r10, r6, r3, r12
+	umlal	r6, r7, r4, r12
+	umlal	r7, r8, r5, r12
+	and.w	r9, r9, #0x11111111
+	and.w	r10, r10, #0x11111111
+	and.w	r6, r6, #0x11111111
+	and.w	r7, r7, #0x11111111
+	and.w	r8, r8, #0x11111111
+	// ([85-88], 3) blocks
+	ldr.w	r5, [r1, #12]
+	ldr.w	r12, [r2, #340]
+	umlal	r9, r10, r12, r5
+	umlal	r10, r6, r14, r5
+	umlal	r6, r7, r3, r5
+	umlal	r7, r8, r4, r5
+	and.w	r9, r9, #0x11111111
+	and.w	r10, r10, #0x11111111
+	and.w	r6, r6, #0x11111111
+	and.w	r7, r7, #0x11111111
+	and.w	r8, r8, #0x11111111
+	str.w r10, [r0, #4]
+	str.w r6, [r0, #8]
+	str.w r7, [r0, #12]
+	str.w r9, [r0], #16
+mul_32:
+ // decreasing thread length
+ // mv hh back to h
+	mov	r9, #0
+	mov	r10, #0
+	mov	r6, #0
+	mov	r7, #0
+	ldr.w	r5, [r2, #356]
+	ldr.w	r12, [r2, #360]
+	ldr.w	r14, [r2, #364]
+	// ([89-91],3),([90-91],2),(91,1) blocks
+	ldr.w	r3, [r1, #12]
+	umlal	r10, r6, r14, r3
+	umlal	r9, r10, r12, r3
+	umlal	r8, r9, r5, r3
+	and.w	r8, r8, #0x11111111
+	and.w	r9, r9, #0x11111111
+	and.w	r10, r10, #0x11111111
+	and.w	r6, r6, #0x11111111
+	ldr.w	r3, [r1, #8]
+	umlal	r9, r10, r14, r3
+	umlal	r8, r9, r12, r3
+	and.w	r8, r8, #0x11111111
+	and.w	r9, r9, #0x11111111
+	and.w	r10, r10, #0x11111111
+	ldr.w	r3, [r1, #4]
+	umlal	r8, r9, r14, r3
+	and.w	r8, r8, #0x11111111
+	and.w	r9, r9, #0x11111111
+	str.w r9, [r0, #4]
+	str.w r10, [r0, #8]
+	str.w r6, [r0, #12]
+	str.w r8, [r0], #16
 	pop.w {pc}
 .p2align 2,,3
 .syntax unified
@@ -1004,9 +1318,8 @@ mul_32:
 .type  __polymul_32x32_mod2_jump_head, %function
 __polymul_32x32_mod2_jump_head:
 	push.w {lr}
-	bl.w mul_head_last
-	mov.w r9, r10
-	sub.w r2, #256
+	mov.w r8, #0
+	sub.w r2, #356
 	b.w mul_32
 .p2align 2,,3
 .syntax unified
@@ -1016,8 +1329,8 @@ __polymul_32x32_mod2_jump_head:
 __polymul_32x32_mod2:
 	push.w {lr}
 	bl.w mul_head
-	mov.w r9, r10
-	sub.w r2, #256
+	mov.w r8, r10
+	sub.w r2, #352
 	b.w mul_32
 .p2align 2,,3
 .syntax unified
@@ -1026,8 +1339,8 @@ __polymul_32x32_mod2:
 .type  __polymul_32x64_mod2_jump_head, %function
 __polymul_32x64_mod2_jump_head:
 	push.w {lr}
-	bl.w mul_head_last
-	sub.w r2, #240
+	mov.w r9, #0
+	sub.w r2, #340
 	b.w mul_64
 .p2align 2,,3
 .syntax unified
@@ -1037,7 +1350,8 @@ __polymul_32x64_mod2_jump_head:
 __polymul_32x64_mod2:
 	push.w {lr}
 	bl.w mul_head
-	sub.w r2, #240
+	mov.w r9, r10
+	sub.w r2, #336
 	b.w mul_64
 .p2align 2,,3
 .syntax unified
@@ -1046,9 +1360,8 @@ __polymul_32x64_mod2:
 .type  __polymul_32x96_mod2_jump_head, %function
 __polymul_32x96_mod2_jump_head:
 	push.w {lr}
-	bl.w mul_head_last
-	mov.w r6, r10
-	sub.w r2, #224
+	mov.w r10, #0
+	sub.w r2, #324
 	b.w mul_96
 .p2align 2,,3
 .syntax unified
@@ -1058,8 +1371,7 @@ __polymul_32x96_mod2_jump_head:
 __polymul_32x96_mod2:
 	push.w {lr}
 	bl.w mul_head
-	mov.w r6, r10
-	sub.w r2, #224
+	sub.w r2, #320
 	b.w mul_96
 .p2align 2,,3
 .syntax unified
@@ -1068,9 +1380,8 @@ __polymul_32x96_mod2:
 .type  __polymul_32x128_mod2_jump_head, %function
 __polymul_32x128_mod2_jump_head:
 	push.w {lr}
-	bl.w mul_head_last
-	mov.w r7, r10
-	sub.w r2, #208
+	mov.w r6, #0
+	sub.w r2, #308
 	b.w mul_128
 .p2align 2,,3
 .syntax unified
@@ -1080,8 +1391,8 @@ __polymul_32x128_mod2_jump_head:
 __polymul_32x128_mod2:
 	push.w {lr}
 	bl.w mul_head
-	mov.w r7, r10
-	sub.w r2, #208
+	mov.w r6, r10
+	sub.w r2, #304
 	b.w mul_128
 .p2align 2,,3
 .syntax unified
@@ -1090,9 +1401,8 @@ __polymul_32x128_mod2:
 .type  __polymul_32x160_mod2_jump_head, %function
 __polymul_32x160_mod2_jump_head:
 	push.w {lr}
-	bl.w mul_head_last
-	mov.w r8, r10
-	sub.w r2, #192
+	mov.w r7, #0
+	sub.w r2, #292
 	b.w mul_160
 .p2align 2,,3
 .syntax unified
@@ -1102,8 +1412,8 @@ __polymul_32x160_mod2_jump_head:
 __polymul_32x160_mod2:
 	push.w {lr}
 	bl.w mul_head
-	mov.w r8, r10
-	sub.w r2, #192
+	mov.w r7, r10
+	sub.w r2, #288
 	b.w mul_160
 .p2align 2,,3
 .syntax unified
@@ -1112,9 +1422,8 @@ __polymul_32x160_mod2:
 .type  __polymul_32x192_mod2_jump_head, %function
 __polymul_32x192_mod2_jump_head:
 	push.w {lr}
-	bl.w mul_head_last
-	mov.w r9, r10
-	sub.w r2, #176
+	mov.w r8, #0
+	sub.w r2, #276
 	b.w mul_192
 .p2align 2,,3
 .syntax unified
@@ -1124,8 +1433,8 @@ __polymul_32x192_mod2_jump_head:
 __polymul_32x192_mod2:
 	push.w {lr}
 	bl.w mul_head
-	mov.w r9, r10
-	sub.w r2, #176
+	mov.w r8, r10
+	sub.w r2, #272
 	b.w mul_192
 .p2align 2,,3
 .syntax unified
@@ -1134,8 +1443,8 @@ __polymul_32x192_mod2:
 .type  __polymul_32x224_mod2_jump_head, %function
 __polymul_32x224_mod2_jump_head:
 	push.w {lr}
-	bl.w mul_head_last
-	sub.w r2, #160
+	mov.w r9, #0
+	sub.w r2, #260
 	b.w mul_224
 .p2align 2,,3
 .syntax unified
@@ -1145,7 +1454,8 @@ __polymul_32x224_mod2_jump_head:
 __polymul_32x224_mod2:
 	push.w {lr}
 	bl.w mul_head
-	sub.w r2, #160
+	mov.w r9, r10
+	sub.w r2, #256
 	b.w mul_224
 .p2align 2,,3
 .syntax unified
@@ -1154,9 +1464,8 @@ __polymul_32x224_mod2:
 .type  __polymul_32x256_mod2_jump_head, %function
 __polymul_32x256_mod2_jump_head:
 	push.w {lr}
-	bl.w mul_head_last
-	mov.w r6, r10
-	sub.w r2, #144
+	mov.w r10, #0
+	sub.w r2, #244
 	b.w mul_256
 .p2align 2,,3
 .syntax unified
@@ -1166,8 +1475,7 @@ __polymul_32x256_mod2_jump_head:
 __polymul_32x256_mod2:
 	push.w {lr}
 	bl.w mul_head
-	mov.w r6, r10
-	sub.w r2, #144
+	sub.w r2, #240
 	b.w mul_256
 .p2align 2,,3
 .syntax unified
@@ -1176,9 +1484,8 @@ __polymul_32x256_mod2:
 .type  __polymul_32x288_mod2_jump_head, %function
 __polymul_32x288_mod2_jump_head:
 	push.w {lr}
-	bl.w mul_head_last
-	mov.w r7, r10
-	sub.w r2, #128
+	mov.w r6, #0
+	sub.w r2, #228
 	b.w mul_288
 .p2align 2,,3
 .syntax unified
@@ -1188,8 +1495,8 @@ __polymul_32x288_mod2_jump_head:
 __polymul_32x288_mod2:
 	push.w {lr}
 	bl.w mul_head
-	mov.w r7, r10
-	sub.w r2, #128
+	mov.w r6, r10
+	sub.w r2, #224
 	b.w mul_288
 .p2align 2,,3
 .syntax unified
@@ -1198,9 +1505,8 @@ __polymul_32x288_mod2:
 .type  __polymul_32x320_mod2_jump_head, %function
 __polymul_32x320_mod2_jump_head:
 	push.w {lr}
-	bl.w mul_head_last
-	mov.w r8, r10
-	sub.w r2, #112
+	mov.w r7, #0
+	sub.w r2, #212
 	b.w mul_320
 .p2align 2,,3
 .syntax unified
@@ -1210,8 +1516,8 @@ __polymul_32x320_mod2_jump_head:
 __polymul_32x320_mod2:
 	push.w {lr}
 	bl.w mul_head
-	mov.w r8, r10
-	sub.w r2, #112
+	mov.w r7, r10
+	sub.w r2, #208
 	b.w mul_320
 .p2align 2,,3
 .syntax unified
@@ -1220,9 +1526,8 @@ __polymul_32x320_mod2:
 .type  __polymul_32x352_mod2_jump_head, %function
 __polymul_32x352_mod2_jump_head:
 	push.w {lr}
-	bl.w mul_head_last
-	mov.w r9, r10
-	sub.w r2, #96
+	mov.w r8, #0
+	sub.w r2, #196
 	b.w mul_352
 .p2align 2,,3
 .syntax unified
@@ -1232,8 +1537,8 @@ __polymul_32x352_mod2_jump_head:
 __polymul_32x352_mod2:
 	push.w {lr}
 	bl.w mul_head
-	mov.w r9, r10
-	sub.w r2, #96
+	mov.w r8, r10
+	sub.w r2, #192
 	b.w mul_352
 .p2align 2,,3
 .syntax unified
@@ -1242,8 +1547,8 @@ __polymul_32x352_mod2:
 .type  __polymul_32x384_mod2_jump_head, %function
 __polymul_32x384_mod2_jump_head:
 	push.w {lr}
-	bl.w mul_head_last
-	sub.w r2, #80
+	mov.w r9, #0
+	sub.w r2, #180
 	b.w mul_384
 .p2align 2,,3
 .syntax unified
@@ -1253,7 +1558,8 @@ __polymul_32x384_mod2_jump_head:
 __polymul_32x384_mod2:
 	push.w {lr}
 	bl.w mul_head
-	sub.w r2, #80
+	mov.w r9, r10
+	sub.w r2, #176
 	b.w mul_384
 .p2align 2,,3
 .syntax unified
@@ -1262,9 +1568,8 @@ __polymul_32x384_mod2:
 .type  __polymul_32x416_mod2_jump_head, %function
 __polymul_32x416_mod2_jump_head:
 	push.w {lr}
-	bl.w mul_head_last
-	mov.w r6, r10
-	sub.w r2, #64
+	mov.w r10, #0
+	sub.w r2, #164
 	b.w mul_416
 .p2align 2,,3
 .syntax unified
@@ -1274,8 +1579,7 @@ __polymul_32x416_mod2_jump_head:
 __polymul_32x416_mod2:
 	push.w {lr}
 	bl.w mul_head
-	mov.w r6, r10
-	sub.w r2, #64
+	sub.w r2, #160
 	b.w mul_416
 .p2align 2,,3
 .syntax unified
@@ -1284,9 +1588,8 @@ __polymul_32x416_mod2:
 .type  __polymul_32x448_mod2_jump_head, %function
 __polymul_32x448_mod2_jump_head:
 	push.w {lr}
-	bl.w mul_head_last
-	mov.w r7, r10
-	sub.w r2, #48
+	mov.w r6, #0
+	sub.w r2, #148
 	b.w mul_448
 .p2align 2,,3
 .syntax unified
@@ -1296,8 +1599,8 @@ __polymul_32x448_mod2_jump_head:
 __polymul_32x448_mod2:
 	push.w {lr}
 	bl.w mul_head
-	mov.w r7, r10
-	sub.w r2, #48
+	mov.w r6, r10
+	sub.w r2, #144
 	b.w mul_448
 .p2align 2,,3
 .syntax unified
@@ -1306,9 +1609,8 @@ __polymul_32x448_mod2:
 .type  __polymul_32x480_mod2_jump_head, %function
 __polymul_32x480_mod2_jump_head:
 	push.w {lr}
-	bl.w mul_head_last
-	mov.w r8, r10
-	sub.w r2, #32
+	mov.w r7, #0
+	sub.w r2, #132
 	b.w mul_480
 .p2align 2,,3
 .syntax unified
@@ -1318,8 +1620,8 @@ __polymul_32x480_mod2_jump_head:
 __polymul_32x480_mod2:
 	push.w {lr}
 	bl.w mul_head
-	mov.w r8, r10
-	sub.w r2, #32
+	mov.w r7, r10
+	sub.w r2, #128
 	b.w mul_480
 .p2align 2,,3
 .syntax unified
@@ -1328,10 +1630,30 @@ __polymul_32x480_mod2:
 .type  __polymul_32x512_mod2_jump_head, %function
 __polymul_32x512_mod2_jump_head:
 	push.w {lr}
-	bl.w mul_head_last
-	mov.w r9, r10
-	sub.w r2, #16
+	mov.w r8, #0
+	sub.w r2, #116
 	b.w mul_512
+.p2align 2,,3
+.syntax unified
+.text
+.global __polymul_32x512_mod2
+.type  __polymul_32x512_mod2, %function
+__polymul_32x512_mod2:
+	push.w {lr}
+	bl.w mul_head
+	mov.w r8, r10
+	sub.w r2, #112
+	b.w mul_512
+.p2align 2,,3
+.syntax unified
+.text
+.global __polymul_32x544_mod2_jump_head
+.type  __polymul_32x544_mod2_jump_head, %function
+__polymul_32x544_mod2_jump_head:
+	push.w {lr}
+	mov.w r9, #0
+	sub.w r2, #100
+	b.w mul_544
 .p2align 2,,3
 .syntax unified
 .text
@@ -1340,13 +1662,117 @@ __polymul_32x512_mod2_jump_head:
 __polymul_32x544_mod2:
 	push.w {lr}
 	bl.w mul_head
+	mov.w r9, r10
+	sub.w r2, #96
 	b.w mul_544
 .p2align 2,,3
 .syntax unified
 .text
-.global __polymul_32x512_mod2
-.type  __polymul_32x512_mod2, %function
-__polymul_32x512_mod2:
+.global __polymul_32x576_mod2_jump_head
+.type  __polymul_32x576_mod2_jump_head, %function
+__polymul_32x576_mod2_jump_head:
+	push.w {lr}
+	mov.w r10, #0
+	sub.w r2, #84
+	b.w mul_576
+.p2align 2,,3
+.syntax unified
+.text
+.global __polymul_32x576_mod2
+.type  __polymul_32x576_mod2, %function
+__polymul_32x576_mod2:
+	push.w {lr}
+	bl.w mul_head
+	sub.w r2, #80
+	b.w mul_576
+.p2align 2,,3
+.syntax unified
+.text
+.global __polymul_32x608_mod2_jump_head
+.type  __polymul_32x608_mod2_jump_head, %function
+__polymul_32x608_mod2_jump_head:
+	push.w {lr}
+	mov.w r6, #0
+	sub.w r2, #68
+	b.w mul_608
+.p2align 2,,3
+.syntax unified
+.text
+.global __polymul_32x608_mod2
+.type  __polymul_32x608_mod2, %function
+__polymul_32x608_mod2:
+	push.w {lr}
+	bl.w mul_head
+	mov.w r6, r10
+	sub.w r2, #64
+	b.w mul_608
+.p2align 2,,3
+.syntax unified
+.text
+.global __polymul_32x640_mod2_jump_head
+.type  __polymul_32x640_mod2_jump_head, %function
+__polymul_32x640_mod2_jump_head:
+	push.w {lr}
+	mov.w r7, #0
+	sub.w r2, #52
+	b.w mul_640
+.p2align 2,,3
+.syntax unified
+.text
+.global __polymul_32x640_mod2
+.type  __polymul_32x640_mod2, %function
+__polymul_32x640_mod2:
+	push.w {lr}
+	bl.w mul_head
+	mov.w r7, r10
+	sub.w r2, #48
+	b.w mul_640
+.p2align 2,,3
+.syntax unified
+.text
+.global __polymul_32x672_mod2_jump_head
+.type  __polymul_32x672_mod2_jump_head, %function
+__polymul_32x672_mod2_jump_head:
+	push.w {lr}
+	mov.w r8, #0
+	sub.w r2, #36
+	b.w mul_672
+.p2align 2,,3
+.syntax unified
+.text
+.global __polymul_32x672_mod2
+.type  __polymul_32x672_mod2, %function
+__polymul_32x672_mod2:
+	push.w {lr}
+	bl.w mul_head
+	mov.w r8, r10
+	sub.w r2, #32
+	b.w mul_672
+.p2align 2,,3
+.syntax unified
+.text
+.global __polymul_32x704_mod2_jump_head
+.type  __polymul_32x704_mod2_jump_head, %function
+__polymul_32x704_mod2_jump_head:
+	push.w {lr}
+	mov.w r9, #0
+	sub.w r2, #20
+	b.w mul_704
+.p2align 2,,3
+.syntax unified
+.text
+.global __polymul_32x736_mod2
+.type  __polymul_32x736_mod2, %function
+__polymul_32x736_mod2:
+	push.w {lr}
+	bl.w mul_head
+	b.w mul_736
+.p2align 2,,3
+.syntax unified
+.text
+.global __polymul_32x704_mod2
+.type  __polymul_32x704_mod2, %function
+__polymul_32x704_mod2:
  // increasing thread length
 	push.w {lr}
 	mov	r6, #0
@@ -2213,4 +2639,334 @@ __polymul_32x512_mod2:
 	str.w r8, [r0, #8]
 	str.w r9, [r0, #12]
 	str.w r6, [r0], #16
+	// ([64-67], 0) blocks
+	ldr.w	r4, [r1]
+	ldr.w	r3, [r2, #268]
+	ldr.w	r14, [r2, #264]
+	ldr.w	r12, [r2, #260]
+	ldr.w	r5, [r2, #256]
+	umull	r6, r7, r12, r4
+	umull	r8, r9, r3, r4
+	umlal	r10, r6, r5, r4
+	umlal	r7, r8, r14, r4
+	and.w	r10, r10, #0x11111111
+	and.w	r6, r6, #0x11111111
+	and.w	r7, r7, #0x11111111
+	and.w	r8, r8, #0x11111111
+	and.w	r9, r9, #0x11111111
+	// ([63-66], 1) blocks
+	ldr.w	r3, [r1, #4]
+	ldr.w	r4, [r2, #252]
+	umlal	r10, r6, r4, r3
+	umlal	r6, r7, r5, r3
+	umlal	r7, r8, r12, r3
+	umlal	r8, r9, r14, r3
+	and.w	r10, r10, #0x11111111
+	and.w	r6, r6, #0x11111111
+	and.w	r7, r7, #0x11111111
+	and.w	r8, r8, #0x11111111
+	and.w	r9, r9, #0x11111111
+	// ([62-65], 2) blocks
+	ldr.w	r14, [r1, #8]
+	ldr.w	r3, [r2, #248]
+	umlal	r10, r6, r3, r14
+	umlal	r6, r7, r4, r14
+	umlal	r7, r8, r5, r14
+	umlal	r8, r9, r12, r14
+	and.w	r10, r10, #0x11111111
+	and.w	r6, r6, #0x11111111
+	and.w	r7, r7, #0x11111111
+	and.w	r8, r8, #0x11111111
+	and.w	r9, r9, #0x11111111
+	// ([61-64], 3) blocks
+	ldr.w	r12, [r1, #12]
+	ldr.w	r14, [r2, #244]
+	umlal	r10, r6, r14, r12
+	umlal	r6, r7, r3, r12
+	umlal	r7, r8, r4, r12
+	umlal	r8, r9, r5, r12
+	and.w	r10, r10, #0x11111111
+	and.w	r6, r6, #0x11111111
+	and.w	r7, r7, #0x11111111
+	and.w	r8, r8, #0x11111111
+	and.w	r9, r9, #0x11111111
+	str.w r6, [r0, #4]
+	str.w r7, [r0, #8]
+	str.w r8, [r0, #12]
+	str.w r10, [r0], #16
+	// ([68-71], 0) blocks
+	ldr.w	r3, [r1]
+	ldr.w	r14, [r2, #284]
+	ldr.w	r12, [r2, #280]
+	ldr.w	r5, [r2, #276]
+	ldr.w	r4, [r2, #272]
+	umull	r10, r6, r5, r3
+	umull	r7, r8, r14, r3
+	umlal	r9, r10, r4, r3
+	umlal	r6, r7, r12, r3
+	and.w	r9, r9, #0x11111111
+	and.w	r10, r10, #0x11111111
+	and.w	r6, r6, #0x11111111
+	and.w	r7, r7, #0x11111111
+	and.w	r8, r8, #0x11111111
+	// ([67-70], 1) blocks
+	ldr.w	r14, [r1, #4]
+	ldr.w	r3, [r2, #268]
+	umlal	r9, r10, r3, r14
+	umlal	r10, r6, r4, r14
+	umlal	r6, r7, r5, r14
+	umlal	r7, r8, r12, r14
+	and.w	r9, r9, #0x11111111
+	and.w	r10, r10, #0x11111111
+	and.w	r6, r6, #0x11111111
+	and.w	r7, r7, #0x11111111
+	and.w	r8, r8, #0x11111111
+	// ([66-69], 2) blocks
+	ldr.w	r12, [r1, #8]
+	ldr.w	r14, [r2, #264]
+	umlal	r9, r10, r14, r12
+	umlal	r10, r6, r3, r12
+	umlal	r6, r7, r4, r12
+	umlal	r7, r8, r5, r12
+	and.w	r9, r9, #0x11111111
+	and.w	r10, r10, #0x11111111
+	and.w	r6, r6, #0x11111111
+	and.w	r7, r7, #0x11111111
+	and.w	r8, r8, #0x11111111
+	// ([65-68], 3) blocks
+	ldr.w	r5, [r1, #12]
+	ldr.w	r12, [r2, #260]
+	umlal	r9, r10, r12, r5
+	umlal	r10, r6, r14, r5
+	umlal	r6, r7, r3, r5
+	umlal	r7, r8, r4, r5
+	and.w	r9, r9, #0x11111111
+	and.w	r10, r10, #0x11111111
+	and.w	r6, r6, #0x11111111
+	and.w	r7, r7, #0x11111111
+	and.w	r8, r8, #0x11111111
+	str.w r10, [r0, #4]
+	str.w r6, [r0, #8]
+	str.w r7, [r0, #12]
+	str.w r9, [r0], #16
+	// ([72-75], 0) blocks
+	ldr.w	r14, [r1]
+	ldr.w	r12, [r2, #300]
+	ldr.w	r5, [r2, #296]
+	ldr.w	r4, [r2, #292]
+	ldr.w	r3, [r2, #288]
+	umull	r9, r10, r4, r14
+	umull	r6, r7, r12, r14
+	umlal	r8, r9, r3, r14
+	umlal	r10, r6, r5, r14
+	and.w	r8, r8, #0x11111111
+	and.w	r9, r9, #0x11111111
+	and.w	r10, r10, #0x11111111
+	and.w	r6, r6, #0x11111111
+	and.w	r7, r7, #0x11111111
+	// ([71-74], 1) blocks
+	ldr.w	r12, [r1, #4]
+	ldr.w	r14, [r2, #284]
+	umlal	r8, r9, r14, r12
+	umlal	r9, r10, r3, r12
+	umlal	r10, r6, r4, r12
+	umlal	r6, r7, r5, r12
+	and.w	r8, r8, #0x11111111
+	and.w	r9, r9, #0x11111111
+	and.w	r10, r10, #0x11111111
+	and.w	r6, r6, #0x11111111
+	and.w	r7, r7, #0x11111111
+	// ([70-73], 2) blocks
+	ldr.w	r5, [r1, #8]
+	ldr.w	r12, [r2, #280]
+	umlal	r8, r9, r12, r5
+	umlal	r9, r10, r14, r5
+	umlal	r10, r6, r3, r5
+	umlal	r6, r7, r4, r5
+	and.w	r8, r8, #0x11111111
+	and.w	r9, r9, #0x11111111
+	and.w	r10, r10, #0x11111111
+	and.w	r6, r6, #0x11111111
+	and.w	r7, r7, #0x11111111
+	// ([69-72], 3) blocks
+	ldr.w	r4, [r1, #12]
+	ldr.w	r5, [r2, #276]
+	umlal	r8, r9, r5, r4
+	umlal	r9, r10, r12, r4
+	umlal	r10, r6, r14, r4
+	umlal	r6, r7, r3, r4
+	and.w	r8, r8, #0x11111111
+	and.w	r9, r9, #0x11111111
+	and.w	r10, r10, #0x11111111
+	and.w	r6, r6, #0x11111111
+	and.w	r7, r7, #0x11111111
+	str.w r9, [r0, #4]
+	str.w r10, [r0, #8]
+	str.w r6, [r0, #12]
+	str.w r8, [r0], #16
+	// ([76-79], 0) blocks
+	ldr.w	r12, [r1]
+	ldr.w	r5, [r2, #316]
+	ldr.w	r4, [r2, #312]
+	ldr.w	r3, [r2, #308]
+	ldr.w	r14, [r2, #304]
+	umull	r8, r9, r3, r12
+	umull	r10, r6, r5, r12
+	umlal	r7, r8, r14, r12
+	umlal	r9, r10, r4, r12
+	and.w	r7, r7, #0x11111111
+	and.w	r8, r8, #0x11111111
+	and.w	r9, r9, #0x11111111
+	and.w	r10, r10, #0x11111111
+	and.w	r6, r6, #0x11111111
+	// ([75-78], 1) blocks
+	ldr.w	r5, [r1, #4]
+	ldr.w	r12, [r2, #300]
+	umlal	r7, r8, r12, r5
+	umlal	r8, r9, r14, r5
+	umlal	r9, r10, r3, r5
+	umlal	r10, r6, r4, r5
+	and.w	r7, r7, #0x11111111
+	and.w	r8, r8, #0x11111111
+	and.w	r9, r9, #0x11111111
+	and.w	r10, r10, #0x11111111
+	and.w	r6, r6, #0x11111111
+	// ([74-77], 2) blocks
+	ldr.w	r4, [r1, #8]
+	ldr.w	r5, [r2, #296]
+	umlal	r7, r8, r5, r4
+	umlal	r8, r9, r12, r4
+	umlal	r9, r10, r14, r4
+	umlal	r10, r6, r3, r4
+	and.w	r7, r7, #0x11111111
+	and.w	r8, r8, #0x11111111
+	and.w	r9, r9, #0x11111111
+	and.w	r10, r10, #0x11111111
+	and.w	r6, r6, #0x11111111
+	// ([73-76], 3) blocks
+	ldr.w	r3, [r1, #12]
+	ldr.w	r4, [r2, #292]
+	umlal	r7, r8, r4, r3
+	umlal	r8, r9, r5, r3
+	umlal	r9, r10, r12, r3
+	umlal	r10, r6, r14, r3
+	and.w	r7, r7, #0x11111111
+	and.w	r8, r8, #0x11111111
+	and.w	r9, r9, #0x11111111
+	and.w	r10, r10, #0x11111111
+	and.w	r6, r6, #0x11111111
+	str.w r8, [r0, #4]
+	str.w r9, [r0, #8]
+	str.w r10, [r0, #12]
+	str.w r7, [r0], #16
+	// ([80-83], 0) blocks
+	ldr.w	r5, [r1]
+	ldr.w	r4, [r2, #332]
+	ldr.w	r3, [r2, #328]
+	ldr.w	r14, [r2, #324]
+	ldr.w	r12, [r2, #320]
+	umull	r7, r8, r14, r5
+	umull	r9, r10, r4, r5
+	umlal	r6, r7, r12, r5
+	umlal	r8, r9, r3, r5
+	and.w	r6, r6, #0x11111111
+	and.w	r7, r7, #0x11111111
+	and.w	r8, r8, #0x11111111
+	and.w	r9, r9, #0x11111111
+	and.w	r10, r10, #0x11111111
+	// ([79-82], 1) blocks
+	ldr.w	r4, [r1, #4]
+	ldr.w	r5, [r2, #316]
+	umlal	r6, r7, r5, r4
+	umlal	r7, r8, r12, r4
+	umlal	r8, r9, r14, r4
+	umlal	r9, r10, r3, r4
+	and.w	r6, r6, #0x11111111
+	and.w	r7, r7, #0x11111111
+	and.w	r8, r8, #0x11111111
+	and.w	r9, r9, #0x11111111
+	and.w	r10, r10, #0x11111111
+	// ([78-81], 2) blocks
+	ldr.w	r3, [r1, #8]
+	ldr.w	r4, [r2, #312]
+	umlal	r6, r7, r4, r3
+	umlal	r7, r8, r5, r3
+	umlal	r8, r9, r12, r3
+	umlal	r9, r10, r14, r3
+	and.w	r6, r6, #0x11111111
+	and.w	r7, r7, #0x11111111
+	and.w	r8, r8, #0x11111111
+	and.w	r9, r9, #0x11111111
+	and.w	r10, r10, #0x11111111
+	// ([77-80], 3) blocks
+	ldr.w	r14, [r1, #12]
+	ldr.w	r3, [r2, #308]
+	umlal	r6, r7, r3, r14
+	umlal	r7, r8, r4, r14
+	umlal	r8, r9, r5, r14
+	umlal	r9, r10, r12, r14
+	and.w	r6, r6, #0x11111111
+	and.w	r7, r7, #0x11111111
+	and.w	r8, r8, #0x11111111
+	and.w	r9, r9, #0x11111111
+	and.w	r10, r10, #0x11111111
+	str.w r7, [r0, #4]
+	str.w r8, [r0, #8]
+	str.w r9, [r0, #12]
+	str.w r6, [r0], #16
+	// ([84-87], 0) blocks
+	ldr.w	r4, [r1]
+	ldr.w	r3, [r2, #348]
+	ldr.w	r14, [r2, #344]
+	ldr.w	r12, [r2, #340]
+	ldr.w	r5, [r2, #336]
+	umull	r6, r7, r12, r4
+	umull	r8, r9, r3, r4
+	umlal	r10, r6, r5, r4
+	umlal	r7, r8, r14, r4
+	and.w	r10, r10, #0x11111111
+	and.w	r6, r6, #0x11111111
+	and.w	r7, r7, #0x11111111
+	and.w	r8, r8, #0x11111111
+	and.w	r9, r9, #0x11111111
+	// ([83-86], 1) blocks
+	ldr.w	r3, [r1, #4]
+	ldr.w	r4, [r2, #332]
+	umlal	r10, r6, r4, r3
+	umlal	r6, r7, r5, r3
+	umlal	r7, r8, r12, r3
+	umlal	r8, r9, r14, r3
+	and.w	r10, r10, #0x11111111
+	and.w	r6, r6, #0x11111111
+	and.w	r7, r7, #0x11111111
+	and.w	r8, r8, #0x11111111
+	and.w	r9, r9, #0x11111111
+	// ([82-85], 2) blocks
+	ldr.w	r14, [r1, #8]
+	ldr.w	r3, [r2, #328]
+	umlal	r10, r6, r3, r14
+	umlal	r6, r7, r4, r14
+	umlal	r7, r8, r5, r14
+	umlal	r8, r9, r12, r14
+	and.w	r10, r10, #0x11111111
+	and.w	r6, r6, #0x11111111
+	and.w	r7, r7, #0x11111111
+	and.w	r8, r8, #0x11111111
+	and.w	r9, r9, #0x11111111
+	// ([81-84], 3) blocks
+	ldr.w	r12, [r1, #12]
+	ldr.w	r14, [r2, #324]
+	umlal	r10, r6, r14, r12
+	umlal	r6, r7, r3, r12
+	umlal	r7, r8, r4, r12
+	umlal	r8, r9, r5, r12
+	and.w	r10, r10, #0x11111111
+	and.w	r6, r6, #0x11111111
+	and.w	r7, r7, #0x11111111
+	and.w	r8, r8, #0x11111111
+	and.w	r9, r9, #0x11111111
+	str.w r6, [r0, #4]
+	str.w r7, [r0, #8]
+	str.w r8, [r0, #12]
+	str.w r10, [r0], #16
 	pop.w {pc}
