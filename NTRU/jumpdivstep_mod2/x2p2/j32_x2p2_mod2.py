@@ -72,6 +72,7 @@ def main():
 
     ## M at r
     printIn("ldr.w %s, [%s, #-%d]" % (h2[0], M, M_offset*4)) # f1
+    printIn("ldr.w %s, [%s, #-%d]" % (h2[1], M, M_offset*4-4)) # f1
 
     ## add f1
     printIn("eor.w %s, %s, %s, LSL #%d" % (h2[0], h2[0], h1[0], bits_per_coeffi))
