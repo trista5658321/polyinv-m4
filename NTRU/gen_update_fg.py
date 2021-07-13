@@ -90,12 +90,12 @@ def main(base, LENGTH):
     # get the lost coeffi
     uf_pre_coeffi = "r11"
     rf_pre_coeffi = "r12"
-    uf_last_coeffi = "r1"
-    rf_last_coeffi = "r2"
+    uf_last_coeffi = "r0"
+    rf_last_coeffi = "r1"
     printIn("ldr.w %s, [%s, #%d]" % (uf_pre_coeffi, sp, -4))
     printIn("ldr.w %s, [%s, #%d]" % (rf_pre_coeffi, sp, -4 + add_mul_result_distance))
-    printIn("and.w %s, %s, #0x1" % (uf_pre_coeffi, uf_pre_coeffi))
-    printIn("and.w %s, %s, #0x1" % (rf_pre_coeffi, rf_pre_coeffi))
+    printIn("ubfx.w %s, %s, #28, #1" % (uf_pre_coeffi, uf_pre_coeffi))
+    printIn("ubfx.w %s, %s, #28, #1" % (rf_pre_coeffi, rf_pre_coeffi))
 
     add_loop = "add_loop_%d" % (coeffi)
     print(add_loop + ":")
@@ -125,20 +125,20 @@ def main(base, LENGTH):
             for i in range(len(h1)):
                 start_value_tmp = [uf_pre_coeffi, uf_last_coeffi][ i & 1 ]
                 end_value_tmp = [uf_last_coeffi, uf_pre_coeffi][ i & 1 ]
-                printIn("and.w %s, %s, #0x1" % (end_value_tmp, h1[i]))
+                printIn("ubfx.w %s, %s, #28, #1" % (end_value_tmp, h1[i]))
                 printIn("eor.w %s, %s, %s, LSL #4" % (h1[i], start_value_tmp, h1[i]))
 
             for i in range(len(h2)):
                 start_value_tmp = [rf_pre_coeffi, rf_last_coeffi][ i & 1 ]
                 end_value_tmp = [rf_last_coeffi, rf_pre_coeffi][ i & 1 ]
-                printIn("and.w %s, %s, #0x1" % (end_value_tmp, h2[i]))
+                printIn("ubfx.w %s, %s, #28, #1" % (end_value_tmp, h2[i]))
                 printIn("eor.w %s, %s, %s, LSL #4" % (h2[i], start_value_tmp, h2[i]))
         
-        printIn("vmov.w %s, %s, %s, %s" % (f, g, s_f, s_g))
+            printIn("vmov.w %s, %s, %s, %s" % (f, g, s_f, s_g))
         
         # add
         for i in range(len(h1)):
-            printIn("add.w %s, %s" % (h1[i], h2[i]))
+            printIn("eor.w %s, %s" % (h1[i], h2[i]))
         # store
         str_back(h1,str_target)
     
@@ -184,7 +184,7 @@ def main(base, LENGTH):
 
             # add
             for i in range(loop_last):
-                printIn("add.w %s, %s" % (h1[i], h2[i]))
+                printIn("eor.w %s, %s" % (h1[i], h2[i]))
             # store
             tmp_arr = h1[:loop_last]
             str_back(tmp_arr,str_target)

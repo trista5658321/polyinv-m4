@@ -6,7 +6,6 @@
 .type __update_VS_32x32_mod2, %function
 __update_VS_32x32_mod2:
 	push.w {r3-r12,lr}
-	movw.w r11, #0
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #132
@@ -28,6 +27,8 @@ __update_VS_32x32_mod2:
 	bl __polymul_32x32_mod2
 	mov.w r10, sp
 	vmov.w r0, r1, s0, s1
+	movw.w r11, #0
+	movw.w r12, #0
 	add.w lr, r0, #32
 add_loop_vs_32:
 	ldr.w r2, [r10, #32]
@@ -38,14 +39,16 @@ add_loop_vs_32:
 	ldr.w r7, [r10, #100]
 	ldr.w r8, [r10, #104]
 	ldr.w r9, [r10, #108]
-	and.w r12, r2, #0x1
-	eor.w r2, r11, r2, LSL #4
-	and.w r11, r3, #0x1
-	eor.w r3, r12, r3, LSL #4
-	and.w r12, r4, #0x1
-	eor.w r4, r11, r4, LSL #4
-	and.w r11, r5, #0x1
-	eor.w r5, r12, r5, LSL #4
+	vmov.w s0, s1, r0, r1
+	ubfx.w r1, r2, #28, #1
+	eor.w r2, r12, r2, LSL #4
+	ubfx.w r12, r3, #28, #1
+	eor.w r3, r1, r3, LSL #4
+	ubfx.w r1, r4, #28, #1
+	eor.w r4, r12, r4, LSL #4
+	ubfx.w r12, r5, #28, #1
+	eor.w r5, r1, r5, LSL #4
+	vmov.w r0, r1, s0, s1
 	eor.w r2, r6
 	eor.w r3, r7
 	eor.w r4, r8
@@ -62,14 +65,16 @@ add_loop_vs_32:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
-	and.w r12, r2, #0x1
+	vmov.w s0, s1, r0, r1
+	ubfx.w r0, r2, #28, #1
 	eor.w r2, r11, r2, LSL #4
-	and.w r11, r3, #0x1
-	eor.w r3, r12, r3, LSL #4
-	and.w r12, r4, #0x1
+	ubfx.w r11, r3, #28, #1
+	eor.w r3, r0, r3, LSL #4
+	ubfx.w r0, r4, #28, #1
 	eor.w r4, r11, r4, LSL #4
-	and.w r11, r5, #0x1
-	eor.w r5, r12, r5, LSL #4
+	ubfx.w r11, r5, #28, #1
+	eor.w r5, r0, r5, LSL #4
+	vmov.w r0, r1, s0, s1
 	eor.w r2, r6
 	eor.w r3, r7
 	eor.w r4, r8
@@ -90,7 +95,6 @@ add_loop_vs_32:
 .type __update_VS_32x64_mod2, %function
 __update_VS_32x64_mod2:
 	push.w {r3-r12,lr}
-	movw.w r11, #0
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #196
@@ -112,6 +116,8 @@ __update_VS_32x64_mod2:
 	bl __polymul_32x64_mod2
 	mov.w r10, sp
 	vmov.w r0, r1, s0, s1
+	movw.w r11, #0
+	movw.w r12, #0
 	add.w lr, r0, #48
 add_loop_vs_64:
 	ldr.w r2, [r10, #48]
@@ -122,14 +128,16 @@ add_loop_vs_64:
 	ldr.w r7, [r10, #148]
 	ldr.w r8, [r10, #152]
 	ldr.w r9, [r10, #156]
-	and.w r12, r2, #0x1
-	eor.w r2, r11, r2, LSL #4
-	and.w r11, r3, #0x1
-	eor.w r3, r12, r3, LSL #4
-	and.w r12, r4, #0x1
-	eor.w r4, r11, r4, LSL #4
-	and.w r11, r5, #0x1
-	eor.w r5, r12, r5, LSL #4
+	vmov.w s0, s1, r0, r1
+	ubfx.w r1, r2, #28, #1
+	eor.w r2, r12, r2, LSL #4
+	ubfx.w r12, r3, #28, #1
+	eor.w r3, r1, r3, LSL #4
+	ubfx.w r1, r4, #28, #1
+	eor.w r4, r12, r4, LSL #4
+	ubfx.w r12, r5, #28, #1
+	eor.w r5, r1, r5, LSL #4
+	vmov.w r0, r1, s0, s1
 	eor.w r2, r6
 	eor.w r3, r7
 	eor.w r4, r8
@@ -146,14 +154,16 @@ add_loop_vs_64:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
-	and.w r12, r2, #0x1
+	vmov.w s0, s1, r0, r1
+	ubfx.w r0, r2, #28, #1
 	eor.w r2, r11, r2, LSL #4
-	and.w r11, r3, #0x1
-	eor.w r3, r12, r3, LSL #4
-	and.w r12, r4, #0x1
+	ubfx.w r11, r3, #28, #1
+	eor.w r3, r0, r3, LSL #4
+	ubfx.w r0, r4, #28, #1
 	eor.w r4, r11, r4, LSL #4
-	and.w r11, r5, #0x1
-	eor.w r5, r12, r5, LSL #4
+	ubfx.w r11, r5, #28, #1
+	eor.w r5, r0, r5, LSL #4
+	vmov.w r0, r1, s0, s1
 	eor.w r2, r6
 	eor.w r3, r7
 	eor.w r4, r8
@@ -174,7 +184,6 @@ add_loop_vs_64:
 .type __update_VS_32x96_mod2, %function
 __update_VS_32x96_mod2:
 	push.w {r3-r12,lr}
-	movw.w r11, #0
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #260
@@ -196,6 +205,8 @@ __update_VS_32x96_mod2:
 	bl __polymul_32x96_mod2
 	mov.w r10, sp
 	vmov.w r0, r1, s0, s1
+	movw.w r11, #0
+	movw.w r12, #0
 	add.w lr, r0, #64
 add_loop_vs_96:
 	ldr.w r2, [r10, #64]
@@ -206,14 +217,16 @@ add_loop_vs_96:
 	ldr.w r7, [r10, #196]
 	ldr.w r8, [r10, #200]
 	ldr.w r9, [r10, #204]
-	and.w r12, r2, #0x1
-	eor.w r2, r11, r2, LSL #4
-	and.w r11, r3, #0x1
-	eor.w r3, r12, r3, LSL #4
-	and.w r12, r4, #0x1
-	eor.w r4, r11, r4, LSL #4
-	and.w r11, r5, #0x1
-	eor.w r5, r12, r5, LSL #4
+	vmov.w s0, s1, r0, r1
+	ubfx.w r1, r2, #28, #1
+	eor.w r2, r12, r2, LSL #4
+	ubfx.w r12, r3, #28, #1
+	eor.w r3, r1, r3, LSL #4
+	ubfx.w r1, r4, #28, #1
+	eor.w r4, r12, r4, LSL #4
+	ubfx.w r12, r5, #28, #1
+	eor.w r5, r1, r5, LSL #4
+	vmov.w r0, r1, s0, s1
 	eor.w r2, r6
 	eor.w r3, r7
 	eor.w r4, r8
@@ -230,14 +243,16 @@ add_loop_vs_96:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
-	and.w r12, r2, #0x1
+	vmov.w s0, s1, r0, r1
+	ubfx.w r0, r2, #28, #1
 	eor.w r2, r11, r2, LSL #4
-	and.w r11, r3, #0x1
-	eor.w r3, r12, r3, LSL #4
-	and.w r12, r4, #0x1
+	ubfx.w r11, r3, #28, #1
+	eor.w r3, r0, r3, LSL #4
+	ubfx.w r0, r4, #28, #1
 	eor.w r4, r11, r4, LSL #4
-	and.w r11, r5, #0x1
-	eor.w r5, r12, r5, LSL #4
+	ubfx.w r11, r5, #28, #1
+	eor.w r5, r0, r5, LSL #4
+	vmov.w r0, r1, s0, s1
 	eor.w r2, r6
 	eor.w r3, r7
 	eor.w r4, r8
@@ -258,7 +273,6 @@ add_loop_vs_96:
 .type __update_VS_32x128_mod2, %function
 __update_VS_32x128_mod2:
 	push.w {r3-r12,lr}
-	movw.w r11, #0
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #324
@@ -280,6 +294,8 @@ __update_VS_32x128_mod2:
 	bl __polymul_32x128_mod2
 	mov.w r10, sp
 	vmov.w r0, r1, s0, s1
+	movw.w r11, #0
+	movw.w r12, #0
 	add.w lr, r0, #80
 add_loop_vs_128:
 	ldr.w r2, [r10, #80]
@@ -290,14 +306,16 @@ add_loop_vs_128:
 	ldr.w r7, [r10, #244]
 	ldr.w r8, [r10, #248]
 	ldr.w r9, [r10, #252]
-	and.w r12, r2, #0x1
-	eor.w r2, r11, r2, LSL #4
-	and.w r11, r3, #0x1
-	eor.w r3, r12, r3, LSL #4
-	and.w r12, r4, #0x1
-	eor.w r4, r11, r4, LSL #4
-	and.w r11, r5, #0x1
-	eor.w r5, r12, r5, LSL #4
+	vmov.w s0, s1, r0, r1
+	ubfx.w r1, r2, #28, #1
+	eor.w r2, r12, r2, LSL #4
+	ubfx.w r12, r3, #28, #1
+	eor.w r3, r1, r3, LSL #4
+	ubfx.w r1, r4, #28, #1
+	eor.w r4, r12, r4, LSL #4
+	ubfx.w r12, r5, #28, #1
+	eor.w r5, r1, r5, LSL #4
+	vmov.w r0, r1, s0, s1
 	eor.w r2, r6
 	eor.w r3, r7
 	eor.w r4, r8
@@ -314,14 +332,16 @@ add_loop_vs_128:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
-	and.w r12, r2, #0x1
+	vmov.w s0, s1, r0, r1
+	ubfx.w r0, r2, #28, #1
 	eor.w r2, r11, r2, LSL #4
-	and.w r11, r3, #0x1
-	eor.w r3, r12, r3, LSL #4
-	and.w r12, r4, #0x1
+	ubfx.w r11, r3, #28, #1
+	eor.w r3, r0, r3, LSL #4
+	ubfx.w r0, r4, #28, #1
 	eor.w r4, r11, r4, LSL #4
-	and.w r11, r5, #0x1
-	eor.w r5, r12, r5, LSL #4
+	ubfx.w r11, r5, #28, #1
+	eor.w r5, r0, r5, LSL #4
+	vmov.w r0, r1, s0, s1
 	eor.w r2, r6
 	eor.w r3, r7
 	eor.w r4, r8
@@ -342,7 +362,6 @@ add_loop_vs_128:
 .type __update_VS_32x160_mod2, %function
 __update_VS_32x160_mod2:
 	push.w {r3-r12,lr}
-	movw.w r11, #0
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #388
@@ -364,6 +383,8 @@ __update_VS_32x160_mod2:
 	bl __polymul_32x160_mod2
 	mov.w r10, sp
 	vmov.w r0, r1, s0, s1
+	movw.w r11, #0
+	movw.w r12, #0
 	add.w lr, r0, #96
 add_loop_vs_160:
 	ldr.w r2, [r10, #96]
@@ -374,14 +395,16 @@ add_loop_vs_160:
 	ldr.w r7, [r10, #292]
 	ldr.w r8, [r10, #296]
 	ldr.w r9, [r10, #300]
-	and.w r12, r2, #0x1
-	eor.w r2, r11, r2, LSL #4
-	and.w r11, r3, #0x1
-	eor.w r3, r12, r3, LSL #4
-	and.w r12, r4, #0x1
-	eor.w r4, r11, r4, LSL #4
-	and.w r11, r5, #0x1
-	eor.w r5, r12, r5, LSL #4
+	vmov.w s0, s1, r0, r1
+	ubfx.w r1, r2, #28, #1
+	eor.w r2, r12, r2, LSL #4
+	ubfx.w r12, r3, #28, #1
+	eor.w r3, r1, r3, LSL #4
+	ubfx.w r1, r4, #28, #1
+	eor.w r4, r12, r4, LSL #4
+	ubfx.w r12, r5, #28, #1
+	eor.w r5, r1, r5, LSL #4
+	vmov.w r0, r1, s0, s1
 	eor.w r2, r6
 	eor.w r3, r7
 	eor.w r4, r8
@@ -398,14 +421,16 @@ add_loop_vs_160:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
-	and.w r12, r2, #0x1
+	vmov.w s0, s1, r0, r1
+	ubfx.w r0, r2, #28, #1
 	eor.w r2, r11, r2, LSL #4
-	and.w r11, r3, #0x1
-	eor.w r3, r12, r3, LSL #4
-	and.w r12, r4, #0x1
+	ubfx.w r11, r3, #28, #1
+	eor.w r3, r0, r3, LSL #4
+	ubfx.w r0, r4, #28, #1
 	eor.w r4, r11, r4, LSL #4
-	and.w r11, r5, #0x1
-	eor.w r5, r12, r5, LSL #4
+	ubfx.w r11, r5, #28, #1
+	eor.w r5, r0, r5, LSL #4
+	vmov.w r0, r1, s0, s1
 	eor.w r2, r6
 	eor.w r3, r7
 	eor.w r4, r8
@@ -426,7 +451,6 @@ add_loop_vs_160:
 .type __update_VS_32x192_mod2, %function
 __update_VS_32x192_mod2:
 	push.w {r3-r12,lr}
-	movw.w r11, #0
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #452
@@ -448,6 +472,8 @@ __update_VS_32x192_mod2:
 	bl __polymul_32x192_mod2
 	mov.w r10, sp
 	vmov.w r0, r1, s0, s1
+	movw.w r11, #0
+	movw.w r12, #0
 	add.w lr, r0, #112
 add_loop_vs_192:
 	ldr.w r2, [r10, #112]
@@ -458,14 +484,16 @@ add_loop_vs_192:
 	ldr.w r7, [r10, #340]
 	ldr.w r8, [r10, #344]
 	ldr.w r9, [r10, #348]
-	and.w r12, r2, #0x1
-	eor.w r2, r11, r2, LSL #4
-	and.w r11, r3, #0x1
-	eor.w r3, r12, r3, LSL #4
-	and.w r12, r4, #0x1
-	eor.w r4, r11, r4, LSL #4
-	and.w r11, r5, #0x1
-	eor.w r5, r12, r5, LSL #4
+	vmov.w s0, s1, r0, r1
+	ubfx.w r1, r2, #28, #1
+	eor.w r2, r12, r2, LSL #4
+	ubfx.w r12, r3, #28, #1
+	eor.w r3, r1, r3, LSL #4
+	ubfx.w r1, r4, #28, #1
+	eor.w r4, r12, r4, LSL #4
+	ubfx.w r12, r5, #28, #1
+	eor.w r5, r1, r5, LSL #4
+	vmov.w r0, r1, s0, s1
 	eor.w r2, r6
 	eor.w r3, r7
 	eor.w r4, r8
@@ -482,14 +510,16 @@ add_loop_vs_192:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
-	and.w r12, r2, #0x1
+	vmov.w s0, s1, r0, r1
+	ubfx.w r0, r2, #28, #1
 	eor.w r2, r11, r2, LSL #4
-	and.w r11, r3, #0x1
-	eor.w r3, r12, r3, LSL #4
-	and.w r12, r4, #0x1
+	ubfx.w r11, r3, #28, #1
+	eor.w r3, r0, r3, LSL #4
+	ubfx.w r0, r4, #28, #1
 	eor.w r4, r11, r4, LSL #4
-	and.w r11, r5, #0x1
-	eor.w r5, r12, r5, LSL #4
+	ubfx.w r11, r5, #28, #1
+	eor.w r5, r0, r5, LSL #4
+	vmov.w r0, r1, s0, s1
 	eor.w r2, r6
 	eor.w r3, r7
 	eor.w r4, r8
@@ -510,7 +540,6 @@ add_loop_vs_192:
 .type __update_VS_32x224_mod2, %function
 __update_VS_32x224_mod2:
 	push.w {r3-r12,lr}
-	movw.w r11, #0
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #516
@@ -532,6 +561,8 @@ __update_VS_32x224_mod2:
 	bl __polymul_32x224_mod2
 	mov.w r10, sp
 	vmov.w r0, r1, s0, s1
+	movw.w r11, #0
+	movw.w r12, #0
 	add.w lr, r0, #128
 add_loop_vs_224:
 	ldr.w r2, [r10, #128]
@@ -542,14 +573,16 @@ add_loop_vs_224:
 	ldr.w r7, [r10, #388]
 	ldr.w r8, [r10, #392]
 	ldr.w r9, [r10, #396]
-	and.w r12, r2, #0x1
-	eor.w r2, r11, r2, LSL #4
-	and.w r11, r3, #0x1
-	eor.w r3, r12, r3, LSL #4
-	and.w r12, r4, #0x1
-	eor.w r4, r11, r4, LSL #4
-	and.w r11, r5, #0x1
-	eor.w r5, r12, r5, LSL #4
+	vmov.w s0, s1, r0, r1
+	ubfx.w r1, r2, #28, #1
+	eor.w r2, r12, r2, LSL #4
+	ubfx.w r12, r3, #28, #1
+	eor.w r3, r1, r3, LSL #4
+	ubfx.w r1, r4, #28, #1
+	eor.w r4, r12, r4, LSL #4
+	ubfx.w r12, r5, #28, #1
+	eor.w r5, r1, r5, LSL #4
+	vmov.w r0, r1, s0, s1
 	eor.w r2, r6
 	eor.w r3, r7
 	eor.w r4, r8
@@ -566,14 +599,16 @@ add_loop_vs_224:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
-	and.w r12, r2, #0x1
+	vmov.w s0, s1, r0, r1
+	ubfx.w r0, r2, #28, #1
 	eor.w r2, r11, r2, LSL #4
-	and.w r11, r3, #0x1
-	eor.w r3, r12, r3, LSL #4
-	and.w r12, r4, #0x1
+	ubfx.w r11, r3, #28, #1
+	eor.w r3, r0, r3, LSL #4
+	ubfx.w r0, r4, #28, #1
 	eor.w r4, r11, r4, LSL #4
-	and.w r11, r5, #0x1
-	eor.w r5, r12, r5, LSL #4
+	ubfx.w r11, r5, #28, #1
+	eor.w r5, r0, r5, LSL #4
+	vmov.w r0, r1, s0, s1
 	eor.w r2, r6
 	eor.w r3, r7
 	eor.w r4, r8
@@ -594,7 +629,6 @@ add_loop_vs_224:
 .type __update_VS_32x256_mod2, %function
 __update_VS_32x256_mod2:
 	push.w {r3-r12,lr}
-	movw.w r11, #0
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #580
@@ -616,6 +650,8 @@ __update_VS_32x256_mod2:
 	bl __polymul_32x256_mod2
 	mov.w r10, sp
 	vmov.w r0, r1, s0, s1
+	movw.w r11, #0
+	movw.w r12, #0
 	add.w lr, r0, #144
 add_loop_vs_256:
 	ldr.w r2, [r10, #144]
@@ -626,14 +662,16 @@ add_loop_vs_256:
 	ldr.w r7, [r10, #436]
 	ldr.w r8, [r10, #440]
 	ldr.w r9, [r10, #444]
-	and.w r12, r2, #0x1
-	eor.w r2, r11, r2, LSL #4
-	and.w r11, r3, #0x1
-	eor.w r3, r12, r3, LSL #4
-	and.w r12, r4, #0x1
-	eor.w r4, r11, r4, LSL #4
-	and.w r11, r5, #0x1
-	eor.w r5, r12, r5, LSL #4
+	vmov.w s0, s1, r0, r1
+	ubfx.w r1, r2, #28, #1
+	eor.w r2, r12, r2, LSL #4
+	ubfx.w r12, r3, #28, #1
+	eor.w r3, r1, r3, LSL #4
+	ubfx.w r1, r4, #28, #1
+	eor.w r4, r12, r4, LSL #4
+	ubfx.w r12, r5, #28, #1
+	eor.w r5, r1, r5, LSL #4
+	vmov.w r0, r1, s0, s1
 	eor.w r2, r6
 	eor.w r3, r7
 	eor.w r4, r8
@@ -650,14 +688,16 @@ add_loop_vs_256:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
-	and.w r12, r2, #0x1
+	vmov.w s0, s1, r0, r1
+	ubfx.w r0, r2, #28, #1
 	eor.w r2, r11, r2, LSL #4
-	and.w r11, r3, #0x1
-	eor.w r3, r12, r3, LSL #4
-	and.w r12, r4, #0x1
+	ubfx.w r11, r3, #28, #1
+	eor.w r3, r0, r3, LSL #4
+	ubfx.w r0, r4, #28, #1
 	eor.w r4, r11, r4, LSL #4
-	and.w r11, r5, #0x1
-	eor.w r5, r12, r5, LSL #4
+	ubfx.w r11, r5, #28, #1
+	eor.w r5, r0, r5, LSL #4
+	vmov.w r0, r1, s0, s1
 	eor.w r2, r6
 	eor.w r3, r7
 	eor.w r4, r8
@@ -678,7 +718,6 @@ add_loop_vs_256:
 .type __update_VS_32x288_mod2, %function
 __update_VS_32x288_mod2:
 	push.w {r3-r12,lr}
-	movw.w r11, #0
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #644
@@ -700,6 +739,8 @@ __update_VS_32x288_mod2:
 	bl __polymul_32x288_mod2
 	mov.w r10, sp
 	vmov.w r0, r1, s0, s1
+	movw.w r11, #0
+	movw.w r12, #0
 	add.w lr, r0, #160
 add_loop_vs_288:
 	ldr.w r2, [r10, #160]
@@ -710,14 +751,16 @@ add_loop_vs_288:
 	ldr.w r7, [r10, #484]
 	ldr.w r8, [r10, #488]
 	ldr.w r9, [r10, #492]
-	and.w r12, r2, #0x1
-	eor.w r2, r11, r2, LSL #4
-	and.w r11, r3, #0x1
-	eor.w r3, r12, r3, LSL #4
-	and.w r12, r4, #0x1
-	eor.w r4, r11, r4, LSL #4
-	and.w r11, r5, #0x1
-	eor.w r5, r12, r5, LSL #4
+	vmov.w s0, s1, r0, r1
+	ubfx.w r1, r2, #28, #1
+	eor.w r2, r12, r2, LSL #4
+	ubfx.w r12, r3, #28, #1
+	eor.w r3, r1, r3, LSL #4
+	ubfx.w r1, r4, #28, #1
+	eor.w r4, r12, r4, LSL #4
+	ubfx.w r12, r5, #28, #1
+	eor.w r5, r1, r5, LSL #4
+	vmov.w r0, r1, s0, s1
 	eor.w r2, r6
 	eor.w r3, r7
 	eor.w r4, r8
@@ -734,14 +777,16 @@ add_loop_vs_288:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
-	and.w r12, r2, #0x1
+	vmov.w s0, s1, r0, r1
+	ubfx.w r0, r2, #28, #1
 	eor.w r2, r11, r2, LSL #4
-	and.w r11, r3, #0x1
-	eor.w r3, r12, r3, LSL #4
-	and.w r12, r4, #0x1
+	ubfx.w r11, r3, #28, #1
+	eor.w r3, r0, r3, LSL #4
+	ubfx.w r0, r4, #28, #1
 	eor.w r4, r11, r4, LSL #4
-	and.w r11, r5, #0x1
-	eor.w r5, r12, r5, LSL #4
+	ubfx.w r11, r5, #28, #1
+	eor.w r5, r0, r5, LSL #4
+	vmov.w r0, r1, s0, s1
 	eor.w r2, r6
 	eor.w r3, r7
 	eor.w r4, r8
@@ -762,7 +807,6 @@ add_loop_vs_288:
 .type __update_VS_32x320_mod2, %function
 __update_VS_32x320_mod2:
 	push.w {r3-r12,lr}
-	movw.w r11, #0
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #708
@@ -784,6 +828,8 @@ __update_VS_32x320_mod2:
 	bl __polymul_32x320_mod2
 	mov.w r10, sp
 	vmov.w r0, r1, s0, s1
+	movw.w r11, #0
+	movw.w r12, #0
 	add.w lr, r0, #176
 add_loop_vs_320:
 	ldr.w r2, [r10, #176]
@@ -794,14 +840,16 @@ add_loop_vs_320:
 	ldr.w r7, [r10, #532]
 	ldr.w r8, [r10, #536]
 	ldr.w r9, [r10, #540]
-	and.w r12, r2, #0x1
-	eor.w r2, r11, r2, LSL #4
-	and.w r11, r3, #0x1
-	eor.w r3, r12, r3, LSL #4
-	and.w r12, r4, #0x1
-	eor.w r4, r11, r4, LSL #4
-	and.w r11, r5, #0x1
-	eor.w r5, r12, r5, LSL #4
+	vmov.w s0, s1, r0, r1
+	ubfx.w r1, r2, #28, #1
+	eor.w r2, r12, r2, LSL #4
+	ubfx.w r12, r3, #28, #1
+	eor.w r3, r1, r3, LSL #4
+	ubfx.w r1, r4, #28, #1
+	eor.w r4, r12, r4, LSL #4
+	ubfx.w r12, r5, #28, #1
+	eor.w r5, r1, r5, LSL #4
+	vmov.w r0, r1, s0, s1
 	eor.w r2, r6
 	eor.w r3, r7
 	eor.w r4, r8
@@ -818,14 +866,16 @@ add_loop_vs_320:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
-	and.w r12, r2, #0x1
+	vmov.w s0, s1, r0, r1
+	ubfx.w r0, r2, #28, #1
 	eor.w r2, r11, r2, LSL #4
-	and.w r11, r3, #0x1
-	eor.w r3, r12, r3, LSL #4
-	and.w r12, r4, #0x1
+	ubfx.w r11, r3, #28, #1
+	eor.w r3, r0, r3, LSL #4
+	ubfx.w r0, r4, #28, #1
 	eor.w r4, r11, r4, LSL #4
-	and.w r11, r5, #0x1
-	eor.w r5, r12, r5, LSL #4
+	ubfx.w r11, r5, #28, #1
+	eor.w r5, r0, r5, LSL #4
+	vmov.w r0, r1, s0, s1
 	eor.w r2, r6
 	eor.w r3, r7
 	eor.w r4, r8
@@ -846,7 +896,6 @@ add_loop_vs_320:
 .type __update_VS_32x352_mod2, %function
 __update_VS_32x352_mod2:
 	push.w {r3-r12,lr}
-	movw.w r11, #0
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #772
@@ -868,6 +917,8 @@ __update_VS_32x352_mod2:
 	bl __polymul_32x352_mod2
 	mov.w r10, sp
 	vmov.w r0, r1, s0, s1
+	movw.w r11, #0
+	movw.w r12, #0
 	add.w lr, r0, #192
 add_loop_vs_352:
 	ldr.w r2, [r10, #192]
@@ -878,14 +929,16 @@ add_loop_vs_352:
 	ldr.w r7, [r10, #580]
 	ldr.w r8, [r10, #584]
 	ldr.w r9, [r10, #588]
-	and.w r12, r2, #0x1
-	eor.w r2, r11, r2, LSL #4
-	and.w r11, r3, #0x1
-	eor.w r3, r12, r3, LSL #4
-	and.w r12, r4, #0x1
-	eor.w r4, r11, r4, LSL #4
-	and.w r11, r5, #0x1
-	eor.w r5, r12, r5, LSL #4
+	vmov.w s0, s1, r0, r1
+	ubfx.w r1, r2, #28, #1
+	eor.w r2, r12, r2, LSL #4
+	ubfx.w r12, r3, #28, #1
+	eor.w r3, r1, r3, LSL #4
+	ubfx.w r1, r4, #28, #1
+	eor.w r4, r12, r4, LSL #4
+	ubfx.w r12, r5, #28, #1
+	eor.w r5, r1, r5, LSL #4
+	vmov.w r0, r1, s0, s1
 	eor.w r2, r6
 	eor.w r3, r7
 	eor.w r4, r8
@@ -902,14 +955,16 @@ add_loop_vs_352:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
-	and.w r12, r2, #0x1
+	vmov.w s0, s1, r0, r1
+	ubfx.w r0, r2, #28, #1
 	eor.w r2, r11, r2, LSL #4
-	and.w r11, r3, #0x1
-	eor.w r3, r12, r3, LSL #4
-	and.w r12, r4, #0x1
+	ubfx.w r11, r3, #28, #1
+	eor.w r3, r0, r3, LSL #4
+	ubfx.w r0, r4, #28, #1
 	eor.w r4, r11, r4, LSL #4
-	and.w r11, r5, #0x1
-	eor.w r5, r12, r5, LSL #4
+	ubfx.w r11, r5, #28, #1
+	eor.w r5, r0, r5, LSL #4
+	vmov.w r0, r1, s0, s1
 	eor.w r2, r6
 	eor.w r3, r7
 	eor.w r4, r8
@@ -930,7 +985,6 @@ add_loop_vs_352:
 .type __update_VS_32x384_mod2, %function
 __update_VS_32x384_mod2:
 	push.w {r3-r12,lr}
-	movw.w r11, #0
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #836
@@ -952,6 +1006,8 @@ __update_VS_32x384_mod2:
 	bl __polymul_32x384_mod2
 	mov.w r10, sp
 	vmov.w r0, r1, s0, s1
+	movw.w r11, #0
+	movw.w r12, #0
 	add.w lr, r0, #208
 add_loop_vs_384:
 	ldr.w r2, [r10, #208]
@@ -962,14 +1018,16 @@ add_loop_vs_384:
 	ldr.w r7, [r10, #628]
 	ldr.w r8, [r10, #632]
 	ldr.w r9, [r10, #636]
-	and.w r12, r2, #0x1
-	eor.w r2, r11, r2, LSL #4
-	and.w r11, r3, #0x1
-	eor.w r3, r12, r3, LSL #4
-	and.w r12, r4, #0x1
-	eor.w r4, r11, r4, LSL #4
-	and.w r11, r5, #0x1
-	eor.w r5, r12, r5, LSL #4
+	vmov.w s0, s1, r0, r1
+	ubfx.w r1, r2, #28, #1
+	eor.w r2, r12, r2, LSL #4
+	ubfx.w r12, r3, #28, #1
+	eor.w r3, r1, r3, LSL #4
+	ubfx.w r1, r4, #28, #1
+	eor.w r4, r12, r4, LSL #4
+	ubfx.w r12, r5, #28, #1
+	eor.w r5, r1, r5, LSL #4
+	vmov.w r0, r1, s0, s1
 	eor.w r2, r6
 	eor.w r3, r7
 	eor.w r4, r8
@@ -986,14 +1044,16 @@ add_loop_vs_384:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
-	and.w r12, r2, #0x1
+	vmov.w s0, s1, r0, r1
+	ubfx.w r0, r2, #28, #1
 	eor.w r2, r11, r2, LSL #4
-	and.w r11, r3, #0x1
-	eor.w r3, r12, r3, LSL #4
-	and.w r12, r4, #0x1
+	ubfx.w r11, r3, #28, #1
+	eor.w r3, r0, r3, LSL #4
+	ubfx.w r0, r4, #28, #1
 	eor.w r4, r11, r4, LSL #4
-	and.w r11, r5, #0x1
-	eor.w r5, r12, r5, LSL #4
+	ubfx.w r11, r5, #28, #1
+	eor.w r5, r0, r5, LSL #4
+	vmov.w r0, r1, s0, s1
 	eor.w r2, r6
 	eor.w r3, r7
 	eor.w r4, r8
@@ -1014,7 +1074,6 @@ add_loop_vs_384:
 .type __update_VS_32x416_mod2, %function
 __update_VS_32x416_mod2:
 	push.w {r3-r12,lr}
-	movw.w r11, #0
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #900
@@ -1036,6 +1095,8 @@ __update_VS_32x416_mod2:
 	bl __polymul_32x416_mod2
 	mov.w r10, sp
 	vmov.w r0, r1, s0, s1
+	movw.w r11, #0
+	movw.w r12, #0
 	add.w lr, r0, #224
 add_loop_vs_416:
 	ldr.w r2, [r10, #224]
@@ -1046,14 +1107,16 @@ add_loop_vs_416:
 	ldr.w r7, [r10, #676]
 	ldr.w r8, [r10, #680]
 	ldr.w r9, [r10, #684]
-	and.w r12, r2, #0x1
-	eor.w r2, r11, r2, LSL #4
-	and.w r11, r3, #0x1
-	eor.w r3, r12, r3, LSL #4
-	and.w r12, r4, #0x1
-	eor.w r4, r11, r4, LSL #4
-	and.w r11, r5, #0x1
-	eor.w r5, r12, r5, LSL #4
+	vmov.w s0, s1, r0, r1
+	ubfx.w r1, r2, #28, #1
+	eor.w r2, r12, r2, LSL #4
+	ubfx.w r12, r3, #28, #1
+	eor.w r3, r1, r3, LSL #4
+	ubfx.w r1, r4, #28, #1
+	eor.w r4, r12, r4, LSL #4
+	ubfx.w r12, r5, #28, #1
+	eor.w r5, r1, r5, LSL #4
+	vmov.w r0, r1, s0, s1
 	eor.w r2, r6
 	eor.w r3, r7
 	eor.w r4, r8
@@ -1070,14 +1133,16 @@ add_loop_vs_416:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
-	and.w r12, r2, #0x1
+	vmov.w s0, s1, r0, r1
+	ubfx.w r0, r2, #28, #1
 	eor.w r2, r11, r2, LSL #4
-	and.w r11, r3, #0x1
-	eor.w r3, r12, r3, LSL #4
-	and.w r12, r4, #0x1
+	ubfx.w r11, r3, #28, #1
+	eor.w r3, r0, r3, LSL #4
+	ubfx.w r0, r4, #28, #1
 	eor.w r4, r11, r4, LSL #4
-	and.w r11, r5, #0x1
-	eor.w r5, r12, r5, LSL #4
+	ubfx.w r11, r5, #28, #1
+	eor.w r5, r0, r5, LSL #4
+	vmov.w r0, r1, s0, s1
 	eor.w r2, r6
 	eor.w r3, r7
 	eor.w r4, r8
@@ -1098,7 +1163,6 @@ add_loop_vs_416:
 .type __update_VS_32x448_mod2, %function
 __update_VS_32x448_mod2:
 	push.w {r3-r12,lr}
-	movw.w r11, #0
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #964
@@ -1120,6 +1184,8 @@ __update_VS_32x448_mod2:
 	bl __polymul_32x448_mod2
 	mov.w r10, sp
 	vmov.w r0, r1, s0, s1
+	movw.w r11, #0
+	movw.w r12, #0
 	add.w lr, r0, #240
 add_loop_vs_448:
 	ldr.w r2, [r10, #240]
@@ -1130,14 +1196,16 @@ add_loop_vs_448:
 	ldr.w r7, [r10, #724]
 	ldr.w r8, [r10, #728]
 	ldr.w r9, [r10, #732]
-	and.w r12, r2, #0x1
-	eor.w r2, r11, r2, LSL #4
-	and.w r11, r3, #0x1
-	eor.w r3, r12, r3, LSL #4
-	and.w r12, r4, #0x1
-	eor.w r4, r11, r4, LSL #4
-	and.w r11, r5, #0x1
-	eor.w r5, r12, r5, LSL #4
+	vmov.w s0, s1, r0, r1
+	ubfx.w r1, r2, #28, #1
+	eor.w r2, r12, r2, LSL #4
+	ubfx.w r12, r3, #28, #1
+	eor.w r3, r1, r3, LSL #4
+	ubfx.w r1, r4, #28, #1
+	eor.w r4, r12, r4, LSL #4
+	ubfx.w r12, r5, #28, #1
+	eor.w r5, r1, r5, LSL #4
+	vmov.w r0, r1, s0, s1
 	eor.w r2, r6
 	eor.w r3, r7
 	eor.w r4, r8
@@ -1154,14 +1222,16 @@ add_loop_vs_448:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
-	and.w r12, r2, #0x1
+	vmov.w s0, s1, r0, r1
+	ubfx.w r0, r2, #28, #1
 	eor.w r2, r11, r2, LSL #4
-	and.w r11, r3, #0x1
-	eor.w r3, r12, r3, LSL #4
-	and.w r12, r4, #0x1
+	ubfx.w r11, r3, #28, #1
+	eor.w r3, r0, r3, LSL #4
+	ubfx.w r0, r4, #28, #1
 	eor.w r4, r11, r4, LSL #4
-	and.w r11, r5, #0x1
-	eor.w r5, r12, r5, LSL #4
+	ubfx.w r11, r5, #28, #1
+	eor.w r5, r0, r5, LSL #4
+	vmov.w r0, r1, s0, s1
 	eor.w r2, r6
 	eor.w r3, r7
 	eor.w r4, r8
@@ -1182,7 +1252,6 @@ add_loop_vs_448:
 .type __update_VS_32x480_mod2, %function
 __update_VS_32x480_mod2:
 	push.w {r3-r12,lr}
-	movw.w r11, #0
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #1028
@@ -1204,6 +1273,8 @@ __update_VS_32x480_mod2:
 	bl __polymul_32x480_mod2
 	mov.w r10, sp
 	vmov.w r0, r1, s0, s1
+	movw.w r11, #0
+	movw.w r12, #0
 	add.w lr, r0, #256
 add_loop_vs_480:
 	ldr.w r2, [r10, #256]
@@ -1214,14 +1285,16 @@ add_loop_vs_480:
 	ldr.w r7, [r10, #772]
 	ldr.w r8, [r10, #776]
 	ldr.w r9, [r10, #780]
-	and.w r12, r2, #0x1
-	eor.w r2, r11, r2, LSL #4
-	and.w r11, r3, #0x1
-	eor.w r3, r12, r3, LSL #4
-	and.w r12, r4, #0x1
-	eor.w r4, r11, r4, LSL #4
-	and.w r11, r5, #0x1
-	eor.w r5, r12, r5, LSL #4
+	vmov.w s0, s1, r0, r1
+	ubfx.w r1, r2, #28, #1
+	eor.w r2, r12, r2, LSL #4
+	ubfx.w r12, r3, #28, #1
+	eor.w r3, r1, r3, LSL #4
+	ubfx.w r1, r4, #28, #1
+	eor.w r4, r12, r4, LSL #4
+	ubfx.w r12, r5, #28, #1
+	eor.w r5, r1, r5, LSL #4
+	vmov.w r0, r1, s0, s1
 	eor.w r2, r6
 	eor.w r3, r7
 	eor.w r4, r8
@@ -1238,14 +1311,16 @@ add_loop_vs_480:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
-	and.w r12, r2, #0x1
+	vmov.w s0, s1, r0, r1
+	ubfx.w r0, r2, #28, #1
 	eor.w r2, r11, r2, LSL #4
-	and.w r11, r3, #0x1
-	eor.w r3, r12, r3, LSL #4
-	and.w r12, r4, #0x1
+	ubfx.w r11, r3, #28, #1
+	eor.w r3, r0, r3, LSL #4
+	ubfx.w r0, r4, #28, #1
 	eor.w r4, r11, r4, LSL #4
-	and.w r11, r5, #0x1
-	eor.w r5, r12, r5, LSL #4
+	ubfx.w r11, r5, #28, #1
+	eor.w r5, r0, r5, LSL #4
+	vmov.w r0, r1, s0, s1
 	eor.w r2, r6
 	eor.w r3, r7
 	eor.w r4, r8
@@ -1266,7 +1341,6 @@ add_loop_vs_480:
 .type __update_VS_32x512_mod2, %function
 __update_VS_32x512_mod2:
 	push.w {r3-r12,lr}
-	movw.w r11, #0
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #1028
@@ -1288,6 +1362,8 @@ __update_VS_32x512_mod2:
 	bl __polymul_32x512_mod2
 	mov.w r10, sp
 	vmov.w r0, r1, s0, s1
+	movw.w r11, #0
+	movw.w r12, #0
 	add.w lr, r0, #256
 add_loop_vs_512:
 	ldr.w r2, [r10, #256]
@@ -1298,14 +1374,16 @@ add_loop_vs_512:
 	ldr.w r7, [r10, #772]
 	ldr.w r8, [r10, #776]
 	ldr.w r9, [r10, #780]
-	and.w r12, r2, #0x1
-	eor.w r2, r11, r2, LSL #4
-	and.w r11, r3, #0x1
-	eor.w r3, r12, r3, LSL #4
-	and.w r12, r4, #0x1
-	eor.w r4, r11, r4, LSL #4
-	and.w r11, r5, #0x1
-	eor.w r5, r12, r5, LSL #4
+	vmov.w s0, s1, r0, r1
+	ubfx.w r1, r2, #28, #1
+	eor.w r2, r12, r2, LSL #4
+	ubfx.w r12, r3, #28, #1
+	eor.w r3, r1, r3, LSL #4
+	ubfx.w r1, r4, #28, #1
+	eor.w r4, r12, r4, LSL #4
+	ubfx.w r12, r5, #28, #1
+	eor.w r5, r1, r5, LSL #4
+	vmov.w r0, r1, s0, s1
 	eor.w r2, r6
 	eor.w r3, r7
 	eor.w r4, r8
@@ -1322,14 +1400,16 @@ add_loop_vs_512:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
-	and.w r12, r2, #0x1
+	vmov.w s0, s1, r0, r1
+	ubfx.w r0, r2, #28, #1
 	eor.w r2, r11, r2, LSL #4
-	and.w r11, r3, #0x1
-	eor.w r3, r12, r3, LSL #4
-	and.w r12, r4, #0x1
+	ubfx.w r11, r3, #28, #1
+	eor.w r3, r0, r3, LSL #4
+	ubfx.w r0, r4, #28, #1
 	eor.w r4, r11, r4, LSL #4
-	and.w r11, r5, #0x1
-	eor.w r5, r12, r5, LSL #4
+	ubfx.w r11, r5, #28, #1
+	eor.w r5, r0, r5, LSL #4
+	vmov.w r0, r1, s0, s1
 	eor.w r2, r6
 	eor.w r3, r7
 	eor.w r4, r8
@@ -1350,7 +1430,6 @@ add_loop_vs_512:
 .type __update_VS_32x544_mod2, %function
 __update_VS_32x544_mod2:
 	push.w {r3-r12,lr}
-	movw.w r11, #0
 	vmov.w s0, s1, r0, r1
 	vmov.w s2, r2
 	sub.w sp, #1156
@@ -1372,6 +1451,8 @@ __update_VS_32x544_mod2:
 	bl __polymul_32x544_mod2
 	mov.w r10, sp
 	vmov.w r0, r1, s0, s1
+	movw.w r11, #0
+	movw.w r12, #0
 	add.w lr, r0, #272
 add_loop_vs_544:
 	ldr.w r2, [r10, #288]
@@ -1382,14 +1463,16 @@ add_loop_vs_544:
 	ldr.w r7, [r10, #868]
 	ldr.w r8, [r10, #872]
 	ldr.w r9, [r10, #876]
-	and.w r12, r2, #0x1
-	eor.w r2, r11, r2, LSL #4
-	and.w r11, r3, #0x1
-	eor.w r3, r12, r3, LSL #4
-	and.w r12, r4, #0x1
-	eor.w r4, r11, r4, LSL #4
-	and.w r11, r5, #0x1
-	eor.w r5, r12, r5, LSL #4
+	vmov.w s0, s1, r0, r1
+	ubfx.w r1, r2, #28, #1
+	eor.w r2, r12, r2, LSL #4
+	ubfx.w r12, r3, #28, #1
+	eor.w r3, r1, r3, LSL #4
+	ubfx.w r1, r4, #28, #1
+	eor.w r4, r12, r4, LSL #4
+	ubfx.w r12, r5, #28, #1
+	eor.w r5, r1, r5, LSL #4
+	vmov.w r0, r1, s0, s1
 	eor.w r2, r6
 	eor.w r3, r7
 	eor.w r4, r8
@@ -1406,14 +1489,16 @@ add_loop_vs_544:
 	ldr.w r4, [r10, #8]
 	ldr.w r5, [r10, #12]
 	ldr.w r2, [r10], #16
-	and.w r12, r2, #0x1
+	vmov.w s0, s1, r0, r1
+	ubfx.w r0, r2, #28, #1
 	eor.w r2, r11, r2, LSL #4
-	and.w r11, r3, #0x1
-	eor.w r3, r12, r3, LSL #4
-	and.w r12, r4, #0x1
+	ubfx.w r11, r3, #28, #1
+	eor.w r3, r0, r3, LSL #4
+	ubfx.w r0, r4, #28, #1
 	eor.w r4, r11, r4, LSL #4
-	and.w r11, r5, #0x1
-	eor.w r5, r12, r5, LSL #4
+	ubfx.w r11, r5, #28, #1
+	eor.w r5, r0, r5, LSL #4
+	vmov.w r0, r1, s0, s1
 	eor.w r2, r6
 	eor.w r3, r7
 	eor.w r4, r8

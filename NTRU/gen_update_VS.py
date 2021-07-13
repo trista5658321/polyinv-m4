@@ -28,7 +28,6 @@ def main(base, LENGTH, result_coeffi, loop_name_postfix=""):
     f_params = "(int *V, int *S, int *M1)"
     f_regs = "r3-r12"
     u.prologue_mod3(f_name, f_params, f_regs)
-    printIn("movw.w r11, #0")
     printIn("vmov.w %s, %s, %s, %s" % (s_V, s_S, V, S))
     printIn("vmov.w %s, %s" % (s_M, M))
 
@@ -65,7 +64,15 @@ def main(base, LENGTH, result_coeffi, loop_name_postfix=""):
 
     printIn("mov.w %s, sp" % (sp))
     printIn("vmov.w %s, %s, %s, %s" % (V, S, s_V, s_S))
-    
+
+    # uVx, rVx
+    uV_pre_coeffi = "r11"
+    rV_pre_coeffi = "r12"
+    uV_last_coeffi = "r0"
+    rV_last_coeffi = "r1"
+    printIn("movw.w %s, #0" % (uV_pre_coeffi))
+    printIn("movw.w %s, #0" % (rV_pre_coeffi))
+
     flag_coeffi = result_coeffi
     if flag_coeffi > _P: flag_coeffi = _P
     if coeffi == max_V_coeffi: flag_coeffi = max_V_coeffi
@@ -73,6 +80,7 @@ def main(base, LENGTH, result_coeffi, loop_name_postfix=""):
     flag_bytes = int(flag_coeffi * bytes_per_coeffi)
 
     printIn("add.w %s, %s, #%d" % (flag, V, flag_bytes))
+    
     add_loop = "add_loop_vs_%d" % (coeffi)
     if loop_name_postfix:
         add_loop += ("_" + loop_name_postfix)
@@ -100,11 +108,15 @@ def main(base, LENGTH, result_coeffi, loop_name_postfix=""):
             printIn("ldr.w %s, [%s], #16" % (h1[0], sp))
 
         # h1: * x
+        printIn("vmov.w %s, %s, %s, %s" % (s_V, s_S, V, S))
         for i in range(4):
-            start_value_tmp = ["r11","r12"][ i & 1 ]
-            end_value_tmp = ["r12","r11"][ i & 1 ]
-            printIn("and.w %s, %s, #0x1" % (end_value_tmp, h1[i]))
+            start_reg_set = [[rV_pre_coeffi, rV_last_coeffi], [uV_pre_coeffi, uV_last_coeffi]][count]
+            end_reg_set = [[rV_last_coeffi, rV_pre_coeffi], [uV_last_coeffi, uV_pre_coeffi]][count]
+            start_value_tmp = start_reg_set[ i & 1 ]
+            end_value_tmp = end_reg_set[ i & 1 ]
+            printIn("ubfx.w %s, %s, #28, #1" % (end_value_tmp, h1[i]))
             printIn("eor.w %s, %s, %s, LSL #4" % (h1[i], start_value_tmp, h1[i]))
+        printIn("vmov.w %s, %s, %s, %s" % (V, S, s_V, s_S))
 
         # add
         for i in range(len(h1)):

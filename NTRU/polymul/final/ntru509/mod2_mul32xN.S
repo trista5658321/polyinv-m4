@@ -12,6 +12,8 @@ mul_head_last:
 	ldr	r3, [r2, #4]
 	ldr	r4, [r2, #0]
 	umull	r9, r10, r5, r12
+	and.w	r9, r9, #0x11111111
+	and.w	r10, r10, #0x11111111
 	umlal	r9, r10, r6, r14
 	and.w	r9, r9, #0x11111111
 	and.w	r10, r10, #0x11111111

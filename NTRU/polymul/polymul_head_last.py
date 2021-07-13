@@ -20,6 +20,8 @@ def SCH_polymul_mod2_head_last():
 
         if k == 0:
             print("	umull	%s, %s, %s, %s" % (result_list[0], result_list[1], r12_list[0], r14_list[0]))
+            reduce_mod2(result_list[0], result_list[0])
+            reduce_mod2(result_list[1], result_list[1])
         else:
             print("	umlal	%s, %s, %s, %s" % (result_list[0], result_list[1], r12_list[0], r14_list[0]))
             
