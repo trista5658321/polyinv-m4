@@ -40,6 +40,7 @@ __gf_polymul_16x16_2x2_x2p2_mod2:
 	eor.w r4, r8
 	eor.w r5, r9
 	ldr.w r6, [r1, #-32]
+	ldr.w r7, [r1, #-28]
 	eor.w r6, r6, r2, LSL #4
 	eor.w r7, r7, r3, LSL #4
 	eor.w r7, r7, r2, LSR #28
