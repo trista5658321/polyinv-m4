@@ -38,14 +38,10 @@ extern void __update_fg_32x64_mod2(uint32_t *f, uint32_t *g, uint32_t *M1);
 extern void __update_fg_32x32_mod2(uint32_t *f, uint32_t *g, uint32_t *M1);
 
 int jump1024divsteps_mod2_32(int minusdelta, uint32_t *M, uint32_t *f, uint32_t *g){
-	uint32_t V[68];
-	uint32_t S[68];
+	uint32_t V[68]={0};
+	uint32_t S[68]={0};
 	uint32_t M1[24]; // 32 coefficients * 6
 	uint32_t *ptr = M;
-	for(int i = 0; i < 68; i++){
-	    V[i] = 0;
-	    S[i] = 0;
-	}
 	*(S) = 1;
 	// 1: 16
 	minusdelta = jump32divsteps_mod2(minusdelta,f,g,M1);
@@ -147,7 +143,6 @@ int jump1024divsteps_mod2_32(int minusdelta, uint32_t *M, uint32_t *f, uint32_t 
 	__update_fg_32x32_mod2(f, g, M1+8);
 	__update_VS_32x544_mod2(V, S, M1+8);
 	
-
 	for (int i = 0; i < 68; i++)
 	{
 	    *ptr++ = V[i];

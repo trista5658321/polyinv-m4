@@ -53,17 +53,11 @@ print("#include <inttypes.h>\n")
 f_proto()
 
 print("int jump%ddivsteps_mod2_%d(int minusdelta, uint32_t *M, uint32_t *f, uint32_t *g){" % (_P*2, BASE))
-printIn("uint32_t V[%d];" % V_space)
-printIn("uint32_t S[%d];" % V_space)
+printIn("uint32_t V[%d]={0};" % V_space)
+printIn("uint32_t S[%d]={0};" % V_space)
 printIn("uint32_t M1[%d]; // %d coefficients * 6" % ((BASE*bytes_per_coeffi*6)//4, BASE))
 printIn("uint32_t *ptr = M;")
 
-printIn("for(int i = 0; i < %d; i++){" % V_space)
-printIn("    V[i] = 0;")
-printIn("    S[i] = 0;")
-printIn("}")
-
-# printIn("uint8_t * p_S = (uint8_t *)S;")
 printIn("*(S) = 1;")
 
 uvrs_pos = (BASE*bytes_per_coeffi//4)*2
@@ -116,7 +110,7 @@ while(_N_max_2 != 0):
     _N_max_2 -= base
     base //= 2
 
-printIn("\n")
+printIn("")
 printIn("for (int i = 0; i < %d; i++)" % (V_space))
 printIn("{")
 printIn("    *ptr++ = V[i];")
