@@ -1,6 +1,7 @@
 #!/bin/bash
 # NTRU
 ## 32
+python gen_poly_r2_inv.py 32 508 512 > final/ntru509/poly_r2_inv_jumpdivsteps.c
 python gen_jumpdivstep.py 32 508 512 > final/ntru509/jump1024divsteps_mod2_32.c
 python gen_update_fg.py 32 508 512 > final/ntru509/mod2_update_fg_32.S
 python gen_update_VS.py 32 508 512 > final/ntru509/mod2_update_VS_32.S
