@@ -65,7 +65,7 @@ uvrs_pos = (BASE*bytes_per_coeffi//4)*2
 # Phase 1:
 printIn("// 1: %d" % (round_half))
 for i in range(round_half):
-    printIn("minusdelta = jump%ddivsteps_mod2(minusdelta,f,g,M1);" % (BASE))
+    printIn("minusdelta = jump%ddivsteps_mod2(minusdelta,M1,f,g);" % (BASE))
     printIn("__update_fg_%dx%d_mod2(f, g, M1+%d);" % (BASE, _P, uvrs_pos))
     if i == 0:
         printIn("__update_VS_%dx%d_mod2(V, S, M1+%d);" % (BASE, BASE, uvrs_pos))
@@ -74,7 +74,7 @@ for i in range(round_half):
 
 # Phase 2:
 printIn("// 2")
-printIn("minusdelta = jump%ddivsteps_mod2(minusdelta,f,g,M1);" % (BASE))
+printIn("minusdelta = jump%ddivsteps_mod2(minusdelta,M1,f,g);" % (BASE))
 printIn("__update_fg_%dx%d_mod2(f, g, M1+%d);" % (BASE, _P, uvrs_pos))
 printIn("__update_VS_%dx%d_mod2(V, S, M1+%d);" % (BASE, BASE*round_half, uvrs_pos))
 
@@ -84,7 +84,7 @@ round_half_2 = _N_max // BASE
 # Phase 3:
 printIn("// 3")
 for i in range(round_half_2):
-    printIn("minusdelta = jump%ddivsteps_mod2(minusdelta,f,g,M1);" % (BASE))
+    printIn("minusdelta = jump%ddivsteps_mod2(minusdelta,M1,f,g);" % (BASE))
     printIn("__update_fg_%dx%d_mod2(f, g, M1+%d);" % (BASE, _N_max - BASE*i, uvrs_pos))
     if i == round_half_2 - 1 and _N_max % BASE == 0:
         printIn("__update_VS_%dx%d_mod2(V, S, M1+%d);" % (BASE, max_V_coeffi, uvrs_pos))
@@ -100,7 +100,7 @@ while(base > _N_max_2):
 while(_N_max_2 != 0):
     printIn("// 4")
     _uvrs_pos = (base*bytes_per_coeffi//4)*2
-    printIn("minusdelta = jump%ddivsteps_mod2(minusdelta,f,g,M1);" % (base))
+    printIn("minusdelta = jump%ddivsteps_mod2(minusdelta,M1,f,g);" % (base))
     printIn("__update_fg_%dx%d_mod2(f, g, M1+%d);" % (base, _N_max_2, _uvrs_pos))
     if _N_max_2 - base == 0:
         printIn("__update_VS_%dx%d_mod2(V, S, M1+%d);" % (base, max_V_coeffi, _uvrs_pos))

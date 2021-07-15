@@ -1,17 +1,21 @@
+input_M = "r1"
+input_f = "r2"
+input_g = "r3"
+
 f0 = "r0"
-g0 = "r3"
+g0 = "r1"
 u0 = "r6"
-v0 = "r8"
-r0 = "r10"
-s0 = "r12"
+v0 = "r7"
+r0 = "r8"
+s0 = "r9"
 X0 = "r4"
 X1 = "r5"
 
 tmp = ["r4", "r5", "r6", "r7"]
 tmp2 = ["r8", "r9", "r10", "r11"]
 
-tmp3 = ["r1", "r2", "r4", "r5"]
-tmp4 = ["r7", "r9", "r11", "lr"]
+tmp3 = ["r2", "r3", "r4", "r5"]
+tmp4 = ["r10", "r11", "r12", "lr"]
 
 def to_bit(rd, rs):
     for i in range(4):
@@ -70,24 +74,18 @@ print("// bitslice functions")
 print(".p2align	2,,3")
 print(".syntax		unified")
 print(".text")
-print(".global 	bs2_jump32divsteps")
-print(".type		bs2_jump32divsteps, %function")
+print(".global 	jump32divsteps_mod2")
+print(".type		jump32divsteps_mod2, %function")
 # print("//normal usage is 'vmov.f32 s0, #31.0' before calling")
-print("//int bs2_jump32divsteps(int delta, int *f, int *g, int *M);")
-print("bs2_jump32divsteps:")
+print("//int jump32divsteps_mod2(int delta, int *M, int *f, int *g);")
+print("jump32divsteps_mod2:")
 print("	push	{r4-r11,lr}")
-print("	vmov	s2, r3		// save result matrix ptr")
+print("	vmov	s2, %s		// save result matrix ptr" % (input_M))
 print("	vmov	s3, r0		// save delta")
 
 # convert input
-convert_input(f0, "r1", "f")
-convert_input(g0, "r2", "g")
-
-# print("	ldr	%s, [r1]" % f0)
-# print("	ldr	%s, [r2]" % g0)
-
-# for i in [f0,g0] :
-#     print("	rbit %s, %s" % (i,i))
+convert_input(f0, input_f, "f")
+convert_input(g0, input_g, "g")
 
 print("	mov	%s, #(1<<31)" % u0)
 print("	mov	%s, #(1<<31)" % s0)
@@ -107,14 +105,14 @@ print("	movcs	r5, %s	// f0<->g0" % (f0))
 print("	movcs	%s, %s" % (f0, g0))
 print("	movcs	%s, r5" % (g0))
 print("	ittt	cs")
-print("	movcs	r5, r6	// u0<->r0")
-print("	movcs	r6, r10")
-print("	movcs	r10, r5")
+print("	movcs	r5, %s	// u0<->r0" % (u0))
+print("	movcs	%s, %s" % (u0, r0))
+print("	movcs	%s, r5" % (r0))
 
 print("	itttt	cs")
-print("	movcs	r5, r8	// v0<->s0")
-print("	movcs	r8, r12")
-print("	movcs	r12, r5")
+print("	movcs	r5, %s	// v0<->s0" % (v0))
+print("	movcs	%s, %s" % (v0, s0))
+print("	movcs	%s, r5" % (s0))
 print("	vnegcs.f32	s3, s3")
 print("bs2_jump32divsteps_1:		// second half")
 print("	vadd.f32	s3, s3, s1	// delta++")
