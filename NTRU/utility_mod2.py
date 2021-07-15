@@ -1,5 +1,7 @@
 import sys, math
 
+from polymul.utility_polymul import do_jump_head_4_0
+
 BASE = int(sys.argv[1]) # jump N divsteps
 P = int(sys.argv[2])
 _P = int(sys.argv[3])

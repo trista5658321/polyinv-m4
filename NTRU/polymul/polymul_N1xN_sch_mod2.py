@@ -2,7 +2,7 @@
 import sys
 import re
 from math import log,ceil,floor,sqrt
-from utility_polymul import r_12, r_14, ac, ar, BASE, _P_ZERO_coeffi, coeffi_per_strip, coeffi_per_block, bytes_per_block, reduce_mod2
+from utility_polymul import r_12, r_14, ac, ar, BASE, do_jump_head_4_0, coeffi_per_strip, coeffi_per_block, bytes_per_block, reduce_mod2
 from polymul_head_last import SCH_polymul_mod2_head_last
 
 N = 0
@@ -243,7 +243,8 @@ def polymul(N1, NN, _N):
     print(".p2align 2,,3")
     print(".syntax unified")
     print(".text")
-    if _P_ZERO_coeffi < 7:
+
+    if do_jump_head_4_0:
         SCH_polymul_mod2_head_last()
 
     SCH_polymul_N1xN_mod2(N1,NN,_N)

@@ -1,6 +1,6 @@
 import sys, pathlib
 sys.path.append(str(pathlib.Path(__file__).parent.absolute().parent))
-from NTRU.utility_mod2 import BASE, _P, _P_ZERO_coeffi, _N_max_2, coeffi_per_block, bytes_per_coeffi
+from NTRU.utility_mod2 import BASE, _P, do_jump_head_4_0, _N_max_2, coeffi_per_block, bytes_per_coeffi
 from utility import printIn, set_stack
 import utility as u
 
@@ -24,7 +24,7 @@ def main(base, LENGTH):
     denominator_x_power = coeffi_per_block # (uf + vg)x / base -> (uf + vg)x / denominator_x_power
 
     result_coeffi = coeffi # base_coeffi x coeffi[base_coeffi - 8: -8] -> coeffi
-    if _P_ZERO_coeffi < 7:
+    if do_jump_head_4_0:
         result_coeffi += denominator_x_power
 
     __polymul_name = "__polymul_" + str(base_coeffi) + "x" + str(coeffi) + "_mod2" + "_jump_head"

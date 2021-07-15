@@ -9,6 +9,8 @@ polymul_constraint = 32 # N x N1, N % constraint == 0 and N1 % constraint == 0
 max_V_coeffi = math.ceil((over_divsteps + P) / polymul_constraint) * polymul_constraint
 _N_max_2 = (2 * _P) % BASE
 
+do_jump_head_4_0 = _P_ZERO_coeffi < 15
+
 coeffi_per_strip = 32
 coeffi_per_block = 8
 bytes_per_block = 4

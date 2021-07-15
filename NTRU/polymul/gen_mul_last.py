@@ -1,10 +1,10 @@
-from utility_polymul import BASE, _P, max_V_coeffi as max_coeffi, _P_ZERO_coeffi
+from utility_polymul import BASE, _P, max_V_coeffi as max_coeffi, do_jump_head_4_0
 from func_composite import mul_jump_head_4_4, mul_jump_head_4_0
 from polymul_N1xN_sch_mod2 import SCH_polymul_N1xN_mod2_jump_end, polymul
 
 
 mul_jump_head = mul_jump_head_4_4
-if _P_ZERO_coeffi < 7:
+if do_jump_head_4_0:
     mul_jump_head = mul_jump_head_4_0
 
 polymul(BASE, BASE, BASE)
