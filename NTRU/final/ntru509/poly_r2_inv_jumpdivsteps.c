@@ -9,7 +9,7 @@
 #define _v_space_4bit 68
 #define reverse_head 516
 
-extern int jump1024divsteps_mod2_32(int minusdelta, uint32_t *M, uint32_t *f, uint32_t *g);
+extern int jump1024divsteps_mod2_64(int minusdelta, uint32_t *M, uint32_t *f, uint32_t *g);
 
 void PQCLEAN_NTRUHPS2048509_CLEAN_poly_R2_inv_jumpdivsteps(poly *r, const poly *a){
 	uint16_t _f[_p]={0}, _g[_p]={0}, _M[_v_space_16bit]={0};
@@ -23,7 +23,7 @@ void PQCLEAN_NTRUHPS2048509_CLEAN_poly_R2_inv_jumpdivsteps(poly *r, const poly *
 	convert_bit_to_4_512(f, _f);
 	convert_bit_to_4_512(g, _g);
 
-	minusdelta = jump1024divsteps_mod2_32(minusdelta, M, f, g);
+	minusdelta = jump1024divsteps_mod2_64(minusdelta, M, f, g);
 	convert_bit_to_16_544(_M, M);
 
 	for(i=0;i<p;i++){
