@@ -9,6 +9,8 @@
 #define _v_space_4bit 68
 #define reverse_head 516
 
+extern void convert_bit_to_4_512(uint32_t *f, uint16_t *_f);
+extern void convert_bit_to_16_544(uint16_t *_M, uint32_t *M);
 extern int jump1024divsteps_mod2_64(int minusdelta, uint32_t *M, uint32_t *f, uint32_t *g);
 
 void PQCLEAN_NTRUHPS2048509_CLEAN_poly_R2_inv_jumpdivsteps(poly *r, const poly *a){
