@@ -24,8 +24,9 @@ __gf_polymul_32x32_2x2_x2p2_mod2:
 	and.w lr, lr, #0x11111111
 	vmov.w s0, r9
 	ldr.w r8, [r2, #4]
-	umull r11, r12, r5, r8
-	umull lr, r9, r7, r8
+	mov.w r9, #0
+	umlal r11, r12, r5, r8
+	umlal lr, r9, r7, r8
 	umlal r10, r11, r4, r8
 	umlal r12, lr, r6, r8
 	and.w r10, r10, #0x11111111
@@ -35,8 +36,9 @@ __gf_polymul_32x32_2x2_x2p2_mod2:
 	and.w r9, r9, #0x11111111
 	vmov.w s1, r10
 	ldr.w r8, [r2, #8]
-	umull r12, lr, r5, r8
-	umull r9, r10, r7, r8
+	mov.w r10, #0
+	umlal r12, lr, r5, r8
+	umlal r9, r10, r7, r8
 	umlal r11, r12, r4, r8
 	umlal lr, r9, r6, r8
 	and.w r11, r11, #0x11111111
@@ -46,8 +48,9 @@ __gf_polymul_32x32_2x2_x2p2_mod2:
 	and.w r10, r10, #0x11111111
 	vmov.w s2, r11
 	ldr.w r8, [r2, #12]
-	umull lr, r9, r5, r8
-	umull r10, r11, r7, r8
+	mov.w r11, #0
+	umlal lr, r9, r5, r8
+	umlal r10, r11, r7, r8
 	umlal r12, lr, r4, r8
 	umlal r9, r10, r6, r8
 	and.w r12, r12, #0x11111111
@@ -75,8 +78,9 @@ __gf_polymul_32x32_2x2_x2p2_mod2:
 	and.w lr, lr, #0x11111111
 	vmov.w s8, r9
 	ldr.w r8, [r3, #4]
-	umull r11, r12, r5, r8
-	umull lr, r9, r7, r8
+	mov.w r9, #0
+	umlal r11, r12, r5, r8
+	umlal lr, r9, r7, r8
 	umlal r10, r11, r4, r8
 	umlal r12, lr, r6, r8
 	and.w r10, r10, #0x11111111
@@ -86,8 +90,9 @@ __gf_polymul_32x32_2x2_x2p2_mod2:
 	and.w r9, r9, #0x11111111
 	vmov.w s9, r10
 	ldr.w r8, [r3, #8]
-	umull r12, lr, r5, r8
-	umull r9, r10, r7, r8
+	mov.w r10, #0
+	umlal r12, lr, r5, r8
+	umlal r9, r10, r7, r8
 	umlal r11, r12, r4, r8
 	umlal lr, r9, r6, r8
 	and.w r11, r11, #0x11111111
@@ -97,8 +102,9 @@ __gf_polymul_32x32_2x2_x2p2_mod2:
 	and.w r10, r10, #0x11111111
 	vmov.w s10, r11
 	ldr.w r8, [r3, #12]
-	umull lr, r9, r5, r8
-	umull r10, r11, r7, r8
+	mov.w r11, #0
+	umlal lr, r9, r5, r8
+	umlal r10, r11, r7, r8
 	umlal r12, lr, r4, r8
 	umlal r9, r10, r6, r8
 	and.w r12, r12, #0x11111111
@@ -169,8 +175,9 @@ __gf_polymul_32x32_2x2_x2p2_mod2:
 	and.w lr, lr, #0x11111111
 	vmov.w s0, r9
 	ldr.w r8, [r2, #4]
-	umull r11, r12, r5, r8
-	umull lr, r9, r7, r8
+	mov.w r9, #0
+	umlal r11, r12, r5, r8
+	umlal lr, r9, r7, r8
 	umlal r10, r11, r4, r8
 	umlal r12, lr, r6, r8
 	and.w r10, r10, #0x11111111
@@ -180,8 +187,9 @@ __gf_polymul_32x32_2x2_x2p2_mod2:
 	and.w r9, r9, #0x11111111
 	vmov.w s1, r10
 	ldr.w r8, [r2, #8]
-	umull r12, lr, r5, r8
-	umull r9, r10, r7, r8
+	mov.w r10, #0
+	umlal r12, lr, r5, r8
+	umlal r9, r10, r7, r8
 	umlal r11, r12, r4, r8
 	umlal lr, r9, r6, r8
 	and.w r11, r11, #0x11111111
@@ -191,8 +199,9 @@ __gf_polymul_32x32_2x2_x2p2_mod2:
 	and.w r10, r10, #0x11111111
 	vmov.w s2, r11
 	ldr.w r8, [r2, #12]
-	umull lr, r9, r5, r8
-	umull r10, r11, r7, r8
+	mov.w r11, #0
+	umlal lr, r9, r5, r8
+	umlal r10, r11, r7, r8
 	umlal r12, lr, r4, r8
 	umlal r9, r10, r6, r8
 	and.w r12, r12, #0x11111111
@@ -220,8 +229,9 @@ __gf_polymul_32x32_2x2_x2p2_mod2:
 	and.w lr, lr, #0x11111111
 	vmov.w s8, r9
 	ldr.w r8, [r3, #4]
-	umull r11, r12, r5, r8
-	umull lr, r9, r7, r8
+	mov.w r9, #0
+	umlal r11, r12, r5, r8
+	umlal lr, r9, r7, r8
 	umlal r10, r11, r4, r8
 	umlal r12, lr, r6, r8
 	and.w r10, r10, #0x11111111
@@ -231,8 +241,9 @@ __gf_polymul_32x32_2x2_x2p2_mod2:
 	and.w r9, r9, #0x11111111
 	vmov.w s9, r10
 	ldr.w r8, [r3, #8]
-	umull r12, lr, r5, r8
-	umull r9, r10, r7, r8
+	mov.w r10, #0
+	umlal r12, lr, r5, r8
+	umlal r9, r10, r7, r8
 	umlal r11, r12, r4, r8
 	umlal lr, r9, r6, r8
 	and.w r11, r11, #0x11111111
@@ -242,8 +253,9 @@ __gf_polymul_32x32_2x2_x2p2_mod2:
 	and.w r10, r10, #0x11111111
 	vmov.w s10, r11
 	ldr.w r8, [r3, #12]
-	umull lr, r9, r5, r8
-	umull r10, r11, r7, r8
+	mov.w r11, #0
+	umlal lr, r9, r5, r8
+	umlal r10, r11, r7, r8
 	umlal r12, lr, r4, r8
 	umlal r9, r10, r6, r8
 	and.w r12, r12, #0x11111111
@@ -313,8 +325,9 @@ __gf_polymul_32x32_2x2_x_2x2_mod2:
 	and.w r12, r12, #0x11111111
 	vmov.w s0, r8
 	ldr.w r7, [r2, #4]
-	umull r10, r11, r4, r7
-	umull r12, r8, r6, r7
+	mov.w r8, #0
+	umlal r10, r11, r4, r7
+	umlal r12, r8, r6, r7
 	umlal r9, r10, r3, r7
 	umlal r11, r12, r5, r7
 	and.w r9, r9, #0x11111111
@@ -324,8 +337,9 @@ __gf_polymul_32x32_2x2_x_2x2_mod2:
 	and.w r8, r8, #0x11111111
 	vmov.w s1, r9
 	ldr.w r7, [r2, #8]
-	umull r11, r12, r4, r7
-	umull r8, r9, r6, r7
+	mov.w r9, #0
+	umlal r11, r12, r4, r7
+	umlal r8, r9, r6, r7
 	umlal r10, r11, r3, r7
 	umlal r12, r8, r5, r7
 	and.w r10, r10, #0x11111111
@@ -335,8 +349,9 @@ __gf_polymul_32x32_2x2_x_2x2_mod2:
 	and.w r9, r9, #0x11111111
 	vmov.w s2, r10
 	ldr.w r7, [r2, #12]
-	umull r12, r8, r4, r7
-	umull r9, r10, r6, r7
+	mov.w r10, #0
+	umlal r12, r8, r4, r7
+	umlal r9, r10, r6, r7
 	umlal r11, r12, r3, r7
 	umlal r8, r9, r5, r7
 	and.w r11, r11, #0x11111111
@@ -364,8 +379,9 @@ __gf_polymul_32x32_2x2_x_2x2_mod2:
 	and.w r12, r12, #0x11111111
 	vmov.w s8, r8
 	ldr.w r7, [r2, #20]
-	umull r10, r11, r4, r7
-	umull r12, r8, r6, r7
+	mov.w r8, #0
+	umlal r10, r11, r4, r7
+	umlal r12, r8, r6, r7
 	umlal r9, r10, r3, r7
 	umlal r11, r12, r5, r7
 	and.w r9, r9, #0x11111111
@@ -375,8 +391,9 @@ __gf_polymul_32x32_2x2_x_2x2_mod2:
 	and.w r8, r8, #0x11111111
 	vmov.w s9, r9
 	ldr.w r7, [r2, #24]
-	umull r11, r12, r4, r7
-	umull r8, r9, r6, r7
+	mov.w r9, #0
+	umlal r11, r12, r4, r7
+	umlal r8, r9, r6, r7
 	umlal r10, r11, r3, r7
 	umlal r12, r8, r5, r7
 	and.w r10, r10, #0x11111111
@@ -386,8 +403,9 @@ __gf_polymul_32x32_2x2_x_2x2_mod2:
 	and.w r9, r9, #0x11111111
 	vmov.w s10, r10
 	ldr.w r7, [r2, #28]
-	umull r12, r8, r4, r7
-	umull r9, r10, r6, r7
+	mov.w r10, #0
+	umlal r12, r8, r4, r7
+	umlal r9, r10, r6, r7
 	umlal r11, r12, r3, r7
 	umlal r8, r9, r5, r7
 	and.w r11, r11, #0x11111111
@@ -447,8 +465,9 @@ __gf_polymul_32x32_2x2_x_2x2_mod2:
 	and.w r12, r12, #0x11111111
 	vmov.w s0, r8
 	ldr.w r7, [r2, #4]
-	umull r10, r11, r4, r7
-	umull r12, r8, r6, r7
+	mov.w r8, #0
+	umlal r10, r11, r4, r7
+	umlal r12, r8, r6, r7
 	umlal r9, r10, r3, r7
 	umlal r11, r12, r5, r7
 	and.w r9, r9, #0x11111111
@@ -458,8 +477,9 @@ __gf_polymul_32x32_2x2_x_2x2_mod2:
 	and.w r8, r8, #0x11111111
 	vmov.w s1, r9
 	ldr.w r7, [r2, #8]
-	umull r11, r12, r4, r7
-	umull r8, r9, r6, r7
+	mov.w r9, #0
+	umlal r11, r12, r4, r7
+	umlal r8, r9, r6, r7
 	umlal r10, r11, r3, r7
 	umlal r12, r8, r5, r7
 	and.w r10, r10, #0x11111111
@@ -469,8 +489,9 @@ __gf_polymul_32x32_2x2_x_2x2_mod2:
 	and.w r9, r9, #0x11111111
 	vmov.w s2, r10
 	ldr.w r7, [r2, #12]
-	umull r12, r8, r4, r7
-	umull r9, r10, r6, r7
+	mov.w r10, #0
+	umlal r12, r8, r4, r7
+	umlal r9, r10, r6, r7
 	umlal r11, r12, r3, r7
 	umlal r8, r9, r5, r7
 	and.w r11, r11, #0x11111111
@@ -498,8 +519,9 @@ __gf_polymul_32x32_2x2_x_2x2_mod2:
 	and.w r12, r12, #0x11111111
 	vmov.w s8, r8
 	ldr.w r7, [r2, #20]
-	umull r10, r11, r4, r7
-	umull r12, r8, r6, r7
+	mov.w r8, #0
+	umlal r10, r11, r4, r7
+	umlal r12, r8, r6, r7
 	umlal r9, r10, r3, r7
 	umlal r11, r12, r5, r7
 	and.w r9, r9, #0x11111111
@@ -509,8 +531,9 @@ __gf_polymul_32x32_2x2_x_2x2_mod2:
 	and.w r8, r8, #0x11111111
 	vmov.w s9, r9
 	ldr.w r7, [r2, #24]
-	umull r11, r12, r4, r7
-	umull r8, r9, r6, r7
+	mov.w r9, #0
+	umlal r11, r12, r4, r7
+	umlal r8, r9, r6, r7
 	umlal r10, r11, r3, r7
 	umlal r12, r8, r5, r7
 	and.w r10, r10, #0x11111111
@@ -520,8 +543,9 @@ __gf_polymul_32x32_2x2_x_2x2_mod2:
 	and.w r9, r9, #0x11111111
 	vmov.w s10, r10
 	ldr.w r7, [r2, #28]
-	umull r12, r8, r4, r7
-	umull r9, r10, r6, r7
+	mov.w r10, #0
+	umlal r12, r8, r4, r7
+	umlal r9, r10, r6, r7
 	umlal r11, r12, r3, r7
 	umlal r8, r9, r5, r7
 	and.w r11, r11, #0x11111111
@@ -581,8 +605,9 @@ __gf_polymul_32x32_2x2_x_2x2_mod2:
 	and.w r12, r12, #0x11111111
 	vmov.w s0, r8
 	ldr.w r7, [r2, #36]
-	umull r10, r11, r4, r7
-	umull r12, r8, r6, r7
+	mov.w r8, #0
+	umlal r10, r11, r4, r7
+	umlal r12, r8, r6, r7
 	umlal r9, r10, r3, r7
 	umlal r11, r12, r5, r7
 	and.w r9, r9, #0x11111111
@@ -592,8 +617,9 @@ __gf_polymul_32x32_2x2_x_2x2_mod2:
 	and.w r8, r8, #0x11111111
 	vmov.w s1, r9
 	ldr.w r7, [r2, #40]
-	umull r11, r12, r4, r7
-	umull r8, r9, r6, r7
+	mov.w r9, #0
+	umlal r11, r12, r4, r7
+	umlal r8, r9, r6, r7
 	umlal r10, r11, r3, r7
 	umlal r12, r8, r5, r7
 	and.w r10, r10, #0x11111111
@@ -603,8 +629,9 @@ __gf_polymul_32x32_2x2_x_2x2_mod2:
 	and.w r9, r9, #0x11111111
 	vmov.w s2, r10
 	ldr.w r7, [r2, #44]
-	umull r12, r8, r4, r7
-	umull r9, r10, r6, r7
+	mov.w r10, #0
+	umlal r12, r8, r4, r7
+	umlal r9, r10, r6, r7
 	umlal r11, r12, r3, r7
 	umlal r8, r9, r5, r7
 	and.w r11, r11, #0x11111111
@@ -632,8 +659,9 @@ __gf_polymul_32x32_2x2_x_2x2_mod2:
 	and.w r12, r12, #0x11111111
 	vmov.w s8, r8
 	ldr.w r7, [r2, #52]
-	umull r10, r11, r4, r7
-	umull r12, r8, r6, r7
+	mov.w r8, #0
+	umlal r10, r11, r4, r7
+	umlal r12, r8, r6, r7
 	umlal r9, r10, r3, r7
 	umlal r11, r12, r5, r7
 	and.w r9, r9, #0x11111111
@@ -643,8 +671,9 @@ __gf_polymul_32x32_2x2_x_2x2_mod2:
 	and.w r8, r8, #0x11111111
 	vmov.w s9, r9
 	ldr.w r7, [r2, #56]
-	umull r11, r12, r4, r7
-	umull r8, r9, r6, r7
+	mov.w r9, #0
+	umlal r11, r12, r4, r7
+	umlal r8, r9, r6, r7
 	umlal r10, r11, r3, r7
 	umlal r12, r8, r5, r7
 	and.w r10, r10, #0x11111111
@@ -654,8 +683,9 @@ __gf_polymul_32x32_2x2_x_2x2_mod2:
 	and.w r9, r9, #0x11111111
 	vmov.w s10, r10
 	ldr.w r7, [r2, #60]
-	umull r12, r8, r4, r7
-	umull r9, r10, r6, r7
+	mov.w r10, #0
+	umlal r12, r8, r4, r7
+	umlal r9, r10, r6, r7
 	umlal r11, r12, r3, r7
 	umlal r8, r9, r5, r7
 	and.w r11, r11, #0x11111111
@@ -715,8 +745,9 @@ __gf_polymul_32x32_2x2_x_2x2_mod2:
 	and.w r12, r12, #0x11111111
 	vmov.w s0, r8
 	ldr.w r7, [r2, #36]
-	umull r10, r11, r4, r7
-	umull r12, r8, r6, r7
+	mov.w r8, #0
+	umlal r10, r11, r4, r7
+	umlal r12, r8, r6, r7
 	umlal r9, r10, r3, r7
 	umlal r11, r12, r5, r7
 	and.w r9, r9, #0x11111111
@@ -726,8 +757,9 @@ __gf_polymul_32x32_2x2_x_2x2_mod2:
 	and.w r8, r8, #0x11111111
 	vmov.w s1, r9
 	ldr.w r7, [r2, #40]
-	umull r11, r12, r4, r7
-	umull r8, r9, r6, r7
+	mov.w r9, #0
+	umlal r11, r12, r4, r7
+	umlal r8, r9, r6, r7
 	umlal r10, r11, r3, r7
 	umlal r12, r8, r5, r7
 	and.w r10, r10, #0x11111111
@@ -737,8 +769,9 @@ __gf_polymul_32x32_2x2_x_2x2_mod2:
 	and.w r9, r9, #0x11111111
 	vmov.w s2, r10
 	ldr.w r7, [r2, #44]
-	umull r12, r8, r4, r7
-	umull r9, r10, r6, r7
+	mov.w r10, #0
+	umlal r12, r8, r4, r7
+	umlal r9, r10, r6, r7
 	umlal r11, r12, r3, r7
 	umlal r8, r9, r5, r7
 	and.w r11, r11, #0x11111111
@@ -766,8 +799,9 @@ __gf_polymul_32x32_2x2_x_2x2_mod2:
 	and.w r12, r12, #0x11111111
 	vmov.w s8, r8
 	ldr.w r7, [r2, #52]
-	umull r10, r11, r4, r7
-	umull r12, r8, r6, r7
+	mov.w r8, #0
+	umlal r10, r11, r4, r7
+	umlal r12, r8, r6, r7
 	umlal r9, r10, r3, r7
 	umlal r11, r12, r5, r7
 	and.w r9, r9, #0x11111111
@@ -777,8 +811,9 @@ __gf_polymul_32x32_2x2_x_2x2_mod2:
 	and.w r8, r8, #0x11111111
 	vmov.w s9, r9
 	ldr.w r7, [r2, #56]
-	umull r11, r12, r4, r7
-	umull r8, r9, r6, r7
+	mov.w r9, #0
+	umlal r11, r12, r4, r7
+	umlal r8, r9, r6, r7
 	umlal r10, r11, r3, r7
 	umlal r12, r8, r5, r7
 	and.w r10, r10, #0x11111111
@@ -788,8 +823,9 @@ __gf_polymul_32x32_2x2_x_2x2_mod2:
 	and.w r9, r9, #0x11111111
 	vmov.w s10, r10
 	ldr.w r7, [r2, #60]
-	umull r12, r8, r4, r7
-	umull r9, r10, r6, r7
+	mov.w r10, #0
+	umlal r12, r8, r4, r7
+	umlal r9, r10, r6, r7
 	umlal r11, r12, r3, r7
 	umlal r8, r9, r5, r7
 	and.w r11, r11, #0x11111111

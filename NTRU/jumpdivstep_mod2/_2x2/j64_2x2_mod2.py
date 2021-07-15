@@ -71,8 +71,13 @@ def polymul_32x32(s_result, m2_elem, m1_elem):
     for i in range(4):
         ldr_m_elem(left_coeffi[0], M2, m2_offset+4*i)
 
-        printIn("umull %s, %s, %s, %s" % (result_reg(i,1), result_reg(i,2), top_coeffi[1], left_coeffi[0]))
-        printIn("umull %s, %s, %s, %s" % (result_reg(i,3), result_reg(i,4), top_coeffi[3], left_coeffi[0]))
+        mul_instruction = "umlal"
+        if i == 0:
+            mul_instruction = "umull"
+        if i != 0:
+            printIn("mov.w %s, #0" % (result_reg(i,4)))
+        printIn("%s %s, %s, %s, %s" % (mul_instruction, result_reg(i,1), result_reg(i,2), top_coeffi[1], left_coeffi[0]))
+        printIn("%s %s, %s, %s, %s" % (mul_instruction, result_reg(i,3), result_reg(i,4), top_coeffi[3], left_coeffi[0]))
         printIn("umlal %s, %s, %s, %s" % (result_reg(i,0), result_reg(i,1), top_coeffi[0], left_coeffi[0]))
         printIn("umlal %s, %s, %s, %s" % (result_reg(i,2), result_reg(i,3), top_coeffi[2], left_coeffi[0]))
 
