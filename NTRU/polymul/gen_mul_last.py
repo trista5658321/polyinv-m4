@@ -10,7 +10,7 @@ if do_jump_head_4_0:
 polymul(BASE, BASE, BASE)
 mul_jump_head(BASE, BASE)
 
-__polymul_name = "__polymul_" + str(BASE) + "x" + str(max_coeffi)
+__polymul_name = "__polymul_" + str(BASE) + "x" + str(max_coeffi) + "_mod2"
 print(".p2align 2,,3")
 print(".syntax unified")
 print(".text")

@@ -20,7 +20,11 @@ def get_mul_head_id4_reg():
 
 def get_mul_label_id0_reg(coeffi, _mul_max_coeffi = mul_max_coeffi):
     label_i = (BASE + _mul_max_coeffi - coeffi) // coeffi_per_strip
-    return ac(label_i,0)
+    id0_start = 0
+    if (coeffi % coeffi_per_strip != 0):
+        id0_start = 2 # cut half start
+
+    return ac(label_i,id0_start)
 
 # Case 1: head - coeffi_per_block ~ end - coeffi_per_block
 def mul_jump_head_4_4(coeffi, _mul_max_coeffi = mul_max_coeffi):
