@@ -27,7 +27,7 @@ __update_fg_64x688_mod2:
 	bl __polymul_64x688_mod2_jump_head
 	mov.w r10, sp
 	vmov.w r0, r1, s0, s1
-	add.w lr, r0, #344
+	add.w lr, r0, #336
 	add.w r10, #4
 	ldr.w r11, [r10, #-4]
 	ldr.w r12, [r10, #344]
@@ -90,7 +90,6 @@ add_loop_688:
 	ldr.w r3, [r10, #700]
 	ldr.w r6, [r10, #1044]
 	ldr.w r7, [r10, #1048]
-	vmov.w r0, r1, s0, s1
 	eor.w r2, r6
 	eor.w r3, r7
 	str.w r3, [r1, #4]
@@ -100,13 +99,13 @@ add_loop_688:
 	ldr.w r3, [r10, #4]
 	ldr.w r2, [r10], #8
 	vmov.w s0, s1, r0, r1
-	and.w r0, r2, #0x1
+	ubfx.w r0, r2, #28, #1
 	eor.w r2, r11, r2, LSL #4
-	and.w r11, r3, #0x1
+	ubfx.w r11, r3, #28, #1
 	eor.w r3, r0, r3, LSL #4
-	and.w r1, r6, #0x1
+	ubfx.w r1, r6, #28, #1
 	eor.w r6, r12, r6, LSL #4
-	and.w r12, r7, #0x1
+	ubfx.w r12, r7, #28, #1
 	eor.w r7, r1, r7, LSL #4
 	vmov.w r0, r1, s0, s1
 	eor.w r2, r6

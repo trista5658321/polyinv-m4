@@ -830,7 +830,7 @@ __update_VS_64x640_mod2:
 	vmov.w r0, r1, s0, s1
 	movw.w r11, #0
 	movw.w r12, #0
-	add.w lr, r0, #344
+	add.w lr, r0, #336
 add_loop_vs_640:
 	ldr.w r2, [r10, #352]
 	ldr.w r3, [r10, #356]
@@ -886,6 +886,34 @@ add_loop_vs_640:
 	str.w r2, [r0], #16
 	cmp.w r0, lr
 	bne.w add_loop_vs_640
+	ldr.w r2, [r10, #352]
+	ldr.w r3, [r10, #356]
+	ldr.w r6, [r10, #1056]
+	ldr.w r7, [r10, #1060]
+	vmov.w s0, s1, r0, r1
+	ubfx.w r1, r2, #28, #1
+	eor.w r2, r12, r2, LSL #4
+	ubfx.w r12, r3, #28, #1
+	eor.w r3, r1, r3, LSL #4
+	vmov.w r0, r1, s0, s1
+	eor.w r2, r6
+	eor.w r3, r7
+	str.w r3, [r1, #4]
+	str.w r2, [r1], #8
+	ldr.w r6, [r10, #704]
+	ldr.w r7, [r10, #708]
+	ldr.w r3, [r10, #4]
+	ldr.w r2, [r10], #8
+	vmov.w s0, s1, r0, r1
+	ubfx.w r0, r2, #28, #1
+	eor.w r2, r11, r2, LSL #4
+	ubfx.w r11, r3, #28, #1
+	eor.w r3, r0, r3, LSL #4
+	vmov.w r0, r1, s0, s1
+	eor.w r2, r6
+	eor.w r3, r7
+	str.w r3, [r0, #4]
+	str.w r2, [r0], #8
 	add.w sp, #1412
 	pop.w {r3-r12,pc}
 // void __update_VS_64x688_mod2 (int *V, int *S, int *M1);
@@ -919,7 +947,7 @@ __update_VS_64x688_mod2:
 	vmov.w r0, r1, s0, s1
 	movw.w r11, #0
 	movw.w r12, #0
-	add.w lr, r0, #344
+	add.w lr, r0, #336
 add_loop_vs_688:
 	ldr.w r2, [r10, #344]
 	ldr.w r3, [r10, #348]
@@ -975,6 +1003,34 @@ add_loop_vs_688:
 	str.w r2, [r0], #16
 	cmp.w r0, lr
 	bne.w add_loop_vs_688
+	ldr.w r2, [r10, #344]
+	ldr.w r3, [r10, #348]
+	ldr.w r6, [r10, #1032]
+	ldr.w r7, [r10, #1036]
+	vmov.w s0, s1, r0, r1
+	ubfx.w r1, r2, #28, #1
+	eor.w r2, r12, r2, LSL #4
+	ubfx.w r12, r3, #28, #1
+	eor.w r3, r1, r3, LSL #4
+	vmov.w r0, r1, s0, s1
+	eor.w r2, r6
+	eor.w r3, r7
+	str.w r3, [r1, #4]
+	str.w r2, [r1], #8
+	ldr.w r6, [r10, #688]
+	ldr.w r7, [r10, #692]
+	ldr.w r3, [r10, #4]
+	ldr.w r2, [r10], #8
+	vmov.w s0, s1, r0, r1
+	ubfx.w r0, r2, #28, #1
+	eor.w r2, r11, r2, LSL #4
+	ubfx.w r11, r3, #28, #1
+	eor.w r3, r0, r3, LSL #4
+	vmov.w r0, r1, s0, s1
+	eor.w r2, r6
+	eor.w r3, r7
+	str.w r3, [r0, #4]
+	str.w r2, [r0], #8
 	add.w sp, #1380
 	pop.w {r3-r12,pc}
 // void __update_VS_32x704_mod2 (int *V, int *S, int *M1);
