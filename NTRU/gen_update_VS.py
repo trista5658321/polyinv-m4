@@ -12,6 +12,55 @@ s_V = "s0"
 s_S = "s1"
 s_M = "s2"
 
+sp = "r10"
+flag = "lr"
+h1 = [ "r%d" % (x) for x in range(2,6)]
+h2 = [ "r%d" % (x) for x in range(6,10)]
+
+uV_pre_coeffi = "r11"
+rV_pre_coeffi = "r12"
+uV_last_coeffi = "r0"
+rV_last_coeffi = "r1"
+
+def add_two_mul(diff_mul_result_distance, mul_result_distance, reg_amount = 4):
+    for count in range(2): # 0: S, 1: V
+        str_target = V
+        if count == 0:
+            str_target = S
+            # first mul
+            for i in range(reg_amount):
+                printIn("ldr.w %s, [%s, #%d]" % (h1[i], sp, i*4 + diff_mul_result_distance))
+            # second mul
+            for i in range(reg_amount):
+                printIn("ldr.w %s, [%s, #%d]" % (h2[i], sp, i*4 + mul_result_distance + diff_mul_result_distance))
+        else:
+            # second mul
+            for i in range(reg_amount):
+                printIn("ldr.w %s, [%s, #%d]" % (h2[i], sp, i*4 + mul_result_distance))
+            # first mul
+            for i in range(1, reg_amount):
+                printIn("ldr.w %s, [%s, #%d]" % (h1[i], sp, i*4))
+            printIn("ldr.w %s, [%s], #%d" % (h1[0], sp, reg_amount*4))
+
+        # h1: * x
+        printIn("vmov.w %s, %s, %s, %s" % (s_V, s_S, V, S))
+        for i in range(reg_amount):
+            start_reg_set = [[rV_pre_coeffi, rV_last_coeffi], [uV_pre_coeffi, uV_last_coeffi]][count]
+            end_reg_set = [[rV_last_coeffi, rV_pre_coeffi], [uV_last_coeffi, uV_pre_coeffi]][count]
+            start_value_tmp = start_reg_set[ i & 1 ]
+            end_value_tmp = end_reg_set[ i & 1 ]
+            printIn("ubfx.w %s, %s, #28, #1" % (end_value_tmp, h1[i]))
+            printIn("eor.w %s, %s, %s, LSL #4" % (h1[i], start_value_tmp, h1[i]))
+        printIn("vmov.w %s, %s, %s, %s" % (V, S, s_V, s_S))
+
+        # add
+        for i in range(reg_amount):
+            printIn("eor.w %s, %s" % (h1[i], h2[i]))
+
+        # store
+        tmp_arr = h1[:reg_amount]
+        str_back(tmp_arr, str_target)
+
 def str_back(rs, target = V):
     for i in range(1, len(rs)):
         printIn("str.w %s, [%s, #%d]" % (rs[i], target, 4*i))
@@ -57,19 +106,10 @@ def main(base, LENGTH, result_coeffi, loop_name_postfix=""):
     u.bl_polymul(__polymul_name) # sS
 
     # add
-    sp = "r10"
-    flag = "lr"
-    h1 = [ "r%d" % (x) for x in range(2,6)]
-    h2 = [ "r%d" % (x) for x in range(6,10)]
-
     printIn("mov.w %s, sp" % (sp))
     printIn("vmov.w %s, %s, %s, %s" % (V, S, s_V, s_S))
 
     # uVx, rVx
-    uV_pre_coeffi = "r11"
-    rV_pre_coeffi = "r12"
-    uV_last_coeffi = "r0"
-    rV_last_coeffi = "r1"
     printIn("movw.w %s, #0" % (uV_pre_coeffi))
     printIn("movw.w %s, #0" % (rV_pre_coeffi))
 
@@ -92,84 +132,14 @@ def main(base, LENGTH, result_coeffi, loop_name_postfix=""):
 
     diff_mul_result_distance = result_coeffi * bytes_per_coeffi # offset between uVx and rVx
     mul_result_distance = 2 * result_coeffi * bytes_per_coeffi # offset between uVx and vS
-    for count in range(2): # 0: S, 1: V
-        str_target = V
-        if count == 0:
-            str_target = S
-            # first mul
-            for i in range(len(h1)):
-                printIn("ldr.w %s, [%s, #%d]" % (h1[i], sp, i*4 + diff_mul_result_distance))
-            # second mul
-            for i in range(len(h2)):
-                printIn("ldr.w %s, [%s, #%d]" % (h2[i], sp, i*4 + mul_result_distance + diff_mul_result_distance))
-        else:
-            # second mul
-            for i in range(len(h2)):
-                printIn("ldr.w %s, [%s, #%d]" % (h2[i], sp, i*4 + mul_result_distance))
-            # first mul
-            for i in range(1, len(h1)):
-                printIn("ldr.w %s, [%s, #%d]" % (h1[i], sp, i*4))
-            printIn("ldr.w %s, [%s], #16" % (h1[0], sp))
-
-        # h1: * x
-        printIn("vmov.w %s, %s, %s, %s" % (s_V, s_S, V, S))
-        for i in range(4):
-            start_reg_set = [[rV_pre_coeffi, rV_last_coeffi], [uV_pre_coeffi, uV_last_coeffi]][count]
-            end_reg_set = [[rV_last_coeffi, rV_pre_coeffi], [uV_last_coeffi, uV_pre_coeffi]][count]
-            start_value_tmp = start_reg_set[ i & 1 ]
-            end_value_tmp = end_reg_set[ i & 1 ]
-            printIn("ubfx.w %s, %s, #28, #1" % (end_value_tmp, h1[i]))
-            printIn("eor.w %s, %s, %s, LSL #4" % (h1[i], start_value_tmp, h1[i]))
-        printIn("vmov.w %s, %s, %s, %s" % (V, S, s_V, s_S))
-
-        # add
-        for i in range(len(h1)):
-            printIn("eor.w %s, %s" % (h1[i], h2[i]))
-
-        # store
-        str_back(h1, str_target)
     
+    add_two_mul(diff_mul_result_distance, mul_result_distance)
+
     printIn("cmp.w %s, %s" % (V, flag))
     printIn("bne.w " + add_loop)
 
     if loop_last:
-        for count in range(2): # 0: S, 1: V
-            str_target = V
-            if count == 0:
-                str_target = S
-                # first mul
-                for i in range(loop_last):
-                    printIn("ldr.w %s, [%s, #%d]" % (h1[i], sp, i*4 + diff_mul_result_distance))
-                # second mul
-                for i in range(loop_last):
-                    printIn("ldr.w %s, [%s, #%d]" % (h2[i], sp, i*4 + mul_result_distance + diff_mul_result_distance))
-            else:
-                # second mul
-                for i in range(loop_last):
-                    printIn("ldr.w %s, [%s, #%d]" % (h2[i], sp, i*4 + mul_result_distance))
-                # first mul
-                for i in range(1, loop_last):
-                    printIn("ldr.w %s, [%s, #%d]" % (h1[i], sp, i*4))
-                printIn("ldr.w %s, [%s], #%d" % (h1[0], sp, loop_last*4))
-
-            # h1: * x
-            printIn("vmov.w %s, %s, %s, %s" % (s_V, s_S, V, S))
-            for i in range(loop_last):
-                start_reg_set = [[rV_pre_coeffi, rV_last_coeffi], [uV_pre_coeffi, uV_last_coeffi]][count]
-                end_reg_set = [[rV_last_coeffi, rV_pre_coeffi], [uV_last_coeffi, uV_pre_coeffi]][count]
-                start_value_tmp = start_reg_set[ i & 1 ]
-                end_value_tmp = end_reg_set[ i & 1 ]
-                printIn("ubfx.w %s, %s, #28, #1" % (end_value_tmp, h1[i]))
-                printIn("eor.w %s, %s, %s, LSL #4" % (h1[i], start_value_tmp, h1[i]))
-            printIn("vmov.w %s, %s, %s, %s" % (V, S, s_V, s_S))
-
-            # add
-            for i in range(loop_last):
-                printIn("eor.w %s, %s" % (h1[i], h2[i]))
-
-            # store
-            tmp_arr = h1[:loop_last]
-            str_back(tmp_arr, str_target)
+        add_two_mul(diff_mul_result_distance, mul_result_distance, loop_last)
 
     set_stack(STACK_SPACE, "end")
     u.epilogue_mod3(f_regs)
