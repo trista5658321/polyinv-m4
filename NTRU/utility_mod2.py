@@ -1,6 +1,9 @@
-import sys, math
+import sys, math, pathlib
 
-from polymul.utility_polymul import do_jump_head_4_0
+ROOT_PATH = str(pathlib.Path(__file__).parent.absolute().parent)
+sys.path.append(ROOT_PATH)
+
+from NTRU.polymul.utility_polymul import do_jump_head_4_0
 
 BASE = int(sys.argv[1]) # jump N divsteps
 P = int(sys.argv[2])
@@ -16,3 +19,4 @@ coeffi_per_block = 8
 bytes_per_block = 4
 
 bytes_per_coeffi = 0.5
+bits_per_coeffi = int(bytes_per_coeffi * 8)
