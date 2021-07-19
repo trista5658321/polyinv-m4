@@ -136,7 +136,7 @@ add_loop_x2p2_64_1:
 __gf_polymul_64x64_2x2_x_2x2_mod2:
 	push.w {r4-r11,lr}
 	vmov.w s0, r0
-	sub.w sp, #260
+	sub.w sp, #516
 	mov.w r0, sp
 	bl __polymul_64x64_mod2
 	add.w r1, #32
@@ -256,5 +256,5 @@ add_loop_2x2_64:
 	vmov.w r2, s1
 	cmp.w r0, r2
 	bne.w add_loop_2x2_64
-	add.w sp, #260
+	add.w sp, #516
 	pop.w {r4-r11,pc}

@@ -10,7 +10,7 @@ coeffi = LENGTH//2 # n x n
 m_offset = int(coeffi * bytes_per_coeffi) # unit: bytes
 mul_result_bytes = 2 * coeffi * bytes_per_coeffi
 
-STACK_SPACE = mul_result_bytes * 4 + 4
+STACK_SPACE = mul_result_bytes * 8 + 4
 
 __polymul_name = "__polymul_" + str(coeffi) + "x" + str(coeffi) + "_mod2"
 
