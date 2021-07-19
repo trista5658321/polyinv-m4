@@ -11,7 +11,7 @@
 
 extern void convert_bit_to_4_832(uint32_t *f, uint16_t *_f);
 extern void convert_bit_to_16_864(uint16_t *_M, uint32_t *M);
-extern int jump1664divsteps_mod2_64(int minusdelta, uint32_t *M, uint32_t *f, uint32_t *g);
+extern int jump1664divsteps_mod2_128(int minusdelta, uint32_t *M, uint32_t *f, uint32_t *g);
 
 void PQCLEAN_NTRUHPS4096821_CLEAN_poly_R2_inv_jumpdivsteps(poly *r, const poly *a){
 	uint16_t _f[_p]={0}, _g[_p]={0}, _M[_v_space_16bit]={0};
@@ -25,7 +25,7 @@ void PQCLEAN_NTRUHPS4096821_CLEAN_poly_R2_inv_jumpdivsteps(poly *r, const poly *
 	convert_bit_to_4_832(f, _f);
 	convert_bit_to_4_832(g, _g);
 
-	minusdelta = jump1664divsteps_mod2_64(minusdelta, M, f, g);
+	minusdelta = jump1664divsteps_mod2_128(minusdelta, M, f, g);
 	convert_bit_to_16_864(_M, M);
 
 	for(i=0;i<p;i++){

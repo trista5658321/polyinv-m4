@@ -4,6 +4,8 @@ python b16to_4.py 32 > convert_bit_to_4_32.S
 python b4to_16.py 32 > convert_bit_to_16_32.S
 python b16to_4.py 64 > convert_bit_to_4_64.S
 python b4to_16.py 64 > convert_bit_to_16_64.S
+python b16to_4.py 128 > convert_bit_to_4_128.S
+python b4to_16.py 128 > convert_bit_to_16_128.S
 
 python b16to_4.py 512 > ntru509/convert_bit_to_4_512.S
 python b4to_16.py 512 > ntru509/convert_bit_to_16_512.S
