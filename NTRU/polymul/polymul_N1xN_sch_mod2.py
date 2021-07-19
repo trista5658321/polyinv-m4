@@ -1,178 +1,19 @@
 #!/usr/bin/env python
-import sys
-import re
-from math import log,ceil,floor,sqrt
-from utility_polymul import r_12, r_14, ac, ar, BASE, do_jump_head_4_0, coeffi_per_strip, coeffi_per_block, bytes_per_block, reduce_mod2
-from polymul_head_last import SCH_polymul_mod2_head_last
+import sys, pathlib
+
+ROOT_PATH = str(pathlib.Path(__file__).parent.absolute().parent.parent)
+sys.path.append(ROOT_PATH)
+from NTRU.const import coeffi_per_strip, coeffi_per_block, bytes_per_block
+from NTRU.polymul.utility_polymul import BASE, do_jump_head_4_0
+from NTRU.polymul.polymul_head_last import SCH_polymul_mod2_head_last
+from NTRU.polymul.polymul_component import r_12, r_14, ac, ar, reduce_mod2, start_strip_top, start_strip_bot, continue_strip_top, continue_strip_bot, end_strip_top, end_strip_top_2, end_strip_bot, get_block_id_end, start_strip_top_2b, continue_strip_top_2b, end_strip_top_2b
 
 N = 0
 N1 = 0
-
-r_h = "r0"
-    
-def start_strip_top (i):
-    print("	// ([%d-%d], 0) blocks" % (4*i, 4*i+3))
-    print("	ldr.w	%s, [%s]" % (ar(i,0,4), r_12))
-    print("	ldr.w	%s, [%s, #%d]" % (ar(i,0,3), r_14, 16*i+12))
-    print("	ldr.w	%s, [%s, #%d]" % (ar(i,0,2), r_14, 16*i+8))
-    print("	ldr.w	%s, [%s, #%d]" % (ar(i,0,1), r_14, 16*i+4))
-    print("	ldr.w	%s, [%s, #%d]" % (ar(i,0,0), r_14, 16*i))
-    print("	umull	%s, %s, %s, %s" % (ac(i,1),ac(i,2),ar(i,0,1),ar(i,0,4)))
-    print("	umull	%s, %s, %s, %s" % (ac(i,3),ac(i,4),ar(i,0,3),ar(i,0,4)))
-    print("	umlal	%s, %s, %s, %s" % (ac(i,0),ac(i,1),ar(i,0,0),ar(i,0,4)))
-    print("	umlal	%s, %s, %s, %s" % (ac(i,2),ac(i,3),ar(i,0,2),ar(i,0,4)))
-
-    for id in range(5):
-        reduce_mod2(ac(i,id), ac(i,id))
-
-def start_strip_top_2b (i, part):
-    print("	// ([%d-%d], 0) blocks" % (4*i + 2*part, 4*i+1 + 2*part))
-    print("	ldr.w	%s, [%s]" % (ar(i,0,4), r_12))
-    
-    coeffi_a = ar(i,0,0+2*part)
-    coeffi_b = ar(i,0,1+2*part)
-    result_0 = ac(i,0+2*part)
-    result_1 = ac(i,1+2*part)
-    result_2 = ac(i,2+2*part)
-
-    print("	ldr.w	%s, [%s, #%d]" % (coeffi_b, r_14, 16*i+4 + 2*part*4))
-    print("	ldr.w	%s, [%s, #%d]" % (coeffi_a, r_14, 16*i + 2*part*4))
-    print("	umull	%s, %s, %s, %s" % (result_1, result_2, coeffi_b, ar(i,0,4)))
-    print("	umlal	%s, %s, %s, %s" % (result_0, result_1, coeffi_a, ar(i,0,4)))
-
-    for id in range(2*part, 3+2*part):
-        reduce_mod2(ac(i,id), ac(i,id))
-
-def start_strip_bot (i, j) :
-    i_offset_start = ((coeffi_per_strip*i-N1) // coeffi_per_block) * bytes_per_block
-    blocks_start = 4*(i - N1//coeffi_per_strip)
-    print("	// ([%d-%d], %d) blocks" % (blocks_start+1, blocks_start+4, j))
-    print("	ldr.w	%s, [%s, #%d]" % (ar(i,j,4), r_12, 4*j))
-    print("	ldr.w	%s, [%s, #%d]" % (ar(i,j,3), r_14, i_offset_start+16))
-    print("	ldr.w	%s, [%s, #%d]" % (ar(i,j,2), r_14, i_offset_start+12))
-    print("	ldr.w	%s, [%s, #%d]" % (ar(i,j,1), r_14, i_offset_start+8))
-    print("	ldr.w	%s, [%s, #%d]" % (ar(i,j,0), r_14, i_offset_start+4))
-    print("	umull	%s, %s, %s, %s" % (ac(i,1),ac(i,2),ar(i,j,1),ar(i,j,4)))
-    print("	umull	%s, %s, %s, %s" % (ac(i,3),ac(i,4),ar(i,j,3),ar(i,j,4)))
-    print("	umlal	%s, %s, %s, %s" % (ac(i,0),ac(i,1),ar(i,j,0),ar(i,j,4)))
-    print("	umlal	%s, %s, %s, %s" % (ac(i,2),ac(i,3),ar(i,j,2),ar(i,j,4)))
-
-    for id in range(5):
-        reduce_mod2(ac(i,id), ac(i,id))
-    
-def continue_strip_top (i,j) :
-    print("	// ([%d-%d], %d) blocks" % (4*i-j, 4*i-j+3, j))
-    print("	ldr.w	%s, [%s, #%d]" % (ar(i,j,4), r_12, 4*j))
-    print("	ldr.w	%s, [%s, #%d]" % (ar(i,j,0), r_14, 16*i-4*j))
-    print("	umlal	%s, %s, %s, %s" % (ac(i,0),ac(i,1),ar(i,j,0),ar(i,j,4)))
-    print("	umlal	%s, %s, %s, %s" % (ac(i,1),ac(i,2),ar(i,j,1),ar(i,j,4)))
-    print("	umlal	%s, %s, %s, %s" % (ac(i,2),ac(i,3),ar(i,j,2),ar(i,j,4)))
-    print("	umlal	%s, %s, %s, %s" % (ac(i,3),ac(i,4),ar(i,j,3),ar(i,j,4)))
-
-    for id in range(5):
-        reduce_mod2(ac(i,id), ac(i,id))
-
-def continue_strip_top_2b (i,j, part) :
-    print("	// ([%d-%d], %d) blocks" % (4*i-j + 2*part, 4*i-j+1 + 2*part, j))
-    print("	ldr.w	%s, [%s, #%d]" % (ar(i,j,4), r_12, 4*j))
-
-    coeffi_a = ar(i,j,0+2*part)
-    coeffi_b = ar(i,j,1+2*part)
-    result_0 = ac(i,0+2*part)
-    result_1 = ac(i,1+2*part)
-    result_2 = ac(i,2+2*part)
-
-    print("	ldr.w	%s, [%s, #%d]" % (coeffi_a, r_14, 16*i-4*j + 2*part*4))
-    print("	umlal	%s, %s, %s, %s" % (result_0,result_1,coeffi_a,ar(i,j,4)))
-    print("	umlal	%s, %s, %s, %s" % (result_1,result_2,coeffi_b,ar(i,j,4)))
-
-    for id in range(2*part, 3+2*part):
-        reduce_mod2(ac(i,id), ac(i,id))
-
-def continue_strip_bot (i,j) :
-    print("	// ([%d-%d], %d) blocks" % (4*i-j, 4*i-j+3, j))
-    print("	ldr.w	%s, [%s, #%d]" % (ar(i,j,4), r_12, 4*j))
-    print("	ldr.w	%s, [%s, #%d]" % (ar(i,j,3), r_14, 16*i-4*j+12))
-    print("	umlal	%s, %s, %s, %s" % (ac(i,0),ac(i,1),ar(i,j,0),ar(i,j,4)))
-    print("	umlal	%s, %s, %s, %s" % (ac(i,1),ac(i,2),ar(i,j,1),ar(i,j,4)))
-    print("	umlal	%s, %s, %s, %s" % (ac(i,2),ac(i,3),ar(i,j,2),ar(i,j,4)))
-    print("	umlal	%s, %s, %s, %s" % (ac(i,3),ac(i,4),ar(i,j,3),ar(i,j,4)))
-
-    for id in range(5):
-        reduce_mod2(ac(i,id), ac(i,id))
-        
-def end_strip_top (i) :
-    j = 4 * i
-    print("	// ([0-2],%d), ([0-1],%d), (0,%d) blocks" % (4*i+1,4*i+2,4*i+3))
-    print("	ldr.w	%s, [%s, #%d]" % (ar(i,j,4), r_12, 16*i+4))
-    print("	umlal	%s, %s, %s, %s" % (ac(i,3),ac(i,4),ar(i,j,2),ar(i,j,4)))
-    print("	umlal	%s, %s, %s, %s" % (ac(i,2),ac(i,3),ar(i,j,1),ar(i,j,4)))
-    print("	umlal	%s, %s, %s, %s" % (ac(i,1),ac(i,2),ar(i,j,0),ar(i,j,4)))
-
-    for id in range(1,5):
-        reduce_mod2(ac(i,id), ac(i,id))
-    
-    print("	ldr.w	%s, [%s, #%d]" % (ar(i,j,4), r_12, 16*i+8))
-    print("	umlal	%s, %s, %s, %s" % (ac(i,3),ac(i,4),ar(i,j,1),ar(i,j,4)))
-    print("	umlal	%s, %s, %s, %s" % (ac(i,2),ac(i,3),ar(i,j,0),ar(i,j,4)))
-
-    for id in range(2,5):
-        reduce_mod2(ac(i,id), ac(i,id))
-
-    print("	ldr.w	%s, [%s, #%d]" % (ar(i,j,4), r_12, 16*i+12))
-    print("	umlal	%s, %s, %s, %s" % (ac(i,3),ac(i,4),ar(i,j,0),ar(i,j,4)))
-    
-    for id in range(3,5):
-        reduce_mod2(ac(i,id), ac(i,id))
-    
-    print("	str.w %s, [r0, #4]" % (ac(i,1)))
-    print("	str.w %s, [r0, #8]" % (ac(i,2)))
-    print("	str.w %s, [r0, #12]" % (ac(i,3)))
-    print("	str.w %s, [r0], #16" % (ac(i,0)))
-    
-def end_strip_top_2 (i) :
-    print("	str.w %s, [r0, #4]" % (ac(i,1)))
-    print("	str.w %s, [r0, #8]" % (ac(i,2)))
-    print("	str.w %s, [r0, #12]" % (ac(i,3)))
-    print("	str.w %s, [r0], #16" % (ac(i,0)))
-
-def end_strip_top_2b (i, part) :
-    print("	str.w %s, [r0, #4]" % (ac(i,1+2*part)))
-    print("	str.w %s, [r0], #8" % (ac(i,0+2*part)))
-
-def end_strip_bot (i, j):
-    
-    j_offset_start = bytes_per_block*(j-4) # j at bot
-    block_id_end = N // coeffi_per_block
-
-    print("	// ([%d-%d],%d),([%d-%d],%d),(%d,%d) blocks" % (block_id_end-3,block_id_end-1,j-1, block_id_end-2,block_id_end-1,j-2, block_id_end-1,j-3))
-    print("	ldr.w	%s, [%s, #%d]" % (ar(i,j,4), r_12, j_offset_start+12))
-    print("	umlal	%s, %s, %s, %s" % (ac(i,2),ac(i,3),ar(i,j,3),ar(i,j,4)))
-    print("	umlal	%s, %s, %s, %s" % (ac(i,1),ac(i,2),ar(i,j,2),ar(i,j,4)))
-    print("	umlal	%s, %s, %s, %s" % (ac(i,0),ac(i,1),ar(i,j,1),ar(i,j,4)))
-    
-    for id in range(4):
-        reduce_mod2(ac(i,id), ac(i,id))
-
-    print("	ldr.w	%s, [%s, #%d]" % (ar(i,j,4), r_12, j_offset_start+8))
-    print("	umlal	%s, %s, %s, %s" % (ac(i,1),ac(i,2),ar(i,j,3),ar(i,j,4)))
-    print("	umlal	%s, %s, %s, %s" % (ac(i,0),ac(i,1),ar(i,j,2),ar(i,j,4)))
-    
-    for id in range(3):
-        reduce_mod2(ac(i,id), ac(i,id))
-
-    print("	ldr.w	%s, [%s, #%d]" % (ar(i,j,4), r_12, j_offset_start+4))
-    print("	umlal	%s, %s, %s, %s" % (ac(i,0),ac(i,1),ar(i,j,3),ar(i,j,4)))
-    
-    for id in range(2):
-        reduce_mod2(ac(i,id), ac(i,id))
-
-    print("	str.w %s, [r0, #4]" % (ac(i,1)))
-    print("	str.w %s, [r0, #8]" % (ac(i,2)))
-    print("	str.w %s, [r0, #12]" % (ac(i,3)))
-    print("	str.w %s, [r0], #16" % (ac(i,0)))
   
 def SCH_polymul_N1xN_mod2(N1,N, _P) :
+    block_id_end = get_block_id_end(N)
+
     print("mul_head:")
     print(" // increasing thread length")
     print("	push.w {lr}")
@@ -236,11 +77,11 @@ def SCH_polymul_N1xN_mod2(N1,N, _P) :
         j_last_idx = N1 // coeffi_per_block -1
         j_top_at_i = 4*(i - N//coeffi_per_strip) # not included
 
-        start_strip_bot (i, j_last_idx)
+        start_strip_bot (i, j_last_idx, N1)
 
         for j in range(j_last_idx - 1, j_top_at_i + 3, -1) :
             continue_strip_bot (i,j)
-        end_strip_bot (i, j_top_at_i + 4) 
+        end_strip_bot (i, j_top_at_i + 4, block_id_end) 
         
     print(" // mv hh back to h")
 
@@ -255,7 +96,7 @@ def SCH_polymul_N1xN_mod2(N1,N, _P) :
     print("	ldr.w	%s, [%s, #%d]" % (ar(i,j,1), r_14, end_offset-12))
     print("	ldr.w	%s, [%s, #%d]" % (ar(i,j,2), r_14, end_offset-8))
     print("	ldr.w	%s, [%s, #%d]" % (ar(i,j,3), r_14, end_offset-4))
-    end_strip_bot(i, j)
+    end_strip_bot(i, j, block_id_end)
     print("	pop.w {pc}")
 
 def SCH_polymul_N1xN_mod2_jump_end(N1,N) :

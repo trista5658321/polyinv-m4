@@ -1,4 +1,11 @@
-from utility_polymul import BASE, MUL_LABEL_HAED_LAST, max_V_coeffi as mul_max_coeffi, ac, r_14, coeffi_per_strip, coeffi_per_block, bytes_per_block
+import sys, pathlib
+
+ROOT_PATH = str(pathlib.Path(__file__).parent.absolute().parent.parent)
+sys.path.append(ROOT_PATH)
+
+from NTRU.const import coeffi_per_strip, coeffi_per_block, bytes_per_block
+from NTRU.polymul.polymul_component import ac, r_14
+from NTRU.polymul.utility_polymul import BASE, MUL_LABEL_HAED_LAST, max_V_coeffi as mul_max_coeffi
 
 def prologue(coeffi, suffix = ""):
     __polymul_name = "__polymul_" + str(BASE) + "x" + str(coeffi) + "_mod2"

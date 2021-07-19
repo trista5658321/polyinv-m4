@@ -1,4 +1,11 @@
-from utility_polymul import BASE, MUL_LABEL_HAED_LAST, ar, ac, r_f, r_g, coeffi_per_strip, coeffi_per_block, reduce_mod2
+import sys, pathlib
+
+ROOT_PATH = str(pathlib.Path(__file__).parent.absolute().parent.parent)
+sys.path.append(ROOT_PATH)
+
+from NTRU.const import coeffi_per_strip, coeffi_per_block
+from NTRU.polymul.polymul_component import ar, ac, reduce_mod2
+from NTRU.polymul.utility_polymul import BASE, MUL_LABEL_HAED_LAST, r_f, r_g
 
 
 def SCH_polymul_mod2_head_last():
