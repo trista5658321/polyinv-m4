@@ -31,9 +31,9 @@ python gen_update_VS.py 64 820 832 > final/ntru821/mod2_update_VS_64.S
 # python gen_update_fg.py 128 676 688 > final/ntru677/mod2_update_fg_128.S
 # python gen_update_VS.py 128 676 688 > final/ntru677/mod2_update_VS_128.S
 
-# python gen.py 128 700 704 > final/ntru701/jump1408divsteps_mod2_128.c
-# python gen_update_fg.py 128 700 704 > final/ntru701/mod2_update_fg_128.S
-# python gen_update_VS.py 128 700 704 > final/ntru701/mod2_update_VS_128.S
+python gen_jumpdivstep.py 128 700 704 > final/ntru701/jump1408divsteps_mod2_128.c
+python gen_update_fg.py 128 700 704 > final/ntru701/mod2_update_fg_128.S
+python gen_update_VS.py 128 700 704 > final/ntru701/mod2_update_VS_128.S
 
 python gen_poly_r2_inv.py 128 820 832 > final/ntru821/poly_r2_inv_jumpdivsteps.c
 python gen_jumpdivstep.py 128 820 832 > final/ntru821/jump1664divsteps_mod2_128.c
