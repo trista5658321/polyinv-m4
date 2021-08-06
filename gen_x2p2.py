@@ -1,4 +1,4 @@
-from utility import printIn, LENGTH
+from utility import printIn, LENGTH, set_stack
 import utility as u
 
 import gen_f
@@ -30,41 +30,27 @@ s_bb2_addr = ""
 
 __polymul_name = "__polymul_" + str(LENGTH) + "x" + str(LENGTH)
 
-def data_config():
-    buffer_len = LENGTH * 2 # coefficients
-    buffer_bytes = buffer_len * 2 + 4
-    buffer1 = "b" + str(buffer_len) + "_1"
-    buffer2 = "b" + str(buffer_len) + "_2"
-
-    print(".data")
-    print(buffer1 + ": .space " + str(buffer_bytes))
-    print(buffer2 + ": .space " + str(buffer_bytes))
-    print(".text")
-    print("b1_addr:")
-    printIn(".word " + buffer1)
-    printIn(".word " + buffer1 + "+2")
-    print("b2_addr:")
-    printIn(".word " + buffer2)
-    printIn(".word " + buffer2 + "+2")
+BUFFER_SPACE = (LENGTH * 2) * 2 + 4 # (coefficients * bytes_per_coefficients)
+STACK_SPACE = BUFFER_SPACE * 2
 
 def get_b1_addr(rd, label = False):
     if label:
-        printIn("ldr.w " + rd + ", b1_addr")
+        printIn("mov.w " + rd + ", sp")
     else:
         printIn("vmov.w " + rd + ", " + s_b1_addr)
 def get_bb1_addr(rd, label = False):
     if label:
-        printIn("ldr.w " + rd + ", b1_addr+4")
+        printIn("add.w " + rd + ", sp, #2")
     else:
         printIn("vmov.w " + rd + ", " + s_bb1_addr)
 def get_b2_addr(rd, label = False):
     if label:
-        printIn("ldr.w " + rd + ", b2_addr")
+        printIn("add.w " + rd + ", sp, #" + str(BUFFER_SPACE))
     else:
         printIn("vmov.w " + rd + ", " + s_b2_addr)
 def get_bb2_addr(rd, label = False):
     if label:
-        printIn("ldr.w " + rd + ", b2_addr+4")
+        printIn("add.w " + rd + ", sp, #" + str(BUFFER_SPACE+2))
     else:
         printIn("vmov.w " + rd + ", " + s_bb2_addr)
 def set_zero(r1, r2, r_zero):
@@ -80,7 +66,9 @@ def main():
 
     f_name = "__gf_polymul_" + str(LENGTH) + "x" + str(LENGTH) + "_2x2_x2p2"
     f_params = "(int *V,int *M,int *fh,int *gh)"
-    u.head(f_name, f_params, data_config)
+    u.head(f_name, f_params)
+
+    set_stack(STACK_SPACE)
 
     # 存 r0-r3 function input
     tmp = ["r7", "r8", "r9", "r10", "r11", "r12", "lr"]
@@ -153,6 +141,8 @@ def main():
     printIn("vmov.w r2, " + M)
     # add_g
     gen_g.main()
+
+    set_stack(STACK_SPACE, "end")
     u.end()
 
 # main()

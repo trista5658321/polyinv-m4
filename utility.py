@@ -1,6 +1,9 @@
+from const import PARAM_Q_DIST, get_QR2INV_value
 import sys
 
 LENGTH = 64
+P = None
+Q = None
 
 argv_len = len(sys.argv)
 
@@ -10,11 +13,19 @@ if argv_len > 1:
 LENGTH_1 = LENGTH
 LENGTH_2 = LENGTH
 
+if argv_len == 3:
+    P = sys.argv[2]
+
 if argv_len > 3:
     LENGTH_1 = LENGTH * int(sys.argv[2])
     LENGTH_2 = LENGTH * int(sys.argv[3])
+    P = sys.argv[4]
 
 S_Q_R2INV = "s2"
+
+if P:
+    P = int(P)
+    Q = int(PARAM_Q_DIST[P])
 
 def printIn(asm):
     print("\t" + asm)
@@ -50,7 +61,7 @@ def end():
     printIn("pop {r1-r12, pc}")
 
 def get_q(rd):
-    printIn("mov.w " + rd + ", 4591")
+    printIn("mov.w " + rd + ", " + str(Q))
 
 def get_2P15(rd):
     printIn("movw.w " + rd + ", #32768")
@@ -59,8 +70,9 @@ def get_qR2inv(rd, init = False):
     if not init:
         printIn("vmov.w " + rd + ", " + S_Q_R2INV)
     else:
-        printIn("movw.w " + rd + ", #18015")
-        printIn("movt.w " + rd + ", #14")
+        _qR2inv = get_QR2INV_value(P)
+        printIn("movw.w " + rd + ", #" + str(_qR2inv[0]))
+        printIn("movt.w " + rd + ", #" + str(_qR2inv[1]))
         printIn("vmov.w " + S_Q_R2INV + ", " + rd)
 
 def barrett(x, q, qR2inv, tmp):

@@ -1,4 +1,4 @@
-from utility import printIn, LENGTH
+from utility import printIn, LENGTH, Q, set_stack
 import utility as u
 
 import gen_2x2_add
@@ -29,19 +29,14 @@ s_bb1_addr = "s6"
 __polymul_name = "__polymul_" + str(LENGTH) + "x" + str(LENGTH)
 __polyadd_name = "__polyadd_" + str(LENGTH*2)
 
-def data_config():
-    buffer_len = LENGTH * 2 # coefficients
-    buffer_bytes = buffer_len * 2 + 4
-    buffer1 = "b" + str(buffer_len) + "_1_2x2"
+BUFFER_SPACE = (LENGTH * 2) * 2 + 4 # (coefficients * bytes_per_coefficients)
+STACK_SPACE = BUFFER_SPACE
 
-    print(".data")
-    print(buffer1 + ": .space " + str(buffer_bytes))
+def data_config():
     print(".text")
-    print("b1_addr_2x2:")
-    printIn(".word " + buffer1)
-    printIn(".word " + buffer1 + "+2")
 
     if LENGTH >= 128:
+        assert(Q == 4591)
         print("Toom4Table_4591_2x2:")
         printIn(".word 4194697214 @ s1")
         printIn(".word 66848888   @ s2^")
@@ -62,12 +57,12 @@ def data_config():
 
 def get_b1_addr(rd, label = False):
     if label:
-        printIn("ldr.w " + rd + ", b1_addr_2x2")
+        printIn("mov.w " + rd + ", sp")
     else:
         printIn("vmov.w " + rd + ", " + s_b1_addr)
 def get_bb1_addr(rd, label = False):
     if label:
-        printIn("ldr.w " + rd + ", b1_addr_2x2+4")
+        printIn("add.w " + rd + ", sp, #2")
     else:
         printIn("vmov.w " + rd + ", " + s_bb1_addr)
 
@@ -130,6 +125,8 @@ def main():
         printIn("vpush.w { s16-s25 }")
         printIn("adr lr, Toom4Table_4591_2x2")
         printIn("vldm lr, {s10-s25}")
+
+    set_stack(STACK_SPACE)
 
     # 存 r0-r3 function input
     tmp = ["r7", "r8", "r9", "r10", "r11", "r12", "lr"]
@@ -307,6 +304,8 @@ def main():
     else:
         gen_2x2_add.main()
     
+    set_stack(STACK_SPACE, "end")
+
     if LENGTH >= 128:
         printIn("vpop.w { s16-s25 }")
     u.end()
