@@ -188,7 +188,7 @@ bs2_jump32divsteps_1:		// second half
 	lsrcs	r7, r7, #1
 	bcs	bs2_jump32divsteps_0
 bs2_jump32divsteps_2:	// clean up
-	and.w r10, r0, #0x1
+	ubfx.w r10, r0, #0, #1
 	ubfx.w r3, r0, #1, #1
 	eor.w r10, r3, r10, LSL #4
 	ubfx.w r4, r0, #2, #1
@@ -203,8 +203,7 @@ bs2_jump32divsteps_2:	// clean up
 	eor.w r10, r4, r10, LSL #4
 	ubfx.w r5, r0, #7, #1
 	eor.w r10, r5, r10, LSL #4
-	ubfx.w r2, r0, #8, #1
-	mov.w r11, r2
+	ubfx.w r11, r0, #8, #1
 	ubfx.w r3, r0, #9, #1
 	eor.w r11, r3, r11, LSL #4
 	ubfx.w r4, r0, #10, #1
@@ -219,8 +218,7 @@ bs2_jump32divsteps_2:	// clean up
 	eor.w r11, r4, r11, LSL #4
 	ubfx.w r5, r0, #15, #1
 	eor.w r11, r5, r11, LSL #4
-	ubfx.w r2, r0, #16, #1
-	mov.w r12, r2
+	ubfx.w r12, r0, #16, #1
 	ubfx.w r3, r0, #17, #1
 	eor.w r12, r3, r12, LSL #4
 	ubfx.w r4, r0, #18, #1
@@ -235,8 +233,7 @@ bs2_jump32divsteps_2:	// clean up
 	eor.w r12, r4, r12, LSL #4
 	ubfx.w r5, r0, #23, #1
 	eor.w r12, r5, r12, LSL #4
-	ubfx.w r2, r0, #24, #1
-	mov.w lr, r2
+	ubfx.w lr, r0, #24, #1
 	ubfx.w r3, r0, #25, #1
 	eor.w lr, r3, lr, LSL #4
 	ubfx.w r4, r0, #26, #1
@@ -256,7 +253,7 @@ bs2_jump32divsteps_2:	// clean up
 	str r11, [r0, #8]
 	str r10, [r0, #12]
 	str lr, [r0], #16
-	and.w r10, r1, #0x1
+	ubfx.w r10, r1, #0, #1
 	ubfx.w r3, r1, #1, #1
 	eor.w r10, r3, r10, LSL #4
 	ubfx.w r4, r1, #2, #1
@@ -271,8 +268,7 @@ bs2_jump32divsteps_2:	// clean up
 	eor.w r10, r4, r10, LSL #4
 	ubfx.w r5, r1, #7, #1
 	eor.w r10, r5, r10, LSL #4
-	ubfx.w r2, r1, #8, #1
-	mov.w r11, r2
+	ubfx.w r11, r1, #8, #1
 	ubfx.w r3, r1, #9, #1
 	eor.w r11, r3, r11, LSL #4
 	ubfx.w r4, r1, #10, #1
@@ -287,8 +283,7 @@ bs2_jump32divsteps_2:	// clean up
 	eor.w r11, r4, r11, LSL #4
 	ubfx.w r5, r1, #15, #1
 	eor.w r11, r5, r11, LSL #4
-	ubfx.w r2, r1, #16, #1
-	mov.w r12, r2
+	ubfx.w r12, r1, #16, #1
 	ubfx.w r3, r1, #17, #1
 	eor.w r12, r3, r12, LSL #4
 	ubfx.w r4, r1, #18, #1
@@ -303,8 +298,7 @@ bs2_jump32divsteps_2:	// clean up
 	eor.w r12, r4, r12, LSL #4
 	ubfx.w r5, r1, #23, #1
 	eor.w r12, r5, r12, LSL #4
-	ubfx.w r2, r1, #24, #1
-	mov.w lr, r2
+	ubfx.w lr, r1, #24, #1
 	ubfx.w r3, r1, #25, #1
 	eor.w lr, r3, lr, LSL #4
 	ubfx.w r4, r1, #26, #1
@@ -323,7 +317,7 @@ bs2_jump32divsteps_2:	// clean up
 	str r11, [r0, #8]
 	str r10, [r0, #12]
 	str lr, [r0], #16
-	and.w r10, r6, #0x1
+	ubfx.w r10, r6, #0, #1
 	ubfx.w r3, r6, #1, #1
 	eor.w r10, r3, r10, LSL #4
 	ubfx.w r4, r6, #2, #1
@@ -338,8 +332,7 @@ bs2_jump32divsteps_2:	// clean up
 	eor.w r10, r4, r10, LSL #4
 	ubfx.w r5, r6, #7, #1
 	eor.w r10, r5, r10, LSL #4
-	ubfx.w r2, r6, #8, #1
-	mov.w r11, r2
+	ubfx.w r11, r6, #8, #1
 	ubfx.w r3, r6, #9, #1
 	eor.w r11, r3, r11, LSL #4
 	ubfx.w r4, r6, #10, #1
@@ -354,8 +347,7 @@ bs2_jump32divsteps_2:	// clean up
 	eor.w r11, r4, r11, LSL #4
 	ubfx.w r5, r6, #15, #1
 	eor.w r11, r5, r11, LSL #4
-	ubfx.w r2, r6, #16, #1
-	mov.w r12, r2
+	ubfx.w r12, r6, #16, #1
 	ubfx.w r3, r6, #17, #1
 	eor.w r12, r3, r12, LSL #4
 	ubfx.w r4, r6, #18, #1
@@ -370,8 +362,7 @@ bs2_jump32divsteps_2:	// clean up
 	eor.w r12, r4, r12, LSL #4
 	ubfx.w r5, r6, #23, #1
 	eor.w r12, r5, r12, LSL #4
-	ubfx.w r2, r6, #24, #1
-	mov.w lr, r2
+	ubfx.w lr, r6, #24, #1
 	ubfx.w r3, r6, #25, #1
 	eor.w lr, r3, lr, LSL #4
 	ubfx.w r4, r6, #26, #1
@@ -390,7 +381,7 @@ bs2_jump32divsteps_2:	// clean up
 	str r11, [r0, #8]
 	str r10, [r0, #12]
 	str lr, [r0], #16
-	and.w r10, r7, #0x1
+	ubfx.w r10, r7, #0, #1
 	ubfx.w r3, r7, #1, #1
 	eor.w r10, r3, r10, LSL #4
 	ubfx.w r4, r7, #2, #1
@@ -405,8 +396,7 @@ bs2_jump32divsteps_2:	// clean up
 	eor.w r10, r4, r10, LSL #4
 	ubfx.w r5, r7, #7, #1
 	eor.w r10, r5, r10, LSL #4
-	ubfx.w r2, r7, #8, #1
-	mov.w r11, r2
+	ubfx.w r11, r7, #8, #1
 	ubfx.w r3, r7, #9, #1
 	eor.w r11, r3, r11, LSL #4
 	ubfx.w r4, r7, #10, #1
@@ -421,8 +411,7 @@ bs2_jump32divsteps_2:	// clean up
 	eor.w r11, r4, r11, LSL #4
 	ubfx.w r5, r7, #15, #1
 	eor.w r11, r5, r11, LSL #4
-	ubfx.w r2, r7, #16, #1
-	mov.w r12, r2
+	ubfx.w r12, r7, #16, #1
 	ubfx.w r3, r7, #17, #1
 	eor.w r12, r3, r12, LSL #4
 	ubfx.w r4, r7, #18, #1
@@ -437,8 +426,7 @@ bs2_jump32divsteps_2:	// clean up
 	eor.w r12, r4, r12, LSL #4
 	ubfx.w r5, r7, #23, #1
 	eor.w r12, r5, r12, LSL #4
-	ubfx.w r2, r7, #24, #1
-	mov.w lr, r2
+	ubfx.w lr, r7, #24, #1
 	ubfx.w r3, r7, #25, #1
 	eor.w lr, r3, lr, LSL #4
 	ubfx.w r4, r7, #26, #1
@@ -457,7 +445,7 @@ bs2_jump32divsteps_2:	// clean up
 	str r11, [r0, #8]
 	str r10, [r0, #12]
 	str lr, [r0], #16
-	and.w r10, r8, #0x1
+	ubfx.w r10, r8, #0, #1
 	ubfx.w r3, r8, #1, #1
 	eor.w r10, r3, r10, LSL #4
 	ubfx.w r4, r8, #2, #1
@@ -472,8 +460,7 @@ bs2_jump32divsteps_2:	// clean up
 	eor.w r10, r4, r10, LSL #4
 	ubfx.w r5, r8, #7, #1
 	eor.w r10, r5, r10, LSL #4
-	ubfx.w r2, r8, #8, #1
-	mov.w r11, r2
+	ubfx.w r11, r8, #8, #1
 	ubfx.w r3, r8, #9, #1
 	eor.w r11, r3, r11, LSL #4
 	ubfx.w r4, r8, #10, #1
@@ -488,8 +475,7 @@ bs2_jump32divsteps_2:	// clean up
 	eor.w r11, r4, r11, LSL #4
 	ubfx.w r5, r8, #15, #1
 	eor.w r11, r5, r11, LSL #4
-	ubfx.w r2, r8, #16, #1
-	mov.w r12, r2
+	ubfx.w r12, r8, #16, #1
 	ubfx.w r3, r8, #17, #1
 	eor.w r12, r3, r12, LSL #4
 	ubfx.w r4, r8, #18, #1
@@ -504,8 +490,7 @@ bs2_jump32divsteps_2:	// clean up
 	eor.w r12, r4, r12, LSL #4
 	ubfx.w r5, r8, #23, #1
 	eor.w r12, r5, r12, LSL #4
-	ubfx.w r2, r8, #24, #1
-	mov.w lr, r2
+	ubfx.w lr, r8, #24, #1
 	ubfx.w r3, r8, #25, #1
 	eor.w lr, r3, lr, LSL #4
 	ubfx.w r4, r8, #26, #1
@@ -524,7 +509,7 @@ bs2_jump32divsteps_2:	// clean up
 	str r11, [r0, #8]
 	str r10, [r0, #12]
 	str lr, [r0], #16
-	and.w r10, r9, #0x1
+	ubfx.w r10, r9, #0, #1
 	ubfx.w r3, r9, #1, #1
 	eor.w r10, r3, r10, LSL #4
 	ubfx.w r4, r9, #2, #1
@@ -539,8 +524,7 @@ bs2_jump32divsteps_2:	// clean up
 	eor.w r10, r4, r10, LSL #4
 	ubfx.w r5, r9, #7, #1
 	eor.w r10, r5, r10, LSL #4
-	ubfx.w r2, r9, #8, #1
-	mov.w r11, r2
+	ubfx.w r11, r9, #8, #1
 	ubfx.w r3, r9, #9, #1
 	eor.w r11, r3, r11, LSL #4
 	ubfx.w r4, r9, #10, #1
@@ -555,8 +539,7 @@ bs2_jump32divsteps_2:	// clean up
 	eor.w r11, r4, r11, LSL #4
 	ubfx.w r5, r9, #15, #1
 	eor.w r11, r5, r11, LSL #4
-	ubfx.w r2, r9, #16, #1
-	mov.w r12, r2
+	ubfx.w r12, r9, #16, #1
 	ubfx.w r3, r9, #17, #1
 	eor.w r12, r3, r12, LSL #4
 	ubfx.w r4, r9, #18, #1
@@ -571,8 +554,7 @@ bs2_jump32divsteps_2:	// clean up
 	eor.w r12, r4, r12, LSL #4
 	ubfx.w r5, r9, #23, #1
 	eor.w r12, r5, r12, LSL #4
-	ubfx.w r2, r9, #24, #1
-	mov.w lr, r2
+	ubfx.w lr, r9, #24, #1
 	ubfx.w r3, r9, #25, #1
 	eor.w lr, r3, lr, LSL #4
 	ubfx.w r4, r9, #26, #1

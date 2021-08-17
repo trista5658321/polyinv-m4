@@ -41,11 +41,12 @@ def convert_input(rd, rs, comment):
 
 def to_4bit(rs):
     for j in range(4):
-        if j == 0:
-            print("	and.w %s, %s, #0x1" % (tmp4[j], rs))
-        else:
-            print("	ubfx.w %s, %s, #%d, #1" % (tmp3[0], rs, 8*j))
-            print("	mov.w %s, %s" % (tmp4[j], tmp3[0]))
+        print("	ubfx.w %s, %s, #%d, #1" % (tmp4[j], rs, 8*j))
+        # if j == 0:
+        #     print("	and.w %s, %s, #0x1" % (tmp4[j], rs))
+        # else:
+            # print("	ubfx.w %s, %s, #%d, #1" % (tmp3[0], rs, 8*j))
+            # print("	mov.w %s, %s" % (tmp4[j], tmp3[0]))
         for i in range(1, 4):
             print("	ubfx.w %s, %s, #%d, #1" % (tmp3[i], rs, i+8*j))
             print("	eor.w %s, %s, %s, LSL #4" % (tmp4[j], tmp3[i], tmp4[j]))
